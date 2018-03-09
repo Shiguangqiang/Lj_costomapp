@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">lj_costomapp</string>
+    <string name="options">操作</string>
+    <string name="scan_barcode_title">条形码扫描</string>
+    <string name="scan_qrcode_title">二维码扫描</string>
+    <string name="scan_allcode_title">二维码或条形码扫描</string>
+    <string name="scan_barcode_hint">将条形码对入取景框，即可自动扫描</string>
+    <string name="scan_qrcode_hint">将二维码对入取景框，即可自动扫描</string>
+    <string name="scan_allcode_hint">将二维码或条形码对入取景框，即可自动扫描</string>
+    <string name="title_activity_sao_mao">SaoMaoActivity</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="buhuo_user">补货人员</string>
+    <string name="kefu_user">客服人员</string>
+    <string name="tongji_user">统计人员</string>
+    <string name="manger_user">管理人员</string>
+    <string name="saoma_location">扫码定位</string>
+    <string name="buhuo_message">补货通知</string>
+    <string name="buhuo_done">补货完成</string>
+    <string name="exit_login">退出登录</string>
+    <string name="btn_back">返回</string>
+    <string name="callTa">  联系TA  </string>
+    <string name="alarm">  — 报警 —  </string>
+    <string name="alarmnot">未解决</string>
+    <string name="alarmyet">已解决</string>
+
+
+</resources>

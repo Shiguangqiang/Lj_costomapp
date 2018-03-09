@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#dc2f00</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffffff</color>
+    <color name="titleBarColor">#ff4849</color>
+    <color name="mai_bg">#f4f4f4</color>
+    <color name="text_color">#333333</color>
+    <color name="colorGray">#33000000</color>
+    <color name="common_red">#d25f4e</color>
+    <color name="bg_color">#ebebeb</color>
+    <color name="scan_bg">#7f000000</color>
+    <color name="contents_text">#7f000000</color>
+    <color name="transparent">#000000</color>
+    <color name="sansansan">#333333</color>
+    <color name="liuliuliu">#666666</color>
+    <color name="jiujiujiu">#999999</color>
+    <color name="red">#f90606</color>
+    <color name="black">#000000</color>
+    <color name="orange">#FFD700</color>
+    <color name="blue">#191df9</color>
+
+
+
+</resources>
