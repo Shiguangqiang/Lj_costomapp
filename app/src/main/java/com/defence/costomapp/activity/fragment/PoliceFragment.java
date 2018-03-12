@@ -52,7 +52,7 @@ public class PoliceFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_machine, null);
+        View view = inflater.inflate(R.layout.fragment_police, null);
         srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
         initdata();
         unbinder = ButterKnife.bind(this, view);
@@ -60,6 +60,7 @@ public class PoliceFragment extends BaseFragment {
     }
 
     private void initdata() {
+//        groupid= getActivity().getIntent().getStringExtra("groupidmm");
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

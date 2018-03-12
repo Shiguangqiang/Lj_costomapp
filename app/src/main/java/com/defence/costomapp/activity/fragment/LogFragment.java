@@ -65,6 +65,8 @@ public class LogFragment extends BaseFragment {
     }
 
     private void initdata() {
+
+//        groupid= getActivity().getIntent().getStringExtra("groupidmm");
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

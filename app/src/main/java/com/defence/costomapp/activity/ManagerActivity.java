@@ -74,6 +74,7 @@ public class ManagerActivity extends BaseActivity {
 
 
         SgqUtils.setIndicator(mangerTablayout, 60, 60);
+
         mangerTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

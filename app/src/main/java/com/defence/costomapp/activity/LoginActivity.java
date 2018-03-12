@@ -53,6 +53,10 @@ public class LoginActivity extends BaseActivity {
                 icon.setBackgroundResource(R.mipmap.buhuoicon);
                 name.setText("补货人员");
                 break;
+            case 10110:
+                icon.setBackgroundResource(R.mipmap.tongji);
+                name.setText("统计人员");
+                break;
             case 10100:
                 icon.setBackgroundResource(R.mipmap.guanli);
                 name.setText("管理人员");
@@ -87,17 +91,22 @@ public class LoginActivity extends BaseActivity {
                             SharePerenceUtil.putIntValuetoSp("loginType", loginType);
                             SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin",true);
 
+                            MangerUserBean.ResultBean.DataOneBean mangerUserBean = gson.fromJson(jb.toString(), MangerUserBean.ResultBean.DataOneBean.class);
+                            SharePerenceUtil.putStringValuetoSp("groupid", mangerUserBean.getGroupID() + "");
 
                             switch (loginType) {
                                 case 0:
                                     startActivity(new Intent(LoginActivity.this, BuhuoMessageActivity.class));
                                     break;
                                 case 10100:
-                                    MangerUserBean.ResultBean.DataOneBean mangerUserBean = gson.fromJson(jb.toString(), MangerUserBean.ResultBean.DataOneBean.class);
                                     Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
-                                    SharePerenceUtil.putStringValuetoSp("groupid", mangerUserBean.getGroupID() + "");
+//                                    intent.putExtra("groupidmm",mangerUserBean.getGroupID() + "");
                                     startActivity(intent);
                                     break;
+                                case 10110:
+                                    startActivity(new Intent(LoginActivity.this, StatisticsActivity.class));
+                                    break;
+
                             }
                             finish();
                         } catch (JSONException e) {

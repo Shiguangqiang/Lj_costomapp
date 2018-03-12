@@ -42,6 +42,9 @@ import cn.jpush.android.api.JPushInterface;
 
 
 public class ChoiceTypeActivity extends BaseActivity implements OnClickListener {
+
+
+    //统计
     public static final int BUHUO_TYPE = 0;
     //管理
     public static final int MANAGER_TYPE = 10100;
@@ -64,6 +67,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         setContentView(R.layout.activity_choice_type);
         findViewById(R.id.buhuoll).setOnClickListener(this);
         findViewById(R.id.kefull).setOnClickListener(this);
+        findViewById(R.id.tongji).setOnClickListener(this);
         findViewById(R.id.guanlill).setOnClickListener(this);
         findViewById(R.id.liear_saoma).setOnClickListener(this);
 
@@ -196,6 +200,10 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                 pd.show();
                 mLocationClient.startLocation();
                 break;
+            case R.id.tongji:
+                type = TONGJI_TYPE;
+                intent.putExtra("loginType", TONGJI_TYPE + "");
+                break;
             case R.id.kefull:
                 break;
             case R.id.guanlill:
@@ -205,10 +213,15 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                 break;
         }
 
+
         switch (type) {
             case BUHUO_TYPE:
                 //补货页面
                 checkTypeOrLogined(intent, type, BuhuoMessageActivity.class);
+                break;
+            case TONGJI_TYPE:
+                //统计页面
+                checkTypeOrLogined(intent, type, StatisticsActivity.class);
                 break;
             case MANAGER_TYPE:
                 //管理页面

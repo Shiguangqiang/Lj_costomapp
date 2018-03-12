@@ -65,5 +65,9 @@ public class Urls {
         return BaseUrl + "req-mobile/alarm/list/machine/alarm1/detail100/0data1.json";
     }
 
+    //查看统计查询
+    public static String tjserach() {
+        return BaseUrl + "req-mobile/tong-ji/between/date/0data1.json";
+    }
 
 }

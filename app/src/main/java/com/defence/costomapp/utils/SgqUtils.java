@@ -1,11 +1,14 @@
 package com.defence.costomapp.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +22,32 @@ public class SgqUtils {
     //补货
     public static final int BUHUO_TYPE = 0;
     //管理
-    public static final int  MANAGER_TYPE = 10100;
+    public static final int MANAGER_TYPE = 10100;
+    //统计
+    public static final int TONGJI_TYPE = 10110;
+
+    public static String getAssetsFile(Context context) {
+        try {
+//Return an AssetManager instance for your application's package
+            InputStream is = context.getAssets().open("location.txt");
+            int size = is.available();
+
+            // Read the entire asset into a local byte buffer.
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+
+            // Convert the buffer into a string.
+            String text = new String(buffer, "UTF-8");
+            return text;
+            // Finally stick the string into the text view.
+        } catch (IOException e) {
+            // Should never happen!
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
     //获取当前时间
     public static String getNowDate() {

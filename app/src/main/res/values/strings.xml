@@ -25,5 +25,19 @@
     <string name="alarmnot">未解决</string>
     <string name="alarmyet">已解决</string>
 
+    <string name="tongji">统计</string>
+    <string name="machiceti">自助机统计</string>
+    <string name="user">User</string>
+    <string name="usertj">用户统计</string>
+    <string name="liushui">流水</string>
+    <string name="todayls">今日流水</string>
+    <string name="dingdan">订单</string>
+    <string name="managedd">订单管理</string>
+    <string name="jiesuan">结算</string>
+    <string name="jsserach">结算查询</string>
+    <string name="tuikuan">退款</string>
+    <string name="tkserach">退款查询</string>
+    <string name="startserach">开始查询</string>
+
 
 </resources>

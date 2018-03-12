@@ -95,7 +95,7 @@
             <ImageView
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
-                android:background="@mipmap/guanli" />
+                android:background="@mipmap/tongji" />
 
             <TextView
                 android:layout_width="match_parent"
