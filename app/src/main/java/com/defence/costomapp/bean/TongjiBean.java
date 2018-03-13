@@ -1,5 +1,6 @@
 package com.defence.costomapp.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -288,7 +289,7 @@ public class TongjiBean {
         }
     }
 
-    public static class GoodsListBean {
+    public static class GoodsListBean implements Serializable{
         /**
          * descVal : 冰露矿泉水-550ml
          * formatID : 507

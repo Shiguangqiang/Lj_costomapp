@@ -1,13 +1,18 @@
 package com.defence.costomapp.activity;
 
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.fragment.LogFragment;
@@ -106,8 +111,45 @@ public class ManagerActivity extends BaseActivity {
             SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin",false);
             MyApplication.getApp().setUserInfo(null);
         }
+        startActivity(new Intent(ManagerActivity.this, ChoiceTypeActivity.class));
         finish();
 
+    }
+
+
+    //退出时的时间
+    private long mExitTime;
+
+    //对返回键进行监听
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            Toast.makeText(ManagerActivity.this, "再按一次退出系统", Toast.LENGTH_SHORT).show();
+            mExitTime = System.currentTimeMillis();
+        } else {
+            int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
+            if (loginType != -1) {
+                SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+                SharePerenceUtil.putIntValuetoSp("loginType", -1);
+                SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
+                MyApplication.getApp().setUserInfo(null);
+
+            }
+            finishAffinity();
+            System.exit(0);
+        }
     }
 
     class MyAdapter extends FragmentPagerAdapter {

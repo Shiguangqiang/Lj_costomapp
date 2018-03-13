@@ -6,14 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.fragment.CommodityFragment;
-import com.defence.costomapp.activity.fragment.LogFragment;
 import com.defence.costomapp.activity.fragment.MachiceFragment;
-import com.defence.costomapp.activity.fragment.PoliceFragment;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TongjiBean;
@@ -23,11 +22,9 @@ import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +67,7 @@ public class TjDetailActivity extends BaseActivity {
     private MyAdapter adapter;
     private CommodityFragment commodityFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,13 +87,14 @@ public class TjDetailActivity extends BaseActivity {
         middleTitle.setTextSize(16);
 
 
-
+        //展示数据
+        getData();
         commodityFragment = new CommodityFragment();
         //页面，数据源
         list = new ArrayList<>();
         list.add(commodityFragment);
-
         list.add(new MachiceFragment());
+//        list.add(BlankFragment.newInstance("dd"));
         //ViewPager的适配器
         adapter = new MyAdapter(getSupportFragmentManager());
         mangerViewpager.setAdapter(adapter);
@@ -104,9 +103,14 @@ public class TjDetailActivity extends BaseActivity {
 
         SgqUtils.setIndicator(mangerTablayout, 50, 50);
 
-        //展示数据
-        getData();
 
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -148,12 +152,12 @@ public class TjDetailActivity extends BaseActivity {
                 List<TongjiBean.MachineListBean> machine_list = tongjiBean.getMachine_list();
 
                 String stj = jsonObject.toString();
-                SharePerenceUtil.putStringValuetoSp("stj",stj);
+                SharePerenceUtil.putStringValuetoSp("stj", stj);
 
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("goods", (Serializable) goods_list);
-                commodityFragment.setArguments(bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("goods", (Serializable) goods_list);
+//                commodityFragment.setArguments(bundle);
 
 
             }

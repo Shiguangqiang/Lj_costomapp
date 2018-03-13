@@ -1,5 +1,6 @@
 package com.defence.costomapp.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,12 +8,16 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -21,6 +26,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.model.LatLng;
 
+import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.R;
@@ -66,10 +72,10 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice_type);
         findViewById(R.id.buhuoll).setOnClickListener(this);
-        findViewById(R.id.kefull).setOnClickListener(this);
+//        findViewById(R.id.kefull).setOnClickListener(this);
         findViewById(R.id.tongji).setOnClickListener(this);
         findViewById(R.id.guanlill).setOnClickListener(this);
-        findViewById(R.id.liear_saoma).setOnClickListener(this);
+        LinearLayout liear_saoma = findViewById(R.id.liear_saoma);
 
         alertDialog = new AlertDialog.Builder(this).setMessage("有新版本").setNegativeButton("更新", new DialogInterface.OnClickListener() {
             @Override
@@ -89,6 +95,16 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         pd = new ProgressDialog(this);
         pd.setCanceledOnTouchOutside(false);
         pd.setMessage("正在定位....");
+
+        liear_saoma.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pd.show();
+                mLocationClient.startLocation();
+
+            }
+        });
+
         //初始化定位
         mLocationClient = new AMapLocationClient(getApplicationContext());
         //设置定位回调监听
@@ -136,6 +152,16 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         checkNewVersion();
+
+
+        //判断是否为android6.0以上系统版本，如果是，需要动态添加权限
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            showContacts();
+        }
+//        else {
+//            new Handler().postDelayed(r, 0);// 2秒后关闭，并跳转到主页面
+//        }
     }
 
     private void checkNewVersion() {
@@ -159,6 +185,29 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
 
 
     }
+
+
+
+
+    private static final int BAIDU_READ_PHONE_STATE = 100;
+
+    public void showContacts() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED
+                ) {
+            Toast.makeText(getApplicationContext(), "没有权限,请手动开启权限", Toast.LENGTH_SHORT).show();
+            // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+            ActivityCompat.requestPermissions(ChoiceTypeActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, BAIDU_READ_PHONE_STATE);
+        }
+
+    }
+
+
 
     public String getVersionCode() {
         PackageManager packageManager = this.getPackageManager();
@@ -195,11 +244,11 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                 intent.putExtra("loginType", BUHUO_TYPE + "");
 //                SharePerenceUtil.putIntValuetoSp("loginT",BUHUO_TYPE);
                 break;
-            case R.id.liear_saoma:
-                //启动定位
-                pd.show();
-                mLocationClient.startLocation();
-                break;
+//            case R.id.liear_saoma:
+//                //启动定位
+//                pd.show();
+//                mLocationClient.startLocation();
+//                break;
             case R.id.tongji:
                 type = TONGJI_TYPE;
                 intent.putExtra("loginType", TONGJI_TYPE + "");
@@ -209,7 +258,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
             case R.id.guanlill:
                 type = MANAGER_TYPE;
                 intent.putExtra("loginType", MANAGER_TYPE + "");
-//                SharePerenceUtil.putIntValuetoSp("loginT",MANAGER_TYPE);
                 break;
         }
 

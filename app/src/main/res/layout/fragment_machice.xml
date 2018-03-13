@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/list_shop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+    <ListView
+        android:id="@+id/list_machine"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/pad_height_10"></ListView>
 
 </LinearLayout>

@@ -3,14 +3,18 @@ package com.defence.costomapp.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import com.defence.costomapp.R;
@@ -35,7 +39,6 @@ import java.util.ArrayList;
 
 /**
  * 补货列表
- *
  */
 
 public class BuhuoMessageActivity extends BaseActivity {
@@ -72,11 +75,13 @@ public class BuhuoMessageActivity extends BaseActivity {
                 if (loginType != -1) {
                     SharePerenceUtil.putStringValuetoSp(loginType + "", "");
                     SharePerenceUtil.putIntValuetoSp("loginType", -1);
-                    SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin",false);
+                    SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
                     MyApplication.getApp().setUserInfo(null);
 
                 }
+                startActivity(new Intent(BuhuoMessageActivity.this, ChoiceTypeActivity.class));
                 finish();
+
             }
         });
 
@@ -92,11 +97,45 @@ public class BuhuoMessageActivity extends BaseActivity {
 
     }
 
+    //退出时的时间
+    private long mExitTime;
+
+    //对返回键进行监听
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            Toast.makeText(BuhuoMessageActivity.this, "再按一次退出系统", Toast.LENGTH_SHORT).show();
+            mExitTime = System.currentTimeMillis();
+        } else {
+            int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
+            if (loginType != -1) {
+                SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+                SharePerenceUtil.putIntValuetoSp("loginType", -1);
+                SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
+                MyApplication.getApp().setUserInfo(null);
+
+            }
+            finishAffinity();
+            System.exit(0);
+        }
+    }
+
     private void getData() {
         buhuoMessageEntities.clear();
         RequestParams params = new RequestParams();
         params.put("faultType", "102");
-        httpUtils.doPost(Urls.getBuhuoMessage(),SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
+        httpUtils.doPost(Urls.getBuhuoMessage(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
             @Override
             public void onSuccess(Gson gson, Object result) {
                 sfl.setRefreshing(false);
@@ -121,6 +160,7 @@ public class BuhuoMessageActivity extends BaseActivity {
                                     startActivity(intent);
                                 }
                             });
+
                             rv.setAdapter(adapter);
                         } else {
                             adapter.notifyDataSetChanged();

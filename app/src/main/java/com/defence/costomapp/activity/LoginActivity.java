@@ -32,7 +32,7 @@ public class LoginActivity extends BaseActivity {
     private ImageView icon;
     private TextView name;
     private EditText username, psw;
-    private TextView view_dis;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +43,15 @@ public class LoginActivity extends BaseActivity {
         name = findViewById(R.id.login_name);
         username = findViewById(R.id.login_username);
         psw = findViewById(R.id.login_psw);
-        view_dis = findViewById(R.id.view_dis);
+
 
 //        loginType = SharePerenceUtil.getIntValueFromSP("loginT");
-        loginType =Integer.valueOf(getIntent().getStringExtra("loginType")) ;
+
+        try {
+            loginType =Integer.valueOf(getIntent().getStringExtra("loginType")) ;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
         switch (loginType) {
             case 0:

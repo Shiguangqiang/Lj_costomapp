@@ -12,6 +12,7 @@ public abstract class HttpInterface {
     public abstract void onSuccess(Gson gson, Object result) throws JSONException;
 
     public void onError(Context context, String message) {
+
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 

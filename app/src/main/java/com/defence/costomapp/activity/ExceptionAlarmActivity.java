@@ -123,7 +123,7 @@ public class ExceptionAlarmActivity extends BaseActivity {
                 AlarmNotBean alarmNotBean = gson.fromJson(jsonObject.toString(), AlarmNotBean.class);
 
                 liearAlarmnot.setAdapter(new ExceptionAdapter(ExceptionAlarmActivity.this, alarmNotBean.getList(),"not"));
-                machineAddr.setText(alarmNotBean.getMachine().getAddress());
+                machineAddr.setText(alarmNotBean.getMachine().getDetailedinstalladdress());
                 AMap aMap = map.getMap();
                 LatLng latLng = new LatLng(alarmNotBean.getMachine().getLatitude(), alarmNotBean.getMachine().getLongitude());
                 UiSettings uiSettings = aMap.getUiSettings();

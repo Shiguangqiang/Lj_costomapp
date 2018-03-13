@@ -5,7 +5,10 @@ package com.defence.costomapp.base;
  */
 
 public class Urls {
-    public static String BaseUrl = "http://swz.bj-defence.com/";
+    //    public static String BaseUrl = "http://swz.bj-defence.com/";
+//    测试
+    public static String BaseUrl = "http://192.168.0.234:8080/";
+
 
     public static String BuhuoLogin() {
         return BaseUrl + "req-mobile/login/witttth/account0";
@@ -69,5 +72,22 @@ public class Urls {
     public static String tjserach() {
         return BaseUrl + "req-mobile/tong-ji/between/date/0data1.json";
     }
+
+
+    //查看统计查询_商品
+    public static String tjserach_shop() {
+        return BaseUrl + "req-mobile/tong-ji/between/date/goods/sale/0data1.json";
+    }
+
+    //查看统计查询_机器
+    public static String tjserach_machine() {
+        return BaseUrl + "req-mobile/tong-ji/between/date/machine/sale/0data1.json";
+    }
+
+    //查看用户统计
+    public static String userTj() {
+        return BaseUrl + "req-mobile/user-tongji/list/user0/0data1.json";
+    }
+
 
 }

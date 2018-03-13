@@ -75,6 +75,7 @@ public class StatisticsActivity extends BaseActivity {
                 startActivity(new Intent(StatisticsActivity.this,MachineTjActivity.class));
                 break;
             case R.id.liear_usertj:
+                startActivity(new Intent(StatisticsActivity.this,UserTjActivity.class));
                 break;
             case R.id.liear_liushui:
                 break;
