@@ -1,0 +1,86 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh\\values-zh.xml",
+            "map": [
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\values-zh\\style.xml",
+                    "from": {
+                        "startLines": "7,2,11",
+                        "startColumns": "1,3,1",
+                        "startOffsets": "295,113,430",
+                        "endLines": "10,6,14",
+                        "endColumns": "9,9,9",
+                        "endOffsets": "428,293,559"
+                    },
+                    "to": {
+                        "startLines": "14,18,23",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "902,1040,1225",
+                        "endLines": "17,22,26",
+                        "endColumns": "9,9,9",
+                        "endOffsets": "1035,1220,1354"
+                    }
+                },
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\values-zh\\strings.xml",
+                    "from": {
+                        "startLines": "5,3,8,11,7,9,10,2,12,13,6,4",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "274,109,495,689,427,563,627,55,772,848,365,161",
+                        "endColumns": "90,51,67,82,67,63,61,53,75,53,61,112",
+                        "endOffsets": "360,156,558,767,490,622,684,104,843,897,422,269"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,146,198,266,349,417,481,543,597,673,727,789",
+                        "endColumns": "90,51,67,82,67,63,61,53,75,53,61,112",
+                        "endOffsets": "141,193,261,344,412,476,538,592,668,722,784,897"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\values-zh\\values-zh.xml",
+            "map": [
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\values-zh\\style.xml",
+                    "from": {
+                        "startLines": "7,2,11",
+                        "startColumns": "1,3,1",
+                        "startOffsets": "295,113,430",
+                        "endLines": "10,6,14",
+                        "endColumns": "9,9,9",
+                        "endOffsets": "428,293,559"
+                    },
+                    "to": {
+                        "startLines": "14,18,23",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "902,1040,1225",
+                        "endLines": "17,22,26",
+                        "endColumns": "9,9,9",
+                        "endOffsets": "1035,1220,1354"
+                    }
+                },
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\values-zh\\strings.xml",
+                    "from": {
+                        "startLines": "5,3,8,11,7,9,10,2,12,13,6,4",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "274,109,495,689,427,563,627,55,772,848,365,161",
+                        "endColumns": "90,51,67,82,67,63,61,53,75,53,61,112",
+                        "endOffsets": "360,156,558,767,490,622,684,104,843,897,422,269"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,146,198,266,349,417,481,543,597,673,727,789",
+                        "endColumns": "90,51,67,82,67,63,61,53,75,53,61,112",
+                        "endOffsets": "141,193,261,344,412,476,538,592,668,722,784,897"
+                    }
+                }
+            ]
+        }
+    ]
+}

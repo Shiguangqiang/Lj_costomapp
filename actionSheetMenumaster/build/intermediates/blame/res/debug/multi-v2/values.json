@@ -1,0 +1,120 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\Workspace\\Lj_costomapp\\actionSheetMenumaster\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "map": [
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\actionSheetMenumaster\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "4,3,5",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "111,56,164",
+                        "endColumns": "52,54,52",
+                        "endOffsets": "159,106,212"
+                    },
+                    "to": {
+                        "startLines": "6,7,8",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "1420,1473,1528",
+                        "endColumns": "52,54,52",
+                        "endOffsets": "1468,1523,1576"
+                    }
+                },
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\actionSheetMenumaster\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "21,41,6,15",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "681,1850,186,510",
+                        "endLines": "39,59,12,17",
+                        "endColumns": "12,12,12,12",
+                        "endOffsets": "1844,3054,472,665"
+                    },
+                    "to": {
+                        "startLines": "9,28,47,54",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "1581,2749,3958,4249",
+                        "endLines": "27,46,53,56",
+                        "endColumns": "12,12,12,12",
+                        "endOffsets": "2744,3953,4244,4404"
+                    }
+                },
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\actionSheetMenumaster\\src\\main\\res\\values\\dimens.xml",
+                    "from": {
+                        "startLines": "3,4",
+                        "startColumns": "4,4",
+                        "startOffsets": "89,147",
+                        "endColumns": "57,55",
+                        "endOffsets": "142,198"
+                    },
+                    "to": {
+                        "startLines": "4,5",
+                        "startColumns": "4,4",
+                        "startOffsets": "1306,1364",
+                        "endColumns": "57,55",
+                        "endOffsets": "1359,1415"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "D:\\Workspace\\Lj_costomapp\\actionSheetMenumaster\\build\\intermediates\\res\\merged\\debug\\values\\values.xml",
+            "map": [
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\actionSheetMenumaster\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "4,3,5",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "111,56,164",
+                        "endColumns": "52,54,52",
+                        "endOffsets": "159,106,212"
+                    },
+                    "to": {
+                        "startLines": "6,7,8",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "1420,1473,1528",
+                        "endColumns": "52,54,52",
+                        "endOffsets": "1468,1523,1576"
+                    }
+                },
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\actionSheetMenumaster\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "21,41,6,15",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "681,1850,186,510",
+                        "endLines": "39,59,12,17",
+                        "endColumns": "12,12,12,12",
+                        "endOffsets": "1844,3054,472,665"
+                    },
+                    "to": {
+                        "startLines": "9,28,47,54",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "1581,2749,3958,4249",
+                        "endLines": "27,46,53,56",
+                        "endColumns": "12,12,12,12",
+                        "endOffsets": "2744,3953,4244,4404"
+                    }
+                },
+                {
+                    "source": "D:\\Workspace\\Lj_costomapp\\actionSheetMenumaster\\src\\main\\res\\values\\dimens.xml",
+                    "from": {
+                        "startLines": "3,4",
+                        "startColumns": "4,4",
+                        "startOffsets": "89,147",
+                        "endColumns": "57,55",
+                        "endOffsets": "142,198"
+                    },
+                    "to": {
+                        "startLines": "4,5",
+                        "startColumns": "4,4",
+                        "startOffsets": "1306,1364",
+                        "endColumns": "57,55",
+                        "endOffsets": "1359,1415"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\stripes.png",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\stripes.png"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bottom_bg.9.png",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\bottom_bg.9.png"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\border_bg.9.png",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\border_bg.9.png"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\jpush_notification_icon.png",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\jpush_notification_icon.png"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\tiledstripes.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\tiledstripes.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\jpush_ic_richpush_actionbar_divider.png",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\jpush_ic_richpush_actionbar_divider.png"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\corners_bg.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\corners_bg.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\richpush_btn_selector.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\richpush_btn_selector.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\top_bg.9.png",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\top_bg.9.png"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\richpush_progressbar.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\richpush_progressbar.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\jpush_ic_richpush_actionbar_back.png",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\drawable-hdpi\\jpush_ic_richpush_actionbar_back.png"
+    }
+]

@@ -1,0 +1,347 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:2:1-191:12
+INJECTED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:2:1-191:12
+INJECTED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:2:1-191:12
+INJECTED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:2:1-191:12
+INJECTED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:2:1-191:12
+	package
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:2:11-42
+	android:versionName
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:5:11-38
+		INJECTED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml
+		INJECTED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:3:11-69
+	android:versionCode
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:4:11-36
+		INJECTED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml
+		INJECTED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml
+uses-sdk
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:8:5-10:40
+	android:targetSdkVersion
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:10:9-38
+	android:minSdkVersion
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:9:9-34
+permission#com.defence.costomapp.permission.JPUSH_MESSAGE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:13:5-15:46
+	android:protectionLevel
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:15:9-44
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:14:9-70
+uses-permission#com.defence.costomapp.permission.JPUSH_MESSAGE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:18:5-85
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:18:22-83
+uses-permission#android.permission.RECEIVE_USER_PRESENT
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:19:5-78
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:19:22-76
+uses-permission#android.permission.INTERNET
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:20:5-66
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:20:22-64
+uses-permission#android.permission.WAKE_LOCK
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:21:5-67
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:21:22-65
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:22:5-74
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:22:22-72
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:23:5-80
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:23:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:24:22-77
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:25:5-72
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:25:22-70
+uses-permission#android.permission.VIBRATE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:26:5-65
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:26:22-63
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:27:5-83
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:27:22-81
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:28:5-78
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:28:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:29:5-75
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:29:22-73
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:33:5-77
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:33:22-75
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:34:5-80
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:34:22-78
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:35:5-75
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:35:22-73
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:36:5-78
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:36:22-76
+uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:37:5-88
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:37:22-86
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:38:5-78
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:38:22-76
+uses-permission#android.permission.GET_TASKS
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:39:5-67
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:39:22-65
+application
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:41:5-190:19
+	android:label
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:45:9-41
+	android:icon
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:44:9-45
+	android:allowBackup
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:43:9-36
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:42:9-64
+activity#com.example.jpushdemo.MainActivity
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:48:9-55:20
+	android:label
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:50:13-45
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:49:13-62
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:51:13-54:29
+action#android.intent.action.MAIN
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:52:17-68
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:52:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:53:17-76
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:53:27-74
+activity#com.example.jpushdemo.PushSetActivity
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:57:9-59:57
+	android:label
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:59:13-45
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:58:13-65
+activity#com.example.jpushdemo.SettingActivity
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:61:9-63:57
+	android:label
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:63:13-45
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:62:13-65
+activity#com.example.jpushdemo.TestActivity
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:65:9-72:20
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:67:13-37
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:66:13-62
+intent-filter#jpush.testAction+jpush.testCategory
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:68:13-71:29
+action#jpush.testAction
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:69:17-58
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:69:25-56
+category#jpush.testCategory
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:70:17-62
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:70:27-60
+activity#cn.jpush.android.ui.PopWinActivity
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:75:9-79:20
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:77:13-37
+	android:theme
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:78:13-49
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:76:13-62
+activity#cn.jpush.android.ui.PushActivity
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:82:9-93:20
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:85:13-37
+	android:configChanges
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:84:13-63
+	android:theme
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:86:13-60
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:83:13-60
+intent-filter#android.intent.category.DEFAULT+cn.jpush.android.ui.PushActivity+com.defence.costomapp
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:87:13-92:29
+action#cn.jpush.android.ui.PushActivity
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:88:17-74
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:88:25-72
+category#android.intent.category.DEFAULT
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:90:17-75
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:90:27-73
+category#com.defence.costomapp
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:91:17-65
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:91:27-63
+service#cn.jpush.android.service.PushService
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:97:9-107:19
+	android:process
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:100:13-36
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:99:13-37
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:98:13-64
+intent-filter#cn.jpush.android.intent.PUSH_TIME+cn.jpush.android.intent.PushService+cn.jpush.android.intent.REGISTER+cn.jpush.android.intent.REPORT
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:101:13-106:29
+action#cn.jpush.android.intent.REGISTER
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:102:17-74
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:102:25-72
+action#cn.jpush.android.intent.REPORT
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:103:17-72
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:103:25-70
+action#cn.jpush.android.intent.PushService
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:104:17-77
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:104:25-75
+action#cn.jpush.android.intent.PUSH_TIME
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:105:17-75
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:105:25-73
+provider#cn.jpush.android.service.DataProvider
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:109:9-113:15
+	android:authorities
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:111:13-69
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:112:13-37
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:110:13-65
+service#cn.jpush.android.service.DaemonService
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:117:9-126:19
+	android:enabled
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:119:13-35
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:120:13-36
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:118:13-66
+intent-filter#cn.jpush.android.intent.DaemonService+com.defence.costomapp
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:121:13-124:29
+action#cn.jpush.android.intent.DaemonService
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:122:17-79
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:122:25-77
+provider#cn.jpush.android.service.DownloadProvider
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:128:9-132:15
+	android:authorities
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:130:13-76
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:131:13-36
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:129:13-69
+receiver#cn.jpush.android.service.PushReceiver
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:134:9-153:20
+	android:enabled
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:136:13-35
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:137:13-37
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:135:13-65
+intent-filter#cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY+com.defence.costomapp
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:138:13-141:29
+	android:priority
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:138:28-51
+action#cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:139:17-93
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:139:25-91
+intent-filter#android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:142:13-145:29
+action#android.intent.action.USER_PRESENT
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:143:17-76
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:143:25-74
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:144:17-78
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:144:25-76
+intent-filter#android.intent.action.PACKAGE_ADDED+android.intent.action.PACKAGE_REMOVED
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:147:13-152:29
+action#android.intent.action.PACKAGE_ADDED
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:148:17-77
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:148:25-75
+action#android.intent.action.PACKAGE_REMOVED
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:149:17-79
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:149:25-77
+data
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:151:17-49
+	android:scheme
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:151:23-47
+receiver#cn.jpush.android.service.AlarmReceiver
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:156:9-158:39
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:158:13-37
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:157:13-66
+receiver#com.example.jpushdemo.MyReceiver
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:161:9-173:20
+	android:enabled
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:163:13-35
+	android:exported
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:164:13-37
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:162:13-60
+intent-filter#cn.jpush.android.intent.CONNECTION+cn.jpush.android.intent.MESSAGE_RECEIVED+cn.jpush.android.intent.NOTIFICATION_OPENED+cn.jpush.android.intent.NOTIFICATION_RECEIVED+cn.jpush.android.intent.REGISTRATION+com.defence.costomapp
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:165:13-172:29
+action#cn.jpush.android.intent.REGISTRATION
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:166:17-78
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:166:25-76
+action#cn.jpush.android.intent.MESSAGE_RECEIVED
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:167:17-82
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:167:25-80
+action#cn.jpush.android.intent.NOTIFICATION_RECEIVED
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:168:17-87
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:168:25-85
+action#cn.jpush.android.intent.NOTIFICATION_OPENED
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:169:17-85
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:169:25-83
+action#cn.jpush.android.intent.CONNECTION
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:170:17-76
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:170:25-74
+receiver#com.example.jpushdemo.MyJPushMessageReceiver
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:176:9-181:20
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:176:19-78
+intent-filter#cn.jpush.android.intent.RECEIVE_MESSAGE+com.defence.costomapp
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:177:13-180:29
+action#cn.jpush.android.intent.RECEIVE_MESSAGE
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:178:17-81
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:178:25-79
+meta-data#JPUSH_CHANNEL
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:183:9-185:48
+	android:value
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:185:13-46
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:184:13-41
+meta-data#JPUSH_APPKEY
+ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:186:9-188:55
+	android:value
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:188:13-53
+	android:name
+		ADDED from D:\Workspace\Lj_costomapp\JpushExample\AndroidManifest.xml:187:13-40

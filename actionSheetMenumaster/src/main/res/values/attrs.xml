@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- ActionSheetMenu的主题(ios6和ios7) 属性-->
+    <declare-styleable name="ActionSheets">
+        <attr name="actionSheetStyle" format="reference" />
+    </declare-styleable>
+    
+    <!-- ActionSheetMenu的具体属性字段 -->
+    <declare-styleable name="ActionSheet">
+        
+      <attr name="actionSheetBackground" format="color|reference" /><!-- 整个actionSheet背景 -->
+      
+      <attr name="actionSheetPadding" format="dimension|reference" /><!-- 整个actionSheet内部间距 -->
+      
+      <attr name="actionSheetTextSize" format="dimension|reference" /><!-- actionSheet总体字体大小 -->
+      
+      <attr name = "titleButtonBackground" format="color|reference" /><!-- 标题按钮的背景 -->
+      <attr name = "titleButtonTextSize" format = "dimension|reference" /><!-- 标题按钮的字体大小 -->
+      <attr name = "titleButtonTextColor" format = "color|reference" /><!-- 标题字体的颜色 -->
+      <attr name="titleButtonMarginButton" format="dimension|reference" /><!--标题按钮底部距离 -->
+      <attr name="titleButtonPadding" format="dimension|reference" /><!--标题按内部间距 -->
+      
+      <attr name="otherButtonTopBackground" format="color|reference" /><!-- 主按钮顶部按钮背景-->
+      <attr name="otherButtonMiddleBackground" format="color|reference" /><!--  主按钮中间按钮背景-->
+      <attr name="otherButtonBottomBackground" format="color|reference" /><!--  主按钮底部按钮背景-->
+      <attr name="otherButtonTextColor" format="color|reference" /><!--  主按钮字体颜色-->
+      
+      <attr name="otherButtonSingleBackground" format="color|reference" /><!-- 单个主按钮背景-->
+      <attr name="otherButtonSpacing" format="dimension|reference" /><!-- 主按钮外部间距 -->
+      
+      <attr name="cancelButtonBackground" format="color|reference" /><!-- 取消按钮背景-->
+      <attr name="cancelButtonTextColor" format="color|reference" /><!-- 取消按钮字体颜色-->
+      
+      <attr name="cancelButtonMarginTop" format="dimension|reference" /><!-- 取消按钮顶部距离 -->
+      
+  </declare-styleable>
+    
+    
+</resources>

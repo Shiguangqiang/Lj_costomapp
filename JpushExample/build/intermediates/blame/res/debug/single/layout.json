@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\layout\\customer_notitfication_layout.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\layout\\customer_notitfication_layout.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\layout\\customer_notitfication_layout_one.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\layout\\customer_notitfication_layout_one.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\layout\\jpush_webview_layout.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\layout\\jpush_webview_layout.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\layout\\jpush_popwin_layout.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\layout\\jpush_popwin_layout.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\layout\\set_push_time.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\layout\\set_push_time.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\Workspace\\Lj_costomapp\\JpushExample\\build\\intermediates\\res\\merged\\debug\\layout\\push_set_dialog.xml",
+        "source": "D:\\Workspace\\Lj_costomapp\\JpushExample\\res\\layout\\push_set_dialog.xml"
+    }
+]

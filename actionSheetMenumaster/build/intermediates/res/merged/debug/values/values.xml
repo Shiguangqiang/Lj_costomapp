@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ActionSheet"><attr format="color|reference" name="actionSheetBackground"/><attr format="dimension|reference" name="actionSheetPadding"/><attr format="dimension|reference" name="actionSheetTextSize"/><attr format="color|reference" name="titleButtonBackground"/><attr format="dimension|reference" name="titleButtonTextSize"/><attr format="color|reference" name="titleButtonTextColor"/><attr format="dimension|reference" name="titleButtonMarginButton"/><attr format="dimension|reference" name="titleButtonPadding"/><attr format="color|reference" name="otherButtonTopBackground"/><attr format="color|reference" name="otherButtonMiddleBackground"/><attr format="color|reference" name="otherButtonBottomBackground"/><attr format="color|reference" name="otherButtonTextColor"/><attr format="color|reference" name="otherButtonSingleBackground"/><attr format="dimension|reference" name="otherButtonSpacing"/><attr format="color|reference" name="cancelButtonBackground"/><attr format="color|reference" name="cancelButtonTextColor"/><attr format="dimension|reference" name="cancelButtonMarginTop"/></declare-styleable>
+    <declare-styleable name="ActionSheets"><attr format="reference" name="actionSheetStyle"/></declare-styleable>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">JFActionSheetMenu</string>
+    <string name="hello_world">Hello world!</string>
+    <style name="ActionSheetStyleGray">
+        <item name="titleButtonBackground">@android:color/transparent</item>
+        <item name="titleButtonTextColor">#ff0000</item>
+        <item name="titleButtonTextSize">12sp</item>
+        <item name="titleButtonMarginButton">2dp</item>
+        <item name="titleButtonPadding">5dp</item>
+        <item name="actionSheetBackground">@drawable/as_bg_ios6</item>
+        <item name="cancelButtonBackground">@drawable/as_cancel_bt_bg</item>
+        <item name="otherButtonTopBackground">@drawable/as_other_bt_bg</item>
+        <item name="otherButtonMiddleBackground">@drawable/as_other_bt_bg</item>
+        <item name="otherButtonBottomBackground">@drawable/as_other_bt_bg</item>
+        <item name="otherButtonSingleBackground">@drawable/as_other_bt_bg</item>
+        <item name="cancelButtonTextColor">@android:color/white</item>
+        <item name="otherButtonTextColor">@android:color/black</item>
+        <item name="actionSheetPadding">10dp</item>
+        <item name="otherButtonSpacing">5dp</item>
+        <item name="cancelButtonMarginTop">20dp</item>
+        <item name="actionSheetTextSize">16sp</item>
+    </style>
+    <style name="ActionSheetStyleWhite">
+        <item name="actionSheetBackground">@android:color/transparent</item>
+        <item name="titleButtonBackground">@drawable/actionsheet_top_normal</item>
+        <item name="titleButtonTextColor">#ff0000</item>
+        <item name="titleButtonTextSize">12sp</item>
+        <item name="titleButtonMarginButton">0dp</item>
+        <item name="titleButtonPadding">5dp</item>
+        <item name="cancelButtonBackground">@drawable/slt_as_ios7_cancel_bt</item>
+        <item name="otherButtonTopBackground">@drawable/slt_as_ios7_other_bt_top</item>
+        <item name="otherButtonMiddleBackground">@drawable/slt_as_ios7_other_bt_middle</item>
+        <item name="otherButtonBottomBackground">@drawable/slt_as_ios7_other_bt_bottom</item>
+        <item name="otherButtonSingleBackground">@drawable/slt_as_ios7_other_bt_single</item>
+        <item name="cancelButtonTextColor">#1E82FF</item>
+        <item name="otherButtonTextColor">#1E82FF</item>
+        <item name="actionSheetPadding">10dp</item>
+        <item name="otherButtonSpacing">0dp</item>
+        <item name="cancelButtonMarginTop">5dp</item>
+        <item name="actionSheetTextSize">16sp</item>
+    </style>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+</resources>

@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ActionSheet IOS6" 
+        android:background="@drawable/as_other_bt_bg"
+        android:onClick="ActionBtn1"
+        />
+
+    <Button
+         android:id="@+id/btn2"
+         android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/slt_as_ios7_other_bt_single"
+        android:text="ActionSheet IOS7"
+        android:onClick="ActionBtn2"
+         />
+    
+    <Button
+         android:id="@+id/btn3"
+         android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_btn"
+        android:text="CustonActionSheet" 
+        android:onClick="ActionBtn3"
+        />
+    
+    
+</LinearLayout>
