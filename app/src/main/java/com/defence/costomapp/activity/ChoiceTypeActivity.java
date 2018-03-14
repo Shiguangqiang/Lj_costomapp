@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -26,7 +25,9 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.model.LatLng;
 
-import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
+import com.defence.costomapp.activity.manage.ManagerActivity;
+import com.defence.costomapp.activity.statistics.StatisticsActivity;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.R;
@@ -111,7 +112,12 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         mLocationListener = new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation amapLocation) {
-                pd.dismiss();
+
+                if(pd!=null){
+                    pd.dismiss();
+                }
+
+
                 if (amapLocation != null) {
                     if (amapLocation.getErrorCode() == 0) {
                         double[] lls = gaoDeToBaidu(amapLocation.getLongitude(), amapLocation.getLatitude());
@@ -321,6 +327,13 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
 
         } else {
             startActivity(intent);
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (pd != null) {
+            pd.dismiss();
         }
     }
 

@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.manage;
 
 
 import android.content.Intent;
@@ -15,8 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.activity.fragment.LogFragment;
-import com.defence.costomapp.activity.fragment.PoliceFragment;
+import com.defence.costomapp.activity.ChoiceTypeActivity;
+import com.defence.costomapp.fragment.LogFragment;
+import com.defence.costomapp.fragment.PoliceFragment;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.utils.SgqUtils;

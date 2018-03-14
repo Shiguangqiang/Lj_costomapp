@@ -45,7 +45,7 @@ public class BuhuoMessageInfoAdapter extends RecyclerView.Adapter<BuhuoMessageIn
     public void onBindViewHolder(BuhuoInfoViewholder holder, final int position) {
         BuhuoInfoEntity buhuoInfoEntity = buhuoInfoEntities.get(position);
 //        holder.huodao.setText(buhuoInfoEntity.getLatticenumbers() + "-" + buhuoInfoEntity.getShowName());
-        holder.huodao.setText(buhuoInfoEntity.getLatticenumbers() + "-"+buhuoInfoEntity.getDescVal());
+        holder.huodao.setText(buhuoInfoEntity.getLatticenumbers() + "-"+buhuoInfoEntity.getDescVal()+"-"+buhuoInfoEntity.getShowName());
         if (buhuoInfoEntity.getStocknumber() <= alarmStock) {
             holder.cunliang.setTextColor(Color.RED);
         } else {

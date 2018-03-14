@@ -67,7 +67,11 @@ public class HttpUtils {
                 @Override
                 public void onStart() {
                     try {
-                        pd.show();
+                        if(!pd.isShowing()){
+                            pd.show();
+                        }
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -75,7 +79,9 @@ public class HttpUtils {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    pd.dismiss();
+                    if(pd!=null){
+                        pd.dismiss();
+                    }
                     Log.d("HttpUtils", "statusCode:" + statusCode);
                     Log.d("HttpUtils", new String(responseBody));
                     try {

@@ -1,20 +1,15 @@
 package com.defence.costomapp.adapter;
 
 import android.content.Context;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.activity.WorkLogInfoActivity;
 import com.defence.costomapp.bean.WorkLogInfoBean;
-import com.defence.costomapp.utils.httputils.HttpInterface;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by author Sgq

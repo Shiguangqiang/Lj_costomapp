@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.statistics;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.activity.fragment.CommodityFragment;
-import com.defence.costomapp.activity.fragment.MachiceFragment;
+import com.defence.costomapp.fragment.CommodityFragment;
+import com.defence.costomapp.fragment.MachiceFragment;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TongjiBean;

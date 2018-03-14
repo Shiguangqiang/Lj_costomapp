@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.manage;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -23,7 +23,6 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.AlarmNotBean;
-import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.APPUtils;
 import com.defence.costomapp.utils.ActionSheelUtil;
 import com.defence.costomapp.utils.SgqUtils;

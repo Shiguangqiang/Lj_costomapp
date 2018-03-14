@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.manage;
 
 import android.content.Intent;
 import android.graphics.Color;

@@ -5,9 +5,9 @@ package com.defence.costomapp.base;
  */
 
 public class Urls {
-    //    public static String BaseUrl = "http://swz.bj-defence.com/";
+        public static String BaseUrl = "http://swz.bj-defence.com/";
 //    测试
-    public static String BaseUrl = "http://192.168.0.234:8080/";
+//    public static String BaseUrl = "http://192.168.0.:8080/";
 
 
     public static String BuhuoLogin() {
@@ -86,8 +86,14 @@ public class Urls {
 
     //查看用户统计
     public static String userTj() {
-        return BaseUrl + "req-mobile/user-tongji/list/user0/0data1.json";
+        return BaseUrl + "req-mobile/user-tongji/list/user/0data1.json";
     }
+
+    //查看消费记录
+    public static String shophistory() {
+        return BaseUrl + "req-mobile/user-tongji/list/user/dingdannumber/0data1.json";
+    }
+
 
 
 }

@@ -1,11 +1,9 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.statistics;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,15 +12,11 @@ import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPickerView;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.bean.JsonBean;
-import com.defence.costomapp.utils.GetJsonDataUtil;
 import com.defence.costomapp.utils.MyNumberPicker;
 import com.defence.costomapp.utils.SgqUtils;
-import com.google.gson.Gson;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 

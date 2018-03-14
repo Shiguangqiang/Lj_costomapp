@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
+import com.defence.costomapp.activity.manage.ManagerActivity;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 

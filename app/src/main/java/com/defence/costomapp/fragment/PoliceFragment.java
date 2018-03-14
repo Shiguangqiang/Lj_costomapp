@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity.fragment;
+package com.defence.costomapp.fragment;
 
 
 import android.content.Context;
@@ -15,8 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.activity.ExceptionAlarmActivity;
-import com.defence.costomapp.activity.WorkLogInfoActivity;
+import com.defence.costomapp.activity.manage.ExceptionAlarmActivity;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.MachineBean;

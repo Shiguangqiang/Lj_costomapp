@@ -2,17 +2,18 @@ package com.defence.costomapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
+import com.defence.costomapp.activity.manage.ManagerActivity;
+import com.defence.costomapp.activity.statistics.StatisticsActivity;
 import com.defence.costomapp.bean.MangerUserBean;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.base.Urls;

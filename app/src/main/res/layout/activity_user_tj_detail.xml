@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/F4"
+    android:orientation="vertical"
+    tools:context="com.defence.costomapp.activity.statistics.UserTjDetailActivity">
+
+    <include layout="@layout/include_title_img" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/usertj_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/F4" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/usertj_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#f4f4f4"
     android:orientation="vertical"
-    tools:context="com.defence.costomapp.activity.MachineDetailActivity">
+    tools:context="com.defence.costomapp.activity.statistics.MachineDetailActivity">
 
     <include layout="@layout/include_title_img" />
 

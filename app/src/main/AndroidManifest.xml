@@ -122,10 +122,10 @@
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".base.BaseActivity" />
         <activity
-            android:name=".activity.BuhuoMessageActivity"
+            android:name=".activity.buhuo.BuhuoMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.BuhuoMessageInfoActivity"
+            android:name=".activity.buhuo.BuhuoMessageInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CommonScanActivity"
@@ -134,37 +134,40 @@
         <service android:name="com.amap.api.location.APSService" />
         <!-- 管理人员 -->
         <activity
-            android:name=".activity.ManagerActivity"
+            android:name=".activity.manage.ManagerActivity"
             android:screenOrientation="portrait" />
         <!-- 工作日志详情 -->
         <activity
-            android:name=".activity.WorkLogInfoActivity"
+            android:name=".activity.manage.WorkLogInfoActivity"
             android:screenOrientation="portrait" />
         <!-- 机器报警 -->
         <activity
-            android:name=".activity.ExceptionAlarmActivity"
+            android:name=".activity.manage.ExceptionAlarmActivity"
             android:screenOrientation="portrait" />
         <!-- 统计 -->
         <activity
-            android:name=".activity.StatisticsActivity"
+            android:name=".activity.statistics.StatisticsActivity"
             android:screenOrientation="portrait" />
         <!-- 自助机统计查询 -->
         <activity
-            android:name=".activity.MachineTjActivity"
+            android:name=".activity.statistics.MachineTjActivity"
             android:screenOrientation="portrait" />
         <!-- 自助机统计详情 -->
         <activity
-            android:name=".activity.TjDetailActivity"
+            android:name=".activity.statistics.TjDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 统计商品详情 -->
         <activity
-            android:name=".activity.ShopDetailActivity"
+            android:name=".activity.statistics.ShopDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 统计机器详情 -->
         <activity
-            android:name=".activity.MachineDetailActivity"
+            android:name=".activity.statistics.MachineDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.UserTjActivity"></activity>
+        <!--用户统计-->
+        <activity android:name=".activity.statistics.UserTjActivity" />
+        <!--用户统计详情-->
+        <activity android:name=".activity.statistics.UserTjDetailActivity"></activity>
     </application>
 
 </manifest>

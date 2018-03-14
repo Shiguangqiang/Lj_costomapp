@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#f4f4f4"
     android:orientation="vertical"
-    tools:context="com.defence.costomapp.activity.UserTjActivity">
+    tools:context="com.defence.costomapp.activity.statistics.UserTjActivity">
 
 
     <include layout="@layout/include_title_img" />
@@ -22,8 +22,8 @@
             android:id="@+id/regusernum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="@dimen/pad_height_18"
+            android:layout_weight="1"
             android:textColor="@color/liuliuliu"
             android:textSize="@dimen/pad_text_size_14" />
 
@@ -48,8 +48,8 @@
             android:id="@+id/pingtai_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pad_height_18"
             android:layout_weight="1"
-          android:layout_marginLeft="@dimen/pad_height_18"
             android:textColor="@color/liuliuliu"
             android:textSize="@dimen/pad_text_size_14" />
 
@@ -64,9 +64,16 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list_usertj"
+    <com.defence.costomapp.utils.RefreshUtils.RefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/list_usertj"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+    </com.defence.costomapp.utils.RefreshUtils.RefreshLayout>
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.statistics;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TjshopDetailBean;
-import com.defence.costomapp.bean.TongjiBean;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;

@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.buhuo;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;

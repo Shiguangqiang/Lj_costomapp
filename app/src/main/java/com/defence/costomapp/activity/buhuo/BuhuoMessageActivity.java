@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.buhuo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.activity.ChoiceTypeActivity;
 import com.defence.costomapp.adapter.BuhuoMessageAdapter;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;

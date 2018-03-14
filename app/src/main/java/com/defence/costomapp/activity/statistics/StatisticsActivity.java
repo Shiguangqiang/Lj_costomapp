@@ -1,4 +1,4 @@
-package com.defence.costomapp.activity;
+package com.defence.costomapp.activity.statistics;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -74,8 +74,10 @@ public class StatisticsActivity extends BaseActivity {
                 //自助机统计
                 startActivity(new Intent(StatisticsActivity.this,MachineTjActivity.class));
                 break;
+            // 用户统计
             case R.id.liear_usertj:
                 startActivity(new Intent(StatisticsActivity.this,UserTjActivity.class));
+//                startActivity(new Intent(StatisticsActivity.this,UserTjDetailActivity.class));
                 break;
             case R.id.liear_liushui:
                 break;
