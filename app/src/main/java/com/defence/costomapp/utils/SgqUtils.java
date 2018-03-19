@@ -10,8 +10,10 @@ import android.widget.LinearLayout;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -26,6 +28,8 @@ public class SgqUtils {
     public static final int MANAGER_TYPE = 10100;
     //统计
     public static final int TONGJI_TYPE = 10110;
+
+
 
     public static String getAssetsFile(Context context) {
         try {
@@ -50,7 +54,7 @@ public class SgqUtils {
     }
 
     //Day:日期字符串例如 2015-3-10  Num:需要减少的天数例如 7
-    public static String getDateStr(String day,int Num) {
+    public static String getDateStr(String day, int Num) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
         Date nowDate = null;
         try {
@@ -59,14 +63,14 @@ public class SgqUtils {
             e.printStackTrace();
         }
         //如果需要向后计算日期 -改为+
-        Date newDate2 = new Date(nowDate.getTime() - (long)Num * 24 * 60 * 60 * 1000);
+        Date newDate2 = new Date(nowDate.getTime() - (long) Num * 24 * 60 * 60 * 1000);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
         String dateOk = simpleDateFormat.format(newDate2);
         return dateOk;
     }
 
     //Day:日期字符串例如 2015-3-10  Num:需要减少的天数例如 7
-    public static String getAddDateStr(String day,int Num) {
+    public static String getAddDateStr(String day, int Num) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
         Date nowDate = null;
         try {
@@ -75,7 +79,7 @@ public class SgqUtils {
             e.printStackTrace();
         }
         //如果需要向后计算日期 -改为+
-        Date newDate2 = new Date(nowDate.getTime() + (long)Num * 24 * 60 * 60 * 1000);
+        Date newDate2 = new Date(nowDate.getTime() + (long) Num * 24 * 60 * 60 * 1000);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
         String dateOk = simpleDateFormat.format(newDate2);
         return dateOk;
@@ -88,13 +92,13 @@ public class SgqUtils {
         Date date = new Date(System.currentTimeMillis());
         return simpleDateFormat.format(date);
     }
+
     //获取当前时间
     public static String getNowYmDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");// HH:mm:ss
         Date date = new Date(System.currentTimeMillis());
         return simpleDateFormat.format(date);
     }
-
 
 
     //设置TabLayout下方下划线的宽度

@@ -95,7 +95,7 @@ public class WorkLogDetailAdapter extends BaseExpandableListAdapter {
             tv_numbuhuo.setText("当日补货总量");
         } else {
             if (childPosition > 0) {
-                tv_huodao.setText(childPosition + "." + dataListBeans.get(groupPosition).getWork_log().get(childPosition - 1).getGoods_map().getShowName());
+                tv_huodao.setText( dataListBeans.get(groupPosition).getWork_log().get(childPosition - 1).getItemNo()+ "." + dataListBeans.get(groupPosition).getWork_log().get(childPosition - 1).getGoods_map().getShowName());
                 tv_numbuhuo.setText(dataListBeans.get(groupPosition).getWork_log().get(childPosition - 1).getShelvesnum()+"");
             }
         }

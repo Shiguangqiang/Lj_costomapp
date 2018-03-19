@@ -10,16 +10,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        android:layout_weight="1.5">
+        android:gravity="left"
+        android:layout_marginLeft="@dimen/pad_height_20"
+        android:layout_weight="2">
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:gravity="center"
+            android:gravity="left"
             android:layout_margin="@dimen/pad_height_5"
+            android:layout_marginLeft="@dimen/pad_height_20"
             android:textSize="@dimen/pad_text_size_18"/>
 
         <TextView

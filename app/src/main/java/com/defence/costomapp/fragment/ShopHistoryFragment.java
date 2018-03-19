@@ -9,14 +9,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.ShopHistoryDetailBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
+import com.defence.costomapp.utils.AmountUtils;
+import com.defence.costomapp.utils.DateAndTimeUtil;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
@@ -52,6 +56,8 @@ public class ShopHistoryFragment extends BaseFragment {
     private String uid;
     String Sdate = SgqUtils.getNowYmDate();
     private ShopHistoryAdapter shopHistoryAdapter;
+    private String wxid;
+    private String ttype;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,24 +67,26 @@ public class ShopHistoryFragment extends BaseFragment {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                String dateStr = SgqUtils.getDateStr(Sdate, 28);
+                String dateStr = DateAndTimeUtil.dateFormat(Sdate);
                 initdata(dateStr);
                 shopHistoryAdapter.notifyDataSetChanged();
 
 
             }
         });
-//        上拉加载
+////        上拉加载
         srl.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
 
-                String dateStr = SgqUtils.getAddDateStr(Sdate, 30);
-                initdata(dateStr);
-                shopHistoryAdapter.notifyDataSetChanged();
-
-
+                String dateStr = DateAndTimeUtil.dateaddFormat(Sdate);
+                if (!dateStr.equals(DateAndTimeUtil.dateaddFormat(SgqUtils.getNowYmDate()))) {
+                    initdata(dateStr);
+                    shopHistoryAdapter.notifyDataSetChanged();
+                } else {
+                    srl.setLoading(false);
+                    Toast.makeText(getActivity(), "已是最新月份数据", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -88,17 +96,24 @@ public class ShopHistoryFragment extends BaseFragment {
 
     private void initdata(final String date) {
         uid = getActivity().getIntent().getStringExtra("uid");
+        wxid = getActivity().getIntent().getStringExtra("wxid");
+        ttype = getActivity().getIntent().getStringExtra("ttype");
+
         RequestParams params = new RequestParams();
         params.put("orderUID", uid);
         params.put("sdate", date);
-//        params.put("sdate", "2018-02");
+        if (ttype.equals("wx")) {
+            params.put("wxopenID", wxid);
+
+        }
         params.put("orderBy", "2");
 
         httpUtils.doPost(Urls.shophistory(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
-                Sdate=date;
+
+                Sdate = date;
                 srl.setRefreshing(false);
                 srl.setLoading(false);
 
@@ -109,14 +124,17 @@ public class ShopHistoryFragment extends BaseFragment {
                 //字符串替换
                 String newdate = date.replace("-", "年");
                 tvDate.setText(newdate + "月");
-                tvXiaofei.setText("本月消费:" + shopHistoryDetailBean.getPayval() + "元");
+                tvXiaofei.setText("本月消费:" + AmountUtils.changeF2Y(shopHistoryDetailBean.getPayval() + "") + "元");
+
 
                 shopHistoryAdapter = new ShopHistoryAdapter(getActivity(), shopHistoryDetailBean.getList(), new RVItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
 
+
                     }
                 });
+
                 listShophistory.setAdapter(shopHistoryAdapter);
 
 

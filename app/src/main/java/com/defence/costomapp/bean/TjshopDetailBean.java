@@ -11,11 +11,11 @@ public class TjshopDetailBean {
 
 
     /**
-     * map_data : {"sumCostStr":17.64,"sumLiRun":738,"sumCost":1764,"sumJinE":2502,"sumLiRunStr":7.38,"sumJinEStr":25.02,"saleCount":2}
-     * date2 : 2018-03-13
-     * list : [{"sumJinE":2502,"address":"北京市北京市丰台区","saleCount":2,"machinenumber":"LJ-010-04-001-001"}]
-     * pMap : {"addr1":0,"addr2":0,"formatID":509,"addr3":0,"columns":"","time_end":"2018-03-13 23:59:59","ugTypes":" 0, 1, 3 ","time_start":"2018-03-13 00:00:00"}
-     * date1 : 2018-03-13
+     * map_data : {"sumCostStr":6.3,"sumLiRun":210,"sumCost":630,"sumJinE":840,"sumLiRunStr":2.1,"sumJinEStr":8.4,"saleCount":3}
+     * date2 : 2018-03-19
+     * list : [{"sumJinE":560,"address":"北京市北京市丰台区","detailedinstalladdress":"芳城园二区门口","saleCount":2,"machinenumber":"LJ-010-04-002-001"},{"sumJinE":280,"address":"北京市北京市丰台区","detailedinstalladdress":"富卓苑小区2号林内壁炉门东","saleCount":1,"machinenumber":"LJ-010-04-001-002"}]
+     * pMap : {"addr1":0,"addr2":0,"formatID":601,"addr3":0,"columns":"","time_end":"2018-03-19 23:59:59","ugTypes":" 0, 1, 3 ","time_start":"2018-03-19 00:00:00"}
+     * date1 : 2018-03-19
      */
 
     private MapDataBean map_data;
@@ -66,13 +66,13 @@ public class TjshopDetailBean {
 
     public static class MapDataBean {
         /**
-         * sumCostStr : 17.64
-         * sumLiRun : 738
-         * sumCost : 1764
-         * sumJinE : 2502
-         * sumLiRunStr : 7.38
-         * sumJinEStr : 25.02
-         * saleCount : 2
+         * sumCostStr : 6.3
+         * sumLiRun : 210
+         * sumCost : 630
+         * sumJinE : 840
+         * sumLiRunStr : 2.1
+         * sumJinEStr : 8.4
+         * saleCount : 3
          */
 
         private double sumCostStr;
@@ -144,12 +144,12 @@ public class TjshopDetailBean {
         /**
          * addr1 : 0
          * addr2 : 0
-         * formatID : 509
+         * formatID : 601
          * addr3 : 0
          * columns :
-         * time_end : 2018-03-13 23:59:59
+         * time_end : 2018-03-19 23:59:59
          * ugTypes :  0, 1, 3
-         * time_start : 2018-03-13 00:00:00
+         * time_start : 2018-03-19 00:00:00
          */
 
         private int addr1;
@@ -228,14 +228,16 @@ public class TjshopDetailBean {
 
     public static class ListBean {
         /**
-         * sumJinE : 2502
+         * sumJinE : 560
          * address : 北京市北京市丰台区
+         * detailedinstalladdress : 芳城园二区门口
          * saleCount : 2
-         * machinenumber : LJ-010-04-001-001
+         * machinenumber : LJ-010-04-002-001
          */
 
         private int sumJinE;
         private String address;
+        private String detailedinstalladdress;
         private int saleCount;
         private String machinenumber;
 
@@ -253,6 +255,14 @@ public class TjshopDetailBean {
 
         public void setAddress(String address) {
             this.address = address;
+        }
+
+        public String getDetailedinstalladdress() {
+            return detailedinstalladdress;
+        }
+
+        public void setDetailedinstalladdress(String detailedinstalladdress) {
+            this.detailedinstalladdress = detailedinstalladdress;
         }
 
         public int getSaleCount() {

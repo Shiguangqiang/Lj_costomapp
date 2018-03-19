@@ -15,6 +15,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +34,8 @@ public class HttpUtils {
         myApplication = (MyApplication) context.getApplicationContext();
         this.context = context;
         client = new AsyncHttpClient();
+        DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+        defaultHttpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 3000);
         gson = new Gson();
         pd = new ProgressDialog(context);
         pd.setCanceledOnTouchOutside(false);
@@ -41,33 +45,34 @@ public class HttpUtils {
     /**
      * 添加基本的Params
      */
-    public RequestParams addBaseParams(RequestParams params,int funcType) {
+    public RequestParams addBaseParams(RequestParams params, int funcType) {
         //判断如果是Welcome则不显示pd;
         user = MyApplication.getApp().getUserInfo();
         params.put("_t", System.currentTimeMillis() + "");
         if (user != null) {
             params.put("uniqueCode", user.getAuthorizationKey());
             params.put("phoneAID", user.getId() + "");
-            params.put("funcType",funcType + "");
+            params.put("funcType", funcType + "");
             // TODO: 16/9/14 尚未添加登录和未登录 目前视为未登录,修改后把上面两行代码删除即可
         } else {
             params.put("uniqueCode", "009900");
             params.put("phoneAID", "0");
-            params.put("funcType",funcType + "");
+            params.put("funcType", funcType + "");
         }
         return params;
     }
 
-    public void doPost(String url,int funcType, RequestParams params, final HttpInterface integerface) {
-        addBaseParams(params,funcType);
+    public void doPost(String url, int funcType, RequestParams params, final HttpInterface integerface) {
+        addBaseParams(params, funcType);
         Log.d("HttpUtils", url);
         Log.d("HttpUtils", params + "");
         if (isNetworkAvailable()) {
+
             client.post(url, params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onStart() {
                     try {
-                        if(!pd.isShowing()){
+                        if (!pd.isShowing()) {
                             pd.show();
                         }
 
@@ -79,7 +84,7 @@ public class HttpUtils {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    if(pd!=null){
+                    if (pd != null) {
                         pd.dismiss();
                     }
                     Log.d("HttpUtils", "statusCode:" + statusCode);
@@ -89,8 +94,18 @@ public class HttpUtils {
                         String sign = jb.getString("sign");
                         String message = jb.optString("message");
                         if ("1".equals(sign)) {
+
                             Object result = jb.opt("result");
-                            integerface.onSuccess(gson, result);
+                            Object data_list = jb.opt("data_list");
+                            Object data = jb.opt("data");
+                            if (result == null && data == null && data_list != null) {
+                                integerface.onSuccess(gson, data_list);
+                            } else if (result == null && data_list == null && data != null) {
+                                integerface.onSuccess(gson, data);
+                            } else {
+                                integerface.onSuccess(gson, result);
+                            }
+
                         } else if ("4".equals(sign)) {
                             integerface.onError(context, message);
                         } else if ("3".equals(sign)) {

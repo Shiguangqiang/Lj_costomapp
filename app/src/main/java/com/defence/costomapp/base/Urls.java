@@ -88,11 +88,56 @@ public class Urls {
     public static String userTj() {
         return BaseUrl + "req-mobile/user-tongji/list/user/0data1.json";
     }
+    //查看微信支付
+    public static String wxpay() {
+        return BaseUrl + "req-mobile/user-tongji/list/weixinzhifu/0data1.json";
+    }
+    //查看充值记录
+    public static String chongzhi() {
+        return BaseUrl + "req-mobile/user-tongji/list/user/chongzhijilu/0data1.json";
+    }
+    //查看充值记录详情
+    public static String chongzhidetail() {
+        return BaseUrl + "req-mobile/user-tongji/list/user/chongzhi/info/0data1.json";
+    }
 
     //查看消费记录
     public static String shophistory() {
         return BaseUrl + "req-mobile/user-tongji/list/user/dingdannumber/0data1.json";
     }
+
+    //时间段统计销量
+    public static String timesale() {
+        return BaseUrl + "req-mobile/ding/dan/time/area/sale/0count.json";
+    }
+
+    //购买数量统计
+    public static String shopnum() {
+        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/0data1.json";
+    }
+
+    //机器出货量统计
+    public static String macchunum() {
+        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/machine/0data1.json";
+    }
+    //今日流水
+    public static String dailycost() {
+        return BaseUrl + "req-mobile/tong-ji/daily/sale/cost/0data1.json";
+    }
+    //结算查询
+    public static String jiesuan() {
+        return BaseUrl + "req-mobile/tong-ji/jie/suan/0data1.json";
+    }
+    //订单管理
+    public static String dingdan() {
+        return BaseUrl + "req-mobile/ding/dan/list10/machine/0data1.json";
+    }
+    //订单详情
+    public static String dingdandetail() {
+        return BaseUrl + "req-mobile/ding/dan/order/detail/0data.json";
+
+    }
+
 
 
 

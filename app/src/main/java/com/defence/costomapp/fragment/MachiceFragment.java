@@ -19,6 +19,7 @@ import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TongjiBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
+import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
@@ -222,7 +223,7 @@ public class MachiceFragment extends BaseFragment {
             TextView tv_num = view.findViewById(R.id.tv_num);
             tv_name.setText(machine_list.get(position).getMachinenumber());
             tv_showshop.setText(String.valueOf(machine_list.get(position).getDetailedinstalladdress()));
-            tv_num.setText(machine_list.get(position).getSumJinE() + "元");
+            tv_num.setText(AmountUtils.changeF2Y(machine_list.get(position).getSumJinE() +"")+ "元");
             LinearLayout liear_tjmachine = view.findViewById(R.id.liear_tjmachine);
 
             liear_tjmachine.setOnClickListener(new View.OnClickListener() {

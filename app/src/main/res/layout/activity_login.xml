@@ -31,25 +31,23 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/login_iv"
                 android:layout_centerHorizontal="true"
-                android:gravity="center_horizontal"
                 android:layout_marginTop="@dimen/pad_height_10"
+                android:gravity="center_horizontal"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/pad_text_size_20" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/liear_ll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/pad_height_110"
                 android:layout_below="@+id/login_name"
                 android:layout_marginTop="@dimen/pad_height_10"
-                android:layout_centerHorizontal="true"
                 android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/login_username"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_height="@dimen/pad_height_50"
                     android:hint="请输入账号"
                     android:maxLines="1" />
 
@@ -57,11 +55,12 @@
                 <EditText
                     android:id="@+id/login_psw"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="@dimen/pad_height_50"
+                    android:layout_below="@+id/login_username"
+                    android:layout_marginTop="@dimen/pad_height_10"
                     android:hint="请输入密码"
                     android:maxLines="1" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/login_login"

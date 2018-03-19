@@ -97,7 +97,7 @@ public class LogFragment extends BaseFragment {
                             @Override
                             public void onItemClick(int position) {
                                 Intent intent = new Intent(getActivity(), WorkLogInfoActivity.class);
-                                intent.putExtra("whoID", list.get(position).getShelvesuserid()+"");
+                                intent.putExtra("whoID", list.get(position).getShelvesuserid() + "");
                                 startActivity(intent);
                             }
                         });
@@ -179,6 +179,7 @@ public class LogFragment extends BaseFragment {
             ImageView circle = view.findViewById(R.id.buhuomessage_item_newmessage);
             LinearLayout buhuoItemll = view.findViewById(R.id.buhuoitemll);
 
+            circle.setVisibility(View.GONE);
             name.setText("维护人“" + list.get(position).getRealname() + "”工作日志");
             time.setText(list.get(position).getShelvesdate());
 

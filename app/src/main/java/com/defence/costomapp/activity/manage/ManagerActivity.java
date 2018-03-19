@@ -10,16 +10,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.TextureView;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.ChoiceTypeActivity;
-import com.defence.costomapp.fragment.LogFragment;
-import com.defence.costomapp.fragment.PoliceFragment;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
+import com.defence.costomapp.fragment.LogFragment;
+import com.defence.costomapp.fragment.PoliceFragment;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 
@@ -30,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ManagerActivity extends BaseActivity {
+public class ManagerActivity extends BaseActivity implements PoliceFragment.FragmentInteraction {
 
     @BindView(R.id.back)
     TextView back;
@@ -42,6 +46,8 @@ public class ManagerActivity extends BaseActivity {
     TabLayout mangerTablayout;
     @BindView(R.id.manger_viewpager)
     ViewPager mangerViewpager;
+    @BindView(R.id.img_redlittle)
+    ImageView imgRedlittle;
 
     private List<Fragment> list;
     private MyAdapter adapter;
@@ -109,7 +115,7 @@ public class ManagerActivity extends BaseActivity {
         if (loginType != -1) {
             SharePerenceUtil.putStringValuetoSp(loginType + "", "");
             SharePerenceUtil.putIntValuetoSp("loginType", -1);
-            SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin",false);
+            SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
             MyApplication.getApp().setUserInfo(null);
         }
         startActivity(new Intent(ManagerActivity.this, ChoiceTypeActivity.class));
@@ -150,6 +156,17 @@ public class ManagerActivity extends BaseActivity {
             }
             finishAffinity();
             System.exit(0);
+        }
+    }
+
+    @Override
+    public void process(String str) {
+        String str1 = str;
+
+        if (TextUtils.isEmpty(str)) {
+            imgRedlittle.setVisibility(View.GONE);
+        }else {
+            imgRedlittle.setVisibility(View.VISIBLE);
         }
     }
 

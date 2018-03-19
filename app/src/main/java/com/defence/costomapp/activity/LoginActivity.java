@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_login);
 
         icon = findViewById(R.id.login_iv);
@@ -46,13 +48,25 @@ public class LoginActivity extends BaseActivity {
         psw = findViewById(R.id.login_psw);
 
 
-//        loginType = SharePerenceUtil.getIntValueFromSP("loginT");
+        psw.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                } else {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                }
+            }
+        });
+
 
         try {
-            loginType =Integer.valueOf(getIntent().getStringExtra("loginType")) ;
+            loginType = Integer.valueOf(getIntent().getStringExtra("loginType"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+        initdata(loginType);
+
 
         switch (loginType) {
             case 0:
@@ -95,7 +109,7 @@ public class LoginActivity extends BaseActivity {
                             MyApplication.getApp().setUserInfo(userInfo);
                             SharePerenceUtil.putStringValuetoSp(loginType + "", username.getText().toString() + "---" + psw.getText().toString());
                             SharePerenceUtil.putIntValuetoSp("loginType", loginType);
-                            SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin",true);
+                            SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", true);
 
                             MangerUserBean.ResultBean.DataOneBean mangerUserBean = gson.fromJson(jb.toString(), MangerUserBean.ResultBean.DataOneBean.class);
                             SharePerenceUtil.putStringValuetoSp("groupid", mangerUserBean.getGroupID() + "");
@@ -106,7 +120,7 @@ public class LoginActivity extends BaseActivity {
                                     break;
                                 case 10100:
                                     Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
-//                                    intent.putExtra("groupidmm",mangerUserBean.getGroupID() + "");
+//
                                     startActivity(intent);
                                     break;
                                 case 10110:
@@ -133,5 +147,20 @@ public class LoginActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+    private void initdata(int type) {
+
+        String nameAndPsw = SharePerenceUtil.getStringValueFromSp(type + "");
+        if (!TextUtils.isEmpty(nameAndPsw)) {
+            final String userNamesp = nameAndPsw.split("---")[0];
+            final String pswsp = nameAndPsw.split("---")[1];
+
+            username.setText(userNamesp);
+            psw.setText(pswsp);
+
+
+        }
+
     }
 }

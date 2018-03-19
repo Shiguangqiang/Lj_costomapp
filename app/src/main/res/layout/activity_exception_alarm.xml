@@ -68,9 +68,9 @@
             android:id="@+id/liear_alarmnot"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:divider="@null"
-            android:dividerHeight="@dimen/pad_height_8"
-            android:layout_weight="0.5"></ListView>
+            android:dividerHeight="@dimen/pad_height_8"></ListView>
 
         <TextView
             android:layout_width="match_parent"
@@ -84,9 +84,9 @@
             android:id="@+id/liear_alarmyet"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:divider="@null"
-            android:dividerHeight="@dimen/pad_height_8"
-            android:layout_weight="0.5"></ListView>
+            android:dividerHeight="@dimen/pad_height_8"></ListView>
 
 
     </LinearLayout>

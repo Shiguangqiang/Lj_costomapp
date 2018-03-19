@@ -171,7 +171,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     private boolean isBottom() {
 
         if (mListView != null && mListView.getAdapter() != null) {
-            return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount() - 1);
+            return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount()-1);
         }
         return false;
     }

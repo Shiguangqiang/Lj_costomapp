@@ -20,8 +20,11 @@ import android.widget.TextView;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
+import com.defence.costomapp.bean.ChongzhiBean;
 import com.defence.costomapp.bean.UserTjBean;
+import com.defence.costomapp.bean.WxpayBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
+import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.httputils.HttpInterface;
@@ -61,13 +64,19 @@ public class UserTjActivity extends BaseActivity {
     ListView listUsertj;
     @BindView(R.id.srl)
     RefreshLayout srl;
+    @BindView(R.id.tv_chongzhi)
+    TextView tvChongzhi;
 
 
     private PopupWindow pop;
 
     int length = 0;
+    int begin = 0;
     String sortOrderBy = "timeline";
     private UserTjAdapter userTjAdapter;
+    String typetj = "user";
+    private WxpayAdapter wxpayAdapter;
+    private ChongzhiBean chongzhiBean;
 
 
     @Override
@@ -91,7 +100,8 @@ public class UserTjActivity extends BaseActivity {
             public void onRefresh() {
                 if (length > 0) {
                     length--;
-                    getData(length, sortOrderBy);
+                    begin--;
+                    getData(length, sortOrderBy, typetj);
                     userTjAdapter.notifyDataSetChanged();
                 } else {
                     srl.setRefreshing(false);
@@ -106,7 +116,8 @@ public class UserTjActivity extends BaseActivity {
             public void onLoad() {
 
                 length++;
-                getData(length, sortOrderBy);
+                begin++;
+                getData(length, sortOrderBy, typetj);
                 userTjAdapter.notifyDataSetChanged();
 
             }
@@ -119,8 +130,7 @@ public class UserTjActivity extends BaseActivity {
                 finish();
             }
         });
-        getData(length, sortOrderBy);
-
+        getData(length, sortOrderBy, typetj);
         initpopdialog();
 
 
@@ -144,7 +154,8 @@ public class UserTjActivity extends BaseActivity {
             public void onClick(View view) {
                 middleTitle.setText("用户统计 - 登录时间");
                 sortOrderBy = "timeline";
-                getData(length, sortOrderBy);
+                typetj = "user";
+                getData(length, sortOrderBy, typetj);
                 if (pop.isShowing()) {
                     pop.dismiss();
                 }
@@ -155,7 +166,8 @@ public class UserTjActivity extends BaseActivity {
             public void onClick(View view) {
                 middleTitle.setText("用户统计 - 账户余额");
                 sortOrderBy = "bankNo";
-                getData(length, sortOrderBy);
+                typetj = "user";
+                getData(length, sortOrderBy, typetj);
                 if (pop.isShowing()) {
                     pop.dismiss();
                 }
@@ -167,7 +179,8 @@ public class UserTjActivity extends BaseActivity {
             public void onClick(View view) {
                 middleTitle.setText("用户统计 - 注册时间");
                 sortOrderBy = "reg_time";
-                getData(length, sortOrderBy);
+                typetj = "user";
+                getData(length, sortOrderBy, typetj);
                 if (pop.isShowing()) {
                     pop.dismiss();
                 }
@@ -178,7 +191,8 @@ public class UserTjActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 middleTitle.setText("用户统计 - 微信支付");
-                getData(length, sortOrderBy);
+                typetj = "wx";
+                getData(length, sortOrderBy, typetj);
                 if (pop.isShowing()) {
                     pop.dismiss();
                 }
@@ -188,7 +202,7 @@ public class UserTjActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 middleTitle.setText("用户统计 - 充值记录");
-                getData(length, sortOrderBy);
+                getDataChongzhi();
                 if (pop.isShowing()) {
                     pop.dismiss();
                 }
@@ -218,44 +232,243 @@ public class UserTjActivity extends BaseActivity {
 
     }
 
+    /*充值记录*/
+    private void getDataChongzhi() {
+        RequestParams params = new RequestParams();
+        params.put("begin", begin + "");
+        params.put("orderBy", "2");
+        params.put("end", "10");
+        httpUtils.doPost(Urls.chongzhi(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+            @Override
+            public void onSuccess(Gson gson, Object result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result.toString());
+                chongzhiBean = gson.fromJson(jsonObject.toString(), ChongzhiBean.class);
+                tvChongzhi.setVisibility(View.VISIBLE);
+                saomausernum.setVisibility(View.VISIBLE);
+                tvChongzhi.setText("守望注册人数:" + chongzhiBean.getRegnum());
+                regusernum.setText("平台付款次数:" + chongzhiBean.getPingtaiNum());
+                saomausernum.setText("微信付款次数:" + chongzhiBean.getWeixinNum());
+                pingtaiPay.setText("充值金额:" + AmountUtils.changeF2Y(chongzhiBean.getChongzhinum() + ""));
+                weixinpay.setText("平台留存余额:" + AmountUtils.changeF2Y(chongzhiBean.getBankNo() + ""));
+
+
+                ChongzhiAdapter chongzhiAdapter = new ChongzhiAdapter(UserTjActivity.this, chongzhiBean.getList(), new RVItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Intent intent = new Intent(UserTjActivity.this, ChongzhiDetailActivity.class);
+                        intent.putExtra("userid", chongzhiBean.getList().get(position).getUserID()+"");
+                        startActivity(intent);
+
+                    }
+                });
+                listUsertj.setAdapter(chongzhiAdapter);
+
+            }
+        });
+    }
+
     /*得到数据*/
-    private void getData(int length, String sortOrderBy) {
+    private void getData(int length, String sortOrderBy, final String type) {
 
         RequestParams params = new RequestParams();
+        if (type.equals("wx")) {
+            params.put("orderUID", "0");
+        }
         params.put("length", length + "");
         params.put("sortOrderBy", sortOrderBy);
         params.put("order", "desc");
         params.put("orderBy", "2");
         params.put("endpag", "10");
 
-        httpUtils.doPost(Urls.userTj(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+        if (type.equals("user")) {
 
-            @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
-                srl.setRefreshing(false);
-                srl.setLoading(false);
-                JSONObject jsonObject = new JSONObject(result.toString());
-                final UserTjBean userTjBean = gson.fromJson(jsonObject.toString(), UserTjBean.class);
-                regusernum.setText("注册人数:" + userTjBean.getReg_user());
-                pingtaiPay.setText("平台付款次数:" + userTjBean.getPingtaiNum());
-                weixinpay.setText("微信付款次数" + userTjBean.getWeixinNum());
+            httpUtils.doPost(Urls.userTj(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+                @Override
+                public void onSuccess(Gson gson, Object result) throws JSONException {
+                    srl.setRefreshing(false);
+                    srl.setLoading(false);
+                    JSONObject jsonObject = new JSONObject(result.toString());
+                    final UserTjBean userTjBean = gson.fromJson(jsonObject.toString(), UserTjBean.class);
+                    saomausernum.setVisibility(View.GONE);
+                    tvChongzhi.setVisibility(View.GONE);
+                    regusernum.setText("注册人数:" + userTjBean.getReg_user());
+                    pingtaiPay.setText("平台付款次数:" + userTjBean.getPingtaiNum());
+                    weixinpay.setText("微信付款次数" + userTjBean.getWeixinNum());
+                    userTjAdapter = new UserTjAdapter(UserTjActivity.this, userTjBean.getUserList(), new RVItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Intent intent = new Intent(UserTjActivity.this, UserTjDetailActivity.class);
+                            intent.putExtra("uid", (userTjBean.getUserList().get(position).getId()) + "");
+                            intent.putExtra("uname", userTjBean.getUserList().get(position).getName());
+                            intent.putExtra("ttype", type);
+                            startActivity(intent);
+                        }
+                    });
 
-                userTjAdapter = new UserTjAdapter(UserTjActivity.this, userTjBean.getUserList(), new RVItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        Intent intent = new Intent(UserTjActivity.this, UserTjDetailActivity.class);
-                        intent.putExtra("uid", (userTjBean.getUserList().get(position).getId())+"");
-                        intent.putExtra("uname", userTjBean.getUserList().get(position).getName());
-                        startActivity(intent);
-                    }
-                });
+                    listUsertj.setAdapter(userTjAdapter);
+                }
+            });
+        } else if (type.equals("wx")) {
+            httpUtils.doPost(Urls.wxpay(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+                @Override
+                public void onSuccess(Gson gson, Object result) throws JSONException {
+                    srl.setRefreshing(false);
+                    srl.setLoading(false);
+                    JSONObject jsonObject = new JSONObject(result.toString());
+                    final WxpayBean wxpayBean = gson.fromJson(jsonObject.toString(), WxpayBean.class);
+                    regusernum.setText("注册人数:" + wxpayBean.getReg_user());
+                    pingtaiPay.setText("平台付款次数:" + wxpayBean.getPingtaiNum());
+                    weixinpay.setText("微信付款次数" + wxpayBean.getWeixinNum());
 
-                listUsertj.setAdapter(userTjAdapter);
-            }
-        });
+                    wxpayAdapter = new WxpayAdapter(UserTjActivity.this, wxpayBean.getList(), new RVItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Intent intent = new Intent(UserTjActivity.this, UserTjDetailActivity.class);
+                            intent.putExtra("uid", (wxpayBean.getList().get(position).getOrderUID()) + "");
+                            intent.putExtra("wxid", wxpayBean.getList().get(position).getWxOpenID());
+                            intent.putExtra("ttype", type);
+                            startActivity(intent);
+                        }
+                    });
+
+                    listUsertj.setAdapter(wxpayAdapter);
+
+                }
+            });
+        }
 
     }
 
+
+    private class WxpayAdapter extends BaseAdapter {
+
+        private Context context;
+        private LayoutInflater inflater;
+        private List<WxpayBean.ListBean> list;
+        private RVItemClickListener rvItemClickListener;
+
+        public WxpayAdapter(Context context, List<WxpayBean.ListBean> list, RVItemClickListener rvItemClickListener) {
+            super();
+            this.context = context;
+            inflater = LayoutInflater.from(context);
+            this.list = list;
+            this.rvItemClickListener = rvItemClickListener;
+
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            if (list != null && list.size() > 0) {
+                return list.size();
+            }
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+            // TODO Auto-generated method stub
+            return list.get(arg0);
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+            // TODO Auto-generated method stub
+            return arg0;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup arg2) {
+            // TODO Auto-generated method stub
+            if (view == null) {
+                view = inflater.inflate(R.layout.item_usertj, null);
+            }
+            TextView reg_phone = view.findViewById(R.id.reg_phone);
+            TextView tv_yue = view.findViewById(R.id.tv_yue);
+            TextView tv_nearlogintime = view.findViewById(R.id.tv_nearlogintime);
+            LinearLayout liearitemll = view.findViewById(R.id.liearitemll);
+
+            reg_phone.setText(list.get(position).getWx());
+            tv_yue.setVisibility(View.GONE);
+            tv_nearlogintime.setText("总消费:" + AmountUtils.changeF2Y(list.get(position).getPv() + "") + "元");
+
+            liearitemll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rvItemClickListener.onItemClick(position);
+                }
+            });
+
+            return view;
+
+        }
+    }
+
+    private class ChongzhiAdapter extends BaseAdapter {
+
+        private Context context;
+        private LayoutInflater inflater;
+        private List<ChongzhiBean.ListBean> list;
+        private RVItemClickListener rvItemClickListener;
+
+        public ChongzhiAdapter(Context context, List<ChongzhiBean.ListBean> list, RVItemClickListener rvItemClickListener) {
+            super();
+            this.context = context;
+            inflater = LayoutInflater.from(context);
+            this.list = list;
+            this.rvItemClickListener = rvItemClickListener;
+
+        }
+
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            if (list != null && list.size() > 0) {
+                return list.size();
+            }
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+            // TODO Auto-generated method stub
+            return list.get(arg0);
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+            // TODO Auto-generated method stub
+            return arg0;
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup arg2) {
+            // TODO Auto-generated method stub
+            if (view == null) {
+                view = inflater.inflate(R.layout.item_chongzhi, null);
+            }
+            TextView reg_phone = view.findViewById(R.id.reg_phone);
+            TextView tv_yue = view.findViewById(R.id.tv_yue);
+            TextView tv_price = view.findViewById(R.id.tv_price);
+            TextView tv_nearlogintime = view.findViewById(R.id.tv_nearlogintime);
+            LinearLayout liearitemll = view.findViewById(R.id.liearitemll);
+
+            reg_phone.setText(list.get(position).getMphone());
+            tv_price.setText("+"+list.get(position).getHm());
+            tv_yue.setText("账户余额:" + AmountUtils.changeF2Y(list.get(position).getBankNo() + "") + "元");
+            tv_nearlogintime.setText(list.get(position).getTimeline());
+            liearitemll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rvItemClickListener.onItemClick(position);
+                }
+            });
+
+            return view;
+
+        }
+    }
 
     private class UserTjAdapter extends BaseAdapter {
 
@@ -306,7 +519,7 @@ public class UserTjActivity extends BaseActivity {
             LinearLayout liearitemll = view.findViewById(R.id.liearitemll);
 
             reg_phone.setText(userList.get(position).getMphone());
-            tv_yue.setText("账户余额:" + userList.get(position).getBankNo() + "元");
+            tv_yue.setText("账户余额:" + AmountUtils.changeF2Y(userList.get(position).getBankNo() + "") + "元");
             tv_nearlogintime.setText("最近登录时间:" + userList.get(position).getTimeline());
 
             liearitemll.setOnClickListener(new View.OnClickListener() {

@@ -14,6 +14,7 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TjshopDetailBean;
+import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
@@ -80,7 +81,6 @@ public class ShopDetailActivity extends BaseActivity {
 
         middleTitle.setText(formatText + "销售占比");
         getData();
-
     }
 
     //商品详情
@@ -101,8 +101,8 @@ public class ShopDetailActivity extends BaseActivity {
             public void onSuccess(Gson gson, Object result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TjshopDetailBean tjshopDetailBean = gson.fromJson(jsonObject.toString(), TjshopDetailBean.class);
-                sumJinE.setText("总额:"+tjshopDetailBean.getMap_data().getSumJinE()+"元");
-                sumLiRun.setText("总利润:"+tjshopDetailBean.getMap_data().getSumLiRun()+"元");
+                sumJinE.setText("总额:"+ AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumJinE()+"")+"元");
+                sumLiRun.setText("总利润:"+ AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumLiRun()+"")+"元");
                 saleCount.setText("总件:"+tjshopDetailBean.getMap_data().getSaleCount()+"个");
                 listShopdetail.setAdapter(new ShopDetailAdapter(ShopDetailActivity.this,tjshopDetailBean.getList()));
 
@@ -156,8 +156,8 @@ public class ShopDetailActivity extends BaseActivity {
             TextView tv_name = view.findViewById(R.id.tv_name);
             TextView tv_showshop = view.findViewById(R.id.tv_showshop);
             TextView tv_num = view.findViewById(R.id.tv_num);
-            tv_name.setText(listBeanList.get(position).getMachinenumber());
-            tv_showshop.setText(String.valueOf(listBeanList.get(position).getAddress() ));
+            tv_name.setText(listBeanList.get(position).getDetailedinstalladdress());
+            tv_showshop.setText(listBeanList.get(position).getMachinenumber());
             tv_num.setText(listBeanList.get(position).getSaleCount() + "个");
 
 

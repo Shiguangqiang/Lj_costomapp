@@ -10,18 +10,18 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="@drawable/home_selector"/>
-
-    <TextView
-        android:id="@+id/tv_circle"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:gravity="center"
-        android:visibility="gone"
-        android:background="@drawable/circle_white"/>
+        android:background="@drawable/home_selector"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_circle"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:gravity="center"-->
+        <!--android:visibility="gone"-->
+        <!--android:background="@drawable/circle_white"/>-->
 
 
 </LinearLayout>

@@ -14,6 +14,7 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TjMachineDetailBean;
+import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
@@ -93,16 +94,17 @@ public class MachineDetailActivity extends BaseActivity {
             public void onSuccess(Gson gson, Object result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TjMachineDetailBean tjMachineDetailBean = gson.fromJson(jsonObject.toString(), TjMachineDetailBean.class);
-                sumJinE.setText("总额:"+tjMachineDetailBean.getMap_data().getSumJinE()+"元");
-                sumLiRun.setText("总利润:"+tjMachineDetailBean.getMap_data().getSumLiRun()+"元");
-                saleCount.setText("总件:"+tjMachineDetailBean.getMap_data().getSaleCount()+"个");
-                listMachinedetail.setAdapter(new MachineDetailAdapter(MachineDetailActivity.this,tjMachineDetailBean.getList()));
+                sumJinE.setText("总额:" + AmountUtils.changeF2Y(tjMachineDetailBean.getMap_data().getSumJinE() + "") + "元");
+                sumLiRun.setText("总利润:" + AmountUtils.changeF2Y(tjMachineDetailBean.getMap_data().getSumLiRun() + "") + "元");
+                saleCount.setText("总件:" + tjMachineDetailBean.getMap_data().getSaleCount() + "个");
+                listMachinedetail.setAdapter(new MachineDetailAdapter(MachineDetailActivity.this, tjMachineDetailBean.getList()));
 
             }
         });
 
 
     }
+
     private class MachineDetailAdapter extends BaseAdapter {
 
         private Context context;
@@ -117,7 +119,6 @@ public class MachineDetailActivity extends BaseActivity {
 
 
         }
-
 
 
         @Override

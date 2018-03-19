@@ -102,6 +102,7 @@ public class BuhuoMessageActivity extends BaseActivity {
     private long mExitTime;
 
     //对返回键进行监听
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

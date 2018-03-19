@@ -16,6 +16,7 @@ import com.defence.costomapp.fragment.MachiceFragment;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TongjiBean;
+import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
@@ -142,11 +143,11 @@ public class TjDetailActivity extends BaseActivity {
                 TongjiBean tongjiBean = gson.fromJson(jsonObject.toString(), TongjiBean.class);
 
 
-                sumJinE.setText("金额:" + tongjiBean.getMap_data().getSumJinE() + "元");
+                sumJinE.setText("金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE()+"") + "元");
                 paysalecount.setText("付款商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
                 freesalecount.setText("赠送商品:" + tongjiBean.getMap_data().getFreeSaleCount() + "个");
-                freecost.setText("赠送成本:" + tongjiBean.getMap_data().getFreeCost() + "元");
-                lirun.setText("净利润:" + tongjiBean.getMap_data().getLiRun1() + "元");
+                freecost.setText("赠送成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getFreeCost()+"") + "元");
+                lirun.setText("净利润:" +AmountUtils.changeF2Y( tongjiBean.getMap_data().getLiRun1()+"") + "元");
 
                 List<TongjiBean.GoodsListBean> goods_list = tongjiBean.getGoods_list();
                 List<TongjiBean.MachineListBean> machine_list = tongjiBean.getMachine_list();

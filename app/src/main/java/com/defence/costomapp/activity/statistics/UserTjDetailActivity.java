@@ -38,6 +38,7 @@ public class UserTjDetailActivity extends BaseActivity {
 
     private String uid;
     private String uname;
+    private String wxid;
 
     private String[] titles = new String[]{"消费记录", "行为分析"};
     private List<Fragment> list;
@@ -53,9 +54,16 @@ public class UserTjDetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        uid = getIntent().getStringExtra("uid");
-        uname = getIntent().getStringExtra("uname");
-        middleTitle.setText(uname);
+        String ttype = getIntent().getStringExtra("ttype");
+        if (ttype.equals("user")) {
+            uid = getIntent().getStringExtra("uid");
+            uname = getIntent().getStringExtra("uname");
+            middleTitle.setText(uname);
+        } else if (ttype.equals("wx")) {
+            uid = getIntent().getStringExtra("uid");
+            wxid = getIntent().getStringExtra("wxid");
+            middleTitle.setText(uid);
+        }
 
         //页面，数据源
         list = new ArrayList<>();

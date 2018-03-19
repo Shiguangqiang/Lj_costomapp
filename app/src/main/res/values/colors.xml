@@ -13,16 +13,24 @@
     <color name="scan_bg">#7f000000</color>
     <color name="contents_text">#7f000000</color>
     <color name="transparent">#000000</color>
-    <color name="sansansan">#333333</color>
+
     <color name="liuliuliu">#666666</color>
     <color name="jiujiujiu">#999999</color>
     <color name="red">#f90606</color>
     <color name="black">#000000</color>
     <color name="orange">#FFD700</color>
     <color name="blue">#191df9</color>
-    <color name="F2">#F2F2F2</color>
+
     <color name="F4">#F4F4F4</color>
 
+    <color name="sansansan">#333333</color>
+    <color name="F2">#F2F2F2</color>
+    <color name="bule_light">#00ccff</color>
+    <color name="green">#1ae932</color>
+
+    <color name="orange_light">#ffcc00</color>
+    <color name="red_light">#ff3300</color>
+    <color name="pink_light">#cc00ff</color>
 
 
 </resources>

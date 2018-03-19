@@ -55,8 +55,8 @@ public class BehavAnalysisFragment extends Fragment {
         //页面，数据源
         list = new ArrayList<>();
         list.add(new Tab1Fragment());
-        list.add(new Tab1Fragment());
-        list.add(new Tab1Fragment());
+        list.add(new Tab2Fragment());
+        list.add(new Tab3Fragment());
         //ViewPager的适配器
         adapter = new MyAdapter(getChildFragmentManager(), getContext());
         viewPager.setAdapter(adapter);
@@ -98,7 +98,7 @@ public class BehavAnalysisFragment extends Fragment {
         public View getTabView(int position) {
             View v = LayoutInflater.from(context).inflate(R.layout.tab_custom, null);
             TextView tv_title = (TextView) v.findViewById(R.id.tv_title);
-            TextView tv_circle = (TextView) v.findViewById(R.id.tv_circle);
+//            TextView tv_circle = (TextView) v.findViewById(R.id.tv_circle);
 //            if (tabLayout.getSelectedTabPosition()==position) {
 //                tv_title.setText(titles[position]);
 //                tv_title.setVisibility(View.VISIBLE);

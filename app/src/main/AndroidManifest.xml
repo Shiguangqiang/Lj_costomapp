@@ -164,10 +164,31 @@
         <activity
             android:name=".activity.statistics.MachineDetailActivity"
             android:screenOrientation="portrait" />
-        <!--用户统计-->
-        <activity android:name=".activity.statistics.UserTjActivity" />
-        <!--用户统计详情-->
-        <activity android:name=".activity.statistics.UserTjDetailActivity"></activity>
+        <!-- 用户统计 -->
+        <activity
+            android:name=".activity.statistics.UserTjActivity"
+            android:screenOrientation="portrait" />
+        <!-- 用户统计详情 -->
+        <activity
+            android:name=".activity.statistics.UserTjDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 充值记录详情 -->
+        <activity
+            android:name=".activity.statistics.ChongzhiDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 今日流水 -->
+        <activity
+            android:name=".activity.statistics.DailyCostActivity"
+            android:screenOrientation="portrait" />
+        <!-- 结算查询 -->
+        <activity
+            android:name=".activity.statistics.JieSuanActivity"
+            android:screenOrientation="portrait" />
+        <!-- 订单管理 -->
+        <activity
+            android:name=".activity.statistics.DingdanActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.statistics.DingdanDetailActivity"></activity>
     </application>
 
 </manifest>
