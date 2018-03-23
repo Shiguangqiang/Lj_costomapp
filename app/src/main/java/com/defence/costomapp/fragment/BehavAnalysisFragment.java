@@ -68,8 +68,7 @@ public class BehavAnalysisFragment extends Fragment {
             tab.setCustomView(adapter.getTabView(i));
         }
     }
-
-
+    
     class MyAdapter extends FragmentPagerAdapter {
 
         private Context context;

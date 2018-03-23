@@ -17,10 +17,51 @@ public class UserTjBean {
      * reg_user : 180
      */
 
+    private int reg_user;
+    private int bankNo;
     private int pingtaiNum;
     private int weixinNum;
-    private int reg_user;
-    private List<UserListBean> userList;
+    private int chongzhinum;
+    private int regnum;
+
+
+    private List<ListBean> list;
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public int getChongzhinum() {
+        return chongzhinum;
+    }
+
+    public void setChongzhinum(int chongzhinum) {
+        this.chongzhinum = chongzhinum;
+    }
+
+    public int getRegnum() {
+        return regnum;
+    }
+
+    public void setRegnum(int regnum) {
+        this.regnum = regnum;
+    }
+
+
+
+    public int getBankNo() {
+        return bankNo;
+    }
+
+    public void setBankNo(int bankNo) {
+        this.bankNo = bankNo;
+    }
+
+
 
     public int getPingtaiNum() {
         return pingtaiNum;
@@ -46,45 +87,24 @@ public class UserTjBean {
         this.reg_user = reg_user;
     }
 
-    public List<UserListBean> getUserList() {
-        return userList;
-    }
 
-    public void setUserList(List<UserListBean> userList) {
-        this.userList = userList;
-    }
 
-    public static class UserListBean {
+
+
+    public static class ListBean {
         /**
-         * id : 263
-         * mphone : 13488686332
-         * password : MTM0ODYzMzI=
-         * timeline : 2018-03-13 15:40:19
-         * authorizationKey : ToYAS3eb
-         * registrationid : 161a3797c80e2e59ebf
-         * name : 小凯
-         * age : 0
-         * birth :
-         * height : 160
-         * weight : 60
-         * idcard :
-         * gender : 8
-         * portrait : image/50201802081132585490494901116133
-         * bankNo : 6010
-         * hasBand : 0
-         * language : zh
-         * country : HANS
-         * whichPhone : iPhone
-         * address : Dunn
-         * addr1 : 12
-         * addr2 : 1201
-         * addr3 : 120101
-         * addr4 : 0
-         * addrVal : 天津市-天津市-和平区
-         * reg_from : 0
-         * reg_time :
+         * wx : W9HYbr7eIY
+         * wxOpenID : oAyIL1Zta7UH2qFMHJW9HYbr7eIY
+         * pv : 18600
+         * orderUID : 0
          */
 
+        private String wx;
+        private String wxOpenID;
+        private int pv;
+        private int orderUID;
+        private int userID;
+        private int hm;
         private int id;
         private String mphone;
         private String password;
@@ -113,6 +133,7 @@ public class UserTjBean {
         private int reg_from;
         private String reg_time;
 
+
         public int getId() {
             return id;
         }
@@ -121,28 +142,12 @@ public class UserTjBean {
             this.id = id;
         }
 
-        public String getMphone() {
-            return mphone;
-        }
-
-        public void setMphone(String mphone) {
-            this.mphone = mphone;
-        }
-
         public String getPassword() {
             return password;
         }
 
         public void setPassword(String password) {
             this.password = password;
-        }
-
-        public String getTimeline() {
-            return timeline;
-        }
-
-        public void setTimeline(String timeline) {
-            this.timeline = timeline;
         }
 
         public String getAuthorizationKey() {
@@ -223,14 +228,6 @@ public class UserTjBean {
 
         public void setPortrait(String portrait) {
             this.portrait = portrait;
-        }
-
-        public int getBankNo() {
-            return bankNo;
-        }
-
-        public void setBankNo(int bankNo) {
-            this.bankNo = bankNo;
         }
 
         public int getHasBand() {
@@ -327,6 +324,79 @@ public class UserTjBean {
 
         public void setReg_time(String reg_time) {
             this.reg_time = reg_time;
+        }
+
+        public int getBankNo() {
+            return bankNo;
+        }
+
+        public void setBankNo(int bankNo) {
+            this.bankNo = bankNo;
+        }
+
+        public String getTimeline() {
+            return timeline;
+        }
+
+        public void setTimeline(String timeline) {
+            this.timeline = timeline;
+        }
+
+        public String getMphone() {
+            return mphone;
+        }
+
+        public void setMphone(String mphone) {
+            this.mphone = mphone;
+        }
+
+        public int getHm() {
+            return hm;
+        }
+
+        public void setHm(int hm) {
+            this.hm = hm;
+        }
+
+        public int getUserID() {
+
+            return userID;
+        }
+
+        public void setUserID(int userID) {
+            this.userID = userID;
+        }
+
+        public String getWx() {
+            return wx;
+        }
+
+        public void setWx(String wx) {
+            this.wx = wx;
+        }
+
+        public String getWxOpenID() {
+            return wxOpenID;
+        }
+
+        public void setWxOpenID(String wxOpenID) {
+            this.wxOpenID = wxOpenID;
+        }
+
+        public int getPv() {
+            return pv;
+        }
+
+        public void setPv(int pv) {
+            this.pv = pv;
+        }
+
+        public int getOrderUID() {
+            return orderUID;
+        }
+
+        public void setOrderUID(int orderUID) {
+            this.orderUID = orderUID;
         }
     }
 }

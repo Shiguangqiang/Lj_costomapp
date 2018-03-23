@@ -4,12 +4,16 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
@@ -48,19 +52,32 @@ public class MachineTjActivity extends BaseActivity {
     TextView tvRightdate;
     @BindView(R.id.tv_add)
     TextView tvAdd;
+
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.right_icon)
+    ImageView rightIcon;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
+    @BindView(R.id.liear_machicelist)
+    LinearLayout liearMachicelist;
+    @BindView(R.id.liear_grouplist)
+    LinearLayout liearGrouplist;
     @BindView(R.id.btn_startserach)
-    Button btnStartserach;
+    TextView btnStartserach;
+    @BindView(R.id.chu_rb)
+    RadioButton chuRb;
+    @BindView(R.id.tuikuan_rb)
+    RadioButton tuikuanRb;
+    @BindView(R.id.rg)
+    RadioGroup rg;
+    private String device;
+    private String devicegroup;
 
-
-    private ArrayList<JsonBean> options1Items = new ArrayList<>();
-    private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
-    private String addr1;
-    private String addr2;
-    private String addr3;
-    private String xianICStr;
-    private String shiICStr;
-    private String shengIcStr;
+    private String xianICStr = "0";
+    private String shiICStr = "0";
+    private String shengIcStr = "0";
+    private String status = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,81 +92,8 @@ public class MachineTjActivity extends BaseActivity {
         middleTitle.setText("统计");
         tvLeftdate.setText(SgqUtils.getNowDate());
         tvRightdate.setText(SgqUtils.getNowDate());
-//        //解析
-//        initJsonData();
     }
 
-//    private void initJsonData() {//解析数据
-//
-//        /**
-//         * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
-//         * 关键逻辑在于循环体
-//         *
-//         * */
-//        String JsonData = new GetJsonDataUtil().getJson(this, "province.json");//获取assets目录下的json文件数据
-//
-//        ArrayList<JsonBean> jsonBean = parseData(JsonData);//用Gson 转成实体
-//
-//        /**
-//         * 添加省份数据
-//         *
-//         * 注意：如果是添加的JavaBean实体，则实体类需要实现 IPickerViewData 接口，
-//         * PickerView会通过getPickerViewText方法获取字符串显示出来。
-//         */
-//        options1Items = jsonBean;
-//
-//        for (int i = 0; i < jsonBean.size(); i++) {//遍历省份
-//            ArrayList<String> CityList = new ArrayList<>();//该省的城市列表（第二级）
-//            ArrayList<ArrayList<String>> Province_AreaList = new ArrayList<>();//该省的所有地区列表（第三极）
-//
-//            for (int c = 0; c < jsonBean.get(i).getCityList().size(); c++) {//遍历该省份的所有城市
-//                String CityName = jsonBean.get(i).getCityList().get(c).getName();
-//                CityList.add(CityName);//添加城市
-//
-//                ArrayList<String> City_AreaList = new ArrayList<>();//该城市的所有地区列表
-//
-//                //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
-//                if (jsonBean.get(i).getCityList().get(c).getArea() == null
-//                        || jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
-//                    City_AreaList.add("");
-//                } else {
-//
-//                    for (int d = 0; d < jsonBean.get(i).getCityList().get(c).getArea().size(); d++) {//该城市对应地区所有数据
-//                        String AreaName = jsonBean.get(i).getCityList().get(c).getArea().get(d);
-//
-//                        City_AreaList.add(AreaName);//添加该城市所有地区数据
-//                    }
-//                }
-//                Province_AreaList.add(City_AreaList);//添加该省所有地区数据
-//            }
-//
-//            /**
-//             * 添加城市数据
-//             */
-//            options2Items.add(CityList);
-//
-//            /**
-//             * 添加地区数据
-//             */
-//            options3Items.add(Province_AreaList);
-//        }
-//
-//    }
-//
-//    public ArrayList<JsonBean> parseData(String result) {//Gson 解析
-//        ArrayList<JsonBean> detail = new ArrayList<>();
-//        try {
-//            JSONArray data = new JSONArray(result);
-//            Gson gson = new Gson();
-//            for (int i = 0; i < data.length(); i++) {
-//                JsonBean entity = gson.fromJson(data.optJSONObject(i).toString(), JsonBean.class);
-//                detail.add(entity);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return detail;
-//    }
 
     Calendar ca = Calendar.getInstance();
     int mYear = ca.get(Calendar.YEAR);
@@ -217,42 +161,44 @@ public class MachineTjActivity extends BaseActivity {
         }
     };
 
+    //    重写onActivityResult方法，用来接收B回传的数据。
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) { //resultCode为回传的标记，我在B中回传的是RESULT_OK
+            case 0:
+//                Bundle b=data.getExtras(); //data为B中回传的Intent
+//                String str=b.getString("str1");//str即为回传的值
+                if (data != null) {
+                    device = data.getStringExtra("device");
+                }
 
-//    private void ShowPickerView() {// 弹出选择器
-//
-//        OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-//                //返回的分别是三个级别的选中位置
-//                String tx = options1Items.get(options1).getPickerViewText() +
-//                        options2Items.get(options1).get(options2) +
-//                        options3Items.get(options1).get(options2).get(options3);
-//
-//                addr1 = options1Items.get(options1).getPickerViewText();
-//                addr2 = options2Items.get(options1).get(options2);
-//                addr3 = options3Items.get(options1).get(options2).get(options3);
-//
-//                tvAdd.setText(tx);
-//            }
-//        })
-//
-//                .setTitleText("城市选择")
-//                .setDividerColor(Color.BLACK)
-//                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-//                .setContentTextSize(20)
-//                .build();
-//
-//        /*pvOptions.setPicker(options1Items);//一级选择器
-//        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
-//        pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
-//        pvOptions.show();
-//    }
+                break;
+            case 1:
+//                Bundle b=data.getExtras(); //data为B中回传的Intent
+//                String str=b.getString("str1");//str即为回传的值
+                if (data != null) {
+                    devicegroup = data.getStringExtra("devicegroup");
+                }
 
+                break;
+            default:
+                break;
+        }
+    }
 
-    @OnClick({R.id.back, R.id.tv_leftdate, R.id.tv_rightdate, R.id.tv_add, R.id.btn_startserach})
+    @OnClick({R.id.liear_machicelist, R.id.liear_grouplist, R.id.chu_rb, R.id.tuikuan_rb, R.id.liear_left, R.id.tv_leftdate, R.id.tv_rightdate, R.id.tv_add, R.id.btn_startserach})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.back:
+            case R.id.liear_machicelist:
+                startActivityForResult(new Intent(MachineTjActivity.this, TkMachinListActivity.class), 144);
+                break;
+            case R.id.liear_grouplist:
+                startActivityForResult(new Intent(MachineTjActivity.this, TkGroupActivity.class), 166);
+                break;
+            case R.id.chu_rb:
+                break;
+            case R.id.tuikuan_rb:
+                break;
+            case R.id.liear_left:
                 finish();
                 break;
             case R.id.tv_leftdate:
@@ -265,21 +211,47 @@ public class MachineTjActivity extends BaseActivity {
                 break;
             case R.id.tv_add:
 //                ShowPickerView();
-
                 ShowNewPickerView();
                 break;
             case R.id.btn_startserach:
-                Intent intent = new Intent(MachineTjActivity.this, TjDetailActivity.class);
-                intent.putExtra("leftdate", tvLeftdate.getText().toString());
-                intent.putExtra("rightdate", tvRightdate.getText().toString());
-                intent.putExtra("tvAdd", tvAdd.getText().toString());
-                intent.putExtra("addr1", shengIcStr);
-                intent.putExtra("addr2", shiICStr);
-                intent.putExtra("addr3", xianICStr);
-                startActivity(intent);
+
+
+                if (TextUtils.isEmpty(device) && TextUtils.isEmpty(devicegroup)) {
+                    new AlertDialog.Builder(this)
+                            .setMessage("请至少选择一种查询方式")
+//                            .setPositiveButton(" ",null)
+//                            .setNeutralButton("好", null)
+                            .setNegativeButton("好",null)
+                            .show();
+                } else {
+
+                    if (chuRb.isChecked()) {
+                        status = "4";
+                    }
+                    if (tuikuanRb.isChecked()) {
+                        status = "5,6";
+                    }
+                    if (!TextUtils.isEmpty(devicegroup)) {
+                        device = devicegroup;
+                    }
+
+                    Intent intent = new Intent(MachineTjActivity.this, MachineSerachActivity.class);
+                    intent.putExtra("leftdate", tvLeftdate.getText().toString());
+                    intent.putExtra("rightdate", tvRightdate.getText().toString());
+                    intent.putExtra("tvAdd", tvAdd.getText().toString());
+                    intent.putExtra("addr1", shengIcStr);
+                    intent.putExtra("addr2", shiICStr);
+                    intent.putExtra("addr3", xianICStr);
+                    intent.putExtra("device", device);
+                    intent.putExtra("status", status);
+                    startActivity(intent);
+                    finish();
+                }
+
                 break;
         }
     }
+
 
     public AlertDialog alertDialog;
     private View ad_view;

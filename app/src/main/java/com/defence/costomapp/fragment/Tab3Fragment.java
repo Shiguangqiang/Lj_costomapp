@@ -122,7 +122,7 @@ public class Tab3Fragment extends BaseFragment {
         public View getView(final int position, View view, ViewGroup arg2) {
             // TODO Auto-generated method stub
             if (view == null) {
-                view = inflater.inflate(R.layout.item_usertj, null);
+                view = inflater.inflate(R.layout.item_usertjnew, null);
             }
             TextView reg_phone = view.findViewById(R.id.reg_phone);
             TextView tv_yue = view.findViewById(R.id.tv_yue);

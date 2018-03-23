@@ -120,7 +120,6 @@ public class LoginActivity extends BaseActivity {
                                     break;
                                 case 10100:
                                     Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
-//
                                     startActivity(intent);
                                     break;
                                 case 10110:
@@ -128,7 +127,7 @@ public class LoginActivity extends BaseActivity {
                                     break;
 
                             }
-                            finish();
+//                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

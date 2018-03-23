@@ -1,21 +1,24 @@
 package com.defence.costomapp.activity.statistics;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.fragment.CommodityFragment;
-import com.defence.costomapp.fragment.MachiceFragment;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TongjiBean;
+import com.defence.costomapp.fragment.CommodityFragment;
+import com.defence.costomapp.fragment.MachiceFragment;
 import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
@@ -31,8 +34,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class TjDetailActivity extends BaseActivity {
+public class MachineSerachActivity extends BaseActivity {
 
     @BindView(R.id.back)
     ImageView back;
@@ -54,8 +58,16 @@ public class TjDetailActivity extends BaseActivity {
     TabLayout mangerTablayout;
     @BindView(R.id.manger_viewpager)
     ViewPager mangerViewpager;
+    @BindView(R.id.right_icon)
+    ImageView rightIcon;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
     private String leftdate;
     private String rightdate;
+    private String leftdatenew = SgqUtils.getNowDate();
+    private String rightdatenew = SgqUtils.getNowDate();
     private String tvAdd;
     String addr1, addr2, addr3;
     private String intent_addr1;
@@ -67,6 +79,8 @@ public class TjDetailActivity extends BaseActivity {
     private List<Fragment> list;
     private MyAdapter adapter;
     private CommodityFragment commodityFragment;
+    private String device;
+    private String status;
 
 
     @Override
@@ -80,12 +94,24 @@ public class TjDetailActivity extends BaseActivity {
     private void init() {
         leftdate = getIntent().getStringExtra("leftdate");
         rightdate = getIntent().getStringExtra("rightdate");
+
+        if (!TextUtils.isEmpty(leftdate)) {
+            leftdatenew = leftdate;
+        }
+        if (!TextUtils.isEmpty(rightdate)) {
+            rightdatenew = rightdate;
+        }
+        device = getIntent().getStringExtra("device");
+        status = getIntent().getStringExtra("status");
         tvAdd = getIntent().getStringExtra("tvAdd");
+
         intent_addr1 = getIntent().getStringExtra("addr1");
         intent_addr2 = getIntent().getStringExtra("addr2");
         intent_addr3 = getIntent().getStringExtra("addr3");
-        middleTitle.setText(leftdate + " 至 " + rightdate);
+
+        middleTitle.setText(leftdatenew + " 至 " + rightdatenew);
         middleTitle.setTextSize(16);
+        rightIcon.setImageResource(R.mipmap.all);
 
 
         //展示数据
@@ -105,36 +131,49 @@ public class TjDetailActivity extends BaseActivity {
         SgqUtils.setIndicator(mangerTablayout, 50, 50);
 
 
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
     }
 
     private void getData() {
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
-
-        if (tvAdd.length() == 3) {
-            addr1 = "0";
-            addr2 = "0";
-            addr3 = "0";
-        } else {
-            addr1 = intent_addr1;
-            addr2 = intent_addr2;
-            addr3 = intent_addr3;
-        }
+//        if (!TextUtils.isEmpty(tvAdd)) {
+//            if (tvAdd.length() == 3) {
+//                addr1 = "0";
+//                addr2 = "0";
+//                addr3 = "0";
+//            } else {
+//                addr1 = intent_addr1;
+//                addr2 = intent_addr2;
+//                addr3 = intent_addr3;
+//            }
+//        } else {
+//            addr1 = "0";
+//            addr2 = "0";
+//            addr3 = "0";
+//        }
+//
 
         RequestParams params = new RequestParams();
-        params.put("adminGroupID", groupid);
-        params.put("date1", leftdate);
-        params.put("date2", rightdate);
-        params.put("addr1", addr1);
-        params.put("addr2", addr2);
-        params.put("addr3", addr3);
+
+        if (TextUtils.isEmpty(device) && TextUtils.isEmpty(status)) {
+            params.put("adminGroupID", groupid);
+            params.put("addr1", "0");
+            params.put("addr2", "0");
+            params.put("addr3", "0");
+            params.put("date1", "2000-01-01");
+            params.put("date2", SgqUtils.getNowDate());
+        } else {
+            params.put("adminGroupID", groupid);
+            params.put("date1", leftdatenew);
+            params.put("date2", rightdatenew);
+            params.put("addr1", "0");
+            params.put("addr2", "0");
+            params.put("addr3", "0");
+            params.put("devices", device);
+            params.put("status", status);
+
+        }
+
+
         httpUtils.doPost(Urls.tjserach(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
@@ -143,11 +182,11 @@ public class TjDetailActivity extends BaseActivity {
                 TongjiBean tongjiBean = gson.fromJson(jsonObject.toString(), TongjiBean.class);
 
 
-                sumJinE.setText("金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE()+"") + "元");
+                sumJinE.setText("金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
                 paysalecount.setText("付款商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
                 freesalecount.setText("赠送商品:" + tongjiBean.getMap_data().getFreeSaleCount() + "个");
-                freecost.setText("赠送成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getFreeCost()+"") + "元");
-                lirun.setText("净利润:" +AmountUtils.changeF2Y( tongjiBean.getMap_data().getLiRun1()+"") + "元");
+                freecost.setText("赠送成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getFreeCost() + "") + "元");
+                lirun.setText("净利润:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getLiRun1() + "") + "元");
 
                 List<TongjiBean.GoodsListBean> goods_list = tongjiBean.getGoods_list();
                 List<TongjiBean.MachineListBean> machine_list = tongjiBean.getMachine_list();
@@ -155,14 +194,21 @@ public class TjDetailActivity extends BaseActivity {
                 String stj = jsonObject.toString();
                 SharePerenceUtil.putStringValuetoSp("stj", stj);
 
-
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("goods", (Serializable) goods_list);
-//                commodityFragment.setArguments(bundle);
-
-
             }
         });
+    }
+
+    @OnClick({R.id.liear_left, R.id.liear_right})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.liear_left:
+                finish();
+                break;
+            case R.id.liear_right:
+                startActivity(new Intent(MachineSerachActivity.this, MachineTjActivity.class));
+                finish();
+                break;
+        }
     }
 
 

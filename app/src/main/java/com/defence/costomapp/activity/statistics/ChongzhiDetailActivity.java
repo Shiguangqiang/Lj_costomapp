@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,10 @@ public class ChongzhiDetailActivity extends BaseActivity {
     TextView tvDate;
     @BindView(R.id.tv_xiaofei)
     TextView tvXiaofei;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
     private String userid;
     String Sdate = SgqUtils.getNowYmDate();
     private ChongzhiAdapter chongzhiAdapter;
@@ -72,7 +77,6 @@ public class ChongzhiDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chongzhi_detail);
         ButterKnife.bind(this);
-
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -103,8 +107,9 @@ public class ChongzhiDetailActivity extends BaseActivity {
 
     private void intdata(final String date) {
         userid = getIntent().getStringExtra("userid");
+        String phone = getIntent().getStringExtra("phone");
+        middleTitle.setText(phone);
 
-        middleTitle.setText(userid);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +134,13 @@ public class ChongzhiDetailActivity extends BaseActivity {
                 //字符串替换
                 String newdate = date.replace("-", "年");
                 tvDate.setText(newdate + "月");
-                tvXiaofei.setText("本月消费:" + AmountUtils.changeF2Y(chongzhiDetailBean.getPayval() + "") + "元");
+
+                int nnum = 0;
+                for (int i = 0; i < chongzhiDetailBean.getList().size(); i++) {
+                    nnum += chongzhiDetailBean.getList().get(i).getHowMuch();
+                }
+                tvXiaofei.setText("本月:" + AmountUtils.changeF2Y(nnum + "") + "元");
+
 
                 tvYue.setText("当前余额:" + AmountUtils.changeF2Y(chongzhiDetailBean.getYueNum() + ""));
                 tvZcz.setText("总充值:" + AmountUtils.changeF2Y(chongzhiDetailBean.getChongzhinum() + ""));
@@ -143,7 +154,6 @@ public class ChongzhiDetailActivity extends BaseActivity {
             }
         });
     }
-
 
     private class ChongzhiAdapter extends BaseAdapter {
 

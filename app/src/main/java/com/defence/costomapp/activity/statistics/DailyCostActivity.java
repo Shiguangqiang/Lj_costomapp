@@ -3,6 +3,7 @@ package com.defence.costomapp.activity.statistics;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,10 @@ public class DailyCostActivity extends BaseActivity {
     TextView lastday;
     @BindView(R.id.tv_nextday)
     TextView tvNextday;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
     private String groupid;
     String ddate = SgqUtils.getNowDate();
 
@@ -82,9 +87,14 @@ public class DailyCostActivity extends BaseActivity {
                 ddate = date;
                 JSONObject jsonObject = new JSONObject(result.toString());
                 DailyCostBean.ResultBean dailyCostBean = gson.fromJson(jsonObject.toString(), DailyCostBean.ResultBean.class);
-                tvDate.setText(dailyCostBean.getDate() + "");
-                tvFanxian.setText(AmountUtils.changeF2Y(dailyCostBean.getMap().getSumJinE() + "") + "元");
-                tvLirun.setText(AmountUtils.changeF2Y(dailyCostBean.getMap().getSumLiRun() + "") + "元");
+                tvDate.setText(dailyCostBean.getDate() + "" + SgqUtils.dateToWeek(dailyCostBean.getDate() + ""));
+
+                tvXiaose.setText(AmountUtils.changeF2Y(dailyCostBean.getMap().getSumJinE() + "") + "元");
+                tvZerocb.setText(AmountUtils.changeF2Y(dailyCostBean.getMap().getSumLiRun() + "") + "元");
+                tvFanxian.setText(AmountUtils.changeF2Y(dailyCostBean.getMap().getSumFanXian() + "") + "元");
+
+
+
                 tvPaycount.setText(dailyCostBean.getMap().getSumCost() + "");
                 tvSendcount.setText(dailyCostBean.getMap().getSumSaleCount() + "");
 
@@ -94,10 +104,10 @@ public class DailyCostActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.back, R.id.lastday, R.id.tv_nextday})
+    @OnClick({R.id.liear_left, R.id.lastday, R.id.tv_nextday})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.back:
+            case R.id.liear_left:
                 finish();
                 break;
             case R.id.lastday:

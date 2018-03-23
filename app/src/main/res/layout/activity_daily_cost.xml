@@ -24,6 +24,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView
@@ -32,6 +33,7 @@
             android:layout_margin="@dimen/pad_height_15"
             android:layout_weight="1"
             android:gravity="left"
+
             android:text="付款个数:"
             android:textSize="@dimen/pad_text_size_18" />
 
@@ -42,13 +44,14 @@
             android:layout_margin="@dimen/pad_height_15"
             android:layout_weight="1"
             android:gravity="right"
+
             android:text="0个"
             android:textSize="@dimen/pad_text_size_18" />
 
 
     </LinearLayout>
 
-    <LinearLayout
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -59,6 +62,7 @@
             android:layout_margin="@dimen/pad_height_15"
             android:layout_weight="1"
             android:gravity="left"
+            android:visibility="gone"
             android:text="赠送个数:"
             android:textSize="@dimen/pad_text_size_18" />
 
@@ -73,7 +77,7 @@
             android:textSize="@dimen/pad_text_size_18" />
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,7 +100,7 @@
             android:layout_margin="@dimen/pad_height_15"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="0元"
+            android:text="0.00元"
             android:textSize="@dimen/pad_text_size_18" />
 
 
@@ -113,7 +117,7 @@
             android:layout_margin="@dimen/pad_height_15"
             android:layout_weight="1"
             android:gravity="left"
-            android:text="0元购成本:"
+            android:text="利润额:"
             android:textSize="@dimen/pad_text_size_18" />
 
         <TextView
@@ -123,7 +127,7 @@
             android:layout_margin="@dimen/pad_height_15"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="0元"
+            android:text="0.00元"
             android:textSize="@dimen/pad_text_size_18" />
 
 
@@ -150,7 +154,7 @@
             android:layout_margin="@dimen/pad_height_15"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="0元"
+            android:text="0.00元"
             android:textSize="@dimen/pad_text_size_18" />
 
 
@@ -177,8 +181,34 @@
             android:layout_margin="@dimen/pad_height_15"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="0元"
+            android:text="0.00元"
             android:textSize="@dimen/pad_text_size_18" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pad_height_15"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="销售数量:"
+            android:textSize="@dimen/pad_text_size_18" />
+
+        <TextView
+            android:id="@+id/tv_sendcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pad_height_15"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="0个"
+            android:textSize="@dimen/pad_text_size_18" />
+
 
     </LinearLayout>
 

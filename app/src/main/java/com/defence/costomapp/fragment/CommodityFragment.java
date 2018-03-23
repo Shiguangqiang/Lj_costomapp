@@ -50,12 +50,12 @@ public class CommodityFragment extends BaseFragment {
     private List<TongjiBean.GoodsListBean> goods_list;
     private String leftdate;
     private String rightdate;
-    private String tvAdd;
-    String addr1, addr2, addr3;
-    private String intent_addr1;
-    private String intent_addr2;
-    private String intent_addr3;
+    private String leftdatenew = SgqUtils.getNowDate();
+    private String rightdatenew = SgqUtils.getNowDate();
     private String groupid;
+
+    private String device;
+    private String status;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,76 +68,35 @@ public class CommodityFragment extends BaseFragment {
 
 
     private void initdata() {
-
         getData();
-//        if (getArguments() != null) {
-//            List<TongjiBean.GoodsListBean> goods_list = (List<TongjiBean.GoodsListBean>) getArguments().getSerializable("goods");
-//        }
-////
-//        String stj = SharePerenceUtil.getStringValueFromSp("stj");
-//
-//        if (!TextUtils.isEmpty(stj)) {
-//            TongjiBean tongjiBean = new Gson().fromJson(stj, TongjiBean.class);
-//            goods_list = tongjiBean.getGoods_list();
-//            listShop.setAdapter(new ShopAdapter(getActivity(), goods_list, new RVItemClickListener() {
-//                @Override
-//                public void onItemClick(int position) {
-//
-//                    Intent intent = new Intent(getActivity(), ShopDetailActivity.class);
-//
-//                    intent.putExtra("formatID", goods_list.get(position).getFormatID() + "");
-//                    intent.putExtra("formatText", goods_list.get(position).getDescVal());
-//
-//                    intent.putExtra("date1", getActivity().getIntent().getStringExtra("leftdate"));
-//                    intent.putExtra("date2", getActivity().getIntent().getStringExtra("rightdate"));
-//
-//                    String addr1 = getActivity().getIntent().getStringExtra("addr1");
-//                    String addr2 = getActivity().getIntent().getStringExtra("addr2");
-//                    String addr3 = getActivity().getIntent().getStringExtra("addr3");
-//
-//                    if (TextUtils.isEmpty(addr1)) {
-//                        addr1 = "0";
-//                        addr2 = "0";
-//                        addr3 = "0";
-//                    }
-//                    intent.putExtra("addr1", addr1);
-//                    intent.putExtra("addr2", addr2);
-//                    intent.putExtra("addr3", addr3);
-//                    startActivity(intent);
-//
-//                }
-//            }));
-//        }
-
     }
 
     private void getData() {
-
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         leftdate = getActivity().getIntent().getStringExtra("leftdate");
         rightdate = getActivity().getIntent().getStringExtra("rightdate");
-        tvAdd = getActivity().getIntent().getStringExtra("tvAdd");
-        intent_addr1 = getActivity().getIntent().getStringExtra("addr1");
-        intent_addr2 = getActivity().getIntent().getStringExtra("addr2");
-        intent_addr3 = getActivity().getIntent().getStringExtra("addr3");
-
-        if (tvAdd.length() == 3) {
-            addr1 = "0";
-            addr2 = "0";
-            addr3 = "0";
-        } else {
-            addr1 = intent_addr1;
-            addr2 = intent_addr2;
-            addr3 = intent_addr3;
-        }
-
+        device = getActivity().getIntent().getStringExtra("device");
+        status = getActivity().getIntent().getStringExtra("status");
         RequestParams params = new RequestParams();
-        params.put("adminGroupID", groupid);
-        params.put("date1", leftdate);
-        params.put("date2", rightdate);
-        params.put("addr1", addr1);
-        params.put("addr2", addr2);
-        params.put("addr3", addr3);
+
+        if (TextUtils.isEmpty(device) && TextUtils.isEmpty(status)) {
+            params.put("adminGroupID", groupid);
+            params.put("addr1", "0");
+            params.put("addr2", "0");
+            params.put("addr3", "0");
+            params.put("date1", "2000-01-01");
+            params.put("date2", SgqUtils.getNowDate());
+        } else {
+            params.put("adminGroupID", groupid);
+            params.put("date1", leftdate);
+            params.put("date2", rightdate);
+            params.put("addr1", "0");
+            params.put("addr2", "0");
+            params.put("addr3", "0");
+            params.put("devices", device);
+            params.put("status", status);
+
+        }
         httpUtils.doPost(Urls.tjserach(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override

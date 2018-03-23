@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.utils.SharePerenceUtil;
@@ -76,23 +75,23 @@ public class StatisticsActivity extends BaseActivity {
                 break;
             case R.id.liear_machicetj:
                 //自助机统计
-                startActivity(new Intent(StatisticsActivity.this, MachineTjActivity.class));
+                startActivity(new Intent(StatisticsActivity.this, MachineSerachActivity.class));
                 break;
-            // 用户统计
+                // 用户统计
             case R.id.liear_usertj:
-                startActivity(new Intent(StatisticsActivity.this, UserTjActivity.class));
-//                startActivity(new Intent(StatisticsActivity.this,UserTjDetailActivity.class));
+                startActivity(new Intent(StatisticsActivity.this, UserTjNewActivity.class));
                 break;
             case R.id.liear_liushui:
-                startActivity(new Intent(StatisticsActivity.this,DailyCostActivity.class));
+                startActivity(new Intent(StatisticsActivity.this, DailyCostActivity.class));
                 break;
             case R.id.liear_dingdan:
-                startActivity(new Intent(StatisticsActivity.this,DingdanActivity.class));
+                startActivity(new Intent(StatisticsActivity.this, DingdanActivity.class));
                 break;
             case R.id.liear_jiesuan:
-                startActivity(new Intent(StatisticsActivity.this,JieSuanActivity.class));
+                startActivity(new Intent(StatisticsActivity.this, JieSuanActivity.class));
                 break;
             case R.id.liear_tuikuan:
+                startActivity(new Intent(StatisticsActivity.this, TuikuanListActivity.class));
                 break;
         }
     }

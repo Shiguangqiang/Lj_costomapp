@@ -288,7 +288,11 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
     //检查是否已经登录
     private void checkTypeOrLogined(Intent intent, final int type, final Class<?> clz) {
         String nameAndPsw = SharePerenceUtil.getStringValueFromSp(type + "");
-        if (!TextUtils.isEmpty(nameAndPsw)) {
+        boolean booleanValueFromSp = SharePerenceUtil.getBooleanValueFromSp(type + "isLogin");
+//        if(booleanValueFromSp){
+//            startActivity(new Intent(ChoiceTypeActivity.this, LoginActivity.class));
+//        } else
+            if (!TextUtils.isEmpty(nameAndPsw)) {
             final String userName = nameAndPsw.split("---")[0];
             final String psw = nameAndPsw.split("---")[1];
             RequestParams params = new RequestParams();

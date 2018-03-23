@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class UserTjDetailActivity extends BaseActivity {
     private String[] titles = new String[]{"消费记录", "行为分析"};
     private List<Fragment> list;
     private MyAdapter adapter;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +57,21 @@ public class UserTjDetailActivity extends BaseActivity {
 
     private void initData() {
         String ttype = getIntent().getStringExtra("ttype");
-        if (ttype.equals("user")) {
-            uid = getIntent().getStringExtra("uid");
-            uname = getIntent().getStringExtra("uname");
-            middleTitle.setText(uname);
-        } else if (ttype.equals("wx")) {
-            uid = getIntent().getStringExtra("uid");
-            wxid = getIntent().getStringExtra("wxid");
-            middleTitle.setText(uid);
+
+        if (!TextUtils.isEmpty(ttype)) {
+            if (ttype.equals("4")) {
+                uid = getIntent().getStringExtra("uid");
+                wxid = getIntent().getStringExtra("wxid");
+                middleTitle.setText(wxid);
+            } else {
+                phone = getIntent().getStringExtra("phone");
+                uid = getIntent().getStringExtra("uid");
+                uname = getIntent().getStringExtra("uname");
+                middleTitle.setText(phone);
+
+            }
+        } else {
+            finish();
         }
 
         //页面，数据源

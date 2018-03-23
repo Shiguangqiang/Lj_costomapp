@@ -2,6 +2,7 @@ package com.defence.costomapp.activity.statistics;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
@@ -38,6 +39,10 @@ public class JieSuanActivity extends BaseActivity {
     TextView tvYijiesuan;
     @BindView(R.id.tv_weijiesuan)
     TextView tvWeijiesuan;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
     private String groupid;
 
     @Override
@@ -64,7 +69,8 @@ public class JieSuanActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.back)
+
+    @OnClick(R.id.liear_left)
     public void onViewClicked() {
         finish();
     }

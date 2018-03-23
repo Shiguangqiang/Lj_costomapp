@@ -118,7 +118,7 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
             SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
             MyApplication.getApp().setUserInfo(null);
         }
-        startActivity(new Intent(ManagerActivity.this, ChoiceTypeActivity.class));
+//        startActivity(new Intent(ManagerActivity.this, ChoiceTypeActivity.class));
         finish();
 
     }

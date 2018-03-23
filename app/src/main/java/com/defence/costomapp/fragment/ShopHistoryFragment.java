@@ -97,15 +97,11 @@ public class ShopHistoryFragment extends BaseFragment {
     private void initdata(final String date) {
         uid = getActivity().getIntent().getStringExtra("uid");
         wxid = getActivity().getIntent().getStringExtra("wxid");
-        ttype = getActivity().getIntent().getStringExtra("ttype");
 
         RequestParams params = new RequestParams();
         params.put("orderUID", uid);
         params.put("sdate", date);
-        if (ttype.equals("wx")) {
-            params.put("wxopenID", wxid);
-
-        }
+        params.put("wxopenID", wxid);
         params.put("orderBy", "2");
 
         httpUtils.doPost(Urls.shophistory(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
@@ -116,15 +112,17 @@ public class ShopHistoryFragment extends BaseFragment {
                 Sdate = date;
                 srl.setRefreshing(false);
                 srl.setLoading(false);
-
                 JSONObject jsonObject = new JSONObject(result.toString());
-
                 ShopHistoryDetailBean shopHistoryDetailBean = gson.fromJson(jsonObject.toString(), ShopHistoryDetailBean.class);
-
-                //字符串替换
+                //字符串替
                 String newdate = date.replace("-", "年");
                 tvDate.setText(newdate + "月");
-                tvXiaofei.setText("本月消费:" + AmountUtils.changeF2Y(shopHistoryDetailBean.getPayval() + "") + "元");
+                int nnum = 0;
+                for (int i = 0; i < shopHistoryDetailBean.getList().size(); i++) {
+                    nnum += shopHistoryDetailBean.getList().get(i).getPayVal();
+                }
+                tvXiaofei.setText("本月:" + AmountUtils.changeF2Y(nnum + "") + "元");
+//                tvXiaofei.setText("本月消费:" + AmountUtils.changeF2Y(shopHistoryDetailBean.getPayval() + "") + "元");
 
 
                 shopHistoryAdapter = new ShopHistoryAdapter(getActivity(), shopHistoryDetailBean.getList(), new RVItemClickListener() {
@@ -191,8 +189,8 @@ public class ShopHistoryFragment extends BaseFragment {
 
 
             tv_show.setText(list.get(position).getDescVal());
-            tv_date.setText(list.get(position).getOrderTimeline());
-            tv_pricee.setText(list.get(position).getPayVal() + "");
+            tv_date.setText(list.get(position).getPayTimeline());
+            tv_pricee.setText("-" + AmountUtils.changeF2Y(list.get(position).getPayVal() + "") + "元");
 
 //
 //            buhuoItemll.setOnClickListener(new View.OnClickListener() {

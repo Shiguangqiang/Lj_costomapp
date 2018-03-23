@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by author Sgq
@@ -22,12 +23,54 @@ import java.util.Date;
  */
 
 public class SgqUtils {
+
+
     //补货
     public static final int BUHUO_TYPE = 0;
     //管理
     public static final int MANAGER_TYPE = 10100;
     //统计
     public static final int TONGJI_TYPE = 10110;
+
+
+    //将list转换为带有 ， 的字符串
+    public static String listToString(List<String> list) {
+
+        StringBuilder sb = new StringBuilder();
+
+        if (list != null && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (i < list.size() - 1) {
+                    sb.append("'" + list.get(i) + "',");
+                } else {
+                    sb.append("'" + list.get(i) + "'");
+                }
+            }
+        }
+        return sb.toString();
+    }
+    /**
+     * 日期转星期
+     *
+     * @param datetime
+     * @return
+     */
+    public static String dateToWeek(String datetime) {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        String[] weekDays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+        Calendar cal = Calendar.getInstance(); // 获得一个日历
+        Date datet = null;
+        try {
+            datet = f.parse(datetime);
+            cal.setTime(datet);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1; // 指示一个星期中的某天。
+        if (w < 0)
+            w = 0;
+        return weekDays[w];
+    }
 
 
 

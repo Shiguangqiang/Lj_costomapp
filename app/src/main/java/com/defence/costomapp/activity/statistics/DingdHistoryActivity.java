@@ -1,5 +1,6 @@
 package com.defence.costomapp.activity.statistics;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,15 +20,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
+import com.defence.costomapp.bean.DingdHistoryBean;
 import com.defence.costomapp.bean.DingdanBean;
-import com.defence.costomapp.bean.UserInfo;
-import com.defence.costomapp.bean.WxpayBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.AmountUtils;
-import com.defence.costomapp.utils.HttpUtils;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
@@ -38,18 +36,13 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
-public class DingdanActivity extends BaseActivity {
+public class DingdHistoryActivity extends BaseActivity {
 
     @BindView(R.id.back)
     ImageView back;
@@ -59,28 +52,39 @@ public class DingdanActivity extends BaseActivity {
     TextView rightTitle;
     @BindView(R.id.right_icon)
     ImageView rightIcon;
-    @BindView(R.id.list_dingdan)
-    ListView listDingdan;
+    @BindView(R.id.success_count)
+    TextView successCount;
+    @BindView(R.id.waitout_count)
+    TextView waitoutCount;
+    @BindView(R.id.refound_count)
+    TextView refoundCount;
+    @BindView(R.id.success_money)
+    TextView successMoney;
+    @BindView(R.id.refound_money)
+    TextView refoundMoney;
+    @BindView(R.id.refound_cb)
+    TextView refoundCb;
+    @BindView(R.id.list_dingdanhis)
+    ListView listDingdanhis;
     @BindView(R.id.srl)
     RefreshLayout srl;
-    private PopupWindow pop;
+    private String wxOpenID;
+    private String whoID;
     private String groupid;
-
+    private DingdanAdapter dingdanAdapter;
     int iiCount = 0;
     String state = "";
-    private DingdanAdapter dingdanAdapter;
+    private PopupWindow pop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dingdan);
+        setContentView(R.layout.activity_dingd_history);
         ButterKnife.bind(this);
-        initdata();
-    }
 
-    private void initdata() {
-        middleTitle.setText("全部订单");
-        rightIcon.setImageResource(R.mipmap.all);
+        whoID = getIntent().getStringExtra("whoID");
+        wxOpenID = getIntent().getStringExtra("wxOpenID");
+        groupid = SharePerenceUtil.getStringValueFromSp("groupid");
 
         //        // 设置下拉刷新监听器
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -88,7 +92,7 @@ public class DingdanActivity extends BaseActivity {
             public void onRefresh() {
                 if (iiCount >= 10) {
                     iiCount -= 10;
-                    getdata(iiCount, state);
+                    getlistdata(iiCount, state);
                     dingdanAdapter.notifyDataSetChanged();
                 } else {
                     srl.setRefreshing(false);
@@ -100,78 +104,23 @@ public class DingdanActivity extends BaseActivity {
             @Override
             public void onLoad() {
                 iiCount += 10;
-                getdata(iiCount, state);
+                getlistdata(iiCount, state);
                 dingdanAdapter.notifyDataSetChanged();
 
             }
         });
-
-//        getNewData(iiCount, state);
-        getdata(iiCount, state);
+        /*个人记录*/
+        initdata();
+        /*list 历史*/
+        getlistdata(iiCount, state);
 
         initpopdialog();
 
 
     }
-//
-/*    private void getNewData(int iiCount, String state) {
-        groupid = SharePerenceUtil.getStringValueFromSp("groupid");
-        UserInfo user = MyApplication.getApp().getUserInfo();
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("iCount", iiCount + "");
-        params.put("adminGroupID", groupid);
-        params.put("status", state);
-        params.put("uniqueCode", user.getAuthorizationKey());
-        params.put("phoneAID", user.getId() + "");
-        params.put("funcType", SgqUtils.TONGJI_TYPE+"");
-        HttpUtils.doPost(Urls.dingdan(), params, new Callback() {
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                String s = e.toString();
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().toString();
-            }
-        });
-    }*/
-
-    /*数据*/
-    private void getdata(int iiCount, String sstate) {
-        groupid = SharePerenceUtil.getStringValueFromSp("groupid");
-        RequestParams params = new RequestParams();
-        params.put("iCount", iiCount + "");
-        params.put("adminGroupID", groupid);
-        params.put("status", sstate);
-        httpUtils.doPost(Urls.dingdan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
-            @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
-                srl.setRefreshing(false);
-                srl.setLoading(false);
-                JSONObject jsonObject = new JSONObject(result.toString());
-                final DingdanBean dingdanBean = gson.fromJson(jsonObject.toString(), DingdanBean.class);
-
-                dingdanAdapter = new DingdanAdapter(DingdanActivity.this, dingdanBean.getList(), new RVItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        Intent intent = new Intent(DingdanActivity.this, DingdanDetailActivity.class);
-                        intent.putExtra("numberID", dingdanBean.getList().get(position).getNumberID());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-                });
-
-                listDingdan.setAdapter(dingdanAdapter);
-            }
-        });
-    }
 
     private void initpopdialog() {
-          /*初始化从底部弹出*/
+        /*初始化从底部弹出*/
 
         final View view = getLayoutInflater().inflate(R.layout.pop_dialog_dingd, null);
         pop = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
@@ -188,10 +137,9 @@ public class DingdanActivity extends BaseActivity {
             public void onClick(View view) {
                 iiCount = 0;
                 state = "3";
-                getdata(iiCount, state);
+                getlistdata(iiCount, state);
                 dingdanAdapter.notifyDataSetChanged();
                 pop.dismiss();
-
             }
         });
 
@@ -200,7 +148,7 @@ public class DingdanActivity extends BaseActivity {
             public void onClick(View view) {
                 iiCount = 0;
                 state = "5";
-                getdata(iiCount, state);
+                getlistdata(iiCount, state);
                 dingdanAdapter.notifyDataSetChanged();
                 pop.dismiss();
             }
@@ -210,7 +158,7 @@ public class DingdanActivity extends BaseActivity {
             public void onClick(View view) {
                 iiCount = 0;
                 state = "4";
-                getdata(iiCount, state);
+                getlistdata(iiCount, state);
                 dingdanAdapter.notifyDataSetChanged();
                 pop.dismiss();
             }
@@ -220,7 +168,7 @@ public class DingdanActivity extends BaseActivity {
             public void onClick(View view) {
                 iiCount = 0;
                 state = "";
-                getdata(iiCount, state);
+                getlistdata(iiCount, state);
                 dingdanAdapter.notifyDataSetChanged();
                 pop.dismiss();
             }
@@ -238,9 +186,6 @@ public class DingdanActivity extends BaseActivity {
         pop.setOutsideTouchable(true);
         pop.setFocusable(true);// 点击back退出pop
         pop.setAnimationStyle(R.style.add_new_style);
-        //设置背景透明才能显示
-        pop.setBackgroundDrawable(new ColorDrawable(-00000));
-
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
 
             @Override
@@ -250,10 +195,70 @@ public class DingdanActivity extends BaseActivity {
                 getWindow().setAttributes(lp);
             }
         });
+        pop.setBackgroundDrawable(new ColorDrawable(Color.argb(136, 0, 0, 0)));// 设置背景透明，点击back退出pop
 
-        pop.setBackgroundDrawable(getResources().getDrawable(android.R.color.transparent));
-//        pop.setBackgroundDrawable(new ColorDrawable(Color.argb(136, 0, 0, 0)));// 设置背景透明，点击back退出pop
+    }
 
+    private void getlistdata(int iiCount, String sstate) {
+
+        rightIcon.setImageResource(R.mipmap.all);
+        RequestParams params = new RequestParams();
+        params.put("whoID", whoID);
+        params.put("wxOpenID", wxOpenID);
+        params.put("adminGroupID", groupid);
+        params.put("iCount", iiCount + "");
+        params.put("adminGroupID", groupid);
+        params.put("status", sstate);
+        httpUtils.doPost(Urls.dingdhistoryllist(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+
+            @Override
+            public void onSuccess(Gson gson, Object result) throws JSONException {
+                srl.setRefreshing(false);
+                srl.setLoading(false);
+                JSONObject jsonObject = new JSONObject(result.toString());
+                final DingdanBean dingdanBean = gson.fromJson(jsonObject.toString(), DingdanBean.class);
+
+                dingdanAdapter = new DingdanAdapter(DingdHistoryActivity.this, dingdanBean.getList(), new RVItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Intent intent = new Intent(DingdHistoryActivity.this, DingdanDetailActivity.class);
+                        intent.putExtra("numberID", dingdanBean.getList().get(position).getNumberID());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
+
+                if (dingdanBean.getList() != null) {
+                    listDingdanhis.setAdapter(dingdanAdapter);
+                }
+
+            }
+        });
+
+    }
+
+    private void initdata() {
+
+        middleTitle.setText(whoID);
+        RequestParams params = new RequestParams();
+        params.put("whoID", whoID);
+        params.put("wxOpenID", wxOpenID);
+        params.put("adminGroupID", groupid);
+        httpUtils.doPost(Urls.dingdhistoryl(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+
+
+            @Override
+            public void onSuccess(Gson gson, Object result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result.toString());
+                DingdHistoryBean dingdHistoryBean = gson.fromJson(jsonObject.toString(), DingdHistoryBean.class);
+                successCount.setText("成功次数:" + dingdHistoryBean.getSuccess_count() + "");
+                successMoney.setText("成功金额:" + AmountUtils.changeF2Y(dingdHistoryBean.getSuccess_money() + ""));
+                waitoutCount.setText("待出货:" + dingdHistoryBean.getWait_out_store() + "");
+                refoundMoney.setText("退款金额:" + AmountUtils.changeF2Y(dingdHistoryBean.getRefund_money() + ""));
+                refoundCount.setText("退款次数:" + dingdHistoryBean.getRefund_count() + "");
+                refoundCb.setText("退款成本:" + AmountUtils.changeF2Y(dingdHistoryBean.getRefund_cb() + ""));
+            }
+        });
     }
 
     @OnClick({R.id.back, R.id.right_icon})
@@ -265,7 +270,6 @@ public class DingdanActivity extends BaseActivity {
             case R.id.right_icon:
                 if (pop.isShowing()) {
                     pop.dismiss();
-
                 } else {
                     pop.showAtLocation(view, Gravity.BOTTOM, 0, -560);//在父控件下方出来
                     pop.showAsDropDown(view);
@@ -273,12 +277,13 @@ public class DingdanActivity extends BaseActivity {
                     WindowManager.LayoutParams lp = getWindow().getAttributes();
                     lp.alpha = 0.7f;
                     getWindow().setAttributes(lp);
+
                 }
                 break;
         }
     }
 
-    private class DingdanAdapter extends BaseAdapter {
+    public class DingdanAdapter extends BaseAdapter {
 
         private Context context;
         private LayoutInflater inflater;
@@ -352,7 +357,7 @@ public class DingdanActivity extends BaseActivity {
             tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
             tv_dannum.setText(list.get(position).getNumberID());
 
-
+//
             liearitemll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -364,5 +369,4 @@ public class DingdanActivity extends BaseActivity {
 
         }
     }
-
 }

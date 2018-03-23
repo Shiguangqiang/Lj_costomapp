@@ -154,7 +154,7 @@
             android:screenOrientation="portrait" />
         <!-- 自助机统计详情 -->
         <activity
-            android:name=".activity.statistics.TjDetailActivity"
+            android:name=".activity.statistics.MachineSerachActivity"
             android:screenOrientation="portrait" />
         <!-- 统计商品详情 -->
         <activity
@@ -166,7 +166,7 @@
             android:screenOrientation="portrait" />
         <!-- 用户统计 -->
         <activity
-            android:name=".activity.statistics.UserTjActivity"
+            android:name=".activity.statistics.UserTjNewActivity"
             android:screenOrientation="portrait" />
         <!-- 用户统计详情 -->
         <activity
@@ -188,7 +188,27 @@
         <activity
             android:name=".activity.statistics.DingdanActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.statistics.DingdanDetailActivity"></activity>
+        <!-- 订单详情 -->
+        <activity
+            android:name=".activity.statistics.DingdanDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 用户历史订单 -->
+        <activity
+            android:name=".activity.statistics.DingdHistoryActivity"
+            android:screenOrientation="portrait" />
+        <!-- 退款 -->
+        <activity
+            android:name=".activity.statistics.TuikuanListActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 退款查询 -->
+        <activity
+            android:name=".activity.statistics.TuiKuanSerachActivity"
+            android:screenOrientation="portrait" />
+        <!--  -->
+        <activity android:name=".activity.statistics.TkMachinListActivity" />
+        <activity android:name=".activity.statistics.TkShopActivity" />
+        <activity android:name=".activity.statistics.TkGroupActivity"></activity>
     </application>
 
 </manifest>

@@ -15,10 +15,12 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.CoreConnectionPNames;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 
 
 public class HttpUtils {
@@ -34,12 +36,15 @@ public class HttpUtils {
         myApplication = (MyApplication) context.getApplicationContext();
         this.context = context;
         client = new AsyncHttpClient();
-        DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-        defaultHttpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 3000);
+
+        client.setTimeout(20000); // 设置链接超时，如果不设置，默认为10s
+
         gson = new Gson();
         pd = new ProgressDialog(context);
         pd.setCanceledOnTouchOutside(false);
         pd.setMessage("正在加载....");
+//
+
     }
 
     /**
@@ -84,8 +89,13 @@ public class HttpUtils {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    if (pd != null) {
-                        pd.dismiss();
+
+                    try {
+                        if (pd != null) {
+                            pd.dismiss();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     Log.d("HttpUtils", "statusCode:" + statusCode);
                     Log.d("HttpUtils", new String(responseBody));
@@ -98,7 +108,7 @@ public class HttpUtils {
                             Object result = jb.opt("result");
                             Object data_list = jb.opt("data_list");
                             Object data = jb.opt("data");
-                            if (result == null && data == null && data_list != null) {
+                            if (result == null && data != null && data_list != null) {
                                 integerface.onSuccess(gson, data_list);
                             } else if (result == null && data_list == null && data != null) {
                                 integerface.onSuccess(gson, data);

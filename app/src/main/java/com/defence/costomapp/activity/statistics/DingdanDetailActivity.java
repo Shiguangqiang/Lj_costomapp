@@ -2,6 +2,7 @@ package com.defence.costomapp.activity.statistics;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdate;
@@ -76,7 +76,11 @@ public class DingdanDetailActivity extends BaseActivity {
     TextView tvTimen;
     @BindView(R.id.liear_tuikuansucc)
     LinearLayout liearTuikuansucc;
-    private String sprice;
+    private String whoID;
+    private String wxOpenID;
+    private String numberID;
+    private String groupid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +93,12 @@ public class DingdanDetailActivity extends BaseActivity {
     }
 
     private void initdata() {
-        String numberID = getIntent().getStringExtra("numberID");
-        String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
+        numberID = getIntent().getStringExtra("numberID");
+        groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         middleTitle.setText(numberID);
         middleTitle.setTextSize(14);
+        rightIcon.setImageResource(R.mipmap.all);
+
         RequestParams params = new RequestParams();
         params.put("numberID", numberID);
         params.put("adminGroupID", groupid);
@@ -108,6 +114,8 @@ public class DingdanDetailActivity extends BaseActivity {
                 tvAnum2.setText(dingdDetailBean.getMachineID());
                 tvShow.setText(dingdDetailBean.getDescVal());
                 tvTimen.setText(dingdDetailBean.getOrderTimeline());
+                whoID = dingdDetailBean.getOrderUID() + "";
+                wxOpenID = dingdDetailBean.getWxOpenID();
 
                 switch (dingdDetailBean.getStatus()) {
                     case 3:
@@ -182,16 +190,21 @@ public class DingdanDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.back, R.id.tv_ignore})
+    @OnClick({R.id.back, R.id.tv_ignore, R.id.right_icon})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
             case R.id.tv_ignore:
-                liearDaichuhuo.setVisibility(View.GONE);
+                finish();
                 break;
-
+            case R.id.right_icon:
+                Intent intenthis = new Intent(DingdanDetailActivity.this, DingdHistoryActivity.class);
+                intenthis.putExtra("whoID", whoID);
+                intenthis.putExtra("wxOpenID", wxOpenID);
+                startActivity(intenthis);
+                break;
         }
     }
 
@@ -228,7 +241,7 @@ public class DingdanDetailActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated meth od stub
                 if (singleSelectedId >= 0) {
-//                    Toast.makeText(mContext, "你选择的ID为："+singleSelectedId, Toast.LENGTH_SHORT).show();
+                    tuikuan(items[which].toString());
                 } else {
                     singleSelectedId = 0;
                     // 业务逻辑
@@ -244,7 +257,26 @@ public class DingdanDetailActivity extends BaseActivity {
 
             }
         });
+
         builder.create().show();
     }
 
+
+    //退款
+    private void tuikuan(final String reason) {
+
+       /* RequestParams params = new RequestParams();
+        params.put("numberID", numberID);
+        params.put("adminGroupID", groupid);
+        params.put("reason", reason);
+        httpUtils.doPost(Urls.dingdandetail(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+
+            @Override
+            public void onSuccess(Gson gson, Object result) throws JSONException {
+                new JSONObject(result.toString());
+
+            }
+        });*/
+
+    }
 }

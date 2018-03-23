@@ -4,85 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f4f4f4"
+    android:background="@color/F4"
     android:orientation="vertical"
-    tools:context="com.defence.costomapp.activity.statistics.MachineSerachActivity">
+    tools:context="com.defence.costomapp.activity.statistics.DingdHistoryActivity">
 
     <include layout="@layout/include_title_img" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/pad_height_15"
         android:layout_marginTop="@dimen/pad_height_15"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/sumJinE"
+            android:id="@+id/success_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="总额:0元" />
+            android:text="" />
 
         <TextView
-            android:id="@+id/paysalecount"
+            android:id="@+id/waitout_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="付款商品:0个" />
+            android:text="" />
 
         <TextView
-            android:id="@+id/freesalecount"
+            android:id="@+id/refound_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="赠送商品:0个" />
+            android:text="" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/pad_height_15"
         android:layout_marginTop="@dimen/pad_height_15"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/freecost"
+            android:id="@+id/success_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="赠送成本:0元" />
+            android:text="" />
 
         <TextView
-            android:id="@+id/lirun"
+            android:id="@+id/refound_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="净利润:0元" />
+            android:text="" />
+
+        <TextView
+            android:id="@+id/refound_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="" />
 
     </LinearLayout>
 
-    <View
+    <com.defence.costomapp.utils.RefreshUtils.RefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/pad_height_10"
-        android:layout_marginTop="@dimen/pad_height_10"
-        android:background="@color/liuliuliu" />
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/list_dingdanhis"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/manger_tablayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/orange"
-        app:tabIndicatorHeight="@dimen/pad_height_8" />
+    </com.defence.costomapp.utils.RefreshUtils.RefreshLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/manger_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -89,13 +89,9 @@ public class Tab1Fragment extends BaseFragment {
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
 
-
                 try {
                     if (result != null) {
-
-
                         List<Integer> data_list = new ArrayList<>();
-
                         JSONArray jsonArray = new JSONArray(result.toString());
                         for (int i = 0; i < jsonArray.length(); i++) {
                             data_list.add((Integer) jsonArray.get(i));
@@ -107,6 +103,7 @@ public class Tab1Fragment extends BaseFragment {
 //                        threeStarNum = timeSaleBean.getData_list().get(3);
 //                        fourStarNum = timeSaleBean.getData_list().get(4);
 //                        fiveStarNum = timeSaleBean.getData_list().get(5);
+
 
                         PieData mPieData = getPieData(6, 100, data_list.get(0), data_list.get(1), data_list.get(2), data_list.get(3), data_list.get(4), data_list.get(5));
                         showChart(pieChart, mPieData);
