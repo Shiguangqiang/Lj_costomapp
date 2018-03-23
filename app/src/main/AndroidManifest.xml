@@ -208,7 +208,8 @@
         <!--  -->
         <activity android:name=".activity.statistics.TkMachinListActivity" />
         <activity android:name=".activity.statistics.TkShopActivity" />
-        <activity android:name=".activity.statistics.TkGroupActivity"></activity>
+        <activity android:name=".activity.statistics.TkGroupActivity" />
+        <activity android:name=".activity.statistics.DingdanNewActivity"></activity>
     </application>
 
 </manifest>

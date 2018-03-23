@@ -131,7 +131,7 @@ public class TuikuanListActivity extends BaseActivity {
 
         if (TextUtils.isEmpty(formatid) && TextUtils.isEmpty(machineNumber) && TextUtils.isEmpty(groupMachineNumber)) {
             RequestParams params = new RequestParams();
-            params.put("length", length + "");
+            params.put("length", (length*10)+ "");
             params.put("orderBy", "2");
             params.put("endpag", "10");
             //未选择展示全部
@@ -147,18 +147,18 @@ public class TuikuanListActivity extends BaseActivity {
 
                     tuikuanSum.setText("退款总额:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getTuikuanSum())));
                     tuikuandingdanshu.setText("退款订单数:" + tuikuanListBean.getTuikuandingdanshu() + "");
-                    tuikuanchengben.setText("退款成本:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getDaichuhuochengben())));
+                    tuikuanchengben.setText("退款成本:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getTuikuanchengben())));
+
                     daichuhuoSum.setText("待出货总额:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getDaichuhuoSum())));
                     daichuhuodingdanshu.setText("待出货订单数:" + tuikuanListBean.getDaichuhuodingdanshu() + "");
-                    daichuhuochengben.setText("待出货成本:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getTuikuanchengben())));
-
+                    daichuhuochengben.setText("待出货成本:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getDaichuhuochengben())));
 
                     if (list == null)
                         list = new ArrayList();
                     list.addAll(tuikuanListBean.getList());
 
                     if (dingdanAdapter == null) {
-                        dingdanAdapter = new DingdanAdapter(TuikuanListActivity.this, tuikuanListBean.getList(), new RVItemClickListener() {
+                        dingdanAdapter = new DingdanAdapter(TuikuanListActivity.this, list, new RVItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
                                 Intent intent = new Intent(TuikuanListActivity.this, DingdanDetailActivity.class);

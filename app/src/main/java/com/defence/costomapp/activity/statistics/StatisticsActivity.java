@@ -85,7 +85,7 @@ public class StatisticsActivity extends BaseActivity {
                 startActivity(new Intent(StatisticsActivity.this, DailyCostActivity.class));
                 break;
             case R.id.liear_dingdan:
-                startActivity(new Intent(StatisticsActivity.this, DingdanActivity.class));
+                startActivity(new Intent(StatisticsActivity.this, DingdanNewActivity.class));
                 break;
             case R.id.liear_jiesuan:
                 startActivity(new Intent(StatisticsActivity.this, JieSuanActivity.class));

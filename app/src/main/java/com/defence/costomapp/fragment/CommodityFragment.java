@@ -104,6 +104,7 @@ public class CommodityFragment extends BaseFragment {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TongjiBean tongjiBean = gson.fromJson(jsonObject.toString(), TongjiBean.class);
                 goods_list = tongjiBean.getGoods_list();
+
                 listShop.setAdapter(new ShopAdapter(getActivity(), goods_list, new RVItemClickListener() {
                     @Override
                     public void onItemClick(int position) {

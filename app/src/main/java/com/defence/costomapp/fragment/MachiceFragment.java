@@ -116,7 +116,6 @@ public class MachiceFragment extends BaseFragment {
 
                         intent.putExtra("machineID", machine_list.get(position).getMachine_id()+"");
                         intent.putExtra("machineNo", machine_list.get(position).getMachinenumber());
-
                         intent.putExtra("date1", getActivity().getIntent().getStringExtra("leftdate"));
                         intent.putExtra("date2", getActivity().getIntent().getStringExtra("rightdate"));
 

@@ -181,9 +181,19 @@ public class MachineSerachActivity extends BaseActivity {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TongjiBean tongjiBean = gson.fromJson(jsonObject.toString(), TongjiBean.class);
 
+                if (TextUtils.isEmpty(status)) {
+                    sumJinE.setText("金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
+                    paysalecount.setText("付款商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
+                } else {
+                    if (status.equals("4")) {
+                        sumJinE.setText("成功金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
+                        paysalecount.setText("付款商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
+                    } else {
+                        sumJinE.setText("失败金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
+                        paysalecount.setText("失败商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
+                    }
+                }
 
-                sumJinE.setText("金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
-                paysalecount.setText("付款商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
                 freesalecount.setText("赠送商品:" + tongjiBean.getMap_data().getFreeSaleCount() + "个");
                 freecost.setText("赠送成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getFreeCost() + "") + "元");
                 lirun.setText("净利润:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getLiRun1() + "") + "元");

@@ -113,32 +113,6 @@ public class DingdanActivity extends BaseActivity {
 
 
     }
-//
-/*    private void getNewData(int iiCount, String state) {
-        groupid = SharePerenceUtil.getStringValueFromSp("groupid");
-        UserInfo user = MyApplication.getApp().getUserInfo();
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("iCount", iiCount + "");
-        params.put("adminGroupID", groupid);
-        params.put("status", state);
-        params.put("uniqueCode", user.getAuthorizationKey());
-        params.put("phoneAID", user.getId() + "");
-        params.put("funcType", SgqUtils.TONGJI_TYPE+"");
-        HttpUtils.doPost(Urls.dingdan(), params, new Callback() {
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                String s = e.toString();
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String s = response.body().toString();
-            }
-        });
-    }*/
 
     /*数据*/
     private void getdata(int iiCount, String sstate) {

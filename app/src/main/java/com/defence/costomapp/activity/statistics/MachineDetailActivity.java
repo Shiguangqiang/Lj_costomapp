@@ -86,9 +86,9 @@ public class MachineDetailActivity extends BaseActivity {
         params.put("machineNo", machineNo);
         params.put("date1", date1);
         params.put("date2", date2);
-        params.put("addr1", addr1);
-        params.put("addr2", addr2);
-        params.put("addr3", addr3);
+        params.put("addr1", "0");
+        params.put("addr2", "0");
+        params.put("addr3", "0");
         httpUtils.doPost(Urls.tjserach_machine(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {

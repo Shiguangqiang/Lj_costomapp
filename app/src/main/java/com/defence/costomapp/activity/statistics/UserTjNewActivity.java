@@ -63,6 +63,8 @@ public class UserTjNewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_tj_new);
         ButterKnife.bind(this);
+
+
         middleTitle.setText("用户统计 - 登录时间");
         if (fragmentManager == null)
             fragmentManager = UserTjNewActivity.this.getSupportFragmentManager();
@@ -77,6 +79,7 @@ public class UserTjNewActivity extends BaseActivity {
     }
 
     @SuppressLint("HandlerLeak")
+
     private void initHanlder() {
         handler = new Handler() {
             @Override

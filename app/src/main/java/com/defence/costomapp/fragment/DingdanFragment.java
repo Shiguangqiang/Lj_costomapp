@@ -1,8 +1,8 @@
 package com.defence.costomapp.fragment;
 
-
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -12,16 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.defence.costomapp.R;
 import com.defence.costomapp.activity.statistics.ChongzhiDetailActivity;
 import com.defence.costomapp.activity.statistics.UserTjDetailActivity;
 import com.defence.costomapp.activity.statistics.UserTjNewActivity;
+import com.defence.costomapp.adapter.DingdanAdapter;
 import com.defence.costomapp.adapter.UserTjAdapter;
+import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
+import com.defence.costomapp.bean.DingdanBean;
 import com.defence.costomapp.bean.UserTjBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.DividerItemDecoration;
-import com.defence.costomapp.R;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.utils.httputils.HttpUtils;
 import com.google.gson.Gson;
@@ -35,21 +39,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserTjFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class UserTjFragment extends Fragment {
+public class DingdanFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+
     private int type;
+    private DingdanAdapter dingdanAdapter;
 
-
-    public UserTjFragment() {
+    public DingdanFragment() {
         // Required empty public constructor
     }
 
@@ -57,19 +61,16 @@ public class UserTjFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param type Parameter 1.
-     * @return A new instance of fragment UserTjFragment.
+     * @return A new instance of fragment DingdanFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserTjFragment newInstance(int type) {
-        UserTjFragment fragment = new UserTjFragment();
+    public static DingdanFragment newInstance(int type) {
+        DingdanFragment fragment = new DingdanFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, type);
         fragment.setArguments(args);
         return fragment;
     }
-
-    private HttpUtils httpUtils;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,8 @@ public class UserTjFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_tj, container, false);
+
+        return inflater.inflate(R.layout.fragment_dingdan, container, false);
     }
 
     private PullLoadMoreRecyclerView pullLoadMoreRecyclerView;
@@ -118,14 +120,45 @@ public class UserTjFragment extends Fragment {
 
     private String url;
     private int length = 0;
+    private List list;
 
     private void initData() {
         doPost();
 
     }
 
-    private UserTjAdapter userTjAdapter;
-    private List list;
+    @NonNull
+    private RequestParams setUrlRequestParams() {
+        String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
+        RequestParams params = new RequestParams();
+        switch (type) {
+            case 4:
+                url = Urls.dingdan();
+                params.put("iCount", (length * 10) + "");
+                params.put("adminGroupID", groupid);
+                params.put("status", "4");
+                break;
+            case 3:
+                url = Urls.dingdan();
+                params.put("iCount", (length * 10) + "");
+                params.put("adminGroupID", groupid);
+                params.put("status", "3");
+                break;
+            case 5:
+                url = Urls.dingdan();
+                params.put("iCount", (length * 10) + "");
+                params.put("adminGroupID", groupid);
+                params.put("status", "5");
+                break;
+            case 0:
+                url = Urls.dingdan();
+                params.put("iCount", (length * 10) + "");
+                params.put("adminGroupID", groupid);
+                params.put("status", "");
+                break;
+        }
+        return params;
+    }
 
     private void doPost() {
 
@@ -136,50 +169,31 @@ public class UserTjFragment extends Fragment {
                 pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());
-                    final UserTjBean userTjBean = gson.fromJson(jsonObject.toString(), UserTjBean.class);
-                    Message msg = ((UserTjNewActivity) getActivity()).getHandler().obtainMessage(1);
-                    msg.obj = userTjBean;
-                    msg.sendToTarget();
+                    DingdanBean userTjBean = gson.fromJson(jsonObject.toString(), DingdanBean.class);
 
                     if (list == null)
                         list = new ArrayList();
 
                     list.addAll(userTjBean.getList());
 
-                    if (userTjAdapter == null) {
-                        userTjAdapter = new UserTjAdapter(getContext(), list, new RVItemClickListener() {
+                    if (dingdanAdapter == null) {
+                        dingdanAdapter = new DingdanAdapter(getContext(), list, new RVItemClickListener() {
+
                             @Override
                             public void onItemClick(int position) {
 
-                                if (type == 5) {
-                                    Intent intent = new Intent(getActivity(), ChongzhiDetailActivity.class);
-                                    intent.putExtra("userid", userTjBean.getList().get(position).getUserID() + "");
-                                    intent.putExtra("phone", userTjBean.getList().get(position).getMphone() + "");
-                                    startActivity(intent);
-                                } else {
-                                    Intent intent = new Intent(getActivity(), UserTjDetailActivity.class);
-                                    intent.putExtra("uid", (userTjBean.getList().get(position).getId()) + "");
-                                    intent.putExtra("uname", userTjBean.getList().get(position).getName());
-                                    intent.putExtra("phone", userTjBean.getList().get(position).getMphone() + "");
-                                    intent.putExtra("ttype", type+"");
-                                    intent.putExtra("wxid",userTjBean.getList().get(position).getWxOpenID()+"");
-                                    startActivity(intent);
-                                }
 
                             }
-
                         }, type);
 
-                        pullLoadMoreRecyclerView.setAdapter(userTjAdapter);
+                        pullLoadMoreRecyclerView.setAdapter(dingdanAdapter);
                     } else {
-                        userTjAdapter.notifyDataSetChanged();
+                        dingdanAdapter.notifyDataSetChanged();
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -204,51 +218,7 @@ public class UserTjFragment extends Fragment {
                 ((UserTjNewActivity) getActivity()).getHandler().obtainMessage(2);
             }
         });
-
     }
 
-    @NonNull
-    private RequestParams setUrlRequestParams() {
-        RequestParams params = new RequestParams();
-        switch (type) {
-            case 1:
-                url = Urls.userTj();
-                params.put("length", (length*10) + "");
-                params.put("sortOrderBy", "timeline");
-                params.put("order", "desc");
-                params.put("orderBy", "2");
-                params.put("endpag", "10");
-                break;
-            case 2:
-                url = Urls.userTj();
-                params.put("length",  (length*10) + "");
-                params.put("sortOrderBy", "bankNo");
-                params.put("order", "desc");
-                params.put("orderBy", "2");
-                params.put("endpag", "10");
-                break;
-            case 3:
-                url = Urls.userTj();
-                params.put("length",  (length*10) + "");
-                params.put("sortOrderBy", "reg_time");
-                params.put("order", "desc");
-                params.put("orderBy", "2");
-                params.put("endpag", "10");
-                break;
-            case 4:
-                url = Urls.wxpay();
-                params.put("length",  (length*10) + "");
-                params.put("orderUID", "0");
-                params.put("orderBy", "2");
-                params.put("endpag", "10");
-                break;
-            case 5:
-                url = Urls.chongzhi();
-                params.put("begin",  (length*10) + "");
-                params.put("end", "10");
-                params.put("orderBy", "2");
-                break;
-        }
-        return params;
-    }
+
 }
