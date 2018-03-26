@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -123,6 +124,16 @@ public class DingdanNewActivity extends BaseActivity {
         pop.setOutsideTouchable(true);
         pop.setFocusable(true);// 点击back退出pop
         pop.setAnimationStyle(R.style.add_new_style);
+
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
+            }
+        });
         pop.setBackgroundDrawable(new ColorDrawable(Color.argb(136, 0, 0, 0)));// 设置背景透明，点击back退出pop
         rightIcon.setImageResource(R.mipmap.all);
         rightIcon.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +145,10 @@ public class DingdanNewActivity extends BaseActivity {
                 } else {
                     pop.showAtLocation(view, Gravity.BOTTOM, 0, -560);//在父控件下方出来
                     pop.showAsDropDown(view);
+                    // 设置背景颜色变暗
+                    WindowManager.LayoutParams lp = getWindow().getAttributes();
+                    lp.alpha = 0.7f;
+                    getWindow().setAttributes(lp);
                 }
             }
         });

@@ -161,8 +161,8 @@ public class UserTjFragment extends Fragment {
                                     intent.putExtra("uid", (userTjBean.getList().get(position).getId()) + "");
                                     intent.putExtra("uname", userTjBean.getList().get(position).getName());
                                     intent.putExtra("phone", userTjBean.getList().get(position).getMphone() + "");
-                                    intent.putExtra("ttype", type+"");
-                                    intent.putExtra("wxid",userTjBean.getList().get(position).getWxOpenID()+"");
+                                    intent.putExtra("ttype", type + "");
+                                    intent.putExtra("wxid", userTjBean.getList().get(position).getWxOpenID() + "");
                                     startActivity(intent);
                                 }
 
@@ -193,8 +193,15 @@ public class UserTjFragment extends Fragment {
             @Override
             public void onFailure(Context context) {
                 super.onFailure(context);
-                pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
-                ((UserTjNewActivity) getActivity()).getHandler().obtainMessage(2);
+
+                try {
+                    pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+                    ((UserTjNewActivity) getActivity()).getHandler().obtainMessage(2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
             }
 
             @Override
@@ -213,7 +220,7 @@ public class UserTjFragment extends Fragment {
         switch (type) {
             case 1:
                 url = Urls.userTj();
-                params.put("length", (length*10) + "");
+                params.put("length", (length * 10) + "");
                 params.put("sortOrderBy", "timeline");
                 params.put("order", "desc");
                 params.put("orderBy", "2");
@@ -221,7 +228,7 @@ public class UserTjFragment extends Fragment {
                 break;
             case 2:
                 url = Urls.userTj();
-                params.put("length",  (length*10) + "");
+                params.put("length", (length * 10) + "");
                 params.put("sortOrderBy", "bankNo");
                 params.put("order", "desc");
                 params.put("orderBy", "2");
@@ -229,7 +236,7 @@ public class UserTjFragment extends Fragment {
                 break;
             case 3:
                 url = Urls.userTj();
-                params.put("length",  (length*10) + "");
+                params.put("length", (length * 10) + "");
                 params.put("sortOrderBy", "reg_time");
                 params.put("order", "desc");
                 params.put("orderBy", "2");
@@ -237,14 +244,14 @@ public class UserTjFragment extends Fragment {
                 break;
             case 4:
                 url = Urls.wxpay();
-                params.put("length",  (length*10) + "");
+                params.put("length", (length * 10) + "");
                 params.put("orderUID", "0");
                 params.put("orderBy", "2");
                 params.put("endpag", "10");
                 break;
             case 5:
                 url = Urls.chongzhi();
-                params.put("begin",  (length*10) + "");
+                params.put("begin", (length * 10) + "");
                 params.put("end", "10");
                 params.put("orderBy", "2");
                 break;

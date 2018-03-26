@@ -98,16 +98,28 @@ public class TuikuanListActivity extends BaseActivity {
 
 
         middleTitle.setText("退款查询");
-        //        // 设置下拉刷新监听器
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                length = 0;
-                list.clear();
-                initdata(length);
 
-            }
-        });
+        //        // 设置下拉刷新监听器
+
+        try {
+            srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    length = 0;
+                    if (list != null&&list.size()>0) {
+                        list.clear();
+                    }
+                    if (listdetail != null&&listdetail.size()>0) {
+                        listdetail.clear();
+                    }
+
+                    initdata(length);
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        上拉加载
         srl.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
@@ -119,11 +131,11 @@ public class TuikuanListActivity extends BaseActivity {
             }
         });
         initdata(length);
-
-
     }
 
     private List list;
+    private List listdetail;
+
 
     private void initdata(int length) {
         rightIcon.setImageResource(R.mipmap.all);
@@ -131,7 +143,7 @@ public class TuikuanListActivity extends BaseActivity {
 
         if (TextUtils.isEmpty(formatid) && TextUtils.isEmpty(machineNumber) && TextUtils.isEmpty(groupMachineNumber)) {
             RequestParams params = new RequestParams();
-            params.put("length", (length*10)+ "");
+            params.put("length", (length * 10) + "");
             params.put("orderBy", "2");
             params.put("endpag", "10");
             //未选择展示全部
@@ -172,21 +184,22 @@ public class TuikuanListActivity extends BaseActivity {
                     } else {
                         dingdanAdapter.notifyDataSetChanged();
                     }
-
-
                 }
             });
 
         } else {
+
             String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
             RequestParams params = new RequestParams();
-            params.put("length", length + "");
+            params.put("length",(length * 10) + "");
             params.put("orderBy", "2");
             params.put("endpag", "10");
             params.put("adminGroupID", groupid);
-            params.put("sdate", sdate + " 00:00:00");
-            params.put("edate", edate + " 23:59:59");
-            params.put("formatid", formatid);
+            params.put("sdate", sdate);
+            params.put("edate", edate);
+            if(!TextUtils.isEmpty(formatid)){
+                params.put("formatid",formatid.replace("'", ""));
+            }
             params.put("machineNumber", machineNumber);
             params.put("groupMachineNumber", groupMachineNumber);
 
@@ -208,19 +221,26 @@ public class TuikuanListActivity extends BaseActivity {
 //                    daichuhuochengben.setText("待出货成本:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getTuikuanchengben())));
                     JSONObject jsonObject = new JSONObject(result.toString());
                     tuikuanListBean = gson.fromJson(jsonObject.toString(), TuikuanListBean.class);
-                    dingdanAdapter = new DingdanAdapter(TuikuanListActivity.this, tuikuanListBean.getList(), new RVItemClickListener() {
-                        @Override
-                        public void onItemClick(int position) {
-                            Intent intent = new Intent(TuikuanListActivity.this, DingdanDetailActivity.class);
-                            intent.putExtra("numberID", tuikuanListBean.getList().get(position).getNumberID());
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
 
-                    if (tuikuanListBean.getList() != null) {
+
+                    if (listdetail == null)
+                        listdetail = new ArrayList();
+                    listdetail.addAll(tuikuanListBean.getList());
+
+                    if (dingdanAdapter == null) {
+                        dingdanAdapter = new DingdanAdapter(TuikuanListActivity.this, listdetail, new RVItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                Intent intent = new Intent(TuikuanListActivity.this, DingdanDetailActivity.class);
+                                intent.putExtra("numberID", tuikuanListBean.getList().get(position).getNumberID());
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
                         listTuikuan.setAdapter(dingdanAdapter);
+                    } else {
+                        dingdanAdapter.notifyDataSetChanged();
                     }
 
 
@@ -293,31 +313,18 @@ public class TuikuanListActivity extends BaseActivity {
             TextView tv_dannum = view.findViewById(R.id.tv_dannum);
             LinearLayout liearitemll = view.findViewById(R.id.liearitemll);
 
-            tv_show.setText(list.get(position).getDescVal());
-            tv_state.setText("退款成功");
-            tv_state.setTextColor(Color.rgb(255, 204, 0));
-//            switch (list.get(position).getStatus()) {
-//                case 3:
-//                    tv_state.setText("待出货");
-//                    tv_state.setTextColor(Color.rgb(255, 51, 0));
-//                    break;
-//                case 4:
-//                    tv_state.setText("交易成功");
-//                    tv_state.setTextColor(Color.rgb(26, 233, 50));
-//                    break;
-//                case 5:
-//                    tv_state.setText("退款成功");
-//                    tv_state.setTextColor(Color.rgb(255, 204, 0));
-//                    break;
-//                case 6:
-//                    tv_state.setText("退款成功");
-//                    tv_state.setTextColor(Color.rgb(255, 204, 0));
-//                    break;
-//            }
+            try {
+                tv_show.setText(list.get(position).getDescVal());
+                tv_state.setText("退款成功");
+                tv_state.setTextColor(Color.rgb(255, 204, 0));
 
-            tv_time.setText(list.get(position).getBackTimeline());
-            tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
-            tv_dannum.setText(list.get(position).getNumberID());
+
+                tv_time.setText(list.get(position).getBackTimeline());
+                tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
+                tv_dannum.setText(list.get(position).getNumberID());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 //
             liearitemll.setOnClickListener(new View.OnClickListener() {
