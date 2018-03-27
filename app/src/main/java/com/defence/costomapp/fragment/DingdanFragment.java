@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.statistics.ChongzhiDetailActivity;
+import com.defence.costomapp.activity.statistics.DingdanActivity;
+import com.defence.costomapp.activity.statistics.DingdanDetailActivity;
 import com.defence.costomapp.activity.statistics.UserTjDetailActivity;
 import com.defence.costomapp.activity.statistics.UserTjNewActivity;
 import com.defence.costomapp.adapter.DingdanAdapter;
@@ -169,7 +171,7 @@ public class DingdanFragment extends BaseFragment {
                 pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());
-                    DingdanBean userTjBean = gson.fromJson(jsonObject.toString(), DingdanBean.class);
+                    final DingdanBean userTjBean = gson.fromJson(jsonObject.toString(), DingdanBean.class);
 
                     if (list == null)
                         list = new ArrayList();
@@ -181,6 +183,10 @@ public class DingdanFragment extends BaseFragment {
 
                             @Override
                             public void onItemClick(int position) {
+                                Intent intent = new Intent(getActivity(), DingdanDetailActivity.class);
+                                intent.putExtra("numberID", userTjBean.getList().get(position).getNumberID());
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
 
 
                             }

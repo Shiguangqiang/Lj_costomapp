@@ -50,10 +50,7 @@ public class CommodityFragment extends BaseFragment {
     private List<TongjiBean.GoodsListBean> goods_list;
     private String leftdate;
     private String rightdate;
-    private String leftdatenew = SgqUtils.getNowDate();
-    private String rightdatenew = SgqUtils.getNowDate();
     private String groupid;
-
     private String device;
     private String status;
 
@@ -72,6 +69,7 @@ public class CommodityFragment extends BaseFragment {
     }
 
     private void getData() {
+
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         leftdate = getActivity().getIntent().getStringExtra("leftdate");
         rightdate = getActivity().getIntent().getStringExtra("rightdate");
@@ -84,7 +82,7 @@ public class CommodityFragment extends BaseFragment {
             params.put("addr1", "0");
             params.put("addr2", "0");
             params.put("addr3", "0");
-            params.put("date1", "2000-01-01");
+            params.put("date1", "2018-01-01");
             params.put("date2", SgqUtils.getNowDate());
         } else {
             params.put("adminGroupID", groupid);
@@ -108,35 +106,15 @@ public class CommodityFragment extends BaseFragment {
                 listShop.setAdapter(new ShopAdapter(getActivity(), goods_list, new RVItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-
                         Intent intent = new Intent(getActivity(), ShopDetailActivity.class);
-
                         intent.putExtra("formatID", goods_list.get(position).getFormatID() + "");
                         intent.putExtra("formatText", goods_list.get(position).getDescVal());
-
-                        intent.putExtra("date1", getActivity().getIntent().getStringExtra("leftdate"));
-                        intent.putExtra("date2", getActivity().getIntent().getStringExtra("rightdate"));
-
-                        String addr1 = getActivity().getIntent().getStringExtra("addr1");
-                        String addr2 = getActivity().getIntent().getStringExtra("addr2");
-                        String addr3 = getActivity().getIntent().getStringExtra("addr3");
-
-                        if (TextUtils.isEmpty(addr1)) {
-                            addr1 = "0";
-                            addr2 = "0";
-                            addr3 = "0";
-                        }
-                        intent.putExtra("addr1", addr1);
-                        intent.putExtra("addr2", addr2);
-                        intent.putExtra("addr3", addr3);
+                        intent.putExtra("date1", leftdate);
+                        intent.putExtra("date2", rightdate);
                         startActivity(intent);
 
                     }
                 }));
-
-
-
-
             }
         });
     }

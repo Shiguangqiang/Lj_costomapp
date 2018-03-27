@@ -2,9 +2,11 @@ package com.defence.costomapp.activity.statistics;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.bean.JsonBean;
+import com.defence.costomapp.fragment.MyDialogFragment;
 import com.defence.costomapp.utils.MyNumberPicker;
 import com.defence.costomapp.utils.SgqUtils;
 
@@ -217,11 +220,23 @@ public class MachineTjActivity extends BaseActivity {
 
 
                 if (TextUtils.isEmpty(device) && TextUtils.isEmpty(devicegroup)) {
+
+
+//                    new MyDialogFragment().setOnButtonClickListener(new MyDialogFragment.OnDialogButtonClickListener() {
+//
+//                        @Override
+//                        public void okButtonClick() {
+//                            Log.i("debug", "ok button click");
+//                        }
+//
+//                    });
+
+//
                     new AlertDialog.Builder(this)
                             .setMessage("请至少选择一种查询方式")
-//                            .setPositiveButton(" ",null)
+//                            .setNegativeButton("好", null)
+                            .setPositiveButton("好", null)
 //                            .setNeutralButton("好", null)
-                            .setNegativeButton("好",null)
                             .show();
                 } else {
 

@@ -69,10 +69,6 @@ public class MachineDetailActivity extends BaseActivity {
         date1 = getIntent().getStringExtra("date1");
         date2 = getIntent().getStringExtra("date2");
 
-        addr1 = getIntent().getStringExtra("addr1");
-        addr2 = getIntent().getStringExtra("addr2");
-        addr3 = getIntent().getStringExtra("addr3");
-
         middleTitle.setText(machineNo + "商品销售情况");
         getData();
 

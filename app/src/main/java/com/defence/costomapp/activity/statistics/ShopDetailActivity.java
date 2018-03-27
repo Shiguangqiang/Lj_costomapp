@@ -54,9 +54,7 @@ public class ShopDetailActivity extends BaseActivity {
     private String formatText;
     private String date1;
     private String date2;
-    private String addr1;
-    private String addr2;
-    private String addr3;
+
     private String groupid;
 
     @Override
@@ -75,10 +73,6 @@ public class ShopDetailActivity extends BaseActivity {
         date1 = getIntent().getStringExtra("date1");
         date2 = getIntent().getStringExtra("date2");
 
-        addr1 = getIntent().getStringExtra("addr1");
-        addr2 = getIntent().getStringExtra("addr2");
-        addr3 = getIntent().getStringExtra("addr3");
-
         middleTitle.setText(formatText + "销售占比");
         getData();
     }
@@ -93,18 +87,18 @@ public class ShopDetailActivity extends BaseActivity {
         params.put("formatText", formatText);
         params.put("date1", date1);
         params.put("date2", date2);
-        params.put("addr1", addr1);
-        params.put("addr2", addr2);
-        params.put("addr3", addr3);
+        params.put("addr1", "0");
+        params.put("addr2", "0");
+        params.put("addr3", "0");
         httpUtils.doPost(Urls.tjserach_shop(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TjshopDetailBean tjshopDetailBean = gson.fromJson(jsonObject.toString(), TjshopDetailBean.class);
-                sumJinE.setText("总额:"+ AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumJinE()+"")+"元");
-                sumLiRun.setText("总利润:"+ AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumLiRun()+"")+"元");
-                saleCount.setText("总件:"+tjshopDetailBean.getMap_data().getSaleCount()+"个");
-                listShopdetail.setAdapter(new ShopDetailAdapter(ShopDetailActivity.this,tjshopDetailBean.getList()));
+                sumJinE.setText("总额:" + AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumJinE() + "") + "元");
+                sumLiRun.setText("总利润:" + AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumLiRun() + "") + "元");
+                saleCount.setText("总件:" + tjshopDetailBean.getMap_data().getSaleCount() + "个");
+                listShopdetail.setAdapter(new ShopDetailAdapter(ShopDetailActivity.this, tjshopDetailBean.getList()));
 
 
             }
@@ -159,7 +153,6 @@ public class ShopDetailActivity extends BaseActivity {
             tv_name.setText(listBeanList.get(position).getDetailedinstalladdress());
             tv_showshop.setText(listBeanList.get(position).getMachinenumber());
             tv_num.setText(listBeanList.get(position).getSaleCount() + "个");
-
 
             return view;
 

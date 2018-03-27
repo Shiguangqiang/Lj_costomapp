@@ -66,13 +66,8 @@ public class MachineSerachActivity extends BaseActivity {
     LinearLayout liearRight;
     private String leftdate;
     private String rightdate;
-    private String leftdatenew = SgqUtils.getNowDate();
-    private String rightdatenew = SgqUtils.getNowDate();
-    private String tvAdd;
-    String addr1, addr2, addr3;
-    private String intent_addr1;
-    private String intent_addr2;
-    private String intent_addr3;
+
+
     private String groupid;
 
     private String[] titles = new String[]{"商品", "机器"};
@@ -95,21 +90,17 @@ public class MachineSerachActivity extends BaseActivity {
         leftdate = getIntent().getStringExtra("leftdate");
         rightdate = getIntent().getStringExtra("rightdate");
 
-        if (!TextUtils.isEmpty(leftdate)) {
-            leftdatenew = leftdate;
-        }
-        if (!TextUtils.isEmpty(rightdate)) {
-            rightdatenew = rightdate;
-        }
+//        if (!TextUtils.isEmpty(leftdate)) {
+//            leftdatenew = leftdate;
+//        }
+//        if (!TextUtils.isEmpty(rightdate)) {
+//            rightdatenew = rightdate;
+//        }
         device = getIntent().getStringExtra("device");
         status = getIntent().getStringExtra("status");
-        tvAdd = getIntent().getStringExtra("tvAdd");
 
-        intent_addr1 = getIntent().getStringExtra("addr1");
-        intent_addr2 = getIntent().getStringExtra("addr2");
-        intent_addr3 = getIntent().getStringExtra("addr3");
 
-        middleTitle.setText(leftdatenew + " 至 " + rightdatenew);
+
         middleTitle.setTextSize(16);
         rightIcon.setImageResource(R.mipmap.all);
 
@@ -151,20 +142,18 @@ public class MachineSerachActivity extends BaseActivity {
 //            addr3 = "0";
 //        }
 //
-
         RequestParams params = new RequestParams();
-
         if (TextUtils.isEmpty(device) && TextUtils.isEmpty(status)) {
             params.put("adminGroupID", groupid);
             params.put("addr1", "0");
             params.put("addr2", "0");
             params.put("addr3", "0");
-            params.put("date1", "2000-01-01");
+            params.put("date1","2018-01-01");
             params.put("date2", SgqUtils.getNowDate());
         } else {
             params.put("adminGroupID", groupid);
-            params.put("date1", leftdatenew);
-            params.put("date2", rightdatenew);
+            params.put("date1", leftdate);
+            params.put("date2", rightdate);
             params.put("addr1", "0");
             params.put("addr2", "0");
             params.put("addr3", "0");
@@ -172,6 +161,8 @@ public class MachineSerachActivity extends BaseActivity {
             params.put("status", status);
 
         }
+
+        middleTitle.setText(leftdate + " 至 " + rightdate);
 
 
         httpUtils.doPost(Urls.tjserach(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {

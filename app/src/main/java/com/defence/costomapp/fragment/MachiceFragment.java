@@ -52,10 +52,7 @@ public class MachiceFragment extends BaseFragment {
     private String leftdate;
     private String rightdate;
     private String tvAdd;
-    String addr1, addr2, addr3;
-    private String intent_addr1;
-    private String intent_addr2;
-    private String intent_addr3;
+
     private String groupid;
 
     private String device;
@@ -71,8 +68,6 @@ public class MachiceFragment extends BaseFragment {
 
     private void initdata() {
         getData();
-
-
     }
 
     private void getData() {
@@ -88,7 +83,7 @@ public class MachiceFragment extends BaseFragment {
             params.put("addr1", "0");
             params.put("addr2", "0");
             params.put("addr3", "0");
-            params.put("date1", "2000-01-01");
+            params.put("date1", "2018-01-01");
             params.put("date2", SgqUtils.getNowDate());
         } else {
             params.put("adminGroupID", groupid);
@@ -101,6 +96,7 @@ public class MachiceFragment extends BaseFragment {
             params.put("status", status);
 
         }
+
         httpUtils.doPost(Urls.tjserach(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
@@ -114,23 +110,11 @@ public class MachiceFragment extends BaseFragment {
 
                         Intent intent = new Intent(getActivity(), MachineDetailActivity.class);
 
-                        intent.putExtra("machineID", machine_list.get(position).getMachine_id()+"");
+                        intent.putExtra("machineID", machine_list.get(position).getMachine_id() + "");
                         intent.putExtra("machineNo", machine_list.get(position).getMachinenumber());
-                        intent.putExtra("date1", getActivity().getIntent().getStringExtra("leftdate"));
-                        intent.putExtra("date2", getActivity().getIntent().getStringExtra("rightdate"));
+                        intent.putExtra("date1", leftdate);
+                        intent.putExtra("date2", rightdate);
 
-                        String addr1 = getActivity().getIntent().getStringExtra("addr1");
-                        String addr2 = getActivity().getIntent().getStringExtra("addr2");
-                        String addr3 = getActivity().getIntent().getStringExtra("addr3");
-
-                        if(TextUtils.isEmpty(addr1)){
-                            addr1="0";
-                            addr2="0";
-                            addr3="0";
-                        }
-                        intent.putExtra("addr1", addr1);
-                        intent.putExtra("addr2", addr2);
-                        intent.putExtra("addr3", addr3);
                         startActivity(intent);
 
                     }
@@ -149,7 +133,7 @@ public class MachiceFragment extends BaseFragment {
         List<TongjiBean.MachineListBean> machine_list;
         private RVItemClickListener rvItemClickListener;
 
-        public MachineAdapter(Context context, List<TongjiBean.MachineListBean> machine_list,RVItemClickListener rvItemClickListener) {
+        public MachineAdapter(Context context, List<TongjiBean.MachineListBean> machine_list, RVItemClickListener rvItemClickListener) {
             super();
             this.context = context;
             inflater = LayoutInflater.from(context);
@@ -189,7 +173,7 @@ public class MachiceFragment extends BaseFragment {
             TextView tv_num = view.findViewById(R.id.tv_num);
             tv_name.setText(machine_list.get(position).getMachinenumber());
             tv_showshop.setText(String.valueOf(machine_list.get(position).getDetailedinstalladdress()));
-            tv_num.setText(AmountUtils.changeF2Y(machine_list.get(position).getSumJinE() +"")+ "元");
+            tv_num.setText(AmountUtils.changeF2Y(machine_list.get(position).getSumJinE() + "") + "元");
             LinearLayout liear_tjmachine = view.findViewById(R.id.liear_tjmachine);
 
             liear_tjmachine.setOnClickListener(new View.OnClickListener() {
