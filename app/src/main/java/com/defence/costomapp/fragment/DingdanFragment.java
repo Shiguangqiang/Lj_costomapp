@@ -122,7 +122,7 @@ public class DingdanFragment extends BaseFragment {
 
     private String url;
     private int length = 0;
-    private List list;
+    private  List<DingdanBean.ListBean> list;
 
     private void initData() {
         doPost();
@@ -184,7 +184,7 @@ public class DingdanFragment extends BaseFragment {
                             @Override
                             public void onItemClick(int position) {
                                 Intent intent = new Intent(getActivity(), DingdanDetailActivity.class);
-                                intent.putExtra("numberID", userTjBean.getList().get(position).getNumberID());
+                                intent.putExtra("numberID", list.get(position).getNumberID());
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
 

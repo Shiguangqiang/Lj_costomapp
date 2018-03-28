@@ -106,10 +106,10 @@ public class TuikuanListActivity extends BaseActivity {
                 @Override
                 public void onRefresh() {
                     length = 0;
-                    if (list != null&&list.size()>0) {
+                    if (list != null && list.size() > 0) {
                         list.clear();
                     }
-                    if (listdetail != null&&listdetail.size()>0) {
+                    if (listdetail != null && listdetail.size() > 0) {
                         listdetail.clear();
                     }
 
@@ -133,8 +133,8 @@ public class TuikuanListActivity extends BaseActivity {
         initdata(length);
     }
 
-    private List list;
-    private List listdetail;
+    private List<TuikuanListBean.ListBean> list;
+    private List<TuikuanListBean.ListBean> listdetail;
 
 
     private void initdata(int length) {
@@ -167,14 +167,15 @@ public class TuikuanListActivity extends BaseActivity {
 
                     if (list == null)
                         list = new ArrayList();
+
                     list.addAll(tuikuanListBean.getList());
 
                     if (dingdanAdapter == null) {
-                        dingdanAdapter = new DingdanAdapter(TuikuanListActivity.this, list, new RVItemClickListener() {
+                        dingdanAdapter = new DingdanAdapter(TuikuanListActivity.this, TuikuanListActivity.this.list, new RVItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
                                 Intent intent = new Intent(TuikuanListActivity.this, DingdanDetailActivity.class);
-                                intent.putExtra("numberID", tuikuanListBean.getList().get(position).getNumberID());
+                                intent.putExtra("numberID", list.get(position).getNumberID());
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
@@ -191,14 +192,14 @@ public class TuikuanListActivity extends BaseActivity {
 
             String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
             RequestParams params = new RequestParams();
-            params.put("length",(length * 10) + "");
+            params.put("length", (length * 10) + "");
             params.put("orderBy", "2");
             params.put("endpag", "10");
             params.put("adminGroupID", groupid);
             params.put("sdate", sdate);
             params.put("edate", edate);
-            if(!TextUtils.isEmpty(formatid)){
-                params.put("formatid",formatid.replace("'", ""));
+            if (!TextUtils.isEmpty(formatid)) {
+                params.put("formatid", formatid.replace("'", ""));
             }
             params.put("machineNumber", machineNumber);
             params.put("groupMachineNumber", groupMachineNumber);
@@ -232,10 +233,10 @@ public class TuikuanListActivity extends BaseActivity {
                             @Override
                             public void onItemClick(int position) {
                                 Intent intent = new Intent(TuikuanListActivity.this, DingdanDetailActivity.class);
-                                intent.putExtra("numberID", tuikuanListBean.getList().get(position).getNumberID());
+                                intent.putExtra("numberID", listdetail.get(position).getNumberID());
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
-                                finish();
+
                             }
                         });
                         listTuikuan.setAdapter(dingdanAdapter);
@@ -257,6 +258,8 @@ public class TuikuanListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.liear_right:
+
+
                 startActivity(new Intent(TuikuanListActivity.this, TuiKuanSerachActivity.class));
                 finish();
                 break;

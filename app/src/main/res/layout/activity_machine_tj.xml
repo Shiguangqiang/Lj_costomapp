@@ -99,6 +99,15 @@
 
     </LinearLayout>
 
+
+    <TextView
+        android:id="@+id/tv_machis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text=""
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/liear_grouplist"
         android:layout_width="match_parent"

@@ -36,6 +36,7 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,6 +69,10 @@ public class DingdHistoryActivity extends BaseActivity {
     ListView listDingdanhis;
     @BindView(R.id.srl)
     RefreshLayout srl;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
     private String wxOpenID;
     private String whoID;
     private String groupid;
@@ -86,26 +91,26 @@ public class DingdHistoryActivity extends BaseActivity {
         wxOpenID = getIntent().getStringExtra("wxOpenID");
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
 
+        rightIcon.setVisibility(View.GONE);
+
         //        // 设置下拉刷新监听器
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (iiCount >= 10) {
-                    iiCount -= 10;
-                    getlistdata(iiCount, state);
-                    dingdanAdapter.notifyDataSetChanged();
-                } else {
-                    srl.setRefreshing(false);
+                iiCount = 0;
+                if (list != null && list.size() > 0) {
+                    list.clear();
                 }
+                getlistdata(iiCount, state);
             }
         });
 //        上拉加载
         srl.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                iiCount += 10;
+                iiCount++;
                 getlistdata(iiCount, state);
-                dingdanAdapter.notifyDataSetChanged();
+
 
             }
         });
@@ -199,6 +204,8 @@ public class DingdHistoryActivity extends BaseActivity {
 
     }
 
+    private List<DingdanBean.ListBean> list;
+
     private void getlistdata(int iiCount, String sstate) {
 
         rightIcon.setImageResource(R.mipmap.all);
@@ -206,7 +213,7 @@ public class DingdHistoryActivity extends BaseActivity {
         params.put("whoID", whoID);
         params.put("wxOpenID", wxOpenID);
         params.put("adminGroupID", groupid);
-        params.put("iCount", iiCount + "");
+        params.put("iCount", (iiCount * 10) + "");
         params.put("adminGroupID", groupid);
         params.put("status", sstate);
         httpUtils.doPost(Urls.dingdhistoryllist(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
@@ -218,18 +225,24 @@ public class DingdHistoryActivity extends BaseActivity {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 final DingdanBean dingdanBean = gson.fromJson(jsonObject.toString(), DingdanBean.class);
 
-                dingdanAdapter = new DingdanAdapter(DingdHistoryActivity.this, dingdanBean.getList(), new RVItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-                        Intent intent = new Intent(DingdHistoryActivity.this, DingdanDetailActivity.class);
-                        intent.putExtra("numberID", dingdanBean.getList().get(position).getNumberID());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-                });
+                if (list == null)
+                    list = new ArrayList();
 
-                if (dingdanBean.getList() != null) {
+                list.addAll(dingdanBean.getList());
+                if (dingdanAdapter == null) {
+                    dingdanAdapter = new DingdanAdapter(DingdHistoryActivity.this, list, new RVItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Intent intent = new Intent(DingdHistoryActivity.this, DingdanDetailActivity.class);
+                            intent.putExtra("numberID", list.get(position).getNumberID());
+                            intent.putExtra("dis", "yes");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    });
                     listDingdanhis.setAdapter(dingdanAdapter);
+                } else {
+                    dingdanAdapter.notifyDataSetChanged();
                 }
 
             }
@@ -239,7 +252,7 @@ public class DingdHistoryActivity extends BaseActivity {
 
     private void initdata() {
 
-        middleTitle.setText(whoID);
+//        middleTitle.setText(whoID);
         RequestParams params = new RequestParams();
         params.put("whoID", whoID);
         params.put("wxOpenID", wxOpenID);
@@ -261,10 +274,10 @@ public class DingdHistoryActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.back, R.id.right_icon})
+    @OnClick({R.id.liear_left, R.id.right_icon})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.back:
+            case R.id.liear_left:
                 finish();
                 break;
             case R.id.right_icon:

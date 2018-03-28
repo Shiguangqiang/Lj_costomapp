@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -32,12 +33,16 @@
     <com.defence.costomapp.utils.RefreshUtils.RefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/pad_height_7"
+        android:background="@color/white">
 
         <ListView
             android:id="@+id/list_shophistory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fastScrollEnabled="false"
+            android:scrollbars="none"
             android:layout_marginTop="@dimen/pad_height_10"></ListView>
     </com.defence.costomapp.utils.RefreshUtils.RefreshLayout>
 

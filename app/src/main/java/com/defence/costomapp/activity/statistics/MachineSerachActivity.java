@@ -147,8 +147,8 @@ public class MachineSerachActivity extends BaseActivity {
             params.put("addr1", "0");
             params.put("addr2", "0");
             params.put("addr3", "0");
-            params.put("date1", "2018-01-01");
-            leftdate = "2018-01-01";
+            params.put("date1",  SgqUtils.getNowDate());
+            leftdate = SgqUtils.getNowDate();
             params.put("date2", SgqUtils.getNowDate());
             rightdate = SgqUtils.getNowDate();
         } else {
@@ -179,15 +179,19 @@ public class MachineSerachActivity extends BaseActivity {
                     if (status.equals("4")) {
                         sumJinE.setText("成功金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
                         paysalecount.setText("付款商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
+                        freesalecount.setText("赠送商品:" + tongjiBean.getMap_data().getFreeSaleCount() + "个");
+                        lirun.setText("净利润:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getLiRun1() + "") + "元");
                     } else {
                         sumJinE.setText("失败金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
-                        paysalecount.setText("失败商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
+                        paysalecount.setText("退款商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
+                        freesalecount.setText("赠送商品:" + tongjiBean.getMap_data().getFreeSaleCount() + "个");
+                        lirun.setText("总成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getPayCost() + "") + "元");
                     }
                 }
 
-                freesalecount.setText("赠送商品:" + tongjiBean.getMap_data().getFreeSaleCount() + "个");
+
                 freecost.setText("赠送成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getFreeCost() + "") + "元");
-                lirun.setText("净利润:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getLiRun1() + "") + "元");
+
 
                 List<TongjiBean.GoodsListBean> goods_list = tongjiBean.getGoods_list();
                 List<TongjiBean.MachineListBean> machine_list = tongjiBean.getMachine_list();

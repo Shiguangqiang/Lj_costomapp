@@ -23,9 +23,6 @@ import com.defence.costomapp.bean.UserTjBean;
 import com.defence.costomapp.fragment.UserTjFragment;
 import com.defence.costomapp.utils.AmountUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,6 +49,10 @@ public class UserTjNewActivity extends BaseActivity {
     TextView weixinpay;
     @BindView(R.id.usertj_LL)
     LinearLayout ll;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
 
 
     private PopupWindow pop;
@@ -111,15 +112,15 @@ public class UserTjNewActivity extends BaseActivity {
                     case 2:
                         //请求失败
                         if (type == 5) {
-                            tvChongzhi.setText("守望注册人数:" );
+                            tvChongzhi.setText("守望注册人数:");
                             regusernum.setText("平台付款次数:");
-                            saomausernum.setText("微信付款次数:" );
+                            saomausernum.setText("微信付款次数:");
                             pingtaiPay.setText("充值金额:");
                             weixinpay.setText("平台留存余额:");
                             tvChongzhi.setVisibility(View.VISIBLE);
                             saomausernum.setVisibility(View.VISIBLE);
                         } else {
-                            regusernum.setText("注册人数:" );
+                            regusernum.setText("注册人数:");
                             pingtaiPay.setText("平台付款次数:");
                             weixinpay.setText("微信付款次数");
                             tvChongzhi.setVisibility(View.GONE);
@@ -137,11 +138,16 @@ public class UserTjNewActivity extends BaseActivity {
 
     private FragmentManager fragmentManager;
 
+    @OnClick(R.id.liear_left)
+    public void onViewClicked() {
+        finish();
+    }
+
     private class DialogOnclickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
 
-            android.support.v4.app.FragmentTransaction tf = fragmentManager.beginTransaction();
+            FragmentTransaction tf = fragmentManager.beginTransaction();
             switch (view.getId()) {
                 case R.id.tv_logintime:
                     middleTitle.setText("用户统计 - 登录时间");
@@ -228,13 +234,4 @@ public class UserTjNewActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.back})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-
-        }
-    }
 }

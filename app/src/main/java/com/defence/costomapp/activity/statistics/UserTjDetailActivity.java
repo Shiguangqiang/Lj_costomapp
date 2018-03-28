@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class UserTjDetailActivity extends BaseActivity {
 
@@ -36,6 +38,10 @@ public class UserTjDetailActivity extends BaseActivity {
     TabLayout usertjTablayout;
     @BindView(R.id.usertj_viewpager)
     ViewPager usertjViewpager;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
 
     private String uid;
     private String uname;
@@ -85,13 +91,11 @@ public class UserTjDetailActivity extends BaseActivity {
         usertjTablayout.setupWithViewPager(usertjViewpager);
 
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    }
 
+    @OnClick(R.id.liear_left)
+    public void onViewClicked() {
+        finish();
     }
 
     class MyAdapter extends FragmentPagerAdapter {

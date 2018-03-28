@@ -3,7 +3,6 @@ package com.defence.costomapp.activity.statistics;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
@@ -12,15 +11,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.fragment.DingdanFragment;
-import com.defence.costomapp.fragment.UserTjFragment;
-import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +41,7 @@ public class DingdanNewActivity extends BaseActivity {
     LinearLayout usertjLL;
 
     private PopupWindow pop;
-    private int type = 0;
+    private int type = 4;
 
 
     @Override
@@ -53,7 +49,7 @@ public class DingdanNewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dingdan_new);
         ButterKnife.bind(this);
-        middleTitle.setText("全部订单");
+        middleTitle.setText("交易成功");
         rightIcon.setImageResource(R.mipmap.all);
         if (fragmentManager == null)
             fragmentManager = DingdanNewActivity.this.getSupportFragmentManager();
@@ -64,10 +60,11 @@ public class DingdanNewActivity extends BaseActivity {
 
     private FragmentManager fragmentManager;
 
-    @OnClick(R.id.back)
+    @OnClick(R.id.liear_left)
     public void onViewClicked() {
         finish();
     }
+
 
     private class DialogOnclickListener implements View.OnClickListener {
         @Override

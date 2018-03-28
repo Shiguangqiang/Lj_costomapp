@@ -94,6 +94,8 @@ public class TkShopActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra("deviceshop", s);
                 setResult(2, intent);
+
+
                 finish();
                 break;
         }

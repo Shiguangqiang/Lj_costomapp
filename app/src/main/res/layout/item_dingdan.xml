@@ -15,17 +15,17 @@
             android:id="@+id/tv_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/pad_height_10"
-            android:textColor="@color/black"
+            android:layout_margin="@dimen/pad_height_7"
             android:layout_weight="1"
             android:gravity="left"
+            android:textColor="@color/black"
             android:textSize="@dimen/pad_text_size_16" />
 
         <TextView
             android:id="@+id/tv_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/pad_height_10"
+            android:layout_margin="@dimen/pad_height_7"
             android:layout_weight="1"
             android:gravity="right"
             android:textSize="@dimen/pad_text_size_16" />
@@ -45,13 +45,23 @@
         android:layout_height="@dimen/pad_height_40"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="@dimen/pad_text_size_22" />
+        android:textSize="@dimen/pad_text_size_22"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_ddaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pad_height_7"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/pad_text_size_16" />
+
     <TextView
         android:id="@+id/tv_dannum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/pad_height_10"
+        android:layout_margin="@dimen/pad_height_7"
         android:gravity="center"
         android:textSize="@dimen/pad_text_size_12" />
 

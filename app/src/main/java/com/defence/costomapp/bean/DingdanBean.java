@@ -22,19 +22,21 @@ public class DingdanBean {
 
     public static class ListBean {
         /**
-         * numberID : 40201803191345583763699601211783
+         * numberID : 40201803191607069681293800047265
          * status : 4
-         * payVal : 250
+         * payVal : 100
          * orderUID : 0
-         * groupNID : 41201803191345583769042401229970
+         * groupNID : 41201803191607069684518700057467
          * adminGroupID : 1
-         * wxTransactionID : 4200000063201803191600395323
-         * orderTimeline : 2018-03-19 13:45:58
+         * machineID : dev-001
+         * wxTransactionID : 4200000066201803191628219521
+         * orderTimeline : 2018-03-19 16:07:06
          * tui_val : 0
-         * wxOpenID : oAyIL1aPQhsiy4UQjjapZTqgv7rY
-         * descVal : 二环内汽水-水蜜桃味450ml
+         * machine_data : {"machinename":"DEV===001","address":"北京市北京市丰台区","detailedinstalladdress":"33333","longitude":116.357042,"latitude":39.885905}
+         * wxOpenID : odCaB1dDSN1mGE7o1EbDxB0OR9Jk
+         * descVal : 诺贝达半面包-蛋羹乳酪
          * backTimeline :
-         * payTimeline : 2018-03-19 13:46:22
+         * payTimeline : 2018-03-19 16:08:53
          */
 
         private String numberID;
@@ -43,9 +45,11 @@ public class DingdanBean {
         private int orderUID;
         private String groupNID;
         private int adminGroupID;
+        private String machineID;
         private String wxTransactionID;
         private String orderTimeline;
         private int tui_val;
+        private MachineDataBean machine_data;
         private String wxOpenID;
         private String descVal;
         private String backTimeline;
@@ -99,6 +103,14 @@ public class DingdanBean {
             this.adminGroupID = adminGroupID;
         }
 
+        public String getMachineID() {
+            return machineID;
+        }
+
+        public void setMachineID(String machineID) {
+            this.machineID = machineID;
+        }
+
         public String getWxTransactionID() {
             return wxTransactionID;
         }
@@ -121,6 +133,14 @@ public class DingdanBean {
 
         public void setTui_val(int tui_val) {
             this.tui_val = tui_val;
+        }
+
+        public MachineDataBean getMachine_data() {
+            return machine_data;
+        }
+
+        public void setMachine_data(MachineDataBean machine_data) {
+            this.machine_data = machine_data;
         }
 
         public String getWxOpenID() {
@@ -153,6 +173,62 @@ public class DingdanBean {
 
         public void setPayTimeline(String payTimeline) {
             this.payTimeline = payTimeline;
+        }
+
+        public static class MachineDataBean {
+            /**
+             * machinename : DEV===001
+             * address : 北京市北京市丰台区
+             * detailedinstalladdress : 33333
+             * longitude : 116.357042
+             * latitude : 39.885905
+             */
+
+            private String machinename;
+            private String address;
+            private String detailedinstalladdress;
+            private double longitude;
+            private double latitude;
+
+            public String getMachinename() {
+                return machinename;
+            }
+
+            public void setMachinename(String machinename) {
+                this.machinename = machinename;
+            }
+
+            public String getAddress() {
+                return address;
+            }
+
+            public void setAddress(String address) {
+                this.address = address;
+            }
+
+            public String getDetailedinstalladdress() {
+                return detailedinstalladdress;
+            }
+
+            public void setDetailedinstalladdress(String detailedinstalladdress) {
+                this.detailedinstalladdress = detailedinstalladdress;
+            }
+
+            public double getLongitude() {
+                return longitude;
+            }
+
+            public void setLongitude(double longitude) {
+                this.longitude = longitude;
+            }
+
+            public double getLatitude() {
+                return latitude;
+            }
+
+            public void setLatitude(double latitude) {
+                this.latitude = latitude;
+            }
         }
     }
 }

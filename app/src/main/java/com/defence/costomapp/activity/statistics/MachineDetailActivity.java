@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MachineDetailActivity extends BaseActivity {
 
@@ -45,6 +47,12 @@ public class MachineDetailActivity extends BaseActivity {
     TextView saleCount;
     @BindView(R.id.list_machinedetail)
     ListView listMachinedetail;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.right_icon)
+    ImageView rightIcon;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
 
     private String machineID;
     private String machineNo;
@@ -101,6 +109,11 @@ public class MachineDetailActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @OnClick(R.id.liear_left)
+    public void onViewClicked() {
+        finish();
     }
 
     private class MachineDetailAdapter extends BaseAdapter {

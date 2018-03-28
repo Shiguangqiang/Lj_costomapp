@@ -2,11 +2,9 @@ package com.defence.costomapp.activity.statistics;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -19,18 +17,20 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
-import com.defence.costomapp.bean.JsonBean;
-import com.defence.costomapp.fragment.MyDialogFragment;
 import com.defence.costomapp.utils.MyNumberPicker;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SpUtil;
 
 import org.json.JSONArray;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -74,6 +74,8 @@ public class MachineTjActivity extends BaseActivity {
     RadioButton tuikuanRb;
     @BindView(R.id.rg)
     RadioGroup rg;
+    @BindView(R.id.tv_machis)
+    TextView tvMachis;
     private String device;
     private String devicegroup;
 
@@ -95,6 +97,12 @@ public class MachineTjActivity extends BaseActivity {
         middleTitle.setText("统计");
         tvLeftdate.setText(SgqUtils.getNowDate());
         tvRightdate.setText(SgqUtils.getNowDate());
+        List<Serializable> checkhis = SpUtil.getList(MyApplication.getApp(), "checkhis");
+        if (checkhis != null && checkhis.size() > 0) {
+//            tvMachis.setVisibility(View.VISIBLE);
+            tvMachis.setText(checkhis.get(0) + "...");
+        }
+
     }
 
 
@@ -172,6 +180,7 @@ public class MachineTjActivity extends BaseActivity {
 //                String str=b.getString("str1");//str即为回传的值
                 if (data != null) {
                     device = data.getStringExtra("device");
+                    tvMachis.setText(device);
                 }
 
                 break;

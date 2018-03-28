@@ -65,7 +65,7 @@ public class UserTjAdapter extends RecyclerView.Adapter<UserTjAdapter.ViewHolder
             case 3:
                 holder.name.setText(entity.getMphone() + "");
                 holder.content.setText("账户余额:" + AmountUtils.changeF2Y(entity.getBankNo() + "") + "元");
-                holder.time.setText("注册时间:" + entity.getTimeline() + "");
+                holder.time.setText("注册时间:" + entity.getReg_time() + "");
                 break;
             case 4:
                 holder.name.setText(entity.getWx() + "");

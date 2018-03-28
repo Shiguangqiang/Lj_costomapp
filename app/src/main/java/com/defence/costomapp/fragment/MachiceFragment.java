@@ -83,8 +83,8 @@ public class MachiceFragment extends BaseFragment {
             params.put("addr1", "0");
             params.put("addr2", "0");
             params.put("addr3", "0");
-            params.put("date1", "2018-01-01");
-            leftdate = "2018-01-01";
+            params.put("date1", SgqUtils.getNowDate());
+            leftdate =SgqUtils.getNowDate();
             params.put("date2", SgqUtils.getNowDate());
             rightdate = SgqUtils.getNowDate();
         } else {

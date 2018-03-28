@@ -63,6 +63,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
                 holder.tv_dannum.setText(list.get(position).getNumberID());
                 holder.tv_state.setText("交易成功");
+                holder.tv_address.setText(list.get(position).getMachine_data().getAddress());
                 holder.tv_state.setTextColor(Color.rgb(26, 233, 50));
                 break;
             case 3:
@@ -71,6 +72,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
                 holder.tv_dannum.setText(list.get(position).getNumberID());
                 holder.tv_state.setText("待出货");
+                holder.tv_address.setText(list.get(position).getMachine_data().getAddress());
                 holder.tv_state.setTextColor(Color.rgb(255, 51, 0));
                 break;
             case 5:
@@ -79,6 +81,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
                 holder.tv_dannum.setText(list.get(position).getNumberID());
                 holder.tv_state.setText("退款成功");
+                holder.tv_address.setText(list.get(position).getMachine_data().getAddress());
                 holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
 
                 break;
@@ -133,6 +136,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
         private TextView tv_time;
         private TextView tv_money;
         private TextView tv_dannum;
+        private TextView tv_address;
         private LinearLayout liearitemll;
 
         public ViewHolder(View itemView) {
@@ -143,6 +147,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
             tv_money = itemView.findViewById(R.id.tv_money);
             tv_dannum = itemView.findViewById(R.id.tv_dannum);
             liearitemll = itemView.findViewById(R.id.liearitemll);
+            tv_address = itemView.findViewById(R.id.tv_ddaddress);
 
         }
     }

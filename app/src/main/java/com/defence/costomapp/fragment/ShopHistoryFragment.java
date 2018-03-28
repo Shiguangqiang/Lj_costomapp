@@ -15,6 +15,7 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.ShopHistoryDetailBean;
+import com.defence.costomapp.bean.TuikuanListBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.DateAndTimeUtil;
@@ -28,6 +29,7 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -78,21 +80,24 @@ public class ShopHistoryFragment extends BaseFragment {
         srl.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-
-                String dateStr = DateAndTimeUtil.dateaddFormat(Sdate);
-                if (!dateStr.equals(DateAndTimeUtil.dateaddFormat(SgqUtils.getNowYmDate()))) {
-                    initdata(dateStr);
-                    shopHistoryAdapter.notifyDataSetChanged();
-                } else {
-                    srl.setLoading(false);
-                    Toast.makeText(getActivity(), "已是最新月份数据", Toast.LENGTH_SHORT).show();
-                }
+                srl.setLoading(false);
+//                String dateStr = DateAndTimeUtil.dateaddFormat(Sdate);
+//                if (!dateStr.equals(DateAndTimeUtil.dateaddFormat(SgqUtils.getNowYmDate()))) {
+//                    initdata(dateStr);
+//                    shopHistoryAdapter.notifyDataSetChanged();
+//                } else {
+//                    srl.setLoading(false);
+//                    Toast.makeText(getActivity(), "已是最新月份数据", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
         initdata(Sdate);
         return view;
     }
+
+
+    private List<ShopHistoryDetailBean.ListBean> list;
 
     private void initdata(final String date) {
         uid = getActivity().getIntent().getStringExtra("uid");
@@ -121,20 +126,19 @@ public class ShopHistoryFragment extends BaseFragment {
                 for (int i = 0; i < shopHistoryDetailBean.getList().size(); i++) {
                     nnum += shopHistoryDetailBean.getList().get(i).getPayVal();
                 }
-                tvXiaofei.setText("本月:" + AmountUtils.changeF2Y(nnum + "") + "元");
+                tvXiaofei.setText("本月消费:" + AmountUtils.changeF2Y(nnum + "") + "元");
 //                tvXiaofei.setText("本月消费:" + AmountUtils.changeF2Y(shopHistoryDetailBean.getPayval() + "") + "元");
 
+                if (list == null)
+                    list = new ArrayList();
 
-                shopHistoryAdapter = new ShopHistoryAdapter(getActivity(), shopHistoryDetailBean.getList(), new RVItemClickListener() {
-                    @Override
-                    public void onItemClick(int position) {
-
-
-                    }
-                });
-
-                listShophistory.setAdapter(shopHistoryAdapter);
-
+                list.addAll(shopHistoryDetailBean.getList());
+                if (shopHistoryAdapter == null) {
+                    shopHistoryAdapter = new ShopHistoryAdapter(getActivity(), list);
+                    listShophistory.setAdapter(shopHistoryAdapter);
+                } else {
+                    shopHistoryAdapter.notifyDataSetChanged();
+                }
 
             }
         });
@@ -145,15 +149,12 @@ public class ShopHistoryFragment extends BaseFragment {
         private Context context;
         private LayoutInflater inflater;
         private List<ShopHistoryDetailBean.ListBean> list;
-        private RVItemClickListener rvItemClickListener;
 
-        public ShopHistoryAdapter(Context context, List<ShopHistoryDetailBean.ListBean> list, RVItemClickListener rvItemClickListener) {
+        public ShopHistoryAdapter(Context context, List<ShopHistoryDetailBean.ListBean> list) {
             super();
             this.context = context;
             inflater = LayoutInflater.from(context);
             this.list = list;
-            this.rvItemClickListener = rvItemClickListener;
-
         }
 
         @Override
@@ -192,13 +193,6 @@ public class ShopHistoryFragment extends BaseFragment {
             tv_date.setText(list.get(position).getPayTimeline());
             tv_pricee.setText("-" + AmountUtils.changeF2Y(list.get(position).getPayVal() + "") + "元");
 
-//
-//            buhuoItemll.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    rvItemClickListener.onItemClick(position);
-//                }
-//            });
 
             return view;
 

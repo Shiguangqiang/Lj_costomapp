@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -76,6 +77,10 @@ public class DingdanDetailActivity extends BaseActivity {
     TextView tvTimen;
     @BindView(R.id.liear_tuikuansucc)
     LinearLayout liearTuikuansucc;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
     private String whoID;
     private String wxOpenID;
     private String numberID;
@@ -94,10 +99,16 @@ public class DingdanDetailActivity extends BaseActivity {
 
     private void initdata() {
         numberID = getIntent().getStringExtra("numberID");
+        String dis = getIntent().getStringExtra("dis");
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         middleTitle.setText(numberID);
         middleTitle.setTextSize(14);
-        rightIcon.setImageResource(R.mipmap.all);
+        if(TextUtils.isEmpty(dis)){
+            rightIcon.setImageResource(R.mipmap.all);
+        }
+
+
+
 
         RequestParams params = new RequestParams();
         params.put("numberID", numberID);
@@ -117,6 +128,7 @@ public class DingdanDetailActivity extends BaseActivity {
                 whoID = dingdDetailBean.getOrderUID() + "";
                 wxOpenID = dingdDetailBean.getWxOpenID();
 
+
                 switch (dingdDetailBean.getStatus()) {
                     case 3:
                         tvState.setText("待出货");
@@ -127,7 +139,7 @@ public class DingdanDetailActivity extends BaseActivity {
                     case 4:
                         tvState.setText("交易成功");
                         tvState.setTextColor(Color.rgb(26, 233, 50));
-                        liearDaichuhuo.setVisibility(View.GONE);
+                        liearDaichuhuo.setVisibility(View.VISIBLE);
                         liearTuikuansucc.setVisibility(View.GONE);
                         break;
                     case 5:
@@ -190,10 +202,10 @@ public class DingdanDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.back, R.id.tv_ignore, R.id.right_icon})
+    @OnClick({R.id.liear_left, R.id.tv_ignore, R.id.right_icon})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.back:
+            case R.id.liear_left:
                 finish();
                 break;
             case R.id.tv_ignore:
@@ -279,4 +291,5 @@ public class DingdanDetailActivity extends BaseActivity {
         });*/
 
     }
+
 }

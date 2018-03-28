@@ -1,12 +1,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.defence.costomapp.fragment.UserTjFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.defence.costomapp.fragment.UserTjFragment">
 
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/srl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/pad_height_7"
+        android:layout_marginRight="@dimen/pad_height_7"></com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
 </FrameLayout>

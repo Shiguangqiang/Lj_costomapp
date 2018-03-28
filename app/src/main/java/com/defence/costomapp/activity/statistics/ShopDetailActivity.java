@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,6 +51,12 @@ public class ShopDetailActivity extends BaseActivity {
     TextView saleCount;
     @BindView(R.id.list_shopdetail)
     ListView listShopdetail;
+    @BindView(R.id.liear_left)
+    LinearLayout liearLeft;
+    @BindView(R.id.right_icon)
+    ImageView rightIcon;
+    @BindView(R.id.liear_right)
+    LinearLayout liearRight;
     private String formatID;
     private String formatText;
     private String date1;
@@ -110,6 +117,11 @@ public class ShopDetailActivity extends BaseActivity {
         });
     }
 
+    @OnClick(R.id.liear_left)
+    public void onViewClicked() {
+        finish();
+    }
+
     private class ShopDetailAdapter extends BaseAdapter {
 
         private Context context;
@@ -162,11 +174,6 @@ public class ShopDetailActivity extends BaseActivity {
             return view;
 
         }
-    }
-
-    @OnClick(R.id.back)
-    public void onViewClicked() {
-        finish();
     }
 
 }

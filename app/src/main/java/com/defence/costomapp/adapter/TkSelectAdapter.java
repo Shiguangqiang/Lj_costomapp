@@ -10,8 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.bean.TuikuanMachineBean;
+import com.defence.costomapp.utils.SpUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,7 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
         ArrayList<String> selectList = new ArrayList<>();
+        ArrayList<Integer> selectint = new ArrayList<>();
         ArrayList<String> strings = new ArrayList<>();
 
         if (string.equals("group")) {
@@ -71,21 +75,25 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
 
             }
-
+            SpUtil.putList(MyApplication.getApp(), "checkgroup", selectList);
         } else if (string.equals("shop")) {
+
             for (int i = 0; i < mList.size(); i++) {
                 if (isItemChecked(i)) {
                     selectList.add(mList.get(i).getGuigeid());
+//                    selectint.add(selectint.get(i));
                 }
             }
+            SpUtil.putList(MyApplication.getApp(), "checkshop", selectList);
         } else {
             for (int i = 0; i < mList.size(); i++) {
                 if (isItemChecked(i)) {
                     selectList.add(mList.get(i).getMachinenumber());
                 }
             }
-
+            SpUtil.putList(MyApplication.getApp(), "checkhis", selectList);
         }
+
 
         return selectList;
     }
@@ -123,12 +131,34 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int i) {
 
 
+        List<Serializable> checkhis = SpUtil.getList(MyApplication.getApp(), "checkhis");
+        List<Serializable> checkshop = SpUtil.getList(MyApplication.getApp(), "checkshop");
+
+
         //设置条目状态
         if (string.equals("machine")) {
+
             ((ListItemViewHolder) holder).mainTitle.setText(mList.get(i).getDetailedinstalladdress());
+
+            if (checkhis != null && checkhis.size() > 0) {
+                for (int j = 0; j < checkhis.size(); j++) {
+                    if (checkhis.get(j).equals(mList.get(i).getMachinenumber())) {
+                        setItemChecked(i, true);
+                    }
+                }
+            }
         } else if (string.equals("shop")) {
             ((ListItemViewHolder) holder).mainTitle.setText(mList.get(i).getDs());
+            if (checkshop != null && checkshop.size() > 0) {
+                for (int j = 0; j < checkhis.size(); j++) {
+                    if (checkshop.get(j).equals(mList.get(i).getGuigeid())) {
+                        setItemChecked(i, true);
+                    }
+                }
+            }
+
         } else if (string.equals("group")) {
+
             List<TuikuanMachineBean.ListBean> l = new ArrayList();
             for (int j = 0; j < mList.size(); j++) {
                 if (mList.get(j).getPrentid().equals("0")) {
@@ -169,14 +199,7 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-//        if (string.equals("group")) {
-//            for (int i = 0; i < mList.size(); i++) {
-//                if (!mList.get(i).getPrentid().equals("0")) {
-//                    mList.remove(mList.get(i));
-//                }
-//            }
-//            return mList == null ? 0 : mList.size();
-//        } else {
+
         if (string.equals("group")) {
             int size = 0;
             for (int i = 0; i < mList.size(); i++) {

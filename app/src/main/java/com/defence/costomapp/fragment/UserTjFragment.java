@@ -125,7 +125,7 @@ public class UserTjFragment extends Fragment {
     }
 
     private UserTjAdapter userTjAdapter;
-    private List list;
+    private  List<UserTjBean.ListBean> list;
 
     private void doPost() {
 
@@ -144,25 +144,27 @@ public class UserTjFragment extends Fragment {
                     if (list == null)
                         list = new ArrayList();
 
-                    list.addAll(userTjBean.getList());
+
+
+                    UserTjFragment.this.list.addAll(userTjBean.getList());
 
                     if (userTjAdapter == null) {
-                        userTjAdapter = new UserTjAdapter(getContext(), list, new RVItemClickListener() {
+                        userTjAdapter = new UserTjAdapter(getContext(), UserTjFragment.this.list, new RVItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
 
                                 if (type == 5) {
                                     Intent intent = new Intent(getActivity(), ChongzhiDetailActivity.class);
-                                    intent.putExtra("userid", userTjBean.getList().get(position).getUserID() + "");
-                                    intent.putExtra("phone", userTjBean.getList().get(position).getMphone() + "");
+                                    intent.putExtra("userid", list.get(position).getUserID() + "");
+                                    intent.putExtra("phone", list.get(position).getMphone() + "");
                                     startActivity(intent);
                                 } else {
                                     Intent intent = new Intent(getActivity(), UserTjDetailActivity.class);
-                                    intent.putExtra("uid", (userTjBean.getList().get(position).getId()) + "");
-                                    intent.putExtra("uname", userTjBean.getList().get(position).getName());
-                                    intent.putExtra("phone", userTjBean.getList().get(position).getMphone() + "");
+                                    intent.putExtra("uid", (list.get(position).getId()) + "");
+                                    intent.putExtra("uname", list.get(position).getName());
+                                    intent.putExtra("phone", list.get(position).getMphone() + "");
                                     intent.putExtra("ttype", type + "");
-                                    intent.putExtra("wxid", userTjBean.getList().get(position).getWxOpenID() + "");
+                                    intent.putExtra("wxid", list.get(position).getWxOpenID() + "");
                                     startActivity(intent);
                                 }
 
