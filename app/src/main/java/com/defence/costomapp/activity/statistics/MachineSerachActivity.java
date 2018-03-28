@@ -100,7 +100,6 @@ public class MachineSerachActivity extends BaseActivity {
         status = getIntent().getStringExtra("status");
 
 
-
         middleTitle.setTextSize(16);
         rightIcon.setImageResource(R.mipmap.all);
 
@@ -148,8 +147,10 @@ public class MachineSerachActivity extends BaseActivity {
             params.put("addr1", "0");
             params.put("addr2", "0");
             params.put("addr3", "0");
-            params.put("date1","2018-01-01");
+            params.put("date1", "2018-01-01");
+            leftdate = "2018-01-01";
             params.put("date2", SgqUtils.getNowDate());
+            rightdate = SgqUtils.getNowDate();
         } else {
             params.put("adminGroupID", groupid);
             params.put("date1", leftdate);
@@ -159,7 +160,6 @@ public class MachineSerachActivity extends BaseActivity {
             params.put("addr3", "0");
             params.put("devices", device);
             params.put("status", status);
-
         }
 
         middleTitle.setText(leftdate + " 至 " + rightdate);

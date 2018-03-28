@@ -50,9 +50,8 @@ public class MachineDetailActivity extends BaseActivity {
     private String machineNo;
     private String date1;
     private String date2;
-    private String addr1;
-    private String addr2;
-    private String addr3;
+    private String device;
+    private String status;
     private String groupid;
 
     @Override
@@ -68,7 +67,8 @@ public class MachineDetailActivity extends BaseActivity {
         machineNo = getIntent().getStringExtra("machineNo");
         date1 = getIntent().getStringExtra("date1");
         date2 = getIntent().getStringExtra("date2");
-
+        device = getIntent().getStringExtra("device");
+        status = getIntent().getStringExtra("status");
         middleTitle.setText(machineNo + "商品销售情况");
         getData();
 
@@ -85,6 +85,9 @@ public class MachineDetailActivity extends BaseActivity {
         params.put("addr1", "0");
         params.put("addr2", "0");
         params.put("addr3", "0");
+        params.put("devices", device);
+        params.put("status", status);
+
         httpUtils.doPost(Urls.tjserach_machine(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
@@ -97,7 +100,6 @@ public class MachineDetailActivity extends BaseActivity {
 
             }
         });
-
 
     }
 

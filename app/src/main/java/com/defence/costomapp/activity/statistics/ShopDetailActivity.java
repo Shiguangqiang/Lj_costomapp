@@ -54,7 +54,8 @@ public class ShopDetailActivity extends BaseActivity {
     private String formatText;
     private String date1;
     private String date2;
-
+    private String device;
+    private String status;
     private String groupid;
 
     @Override
@@ -72,6 +73,8 @@ public class ShopDetailActivity extends BaseActivity {
         formatText = getIntent().getStringExtra("formatText");
         date1 = getIntent().getStringExtra("date1");
         date2 = getIntent().getStringExtra("date2");
+        device = getIntent().getStringExtra("device");
+        status = getIntent().getStringExtra("status");
 
         middleTitle.setText(formatText + "销售占比");
         getData();
@@ -90,6 +93,9 @@ public class ShopDetailActivity extends BaseActivity {
         params.put("addr1", "0");
         params.put("addr2", "0");
         params.put("addr3", "0");
+        params.put("devices", device);
+        params.put("status", status);
+
         httpUtils.doPost(Urls.tjserach_shop(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
@@ -99,7 +105,6 @@ public class ShopDetailActivity extends BaseActivity {
                 sumLiRun.setText("总利润:" + AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumLiRun() + "") + "元");
                 saleCount.setText("总件:" + tjshopDetailBean.getMap_data().getSaleCount() + "个");
                 listShopdetail.setAdapter(new ShopDetailAdapter(ShopDetailActivity.this, tjshopDetailBean.getList()));
-
 
             }
         });

@@ -83,7 +83,9 @@ public class CommodityFragment extends BaseFragment {
             params.put("addr2", "0");
             params.put("addr3", "0");
             params.put("date1", "2018-01-01");
+            leftdate = "2018-01-01";
             params.put("date2", SgqUtils.getNowDate());
+            rightdate = SgqUtils.getNowDate();
         } else {
             params.put("adminGroupID", groupid);
             params.put("date1", leftdate);
@@ -111,6 +113,8 @@ public class CommodityFragment extends BaseFragment {
                         intent.putExtra("formatText", goods_list.get(position).getDescVal());
                         intent.putExtra("date1", leftdate);
                         intent.putExtra("date2", rightdate);
+                        intent.putExtra("device", device);
+                        intent.putExtra("status", status);
                         startActivity(intent);
 
                     }
