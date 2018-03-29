@@ -23,6 +23,7 @@ public class DingdanBean {
     public static class ListBean {
         /**
          * numberID : 40201803191607069681293800047265
+         * itemNo : 21
          * status : 4
          * payVal : 100
          * orderUID : 0
@@ -40,6 +41,7 @@ public class DingdanBean {
          */
 
         private String numberID;
+        private int itemNo;
         private int status;
         private int payVal;
         private int orderUID;
@@ -61,6 +63,14 @@ public class DingdanBean {
 
         public void setNumberID(String numberID) {
             this.numberID = numberID;
+        }
+
+        public int getItemNo() {
+            return itemNo;
+        }
+
+        public void setItemNo(int itemNo) {
+            this.itemNo = itemNo;
         }
 
         public int getStatus() {

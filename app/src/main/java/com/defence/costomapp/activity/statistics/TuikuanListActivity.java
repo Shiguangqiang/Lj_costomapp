@@ -315,13 +315,13 @@ public class TuikuanListActivity extends BaseActivity {
             TextView tv_money = view.findViewById(R.id.tv_money);
             TextView tv_dannum = view.findViewById(R.id.tv_dannum);
             LinearLayout liearitemll = view.findViewById(R.id.liearitemll);
+            TextView tv_ddaddress = view.findViewById(R.id.tv_ddaddress);
 
             try {
                 tv_show.setText(list.get(position).getDescVal());
                 tv_state.setText("退款成功");
                 tv_state.setTextColor(Color.rgb(255, 204, 0));
-
-
+                tv_ddaddress.setText(list.get(position).getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
                 tv_time.setText(list.get(position).getBackTimeline());
                 tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
                 tv_dannum.setText(list.get(position).getNumberID());
@@ -329,7 +329,6 @@ public class TuikuanListActivity extends BaseActivity {
                 e.printStackTrace();
             }
 
-//
             liearitemll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

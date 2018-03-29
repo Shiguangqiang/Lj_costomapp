@@ -38,7 +38,7 @@ public class DateAndTimeUtil {
         return sdf.format(date);
     }
     /***
-     * 日期月份减一个月
+     * 日期加一个月
      *
      * @param datetime
      *            日期(2014-11)
@@ -110,11 +110,8 @@ public class DateAndTimeUtil {
     public static boolean isMonthEnd(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        if (cal.get(Calendar.DATE) == cal
-                .getActualMaximum(Calendar.DAY_OF_MONTH))
-            return true;
-        else
-            return false;
+        return cal.get(Calendar.DATE) == cal
+                .getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     /***
@@ -132,7 +129,7 @@ public class DateAndTimeUtil {
         Date date = null;
 
         try {
-            date = (Date) sdf.parse(_date);
+            date = sdf.parse(_date);
         } catch (ParseException e) {
             e.printStackTrace();
         }

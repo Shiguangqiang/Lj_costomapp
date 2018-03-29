@@ -113,6 +113,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
             @Override
             public void onLocationChanged(AMapLocation amapLocation) {
 
+
                 if(pd!=null){
                     pd.dismiss();
                 }

@@ -34,6 +34,7 @@ import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -103,11 +104,9 @@ public class DingdanDetailActivity extends BaseActivity {
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         middleTitle.setText(numberID);
         middleTitle.setTextSize(14);
-        if(TextUtils.isEmpty(dis)){
+        if (TextUtils.isEmpty(dis)) {
             rightIcon.setImageResource(R.mipmap.all);
         }
-
-
 
 
         RequestParams params = new RequestParams();
@@ -168,15 +167,16 @@ public class DingdanDetailActivity extends BaseActivity {
                 LatLng latLng = new LatLng(dingdDetailBean.getMachine_data().getLatitude(), dingdDetailBean.getMachine_data().getLongitude());
                 UiSettings uiSettings = aMap.getUiSettings();
                 // 通过UISettings.setZoomControlsEnabled(boolean)来设置缩放按钮是否能显示
-                uiSettings.setZoomControlsEnabled(false);
-                uiSettings.setScrollGesturesEnabled(false);
-                uiSettings.setZoomGesturesEnabled(false);
+                uiSettings.setZoomControlsEnabled(true);
+                uiSettings.setScrollGesturesEnabled(true);
+                uiSettings.setZoomGesturesEnabled(true);
                 //可视化区域，将指定位置指定到屏幕中心位置
                 CameraUpdate cameraUpdate = CameraUpdateFactory
                         .newCameraPosition(new CameraPosition(latLng, 19, 0, 30));
                 aMap.moveCamera(cameraUpdate);
-                aMap.addMarker(new MarkerOptions().position(latLng));
-                aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+                aMap.addMarker(new MarkerOptions().position(latLng).title(dingdDetailBean.getMachine_data().getDetailedinstalladdress()));
+
+              /*  aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(final LatLng latLng) {
                         ActionSheelUtil.showMenu(DingdanDetailActivity.this, "选择导航",
@@ -196,7 +196,7 @@ public class DingdanDetailActivity extends BaseActivity {
                                     }
                                 });
                     }
-                });
+                });*/
             }
         });
     }
@@ -252,10 +252,12 @@ public class DingdanDetailActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated meth od stub
-                if (singleSelectedId >= 0) {
-                    tuikuan(items[which].toString());
+
+                if (singleSelectedId > 0) {
+
+                    tuikuan(items[singleSelectedId].toString());
                 } else {
-                    singleSelectedId = 0;
+                    tuikuan(items[0].toString());
                     // 业务逻辑
                 }
             }
@@ -269,7 +271,6 @@ public class DingdanDetailActivity extends BaseActivity {
 
             }
         });
-
         builder.create().show();
     }
 
@@ -277,19 +278,20 @@ public class DingdanDetailActivity extends BaseActivity {
     //退款
     private void tuikuan(final String reason) {
 
-       /* RequestParams params = new RequestParams();
+        RequestParams params = new RequestParams();
         params.put("numberID", numberID);
         params.put("adminGroupID", groupid);
         params.put("reason", reason);
-        httpUtils.doPost(Urls.dingdandetail(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+        httpUtils.doPost(Urls.dingdantuikuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
-                new JSONObject(result.toString());
+                JSONObject jsonObject = new JSONObject(result.toString());
+                liearDaichuhuo.setVisibility(View.GONE);
+                tvState.setText("退款成功");
+
 
             }
-        });*/
-
+        });
     }
-
 }

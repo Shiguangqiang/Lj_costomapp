@@ -34,6 +34,8 @@ public class ShopHistoryDetailBean {
     }
 
     public static class ListBean {
+
+
         /**
          * test_shang_pin : 0
          * numberID : 40201803140514088491723901291233
@@ -73,6 +75,10 @@ public class ShopHistoryDetailBean {
          * kuaiDiFee : 0
          */
 
+
+        private int type;
+        private String moneyy = "0";
+        private String newdate;
         private int test_shang_pin;
         private String numberID;
         private int orderBy;
@@ -109,6 +115,30 @@ public class ShopHistoryDetailBean {
         private String cancelTimeline;
         private int payType;
         private int kuaiDiFee;
+
+        public String getNewdate() {
+            return newdate;
+        }
+
+        public void setNewdate(String newdate) {
+            this.newdate = newdate;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getMoneyy() {
+            return moneyy;
+        }
+
+        public void setMoneyy(String moneyy) {
+            this.moneyy = moneyy;
+        }
 
         public int getTest_shang_pin() {
             return test_shang_pin;

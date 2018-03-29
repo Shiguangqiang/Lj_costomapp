@@ -101,7 +101,7 @@ public class WorkLogInfoActivity extends BaseActivity implements AbstractSpinerA
     /*工作日期*/
     private void getWorkDate() {
         RequestParams params = new RequestParams();
-        params.put("userid", groupid);
+        params.put("userid", whoID);
         httpUtils.doPost(Urls.worklogdate(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
 
             @Override

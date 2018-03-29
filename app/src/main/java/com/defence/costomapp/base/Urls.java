@@ -183,4 +183,11 @@ public class Urls {
         return BaseUrl + "req-mobile/user-tuikuan/list/info/dingdangroupmachine/0data1.json";
     }
 
+
+    //退款退款
+    public static String dingdantuikuan() {
+        return BaseUrl + "req-mobile/ding/dan/dev/qr/refund/order/0item";
+    }
+
+
 }

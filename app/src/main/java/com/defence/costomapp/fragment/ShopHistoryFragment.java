@@ -9,19 +9,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.ShopHistoryDetailBean;
-import com.defence.costomapp.bean.TuikuanListBean;
-import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.DateAndTimeUtil;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
 import com.defence.costomapp.utils.SgqUtils;
-import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
@@ -48,47 +44,35 @@ public class ShopHistoryFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.list_shophistory)
     ListView listShophistory;
-    @BindView(R.id.tv_date)
-    TextView tvDate;
-    @BindView(R.id.tv_xiaofei)
-    TextView tvXiaofei;
     @BindView(R.id.srl)
     RefreshLayout srl;
 
     private String uid;
     String Sdate = SgqUtils.getNowYmDate();
     private ShopHistoryAdapter shopHistoryAdapter;
-    private String wxid;
-    private String ttype;
+    private String wxid = "";
+    private String newdate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shophistory, null);
         unbinder = ButterKnife.bind(this, view);
+        srl.setRefreshing(false);
         //        // 设置下拉刷新监听器
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                String dateStr = DateAndTimeUtil.dateFormat(Sdate);
-                initdata(dateStr);
-                shopHistoryAdapter.notifyDataSetChanged();
-
+                srl.setRefreshing(false);
 
             }
         });
 ////        上拉加载
+
         srl.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                srl.setLoading(false);
-//                String dateStr = DateAndTimeUtil.dateaddFormat(Sdate);
-//                if (!dateStr.equals(DateAndTimeUtil.dateaddFormat(SgqUtils.getNowYmDate()))) {
-//                    initdata(dateStr);
-//                    shopHistoryAdapter.notifyDataSetChanged();
-//                } else {
-//                    srl.setLoading(false);
-//                    Toast.makeText(getActivity(), "已是最新月份数据", Toast.LENGTH_SHORT).show();
-//                }
+                String dateStr = DateAndTimeUtil.dateFormat(Sdate);
+                initdata(dateStr);
             }
         });
 
@@ -120,35 +104,54 @@ public class ShopHistoryFragment extends BaseFragment {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 ShopHistoryDetailBean shopHistoryDetailBean = gson.fromJson(jsonObject.toString(), ShopHistoryDetailBean.class);
                 //字符串替
-                String newdate = date.replace("-", "年");
-                tvDate.setText(newdate + "月");
-                int nnum = 0;
-                for (int i = 0; i < shopHistoryDetailBean.getList().size(); i++) {
-                    nnum += shopHistoryDetailBean.getList().get(i).getPayVal();
+//                newdate = date.replace("-", "年");
+
+
+                List<ShopHistoryDetailBean.ListBean> l = shopHistoryDetailBean.getList();
+
+                for (int i = 0; i < l.size(); i++) {
+                    if (l.get(i).getType() == 222) {
+                        l.get(i).setNewdate(Sdate);
+                    }
                 }
-                tvXiaofei.setText("本月消费:" + AmountUtils.changeF2Y(nnum + "") + "元");
-//                tvXiaofei.setText("本月消费:" + AmountUtils.changeF2Y(shopHistoryDetailBean.getPayval() + "") + "元");
+
+
+                ShopHistoryDetailBean.ListBean bean = new ShopHistoryDetailBean.ListBean();
+
+                if (l.size() != 0) {
+                    int nnum = 0;
+                    for (int i = 0; i < l.size(); i++) {
+                        nnum += l.get(i).getPayVal();
+                    }
+                    bean.setMoneyy(nnum + "");
+                }
+
+
+                bean.setType(222);
+                l.add(0, bean);
 
                 if (list == null)
                     list = new ArrayList();
-
-                list.addAll(shopHistoryDetailBean.getList());
+                list.addAll(l);
                 if (shopHistoryAdapter == null) {
                     shopHistoryAdapter = new ShopHistoryAdapter(getActivity(), list);
                     listShophistory.setAdapter(shopHistoryAdapter);
                 } else {
                     shopHistoryAdapter.notifyDataSetChanged();
                 }
-
             }
         });
     }
 
-    private class ShopHistoryAdapter extends BaseAdapter {
 
+    public class ShopHistoryAdapter extends BaseAdapter {
+
+        public static final int TYPE_TITLE = 0;
+        public static final int TYPE_COMPANY = 1;
         private Context context;
         private LayoutInflater inflater;
         private List<ShopHistoryDetailBean.ListBean> list;
+
 
         public ShopHistoryAdapter(Context context, List<ShopHistoryDetailBean.ListBean> list) {
             super();
@@ -179,30 +182,76 @@ public class ShopHistoryFragment extends BaseFragment {
         }
 
         @Override
-        public View getView(final int position, View view, ViewGroup arg2) {
-            // TODO Auto-generated method stub
-            if (view == null) {
-                view = inflater.inflate(R.layout.item_shophistory, null);
+        public int getItemViewType(int position) {
+
+            if (list.get(position).getType() == 222) {
+                return TYPE_TITLE;
+            } else {
+                return TYPE_COMPANY;
             }
-            TextView tv_show = view.findViewById(R.id.tv_show);
-            TextView tv_date = view.findViewById(R.id.tv_date);
-            TextView tv_pricee = view.findViewById(R.id.tv_pricee);
+        }
 
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
 
-            tv_show.setText(list.get(position).getDescVal());
-            tv_date.setText(list.get(position).getPayTimeline());
-            tv_pricee.setText("-" + AmountUtils.changeF2Y(list.get(position).getPayVal() + "") + "元");
+        @Override
+        public View getView(final int position, View convertView, ViewGroup arg2) {
+            // TODO Auto-generated method stub
 
+            ViewHolder1 viewHolder1 = null;
+            ViewHolder2 viewHolder2 = null;
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            return view;
+            switch (getItemViewType(position)) {
+                case TYPE_TITLE:
+                    if (convertView == null) {
+                        viewHolder1 = new ViewHolder1();
+                        convertView = inflater.inflate(R.layout.layout_header, null);
+                        viewHolder1.tv_dateyy = convertView.findViewById(R.id.tv_dateyy);
+                        viewHolder1.tv_xiaofei = convertView.findViewById(R.id.tv_xiaofei);
+                        convertView.setTag(viewHolder1);
+                    } else {
+                        viewHolder1 = (ViewHolder1) convertView.getTag();
+                    }
+                    viewHolder1.tv_dateyy.setText(list.get(position).getNewdate());
+                    viewHolder1.tv_xiaofei.setText("本月消费:" + AmountUtils.changeF2Y(list.get(position).getMoneyy()) + "元");
+                    break;
+
+                case TYPE_COMPANY:
+                    if (convertView == null) {
+                        viewHolder2 = new ViewHolder2();
+                        convertView = inflater.inflate(R.layout.item_shophistory, null);
+                        viewHolder2.tv_show = convertView.findViewById(R.id.tv_show);
+                        viewHolder2.tv_date = convertView.findViewById(R.id.tv_date);
+                        viewHolder2.tv_pricee = convertView.findViewById(R.id.tv_pricee);
+                        convertView.setTag(viewHolder2);
+                    } else {
+                        viewHolder2 = (ViewHolder2) convertView.getTag();
+                    }
+                    viewHolder2.tv_show.setText(list.get(position).getDescVal());
+                    viewHolder2.tv_date.setText(list.get(position).getPayTimeline());
+                    viewHolder2.tv_pricee.setText("-" + AmountUtils.changeF2Y(list.get(position).getPayVal() + "") + "元");
+                    break;
+                default:
+                    break;
+            }
+
+            return convertView;
+        }
+
+        class ViewHolder1 {
+            TextView tv_dateyy;
+            TextView tv_xiaofei;
+        }
+
+        class ViewHolder2 {
+            TextView tv_show;
+            TextView tv_date;
+            TextView tv_pricee;
 
         }
     }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }
+
