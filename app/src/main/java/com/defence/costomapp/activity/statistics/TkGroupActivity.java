@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.adapter.TkSelectAdapter;
+import com.defence.costomapp.adapter.SelectGroupAdapter;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
@@ -42,7 +43,13 @@ public class TkGroupActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
-    TkSelectAdapter mAdapter;
+    SelectGroupAdapter mAdapter;
+
+    ArrayList<String> listgroupid = new ArrayList();
+    ArrayList<String> listgroupname = new ArrayList();
+    ArrayList<Integer> listchindid = new ArrayList();
+    ArrayList<String> listchindname = new ArrayList();
+    ArrayList<String> listgroupnumber = new ArrayList();
 
 
     @Override
@@ -69,13 +76,26 @@ public class TkGroupActivity extends BaseActivity {
 
         UserInfo userInfo = MyApplication.getApp().getUserInfo();
         RequestParams params = new RequestParams();
-        params.put("userid",userInfo.getId()+"");
+        params.put("userid", userInfo.getId() + "");
         httpUtils.doPost(Urls.listtkgroup(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TuikuanMachineBean tuikuanMachineBean = gson.fromJson(jsonObject.toString(), TuikuanMachineBean.class);
-                mAdapter = new TkSelectAdapter(tuikuanMachineBean.getList(), "group");
+                List<TuikuanMachineBean.ListBean> listgroup = tuikuanMachineBean.getList();
+
+                for (int i = 0; i < listgroup.size(); i++) {
+                    if ((listgroup.get(i).getPrentid().equals("0"))) {
+                        listgroupid.add(listgroup.get(i).getId());
+                        listgroupname.add(listgroup.get(i).getName());
+                    }
+                }
+
+
+//            SpUtil.putList(MyApplication.getApp(), "checkgroup", selectList);
+//            SpUtil.putList(MyApplication.getApp(), "checkgroupString", stringgroup);
+
+                mAdapter = new SelectGroupAdapter(TkGroupActivity.this, listgroup, listgroupname, listgroupid);
                 recyclerView.setAdapter(mAdapter);
 
             }
@@ -104,6 +124,7 @@ public class TkGroupActivity extends BaseActivity {
                 intent.putStringArrayListExtra("intentcheckgroupString", (ArrayList<String>) checkgroupString);
                 setResult(1, intent);
                 finish();
+
                 break;
         }
     }

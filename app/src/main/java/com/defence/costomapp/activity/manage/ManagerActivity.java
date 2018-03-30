@@ -1,6 +1,7 @@
 package com.defence.costomapp.activity.manage;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,10 +23,19 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.activity.ChoiceTypeActivity;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
+import com.defence.costomapp.base.Urls;
+import com.defence.costomapp.bean.MachineBean;
 import com.defence.costomapp.fragment.LogFragment;
 import com.defence.costomapp.fragment.PoliceFragment;
+import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
+import com.defence.costomapp.utils.httputils.HttpInterface;
+import com.google.gson.Gson;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +70,43 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
         setContentView(R.layout.activity_manager);
         ButterKnife.bind(this);
         init();
+        getAlarmPolice();
+    }
+
+    private void getAlarmPolice() {
+        String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
+        RequestParams params = new RequestParams();
+        params.put("adminGroupID", groupid);
+        httpUtils.doPost(Urls.alarmPolice(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
+            @Override
+            public void onSuccess(Gson gson, Object result) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(result.toString());
+                    MachineBean machineBean = gson.fromJson(jsonObject.toString(), MachineBean.class);
+                    List<MachineBean.ListBean> list = machineBean.getList();
+                    int size = 0;
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getNotRepairCount() > 0) {
+                            size += list.get(i).getNotRepairCount();
+
+                        }
+                    }
+
+                    if (size == 0) {
+                        imgRedlittle.setVisibility(View.GONE);
+                    } else {
+                        imgRedlittle.setVisibility(View.VISIBLE);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        });
+
     }
 
     private void init() {
@@ -109,6 +156,7 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
 
     }
 
+
     @OnClick(R.id.back)
     public void onViewClicked() {
         int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
@@ -118,7 +166,6 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
             SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
             MyApplication.getApp().setUserInfo(null);
         }
-//        startActivity(new Intent(ManagerActivity.this, ChoiceTypeActivity.class));
         finish();
 
     }
@@ -165,7 +212,7 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
 
         if (TextUtils.isEmpty(str)) {
             imgRedlittle.setVisibility(View.GONE);
-        }else {
+        } else {
             imgRedlittle.setVisibility(View.VISIBLE);
         }
     }
@@ -192,13 +239,6 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
             return titles[position];
         }
 
-//        @Override
-//        public void finishUpdate(ViewGroup container) {
-//            try {
-//                super.finishUpdate(container);
-//            } catch (NullPointerException nullPointerException) {
-//                System.out.println("Catch the NullPointerException in FragmentPagerAdapter.finishUpdate");
-//            }
-//        }
+
     }
 }

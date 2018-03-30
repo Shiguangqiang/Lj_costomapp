@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,6 +36,22 @@ public class SgqUtils {
 
     //将list转换为带有 ， 的字符串
     public static String listToString(List<String> list) {
+
+        StringBuilder sb = new StringBuilder();
+
+        if (list != null && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (i < list.size() - 1) {
+                    sb.append("'" + list.get(i) + "',");
+                } else {
+                    sb.append("'" + list.get(i) + "'");
+                }
+            }
+        }
+        return sb.toString();
+    }
+    //将list转换为带有 ， 的字符串
+    public static String listToStringSerializable(List<Serializable> list) {
 
         StringBuilder sb = new StringBuilder();
 

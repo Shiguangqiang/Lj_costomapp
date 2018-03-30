@@ -1,24 +1,24 @@
 package com.defence.costomapp.adapter;
 
-import android.support.v7.widget.ForwardingListener;
+
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 
-import com.bumptech.glide.load.data.ExifOrientationStream;
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.bean.TuikuanMachineBean;
+import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SpUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,8 +33,9 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private SparseBooleanArray mSelectedPositions = new SparseBooleanArray();
 
     private boolean mIsSelectable = false;
-    String string;
 
+
+    String string;
 
     public TkSelectAdapter(List<TuikuanMachineBean.ListBean> list, String type) {
         if (list == null) {
@@ -53,42 +54,11 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     //获得选中条目的结果
     public ArrayList<String> getSelectedItem() {
-
-
         ArrayList<String> selectList = new ArrayList<>();
-        ArrayList<String> strings = new ArrayList<>();
-
         ArrayList<String> selectListstring = new ArrayList<>();
         ArrayList<String> selectshopsting = new ArrayList<>();
-        ArrayList<String> stringsting = new ArrayList<>();
-        ArrayList<String> stringgroup = new ArrayList<>();
 
-        if (string.equals("group")) {
-
-            for (int i = 0; i < mList.size(); i++) {
-                if (mList.get(i).getPrentid().equals("0") && isItemChecked(i)) {
-                    strings.add(mList.get(i).getId());
-                    stringsting.add(mList.get(i).getName());
-                }
-            }
-            for (int i = 0; i < mList.size(); i++) {
-                for (int j = 0; j < strings.size(); j++) {
-                    if (strings.get(j).equals(mList.get(i).getPrentid())) {
-                        selectList.add(mList.get(i).getMachinenumber());
-                    }
-                }
-            }
-
-            for (int x = 0; x < mList.size(); x++) {
-                for (int y = 0; y < stringsting.size(); y++) {
-                    if (stringsting.get(y).equals(mList.get(x).getName())) {
-                        stringgroup.add(mList.get(x).getName());
-                    }
-                }
-            }
-            SpUtil.putList(MyApplication.getApp(), "checkgroup", selectList);
-            SpUtil.putList(MyApplication.getApp(), "checkgroupString", stringgroup);
-        } else if (string.equals("shop")) {
+        if (string.equals("shop")) {
 
             for (int i = 0; i < mList.size(); i++) {
                 if (isItemChecked(i)) {
@@ -147,7 +117,7 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         List<Serializable> checkhis = SpUtil.getList(MyApplication.getApp(), "checkhis");
         List<Serializable> checkshop = SpUtil.getList(MyApplication.getApp(), "checkshop");
-        List<Serializable> checkgroup = SpUtil.getList(MyApplication.getApp(), "checkgroupString");
+
 
 
         //设置条目状态
@@ -170,31 +140,32 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             }
-
-        } else if (string.equals("group")) {
-            List<TuikuanMachineBean.ListBean> l = new ArrayList();
-            if (mList != null && mList.size() > 0) {
-                for (int j = 0; j < mList.size(); j++) {
-                    if (mList.get(j).getPrentid().equals("0")) {
-                        l.add(mList.get(j));
-
-                    }
-                }
-            }
-
-            if (checkgroup != null && checkgroup.size() > 0) {
-                for (int j = 0; j < checkgroup.size(); j++) {
-                    if (checkgroup.get(j).equals(l.get(i).getName())) {
-                        setItemChecked(i, true);
-                    }
-                }
-            }
-
-            ((ListItemViewHolder) holder).mainTitle.setText(l.get(i).getName());
         }
 
-        ((ListItemViewHolder) holder).checkBox.setChecked(isItemChecked(i));
+//        } else if (string.equals("group")) {
+//            List<TuikuanMachineBean.ListBean> l = new ArrayList();
+//            if (mList != null && mList.size() > 0) {
+//                for (int j = 0; j < mList.size(); j++) {
+//                    if (mList.get(j).getPrentid() == 0) {
+//                        l.add(mList.get(j));
+//
+//                    }
+//                }
+//            }
+//            if (checkgroup != null && checkgroup.size() > 0) {
+//                for (int m = 0; m < l.size(); m++) {
+//                    for (int z = 0; z < checkgroup.size(); z++) {
+//                        if (checkgroup.get(z).equals(l.get(m).getName())) {
+//                            setItemChecked(i, true);
+//                        }
+//                    }
+//
+//                }
+//            }
 
+//        }
+
+        ((ListItemViewHolder) holder).checkBox.setChecked(isItemChecked(i));
         //checkBox的监听
         ((ListItemViewHolder) holder).checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,6 +175,8 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 } else {
                     setItemChecked(i, true);
                 }
+
+
             }
         });
 
@@ -221,22 +194,10 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         });
     }
 
+
     @Override
     public int getItemCount() {
-
-        if (string.equals("group")) {
-            int size = 0;
-            for (int i = 0; i < mList.size(); i++) {
-                if (mList.get(i).getPrentid().equals("0")) {
-                    size++;
-                }
-
-            }
-            return size;
-        } else {
-            return mList == null ? 0 : mList.size();
-        }
-
+        return mList == null ? 0 : mList.size();
     }
 
     public class ListItemViewHolder extends RecyclerView.ViewHolder {

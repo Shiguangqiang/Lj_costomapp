@@ -62,7 +62,7 @@ public class PoliceFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_police, null);
-        srl = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+        srl = view.findViewById(R.id.srl);
         initdata();
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -209,32 +209,5 @@ public class PoliceFragment extends BaseFragment {
             return view;
 
         }
-    }
-
-    // 当FRagmen被加载到activity的时候会被回调
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        if (activity instanceof FragmentInteraction) {
-            listterner = (FragmentInteraction) activity; // 2.2 获取到宿主activity并赋值
-        } else {
-            throw new IllegalArgumentException("activity must implements FragmentInteraction");
-        }
-    }
-
-
-    //把传递进来的activity对象释放掉
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listterner = null;
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

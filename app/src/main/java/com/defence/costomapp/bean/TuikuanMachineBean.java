@@ -64,8 +64,11 @@ public class TuikuanMachineBean {
          * taishu : 0
          */
 
-
+        private String ds;
+        private String name;
+        private String prentid;
         private String shangpinid;
+
         private String guigeid;
 
         public String getPrentid() {
@@ -75,10 +78,6 @@ public class TuikuanMachineBean {
         public void setPrentid(String prentid) {
             this.prentid = prentid;
         }
-
-        private String ds;
-        private String name;
-        private String prentid;
 
         public String getName() {
             return name;

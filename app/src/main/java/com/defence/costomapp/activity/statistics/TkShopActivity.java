@@ -39,7 +39,6 @@ public class TkShopActivity extends BaseActivity {
     @BindView(R.id.right_title)
     TextView rightTitle;
 
-
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     TkSelectAdapter mAdapter;
@@ -50,11 +49,10 @@ public class TkShopActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tk_shop);
         ButterKnife.bind(this);
-//        back.setBackgroundResource(R.mipmap.back);
+
         back.setText("返回");
         middleTitle.setText("商品列表");
         rightTitle.setText("保存");
-//       rightTitle.setTextColor(getResources().getColor(R.color.bule_light));
 
         //实例化
         getdata();

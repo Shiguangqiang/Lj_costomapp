@@ -5,7 +5,7 @@ package com.defence.costomapp.base;
  */
 
 public class Urls {
-    public static String BaseUrl = "http://swz.bj-defence.com/";
+    public static String BaseUrl = "http://swz.landgy.com/";
 //    测试 yang
 //    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
 
