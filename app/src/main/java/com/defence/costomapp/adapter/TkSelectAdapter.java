@@ -1,5 +1,6 @@
 package com.defence.costomapp.adapter;
 
+import android.support.v7.widget.ForwardingListener;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.data.ExifOrientationStream;
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.bean.TuikuanMachineBean;
@@ -54,17 +56,19 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
         ArrayList<String> selectList = new ArrayList<>();
-        ArrayList<Integer> selectint = new ArrayList<>();
         ArrayList<String> strings = new ArrayList<>();
 
+        ArrayList<String> selectListstring = new ArrayList<>();
+        ArrayList<String> selectshopsting = new ArrayList<>();
+        ArrayList<String> stringsting = new ArrayList<>();
+        ArrayList<String> stringgroup = new ArrayList<>();
+
         if (string.equals("group")) {
+
             for (int i = 0; i < mList.size(); i++) {
-                if (isItemChecked(i)) {
-                    if (mList.get(i).getPrentid().equals("0")) {
-                        if (isItemChecked(i)) {
-                            strings.add(mList.get(i).getId());
-                        }
-                    }
+                if (mList.get(i).getPrentid().equals("0") && isItemChecked(i)) {
+                    strings.add(mList.get(i).getId());
+                    stringsting.add(mList.get(i).getName());
                 }
             }
             for (int i = 0; i < mList.size(); i++) {
@@ -73,27 +77,37 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         selectList.add(mList.get(i).getMachinenumber());
                     }
                 }
+            }
 
+            for (int x = 0; x < mList.size(); x++) {
+                for (int y = 0; y < stringsting.size(); y++) {
+                    if (stringsting.get(y).equals(mList.get(x).getName())) {
+                        stringgroup.add(mList.get(x).getName());
+                    }
+                }
             }
             SpUtil.putList(MyApplication.getApp(), "checkgroup", selectList);
+            SpUtil.putList(MyApplication.getApp(), "checkgroupString", stringgroup);
         } else if (string.equals("shop")) {
 
             for (int i = 0; i < mList.size(); i++) {
                 if (isItemChecked(i)) {
                     selectList.add(mList.get(i).getGuigeid());
-//                    selectint.add(selectint.get(i));
+                    selectshopsting.add(mList.get(i).getDs());
                 }
             }
             SpUtil.putList(MyApplication.getApp(), "checkshop", selectList);
+            SpUtil.putList(MyApplication.getApp(), "checkshopstring", selectshopsting);
         } else {
             for (int i = 0; i < mList.size(); i++) {
                 if (isItemChecked(i)) {
                     selectList.add(mList.get(i).getMachinenumber());
+                    selectListstring.add(mList.get(i).getDetailedinstalladdress());
                 }
             }
             SpUtil.putList(MyApplication.getApp(), "checkhis", selectList);
+            SpUtil.putList(MyApplication.getApp(), "checkhisstring", selectListstring);
         }
-
 
         return selectList;
     }
@@ -133,13 +147,12 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         List<Serializable> checkhis = SpUtil.getList(MyApplication.getApp(), "checkhis");
         List<Serializable> checkshop = SpUtil.getList(MyApplication.getApp(), "checkshop");
+        List<Serializable> checkgroup = SpUtil.getList(MyApplication.getApp(), "checkgroupString");
 
 
         //设置条目状态
         if (string.equals("machine")) {
-
             ((ListItemViewHolder) holder).mainTitle.setText(mList.get(i).getDetailedinstalladdress());
-
             if (checkhis != null && checkhis.size() > 0) {
                 for (int j = 0; j < checkhis.size(); j++) {
                     if (checkhis.get(j).equals(mList.get(i).getMachinenumber())) {
@@ -147,10 +160,11 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     }
                 }
             }
+
         } else if (string.equals("shop")) {
             ((ListItemViewHolder) holder).mainTitle.setText(mList.get(i).getDs());
             if (checkshop != null && checkshop.size() > 0) {
-                for (int j = 0; j < checkhis.size(); j++) {
+                for (int j = 0; j < checkshop.size(); j++) {
                     if (checkshop.get(j).equals(mList.get(i).getGuigeid())) {
                         setItemChecked(i, true);
                     }
@@ -158,15 +172,25 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
         } else if (string.equals("group")) {
-
             List<TuikuanMachineBean.ListBean> l = new ArrayList();
-            for (int j = 0; j < mList.size(); j++) {
-                if (mList.get(j).getPrentid().equals("0")) {
-                    l.add(mList.get(j));
+            if (mList != null && mList.size() > 0) {
+                for (int j = 0; j < mList.size(); j++) {
+                    if (mList.get(j).getPrentid().equals("0")) {
+                        l.add(mList.get(j));
+
+                    }
                 }
             }
-            ((ListItemViewHolder) holder).mainTitle.setText(l.get(i).getName());
 
+            if (checkgroup != null && checkgroup.size() > 0) {
+                for (int j = 0; j < checkgroup.size(); j++) {
+                    if (checkgroup.get(j).equals(l.get(i).getName())) {
+                        setItemChecked(i, true);
+                    }
+                }
+            }
+
+            ((ListItemViewHolder) holder).mainTitle.setText(l.get(i).getName());
         }
 
         ((ListItemViewHolder) holder).checkBox.setChecked(isItemChecked(i));
@@ -222,8 +246,8 @@ public class TkSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         ListItemViewHolder(View view) {
             super(view);
-            this.mainTitle = (TextView) view.findViewById(R.id.text);
-            this.checkBox = (CheckBox) view.findViewById(R.id.select_checkbox);
+            this.mainTitle = view.findViewById(R.id.text);
+            this.checkBox = view.findViewById(R.id.select_checkbox);
 
         }
     }

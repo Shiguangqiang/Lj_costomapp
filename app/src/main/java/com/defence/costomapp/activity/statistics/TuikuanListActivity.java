@@ -78,7 +78,6 @@ public class TuikuanListActivity extends BaseActivity {
     LinearLayout liearTk2;
     private DingdanAdapter dingdanAdapter;
     private TuikuanListBean tuikuanListBean;
-    //    private String device;
     private String formatid;
     private String machineNumber;
     private String groupMachineNumber;
@@ -99,8 +98,7 @@ public class TuikuanListActivity extends BaseActivity {
 
         middleTitle.setText("退款查询");
 
-        //        // 设置下拉刷新监听器
-
+        // 设置下拉刷新监听器
         try {
             srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -213,13 +211,7 @@ public class TuikuanListActivity extends BaseActivity {
                     srl.setLoading(false);
                     liearTk1.setVisibility(View.GONE);
                     liearTk2.setVisibility(View.GONE);
-//
-//                    tuikuanSum.setText("退款总额:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getTuikuanSum())));
-//                    tuikuandingdanshu.setText("退款订单数:" + tuikuanListBean.getTuikuandingdanshu() + "");
-//                    tuikuanchengben.setText("退款成本:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getDaichuhuochengben())));
-//                    daichuhuoSum.setText("待出货总额:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getDaichuhuoSum())));
-//                    daichuhuodingdanshu.setText("待出货订单数:" + tuikuanListBean.getDaichuhuodingdanshu() + "");
-//                    daichuhuochengben.setText("待出货成本:" + AmountUtils.changeF2Y(String.valueOf(tuikuanListBean.getTuikuanchengben())));
+
                     JSONObject jsonObject = new JSONObject(result.toString());
                     tuikuanListBean = gson.fromJson(jsonObject.toString(), TuikuanListBean.class);
 
@@ -258,8 +250,6 @@ public class TuikuanListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.liear_right:
-
-
                 startActivity(new Intent(TuikuanListActivity.this, TuiKuanSerachActivity.class));
                 finish();
                 break;

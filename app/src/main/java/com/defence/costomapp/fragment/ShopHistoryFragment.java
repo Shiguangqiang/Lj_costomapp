@@ -109,11 +109,7 @@ public class ShopHistoryFragment extends BaseFragment {
 
                 List<ShopHistoryDetailBean.ListBean> l = shopHistoryDetailBean.getList();
 
-                for (int i = 0; i < l.size(); i++) {
-                    if (l.get(i).getType() == 222) {
-                        l.get(i).setNewdate(Sdate);
-                    }
-                }
+
 
 
                 ShopHistoryDetailBean.ListBean bean = new ShopHistoryDetailBean.ListBean();
@@ -126,9 +122,14 @@ public class ShopHistoryFragment extends BaseFragment {
                     bean.setMoneyy(nnum + "");
                 }
 
-
                 bean.setType(222);
                 l.add(0, bean);
+
+                for (int i = 0; i < l.size(); i++) {
+                    if (l.get(i).getType() == 222) {
+                        l.get(i).setNewdate(Sdate);
+                    }
+                }
 
                 if (list == null)
                     list = new ArrayList();
@@ -215,6 +216,7 @@ public class ShopHistoryFragment extends BaseFragment {
                     } else {
                         viewHolder1 = (ViewHolder1) convertView.getTag();
                     }
+
                     viewHolder1.tv_dateyy.setText(list.get(position).getNewdate());
                     viewHolder1.tv_xiaofei.setText("本月消费:" + AmountUtils.changeF2Y(list.get(position).getMoneyy()) + "元");
                     break;

@@ -104,6 +104,7 @@
         android:id="@+id/tv_machis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/pad_height_10"
         android:gravity="right"
         android:text=""
         android:visibility="gone" />
@@ -130,6 +131,16 @@
             android:src="@mipmap/right" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_macgroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/pad_height_10"
+        android:gravity="right"
+        android:text=""
+        android:visibility="gone" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

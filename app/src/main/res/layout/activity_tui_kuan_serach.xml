@@ -97,6 +97,16 @@
             android:src="@mipmap/right" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_ssshop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/pad_height_10"
+        android:gravity="right"
+        android:text=""
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/liear_machicelist"
         android:layout_width="match_parent"
@@ -119,6 +129,15 @@
             android:src="@mipmap/right" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_ssmacchine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/pad_height_10"
+        android:gravity="right"
+        android:text=""
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/liear_grouplist"
@@ -143,6 +162,14 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_ssgroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/pad_height_10"
+        android:gravity="right"
+        android:text=""
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_startserach"

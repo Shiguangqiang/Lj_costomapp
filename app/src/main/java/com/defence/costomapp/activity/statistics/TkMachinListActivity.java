@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.adapter.TkSelectAdapter;
+import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TuikuanMachineBean;
 import com.defence.costomapp.utils.DividerItemDecoration;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SpUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
@@ -22,8 +24,10 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +62,7 @@ public class TkMachinListActivity extends BaseActivity {
 
         //实例化
         getdata();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
         layoutManager = new LinearLayoutManager(TkMachinListActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         setItemDecoration();
@@ -95,10 +99,11 @@ public class TkMachinListActivity extends BaseActivity {
             case R.id.right_title:
                 ArrayList<String> selectedItem = mAdapter.getSelectedItem();
                 String s = SgqUtils.listToString(selectedItem);
-//                Intent intent = new Intent(TkMachinListActivity.this, TuiKuanSerachActivity.class);
+
+                List<String> checkhisstring = SpUtil.getList(MyApplication.getApp(), "checkhisstring");
                 Intent intent = new Intent();
                 intent.putExtra("device", s);
-//                startActivity(intent);
+                intent.putStringArrayListExtra("intentcheckhisstring", (ArrayList<String>) checkhisstring);
                 setResult(0, intent);
                 finish();
                 break;

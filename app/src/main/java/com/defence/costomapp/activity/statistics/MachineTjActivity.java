@@ -76,6 +76,8 @@ public class MachineTjActivity extends BaseActivity {
     RadioGroup rg;
     @BindView(R.id.tv_machis)
     TextView tvMachis;
+    @BindView(R.id.tv_macgroup)
+    TextView tvMacgroup;
     private String device;
     private String devicegroup;
 
@@ -83,6 +85,7 @@ public class MachineTjActivity extends BaseActivity {
     private String shiICStr = "0";
     private String shengIcStr = "0";
     private String status = "";
+    private String checkhisstring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +100,33 @@ public class MachineTjActivity extends BaseActivity {
         middleTitle.setText("统计");
         tvLeftdate.setText(SgqUtils.getNowDate());
         tvRightdate.setText(SgqUtils.getNowDate());
-        List<Serializable> checkhis = SpUtil.getList(MyApplication.getApp(), "checkhis");
-        if (checkhis != null && checkhis.size() > 0) {
-//            tvMachis.setVisibility(View.VISIBLE);
-            tvMachis.setText(checkhis.get(0) + "...");
-        }
 
+        try {
+            List<Serializable> checkhisstring = SpUtil.getList(MyApplication.getApp(), "checkhisstring");
+            if (checkhisstring != null && checkhisstring.size() > 0) {
+                tvMachis.setVisibility(View.VISIBLE);
+                if (checkhisstring.size() == 1) {
+                    tvMachis.setText(checkhisstring.get(0) + "");
+                } else if (checkhisstring.size() > 1) {
+                    tvMachis.setText(checkhisstring.get(0) + "等" + checkhisstring.size() + "个机器");
+                } else {
+                    tvMachis.setText("");
+                }
+            }
+            List<Serializable> checkgroupString = SpUtil.getList(MyApplication.getApp(), "checkgroupString");
+            if (checkgroupString != null && checkgroupString.size() > 0) {
+                tvMacgroup.setVisibility(View.VISIBLE);
+                if (checkhisstring.size() == 1) {
+                    tvMacgroup.setText(checkgroupString.get(0) + "");
+                } else if (checkhisstring.size() > 1) {
+                    tvMacgroup.setText(checkgroupString.get(0) + "等" + checkgroupString.size() + "个机器组");
+                } else {
+                    tvMacgroup.setText("");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -176,19 +200,37 @@ public class MachineTjActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) { //resultCode为回传的标记，我在B中回传的是RESULT_OK
             case 0:
-//                Bundle b=data.getExtras(); //data为B中回传的Intent
-//                String str=b.getString("str1");//str即为回传的值
                 if (data != null) {
                     device = data.getStringExtra("device");
-                    tvMachis.setText(device);
-                }
+                    ArrayList<String> intentcheckhisstring = data.getStringArrayListExtra("intentcheckhisstring");
 
+                    if (intentcheckhisstring != null && intentcheckhisstring.size() > 0) {
+                        tvMachis.setVisibility(View.VISIBLE);
+                        if (intentcheckhisstring.size() == 1) {
+                            tvMachis.setText(intentcheckhisstring.get(0) + "");
+                        } else if (intentcheckhisstring.size() > 1) {
+                            tvMachis.setText(intentcheckhisstring.get(0) + "等" + intentcheckhisstring.size() + "个机器");
+                        } else {
+                            tvMachis.setText("");
+                        }
+                    }
+                }
                 break;
             case 1:
-//                Bundle b=data.getExtras(); //data为B中回传的Intent
-//                String str=b.getString("str1");//str即为回传的值
                 if (data != null) {
                     devicegroup = data.getStringExtra("devicegroup");
+                    ArrayList<String> intentcheckgroupString = data.getStringArrayListExtra("intentcheckgroupString");
+
+                    if (intentcheckgroupString != null && intentcheckgroupString.size() > 0) {
+                        tvMacgroup.setVisibility(View.VISIBLE);
+                        if (intentcheckgroupString.size() == 1) {
+                            tvMacgroup.setText(intentcheckgroupString.get(0) + "");
+                        } else if (intentcheckgroupString.size() > 1) {
+                            tvMacgroup.setText(intentcheckgroupString.get(0) + "等" + intentcheckgroupString.size() + "个机器组");
+                        } else {
+                            tvMacgroup.setText("");
+                        }
+                    }
                 }
 
                 break;
@@ -323,9 +365,9 @@ public class MachineTjActivity extends BaseActivity {
     }
 
     private void initAD(View ad_view) {
-        sheng = (MyNumberPicker) ad_view.findViewById(R.id.sheng);
-        shi = (MyNumberPicker) ad_view.findViewById(R.id.shi);
-        xian = (MyNumberPicker) ad_view.findViewById(R.id.xian);
+        sheng = ad_view.findViewById(R.id.sheng);
+        shi = ad_view.findViewById(R.id.shi);
+        xian = ad_view.findViewById(R.id.xian);
         sheng.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         shi.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         xian.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -333,7 +375,7 @@ public class MachineTjActivity extends BaseActivity {
         xian.setMinValue(0);
         xian.setValue(0);
 
-        location_ok = (Button) ad_view.findViewById(R.id.location_ok);
+        location_ok = ad_view.findViewById(R.id.location_ok);
         location_ok.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -369,8 +411,6 @@ public class MachineTjActivity extends BaseActivity {
                 changeCountry(newVal);
             }
         });
-
-
     }
 
     //根据省,联动市数据

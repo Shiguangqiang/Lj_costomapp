@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -60,9 +61,16 @@ public class ExceptionAlarmActivity extends BaseActivity {
     ListView liearAlarmnot;
     @BindView(R.id.liear_alarmyet)
     ListView liearAlarmyet;
+    @BindView(R.id.cb_alarm)
+    CheckBox cbAlarm;
     private String machineID;
     private String machineNo;
     String groupid;
+    String showtype = "0";
+    private ExceptionAdapter yet;
+    private ExceptionAdapter not;
+    private List<AlarmNotBean.ListBean> listyet;
+    private List<AlarmNotBean.ListBean> listnot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +89,34 @@ public class ExceptionAlarmActivity extends BaseActivity {
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         machineID = getIntent().getStringExtra("machineID");
         machineNo = getIntent().getStringExtra("machineNo");
+
+
         //未解决的报警
         getAlarmNot();
         //已解决的报警
         getAlarmYet();
+        cbAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cbAlarm.isChecked()) {
+                    showtype = "1";
+                    listnot.clear();
+                    listyet.clear();
+                    getAlarmYet();
+                    getAlarmNot();
+                    yet.notifyDataSetChanged();
+                    not.notifyDataSetChanged();
+                } else {
+                    showtype = "0";
+                    listnot.clear();
+                    listyet.clear();
+                    getAlarmYet();
+                    getAlarmNot();
+                    yet.notifyDataSetChanged();
+                    not.notifyDataSetChanged();
+                }
+            }
+        });
 
 
     }
@@ -95,13 +127,16 @@ public class ExceptionAlarmActivity extends BaseActivity {
         params.put("machineID", machineID);
         params.put("machineNo", machineNo);
         params.put("adminGroupID", groupid);
+        params.put("show_all", showtype);
         httpUtils.doPost(Urls.alarmYet(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
 
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 AlarmNotBean alarmNotBean = gson.fromJson(jsonObject.toString(), AlarmNotBean.class);
-                liearAlarmyet.setAdapter(new ExceptionAdapter(ExceptionAlarmActivity.this, alarmNotBean.getList(),"yet"));
+                listyet = alarmNotBean.getList();
+                yet = new ExceptionAdapter(ExceptionAlarmActivity.this, listyet, "yet");
+                liearAlarmyet.setAdapter(yet);
 
             }
         });
@@ -114,29 +149,33 @@ public class ExceptionAlarmActivity extends BaseActivity {
         params.put("machineID", machineID);
         params.put("machineNo", machineNo);
         params.put("adminGroupID", groupid);
-        httpUtils.doPost(Urls.alarmNot(),SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
+        params.put("show_all", showtype);
+        httpUtils.doPost(Urls.alarmNot(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
 
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 AlarmNotBean alarmNotBean = gson.fromJson(jsonObject.toString(), AlarmNotBean.class);
-
-                liearAlarmnot.setAdapter(new ExceptionAdapter(ExceptionAlarmActivity.this, alarmNotBean.getList(),"not"));
+                listnot = alarmNotBean.getList();
+                not = new ExceptionAdapter(ExceptionAlarmActivity.this, alarmNotBean.getList(), "not");
+                liearAlarmnot.setAdapter(not);
                 machineAddr.setText(alarmNotBean.getMachine().getDetailedinstalladdress());
 
                 AMap aMap = map.getMap();
                 LatLng latLng = new LatLng(alarmNotBean.getMachine().getLatitude(), alarmNotBean.getMachine().getLongitude());
                 UiSettings uiSettings = aMap.getUiSettings();
                 // 通过UISettings.setZoomControlsEnabled(boolean)来设置缩放按钮是否能显示
-                uiSettings.setZoomControlsEnabled(false);
-                uiSettings.setScrollGesturesEnabled(false);
-                uiSettings.setZoomGesturesEnabled(false);
+                uiSettings.setZoomControlsEnabled(true);
+                uiSettings.setScrollGesturesEnabled(true);
+                uiSettings.setZoomGesturesEnabled(true);
                 //可视化区域，将指定位置指定到屏幕中心位置
                 CameraUpdate cameraUpdate = CameraUpdateFactory
                         .newCameraPosition(new CameraPosition(latLng, 19, 0, 30));
                 aMap.moveCamera(cameraUpdate);
-                aMap.addMarker(new MarkerOptions().position(latLng));
-                aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+                aMap.addMarker(new MarkerOptions().position(latLng).title(alarmNotBean.getMachine().getDetailedinstalladdress()));
+
+
+              /*  aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(final LatLng latLng) {
                         ActionSheelUtil.showMenu(ExceptionAlarmActivity.this, "选择导航",
@@ -156,7 +195,7 @@ public class ExceptionAlarmActivity extends BaseActivity {
                                     }
                                 });
                     }
-                });
+                });*/
 
 
             }
@@ -171,7 +210,7 @@ public class ExceptionAlarmActivity extends BaseActivity {
         private List<AlarmNotBean.ListBean> list;
         private String notyet;
 
-        public ExceptionAdapter(ExceptionAlarmActivity context, List<AlarmNotBean.ListBean> list,String notyet) {
+        public ExceptionAdapter(ExceptionAlarmActivity context, List<AlarmNotBean.ListBean> list, String notyet) {
             super();
             this.context = context;
             inflater = LayoutInflater.from(context);
@@ -209,7 +248,7 @@ public class ExceptionAlarmActivity extends BaseActivity {
             TextView tv_reason = view.findViewById(R.id.tv_reason);
             TextView tv_time = view.findViewById(R.id.tv_time);
 
-            if(notyet.equals("not")){
+            if (notyet.equals("not")) {
                 tv_reason.setTextColor(Color.rgb(249, 6, 6));
             }
 

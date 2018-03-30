@@ -81,7 +81,6 @@ public class HttpUtils {
                             pd.show();
                         }
 
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.adapter.TkSelectAdapter;
+import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TuikuanMachineBean;
 import com.defence.costomapp.utils.DividerItemDecoration;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SpUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
@@ -22,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +58,7 @@ public class TkShopActivity extends BaseActivity {
 
         //实例化
         getdata();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
         layoutManager = new LinearLayoutManager(TkShopActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         setItemDecoration();
@@ -91,11 +94,13 @@ public class TkShopActivity extends BaseActivity {
             case R.id.right_title:
                 ArrayList<String> selectedItem = mAdapter.getSelectedItem();
                 String s = SgqUtils.listToString(selectedItem);
+
+
+                List<String> checkshopstring = SpUtil.getList(MyApplication.getApp(), "checkshopstring");
                 Intent intent = new Intent();
                 intent.putExtra("deviceshop", s);
+                intent.putStringArrayListExtra("intentcheckshop", (ArrayList<String>) checkshopstring);
                 setResult(2, intent);
-
-
                 finish();
                 break;
         }

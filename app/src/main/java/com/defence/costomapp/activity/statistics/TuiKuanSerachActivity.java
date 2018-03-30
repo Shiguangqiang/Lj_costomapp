@@ -12,10 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SpUtil;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +52,12 @@ public class TuiKuanSerachActivity extends BaseActivity {
     TextView tvStartserach;
     @BindView(R.id.liear_shoplist)
     LinearLayout liearShoplist;
+    @BindView(R.id.tv_ssshop)
+    TextView tvSsshop;
+    @BindView(R.id.tv_ssmacchine)
+    TextView tvSsmacchine;
+    @BindView(R.id.tv_ssgroup)
+    TextView tvSsgroup;
     private String device;
     private String devicegroup;
     private String deviceshop;
@@ -63,8 +74,45 @@ public class TuiKuanSerachActivity extends BaseActivity {
         middleTitle.setText("退款查询");
         tvLeftdate.setText(SgqUtils.getNowDate());
         tvRightdate.setText(SgqUtils.getNowDate());
-        //机器
-//        device = getIntent().getStringExtra("device");
+
+        try {
+            List<Serializable> checkhisstring = SpUtil.getList(MyApplication.getApp(), "checkhisstring");
+            if (checkhisstring != null && checkhisstring.size() > 0) {
+                tvSsmacchine.setVisibility(View.VISIBLE);
+                if (checkhisstring.size() == 1) {
+                    tvSsmacchine.setText(checkhisstring.get(0) + "");
+                } else if (checkhisstring.size() > 1) {
+                    tvSsmacchine.setText(checkhisstring.get(0) + "等" + checkhisstring.size() + "个机器");
+                } else {
+                    tvSsmacchine.setText("");
+                }
+            }
+            List<Serializable> checkgroupString = SpUtil.getList(MyApplication.getApp(), "checkgroupString");
+            if (checkgroupString != null && checkgroupString.size() > 0) {
+                tvSsgroup.setVisibility(View.VISIBLE);
+                if (checkhisstring.size() == 1) {
+                    tvSsgroup.setText(checkgroupString.get(0) + "");
+                } else if (checkhisstring.size() > 1) {
+                    tvSsgroup.setText(checkgroupString.get(0) + "等" + checkgroupString.size() + "个机器组");
+                } else {
+                    tvSsgroup.setText("");
+                }
+            }
+            List<Serializable> intentcheckshop = SpUtil.getList(MyApplication.getApp(), "checkshopstring");
+            if (intentcheckshop != null && intentcheckshop.size() > 0) {
+                tvSsshop.setVisibility(View.VISIBLE);
+                if (intentcheckshop.size() == 1) {
+                    tvSsshop.setText(checkgroupString.get(0) + "");
+                } else if (intentcheckshop.size() > 1) {
+                    tvSsshop.setText(intentcheckshop.get(0) + "等" + intentcheckshop.size() + "个商品");
+                } else {
+                    tvSsshop.setText("");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -139,24 +187,53 @@ public class TuiKuanSerachActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) { //resultCode为回传的标记，我在B中回传的是RESULT_OK
             case 0:
-//                Bundle b=data.getExtras(); //data为B中回传的Intent
-//                String str=b.getString("str1");//str即为回传的值
                 if (data != null) {
                     device = data.getStringExtra("device");
+                    ArrayList<String> intentcheckhisstring = data.getStringArrayListExtra("intentcheckhisstring");
+                    if (intentcheckhisstring != null && intentcheckhisstring.size() > 0) {
+                        tvSsmacchine.setVisibility(View.VISIBLE);
+                        if (intentcheckhisstring.size() == 1) {
+                            tvSsmacchine.setText(intentcheckhisstring.get(0) + "");
+                        } else if (intentcheckhisstring.size() > 1) {
+                            tvSsmacchine.setText(intentcheckhisstring.get(0) + "等" + intentcheckhisstring.size() + "个机器");
+                        } else {
+                            tvSsmacchine.setText("");
+                        }
+                    }
                 }
 
                 break;
             case 1:
-//                Bundle b=data.getExtras(); //data为B中回传的Intent
-//                String str=b.getString("str1");//str即为回传的值
                 if (data != null) {
                     devicegroup = data.getStringExtra("devicegroup");
+                    ArrayList<String> intentcheckgroupString = data.getStringArrayListExtra("intentcheckgroupString");
+                    if (intentcheckgroupString != null && intentcheckgroupString.size() > 0) {
+                        tvSsgroup.setVisibility(View.VISIBLE);
+                        if (intentcheckgroupString.size() == 1) {
+                            tvSsgroup.setText(intentcheckgroupString.get(0) + "");
+                        } else if (intentcheckgroupString.size() > 1) {
+                            tvSsgroup.setText(intentcheckgroupString.get(0) + "等" + intentcheckgroupString.size() + "个机器组");
+                        } else {
+                            tvSsgroup.setText("");
+                        }
+                    }
                 }
             case 2:
-//                Bundle b=data.getExtras(); //data为B中回传的Intent
-//                String str=b.getString("str1");//str即为回传的值
                 if (data != null) {
                     deviceshop = data.getStringExtra("deviceshop");
+                    ArrayList<String> intentcheckshop = data.getStringArrayListExtra("intentcheckshop");
+                    if (intentcheckshop != null && intentcheckshop.size() > 0) {
+                        tvSsshop.setVisibility(View.VISIBLE);
+                        if (intentcheckshop.size() == 1) {
+                            tvSsshop.setText(intentcheckshop.get(0) + "");
+                        } else if (intentcheckshop.size() > 1) {
+                            tvSsshop.setText(intentcheckshop.get(0) + "等" + intentcheckshop.size() + "个商品");
+                        } else {
+                            tvSsshop.setText("");
+                        }
+                    }
+
+
                 }
                 break;
             default:
@@ -178,7 +255,6 @@ public class TuiKuanSerachActivity extends BaseActivity {
                 //TODO 调用时间选择器
                 new DatePickerDialog(TuiKuanSerachActivity.this, R.style.MyDatePickerDialogTheme, onDateSetListenerright, mYear, mMonth, mDay).show();
                 break;
-
             case R.id.liear_machicelist:
                 startActivityForResult(new Intent(TuiKuanSerachActivity.this, TkMachinListActivity.class), 144);
                 break;
@@ -190,7 +266,6 @@ public class TuiKuanSerachActivity extends BaseActivity {
                 break;
             case R.id.tv_startserach:
 
-
                 if (TextUtils.isEmpty(device) && TextUtils.isEmpty(devicegroup) && TextUtils.isEmpty(deviceshop)) {
                     new AlertDialog.Builder(this)
                             .setMessage("请至少选择一种查询方式")
@@ -201,8 +276,8 @@ public class TuiKuanSerachActivity extends BaseActivity {
                     intentss.putExtra("sdate", tvLeftdate.getText().toString());
                     intentss.putExtra("edate", tvRightdate.getText().toString());
                     intentss.putExtra("machineNumber", device);
-                    intentss.putExtra("formatid",deviceshop);
-                    intentss.putExtra("groupMachineNumber",devicegroup);
+                    intentss.putExtra("formatid", deviceshop);
+                    intentss.putExtra("groupMachineNumber", devicegroup);
                     startActivity(intentss);
                     finish();
                 }

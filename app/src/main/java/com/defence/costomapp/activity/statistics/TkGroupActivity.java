@@ -16,6 +16,7 @@ import com.defence.costomapp.bean.TuikuanMachineBean;
 import com.defence.costomapp.bean.UserInfo;
 import com.defence.costomapp.utils.DividerItemDecoration;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SpUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
@@ -24,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +56,7 @@ public class TkGroupActivity extends BaseActivity {
         rightTitle.setText("保存");
         //实例化
         getdata();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
         layoutManager = new LinearLayoutManager(TkGroupActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         setItemDecoration();
@@ -96,8 +98,10 @@ public class TkGroupActivity extends BaseActivity {
             case R.id.right_title:
                 ArrayList<String> selectedItem = mAdapter.getSelectedItem();
                 String s = SgqUtils.listToString(selectedItem);
+                List<String> checkgroupString = SpUtil.getList(MyApplication.getApp(), "checkgroupString");
                 Intent intent = new Intent();
                 intent.putExtra("devicegroup", s);
+                intent.putStringArrayListExtra("intentcheckgroupString", (ArrayList<String>) checkgroupString);
                 setResult(1, intent);
                 finish();
                 break;

@@ -87,15 +87,11 @@ public class MachineSerachActivity extends BaseActivity {
     }
 
     private void init() {
+
         leftdate = getIntent().getStringExtra("leftdate");
         rightdate = getIntent().getStringExtra("rightdate");
 
-//        if (!TextUtils.isEmpty(leftdate)) {
-//            leftdatenew = leftdate;
-//        }
-//        if (!TextUtils.isEmpty(rightdate)) {
-//            rightdatenew = rightdate;
-//        }
+
         device = getIntent().getStringExtra("device");
         status = getIntent().getStringExtra("status");
 
