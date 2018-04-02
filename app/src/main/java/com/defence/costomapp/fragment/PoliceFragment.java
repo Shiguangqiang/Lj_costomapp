@@ -51,9 +51,6 @@ public class PoliceFragment extends BaseFragment {
     Unbinder unbinder;
 
 
-    // 2.1 定义用来与外部activity交互，获取到宿主activity
-    private FragmentInteraction listterner;
-
     // 1 定义了所有activity必须实现的接口方法
     public interface FragmentInteraction {
         void process(String str);
@@ -186,12 +183,6 @@ public class PoliceFragment extends BaseFragment {
 
             name.setText(list.get(position).getMachinename() + "报警通知");
             time.setText(list.get(position).getLastReportTime());
-
-            for (int i = 0; i <list.size() ; i++) {
-                if (list.get(i).getNotRepairCount()>0){
-                    listterner.process("VISIBLE");
-                }
-            }
 
             if (list.get(position).getNotRepairCount() > 0) {
                 circle.setVisibility(View.VISIBLE);

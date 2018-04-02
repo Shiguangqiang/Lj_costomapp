@@ -10,8 +10,10 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.activity.LoginActivity;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.utils.SgqUtils;
@@ -153,6 +155,8 @@ public class TuiKuanSerachActivity extends BaseActivity {
 
         }
     };
+   
+
     private DatePickerDialog.OnDateSetListener onDateSetListenerright = new DatePickerDialog.OnDateSetListener() {
 
         @Override
@@ -256,10 +260,19 @@ public class TuiKuanSerachActivity extends BaseActivity {
                 new DatePickerDialog(TuiKuanSerachActivity.this, R.style.MyDatePickerDialogTheme, onDateSetListenerright, mYear, mMonth, mDay).show();
                 break;
             case R.id.liear_machicelist:
-                startActivityForResult(new Intent(TuiKuanSerachActivity.this, TkMachinListActivity.class), 144);
+                if (!TextUtils.isEmpty(devicegroup)) {
+                    Toast.makeText(TuiKuanSerachActivity.this, "机器和机器组只能选择一种!", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivityForResult(new Intent(TuiKuanSerachActivity.this, TkMachinListActivity.class), 144);
+                }
                 break;
             case R.id.liear_grouplist:
-                startActivityForResult(new Intent(TuiKuanSerachActivity.this, TkGroupActivity.class), 166);
+                if (!TextUtils.isEmpty(device)) {
+                    Toast.makeText(TuiKuanSerachActivity.this, "机器组和机器只能选择一种!", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivityForResult(new Intent(TuiKuanSerachActivity.this, TkGroupActivity.class), 166);
+                }
+
                 break;
             case R.id.liear_shoplist:
                 startActivityForResult(new Intent(TuiKuanSerachActivity.this, TkShopActivity.class), 144);

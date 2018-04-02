@@ -61,7 +61,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_show.setText(list.get(position).getDescVal());
                 holder.tv_time.setText(list.get(position).getOrderTimeline());
                 holder.tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
-                holder.tv_dannum.setText(list.get(position).getNumberID());
+                holder.tv_dannum.setText(list.get(position).getWxTransactionID());
                 holder.tv_state.setText("交易成功");
                 holder.tv_address.setText(list.get(position).getMachine_data().getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
                 holder.tv_state.setTextColor(Color.rgb(26, 233, 50));
@@ -70,7 +70,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_show.setText(list.get(position).getDescVal());
                 holder.tv_time.setText(list.get(position).getOrderTimeline());
                 holder.tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
-                holder.tv_dannum.setText(list.get(position).getNumberID());
+                holder.tv_dannum.setText(list.get(position).getWxTransactionID());
                 holder.tv_state.setText("待出货");
                 holder.tv_address.setText(list.get(position).getMachine_data().getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
                 holder.tv_state.setTextColor(Color.rgb(255, 51, 0));
@@ -79,7 +79,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_show.setText(list.get(position).getDescVal());
                 holder.tv_time.setText(list.get(position).getOrderTimeline());
                 holder.tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
-                holder.tv_dannum.setText(list.get(position).getNumberID());
+                holder.tv_dannum.setText(list.get(position).getWxTransactionID());
                 holder.tv_state.setText("退款成功");
                 holder.tv_address.setText(list.get(position).getMachine_data().getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
                 holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
@@ -90,7 +90,7 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_time.setText(list.get(position).getOrderTimeline());
                 holder.tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
                 holder.tv_address.setText(list.get(position).getMachine_data().getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
-                holder.tv_dannum.setText(list.get(position).getNumberID());
+                holder.tv_dannum.setText(list.get(position).getWxTransactionID());
 
                 switch (list.get(position).getStatus()) {
                     case 3:

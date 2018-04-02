@@ -109,6 +109,37 @@ public class ChongzhiDetailBean {
         private int resultVal;
         private String jsonData;
 
+
+        private int type;
+        private String moneyy = "0";
+        private String newdate;
+
+        public int getType() {
+
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getMoneyy() {
+            return moneyy;
+        }
+
+        public void setMoneyy(String moneyy) {
+            this.moneyy = moneyy;
+        }
+
+        public String getNewdate() {
+            return newdate;
+        }
+
+        public void setNewdate(String newdate) {
+            this.newdate = newdate;
+        }
+
+
         public String getOrderNumber() {
             return orderNumber;
         }

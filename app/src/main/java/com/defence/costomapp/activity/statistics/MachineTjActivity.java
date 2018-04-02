@@ -116,9 +116,9 @@ public class MachineTjActivity extends BaseActivity {
             List<Serializable> checkgroupString = SpUtil.getList(MyApplication.getApp(), "checkgroupString");
             if (checkgroupString != null && checkgroupString.size() > 0) {
                 tvMacgroup.setVisibility(View.VISIBLE);
-                if (checkhisstring.size() == 1) {
+                if (checkgroupString.size() == 1) {
                     tvMacgroup.setText(checkgroupString.get(0) + "");
-                } else if (checkhisstring.size() > 1) {
+                } else if (checkgroupString.size() > 1) {
                     tvMacgroup.setText(checkgroupString.get(0) + "等" + checkgroupString.size() + "个机器组");
                 } else {
                     tvMacgroup.setText("");
@@ -210,7 +210,7 @@ public class MachineTjActivity extends BaseActivity {
                             tvMachis.setText(intentcheckhisstring.get(0) + "");
                         } else if (intentcheckhisstring.size() > 1) {
                             tvMachis.setText(intentcheckhisstring.get(0) + "等" + intentcheckhisstring.size() + "个机器");
-                        } else {
+                        } else if (intentcheckhisstring.size() == 0){
                             tvMachis.setText("");
                         }
                     }
@@ -227,7 +227,7 @@ public class MachineTjActivity extends BaseActivity {
                             tvMacgroup.setText(intentcheckgroupString.get(0) + "");
                         } else if (intentcheckgroupString.size() > 1) {
                             tvMacgroup.setText(intentcheckgroupString.get(0) + "等" + intentcheckgroupString.size() + "个机器组");
-                        } else {
+                        } else if(intentcheckgroupString.size() == 0) {
                             tvMacgroup.setText("");
                         }
                     }

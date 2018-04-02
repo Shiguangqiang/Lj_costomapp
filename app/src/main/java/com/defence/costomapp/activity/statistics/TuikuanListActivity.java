@@ -314,7 +314,7 @@ public class TuikuanListActivity extends BaseActivity {
                 tv_ddaddress.setText(list.get(position).getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
                 tv_time.setText(list.get(position).getBackTimeline());
                 tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
-                tv_dannum.setText(list.get(position).getNumberID());
+                tv_dannum.setText(list.get(position). getWxTransactionID());
             } catch (Exception e) {
                 e.printStackTrace();
             }

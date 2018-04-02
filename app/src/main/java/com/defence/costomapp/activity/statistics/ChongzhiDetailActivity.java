@@ -18,6 +18,8 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.ChongzhiDetailBean;
+import com.defence.costomapp.bean.ShopHistoryDetailBean;
+import com.defence.costomapp.fragment.ShopHistoryFragment;
 import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.DateAndTimeUtil;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
@@ -29,6 +31,7 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,9 +84,11 @@ public class ChongzhiDetailActivity extends BaseActivity {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                String dateStr = DateAndTimeUtil.dateFormat(Sdate);
+               /* String dateStr = DateAndTimeUtil.dateFormat(Sdate);
                 intdata(dateStr);
-                chongzhiAdapter.notifyDataSetChanged();
+                chongzhiAdapter.notifyDataSetChanged();*/
+
+                srl.setRefreshing(false);
 
 
             }
@@ -92,19 +97,22 @@ public class ChongzhiDetailActivity extends BaseActivity {
         srl.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-
-                String dateStr = DateAndTimeUtil.dateaddFormat(Sdate);
-                if (!dateStr.equals(DateAndTimeUtil.dateaddFormat(SgqUtils.getNowYmDate()))) {
+                String dateStr = DateAndTimeUtil.dateFormat(Sdate);
+                intdata(dateStr);
+               /* if (!dateStr.equals(DateAndTimeUtil.dateaddFormat(SgqUtils.getNowYmDate()))) {
                     intdata(dateStr);
                     chongzhiAdapter.notifyDataSetChanged();
                 } else {
                     srl.setLoading(false);
                     Toast.makeText(ChongzhiDetailActivity.this, "已是最新月份数据", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
         intdata(Sdate);
     }
+
+    private List<ChongzhiDetailBean.ListBean> list;
+
 
     private void intdata(final String date) {
         userid = getIntent().getStringExtra("userid");
@@ -132,16 +140,6 @@ public class ChongzhiDetailActivity extends BaseActivity {
 
                 JSONObject jsonObject = new JSONObject(result.toString());
                 ChongzhiDetailBean chongzhiDetailBean = gson.fromJson(jsonObject.toString(), ChongzhiDetailBean.class);
-                //字符串替换
-                String newdate = date.replace("-", "年");
-                tvDate.setText(newdate + "月");
-
-                int nnum = 0;
-                for (int i = 0; i < chongzhiDetailBean.getList().size(); i++) {
-                    nnum += chongzhiDetailBean.getList().get(i).getHowMuch();
-                }
-                tvXiaofei.setText("本月:" + AmountUtils.changeF2Y(nnum + "") + "元");
-
 
                 tvYue.setText("当前余额:" + AmountUtils.changeF2Y(chongzhiDetailBean.getYueNum() + ""));
                 tvZcz.setText("总充值:" + AmountUtils.changeF2Y(chongzhiDetailBean.getChongzhinum() + ""));
@@ -150,8 +148,51 @@ public class ChongzhiDetailActivity extends BaseActivity {
                 tvZxd.setText("总下单数:" + chongzhiDetailBean.getPingtaiNum());
                 tvZxf.setText("总消费金额:" + AmountUtils.changeF2Y(chongzhiDetailBean.getPayval() + ""));
 
-                chongzhiAdapter = new ChongzhiAdapter(ChongzhiDetailActivity.this, chongzhiDetailBean.getList());
-                listCzhidetail.setAdapter(chongzhiAdapter);
+                List<ChongzhiDetailBean.ListBean> l = chongzhiDetailBean.getList();
+
+                ChongzhiDetailBean.ListBean bean = new ChongzhiDetailBean.ListBean();
+
+                if (l.size() != 0) {
+                    int nnum = 0;
+                    for (int i = 0; i < l.size(); i++) {
+                        nnum += l.get(i).getHowMuch();
+                    }
+                    bean.setMoneyy(nnum + "");
+                }
+
+                bean.setType(222);
+                l.add(0, bean);
+
+                for (int i = 0; i < l.size(); i++) {
+                    if (l.get(i).getType() == 222) {
+                        l.get(i).setNewdate(Sdate);
+                    }
+                }
+
+                if (list == null)
+                    list = new ArrayList();
+                list.addAll(l);
+                if (chongzhiAdapter == null) {
+                    chongzhiAdapter = new ChongzhiAdapter(ChongzhiDetailActivity.this, list);
+                    listCzhidetail.setAdapter(chongzhiAdapter);
+                } else {
+                    chongzhiAdapter.notifyDataSetChanged();
+                }
+
+
+//                //字符串替换
+//                String newdate = date.replace("-", "年");
+//                tvDate.setText(newdate + "月");
+//
+//                int nnum = 0;
+//                for (int i = 0; i < chongzhiDetailBean.getList().size(); i++) {
+//                    nnum += chongzhiDetailBean.getList().get(i).getHowMuch();
+//                }
+//                tvXiaofei.setText("本月:" + AmountUtils.changeF2Y(nnum + "") + "元");
+
+
+//                chongzhiAdapter = new ChongzhiAdapter(ChongzhiDetailActivity.this, chongzhiDetailBean.getList());
+//                listCzhidetail.setAdapter(chongzhiAdapter);
             }
         });
     }
@@ -163,6 +204,8 @@ public class ChongzhiDetailActivity extends BaseActivity {
 
     private class ChongzhiAdapter extends BaseAdapter {
 
+        public static final int TYPE_TITLE = 0;
+        public static final int TYPE_COMPANY = 1;
         private Context context;
         private LayoutInflater inflater;
         private List<ChongzhiDetailBean.ListBean> list;
@@ -196,9 +239,30 @@ public class ChongzhiDetailActivity extends BaseActivity {
         }
 
         @Override
-        public View getView(final int position, View view, ViewGroup arg2) {
+        public int getItemViewType(int position) {
+
+            if (list.get(position).getType() == 222) {
+                return TYPE_TITLE;
+            } else {
+                return TYPE_COMPANY;
+            }
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup arg2) {
             // TODO Auto-generated method stub
-            if (view == null) {
+
+
+            ViewHolder1 viewHolder1 = null;
+            ViewHolder2 viewHolder2 = null;
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+      /*      if (view == null) {
                 view = inflater.inflate(R.layout.item_tjmachine, null);
             }
             TextView tv_name = view.findViewById(R.id.tv_name);
@@ -212,6 +276,61 @@ public class ChongzhiDetailActivity extends BaseActivity {
             tv_num.setTextColor(Color.rgb(0, 0, 0));
 
             return view;
+
+        }*/
+            switch (getItemViewType(position)) {
+                case TYPE_TITLE:
+                    if (convertView == null) {
+                        viewHolder1 = new ViewHolder1();
+                        convertView = inflater.inflate(R.layout.layout_header, null);
+                        viewHolder1.tv_dateyy = convertView.findViewById(R.id.tv_dateyy);
+                        viewHolder1.tv_xiaofei = convertView.findViewById(R.id.tv_xiaofei);
+                        convertView.setTag(viewHolder1);
+                    } else {
+                        viewHolder1 = (ViewHolder1) convertView.getTag();
+                    }
+
+                    viewHolder1.tv_dateyy.setText(list.get(position).getNewdate());
+                    viewHolder1.tv_xiaofei.setText("本月消费:" + AmountUtils.changeF2Y(list.get(position).getMoneyy()) + "元");
+                    break;
+
+                case TYPE_COMPANY:
+                    if (convertView == null) {
+                        viewHolder2 = new ViewHolder2();
+                        convertView = inflater.inflate(R.layout.item_shophistory, null);
+                        viewHolder2.tv_show = convertView.findViewById(R.id.tv_show);
+                        viewHolder2.tv_date = convertView.findViewById(R.id.tv_date);
+                        viewHolder2.tv_pricee = convertView.findViewById(R.id.tv_pricee);
+                        convertView.setTag(viewHolder2);
+                    } else {
+                        viewHolder2 = (ViewHolder2) convertView.getTag();
+                    }
+                    viewHolder2.tv_show.setText("充值");
+                    viewHolder2.tv_date.setText(list.get(position).getTimeline());
+                    viewHolder2.tv_pricee.setText("+" + AmountUtils.changeF2Y(list.get(position).getHowMuch() + ""));
+                    viewHolder2.tv_pricee.setTextSize(20);
+                    viewHolder2.tv_pricee.setTextColor(Color.rgb(0, 0, 0));
+
+                  /*  viewHolder2.tv_show.setText(list.get(position).getDescVal());
+                    viewHolder2.tv_date.setText(list.get(position).getPayTimeline());
+                    viewHolder2.tv_pricee.setText("-" + AmountUtils.changeF2Y(list.get(position).getPayVal() + "") + "元");*/
+                    break;
+                default:
+                    break;
+            }
+
+            return convertView;
+        }
+
+        class ViewHolder1 {
+            TextView tv_dateyy;
+            TextView tv_xiaofei;
+        }
+
+        class ViewHolder2 {
+            TextView tv_show;
+            TextView tv_date;
+            TextView tv_pricee;
 
         }
     }

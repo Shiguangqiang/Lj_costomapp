@@ -124,12 +124,6 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
         //绑定
         mangerTablayout.setupWithViewPager(mangerViewpager);
 
-//        TabLayout.Tab tab = mangerTablayout.newTab();
-//        tab.setCustomView(R.layout.tab_item);
-//        TextView tv_tab_title = tab.getCustomView().findViewById(R.id.tv_tab_title);
-//        ImageView img_redlittle = tab.getCustomView().findViewById(R.id.img_redlittle);
-//        tv_tab_title.setText("报警");
-//        mangerTablayout.addTab(tab);
 
 
         SgqUtils.setIndicator(mangerTablayout, 60, 60);

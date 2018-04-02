@@ -171,6 +171,8 @@ public class MachineSerachActivity extends BaseActivity {
                 if (TextUtils.isEmpty(status)) {
                     sumJinE.setText("金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
                     paysalecount.setText("付款商品:" + tongjiBean.getMap_data().getPaySaleCount() + "个");
+                    freesalecount.setText("赠送商品:" + tongjiBean.getMap_data().getFreeSaleCount() + "个");
+                    lirun.setText("净利润:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getLiRun1() + "") + "元");
                 } else {
                     if (status.equals("4")) {
                         sumJinE.setText("成功金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");

@@ -124,6 +124,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                         }
 //                        sortInfo();
                         if (buhuoMessageInfoAdapter == null) {
+                            sortInfo();
                             buhuoMessageInfoAdapter = new BuhuoMessageInfoAdapter(alarmStock, buhuoInfoEntities, BuhuoMessageInfoActivity.this, new RVItemClickListener() {
                                 @Override
                                 public void onItemClick(int position) {
@@ -148,7 +149,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                 params.put("machineID", machineEntity.getId());
                 params.put("isrepair", "1");
                 params.put("itemNo", "");
-                httpUtils.doPost(Urls.setBuhuoMessageRead(),SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
+                httpUtils.doPost(Urls.setBuhuoMessageRead(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
                     @Override
                     public void onSuccess(Gson gson, Object result) {
                         BuhuoMessageActivity.handler.sendEmptyMessage(1);

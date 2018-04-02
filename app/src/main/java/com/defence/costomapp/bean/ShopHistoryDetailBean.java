@@ -79,6 +79,7 @@ public class ShopHistoryDetailBean {
         private int type;
         private String moneyy = "0";
         private String newdate;
+
         private int test_shang_pin;
         private String numberID;
         private int orderBy;

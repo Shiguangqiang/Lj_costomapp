@@ -110,8 +110,6 @@ public class ShopHistoryFragment extends BaseFragment {
                 List<ShopHistoryDetailBean.ListBean> l = shopHistoryDetailBean.getList();
 
 
-
-
                 ShopHistoryDetailBean.ListBean bean = new ShopHistoryDetailBean.ListBean();
 
                 if (l.size() != 0) {

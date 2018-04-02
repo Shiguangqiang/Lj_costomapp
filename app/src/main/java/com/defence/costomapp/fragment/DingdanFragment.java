@@ -122,7 +122,7 @@ public class DingdanFragment extends BaseFragment {
 
     private String url;
     private int length = 0;
-    private  List<DingdanBean.ListBean> list;
+    private List<DingdanBean.ListBean> list;
 
     private void initData() {
         doPost();
@@ -150,7 +150,7 @@ public class DingdanFragment extends BaseFragment {
                 url = Urls.dingdan();
                 params.put("iCount", (length * 10) + "");
                 params.put("adminGroupID", groupid);
-                params.put("status", "5");
+                params.put("status", "5,6");
                 break;
             case 0:
                 url = Urls.dingdan();

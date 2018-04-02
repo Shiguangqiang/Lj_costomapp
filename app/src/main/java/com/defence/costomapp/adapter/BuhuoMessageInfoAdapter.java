@@ -3,6 +3,8 @@ package com.defence.costomapp.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,8 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.bean.BuhuoInfoEntity;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -40,12 +44,13 @@ public class BuhuoMessageInfoAdapter extends RecyclerView.Adapter<BuhuoMessageIn
         return new BuhuoInfoViewholder(v);
     }
 
-    @SuppressLint("SetTextI18n")
+
     @Override
     public void onBindViewHolder(BuhuoInfoViewholder holder, final int position) {
         BuhuoInfoEntity buhuoInfoEntity = buhuoInfoEntities.get(position);
-//        holder.huodao.setText(buhuoInfoEntity.getLatticenumbers() + "-" + buhuoInfoEntity.getShowName());
-        holder.huodao.setText(buhuoInfoEntity.getLatticenumbers() + "-"+buhuoInfoEntity.getDescVal()+"-"+buhuoInfoEntity.getShowName());
+
+//        Collections.sort(buhuoInfoEntities, new order());
+        holder.huodao.setText(buhuoInfoEntity.getLatticenumbers() + "-" + buhuoInfoEntity.getDescVal() + "-" + buhuoInfoEntity.getShowName());
         if (buhuoInfoEntity.getStocknumber() <= alarmStock) {
             holder.cunliang.setTextColor(Color.RED);
         } else {
@@ -59,6 +64,17 @@ public class BuhuoMessageInfoAdapter extends RecyclerView.Adapter<BuhuoMessageIn
                 rvItemClickListener.onItemClick(position);
             }
         });
+    }
+
+
+    public class order implements Comparator<BuhuoInfoEntity> {
+
+        @Override
+        public int compare(BuhuoInfoEntity lhs, BuhuoInfoEntity rhs) {
+            // TODO Auto-generated method stub
+            return rhs.getLatticenumbers() - lhs.getLatticenumbers();
+        }
+
     }
 
     @Override
