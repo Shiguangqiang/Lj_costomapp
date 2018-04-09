@@ -97,8 +97,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.5"
-        android:weightSum="3"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -147,11 +147,11 @@
                 android:gravity="center">
 
                 <LinearLayout
+                    android:id="@+id/liear_dingdan"
                     android:layout_width="@dimen/pad_height_100"
                     android:layout_height="@dimen/pad_height_100"
                     android:background="@drawable/tongjibg"
                     android:gravity="center"
-                    android:id="@+id/liear_dingdan"
                     android:orientation="vertical">
 
                     <TextView
@@ -181,11 +181,11 @@
                 android:gravity="center">
 
                 <LinearLayout
+                    android:id="@+id/liear_jiesuan"
                     android:layout_width="@dimen/pad_height_100"
                     android:layout_height="@dimen/pad_height_100"
                     android:background="@drawable/tongjibg"
                     android:gravity="center"
-                    android:id="@+id/liear_jiesuan"
                     android:orientation="vertical">
 
                     <TextView
@@ -223,11 +223,11 @@
                 android:gravity="center">
 
                 <LinearLayout
+                    android:id="@+id/liear_tuikuan"
                     android:layout_width="@dimen/pad_height_100"
                     android:layout_height="@dimen/pad_height_100"
                     android:background="@drawable/tongjibg"
                     android:gravity="center"
-                    android:id="@+id/liear_tuikuan"
                     android:orientation="vertical">
 
                     <TextView
@@ -257,8 +257,10 @@
                 android:gravity="center">
 
                 <LinearLayout
+                    android:id="@+id/liear_xintiao"
                     android:layout_width="@dimen/pad_height_100"
                     android:layout_height="@dimen/pad_height_100"
+                    android:background="@drawable/tongjibg"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -267,6 +269,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:text="@string/xintiao"
                         android:textColor="@color/sansansan"
                         android:textSize="@dimen/pad_text_size_20" />
 
@@ -275,6 +278,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:text="@string/xintiao_tj"
                         android:textColor="@color/liuliuliu"
                         android:textSize="@dimen/pad_text_size_14" />
                 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class LoginActivity extends BaseActivity {
     private int loginType;
@@ -62,6 +65,7 @@ public class LoginActivity extends BaseActivity {
 
         try {
             loginType = Integer.valueOf(getIntent().getStringExtra("loginType"));
+
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -114,6 +118,8 @@ public class LoginActivity extends BaseActivity {
                             MangerUserBean.ResultBean.DataOneBean mangerUserBean = gson.fromJson(jb.toString(), MangerUserBean.ResultBean.DataOneBean.class);
                             SharePerenceUtil.putStringValuetoSp("groupid", mangerUserBean.getGroupID() + "");
 
+                            SetRegistrationid(getApplicationContext());
+
                             switch (loginType) {
                                 case 0:
                                     startActivity(new Intent(LoginActivity.this, BuhuoMessageActivity.class));
@@ -146,6 +152,33 @@ public class LoginActivity extends BaseActivity {
                 });
             }
         });
+    }
+
+
+    //设置注册id
+    private void SetRegistrationid(Context context) {
+        RequestParams params = new RequestParams();
+
+        params.put("registrationid", JPushInterface.getRegistrationID(context));
+
+        httpUtils.doPost(Urls.setRegistrationid(), loginType, params, new HttpInterface() {
+            @Override
+            public void onSuccess(Gson gson, Object result) {
+
+                Log.d("ChoiceTypeActivity", "registerId设置成功");
+            }
+
+            //sign 等于2
+            @Override
+            public void onError(Context context, String message) {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Context context) {
+            }
+        });
+
     }
 
     private void initdata(int type) {

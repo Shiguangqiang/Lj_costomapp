@@ -11,198 +11,208 @@
     <include layout="@layout/include_title_img" />
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pad_height_100"
-        android:layout_marginTop="@dimen/pad_height_50"
-        android:orientation="horizontal">
-
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_100"
+                android:layout_marginTop="@dimen/pad_height_50"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_leftdate"
+                        android:layout_width="@dimen/pad_height_130"
+                        android:layout_height="@dimen/pad_height_35"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/jiujiujiu"
+                        android:textSize="@dimen/pad_text_size_20" />
+
+                    <View
+                        android:layout_width="@dimen/pad_height_130"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/pad_height_3"
+                        android:background="@color/liuliuliu" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pad_height_3"
+                    android:layout_weight="0.3"
+                    android:text="至"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_24" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_rightdate"
+                        android:layout_width="@dimen/pad_height_130"
+                        android:layout_height="@dimen/pad_height_35"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/jiujiujiu"
+                        android:textSize="@dimen/pad_text_size_20" />
+
+                    <View
+                        android:layout_width="@dimen/pad_height_130"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/pad_height_3"
+                        android:background="@color/liuliuliu" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/liear_machicelist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_height_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:gravity="left"
+                    android:text="选择查询的机器列表"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_18" />
+
+                <ImageView
+                    android:layout_width="@dimen/pad_height_20"
+                    android:layout_height="@dimen/pad_height_20"
+                    android:src="@mipmap/right" />
+
+            </LinearLayout>
+
+
             <TextView
-                android:id="@+id/tv_leftdate"
-                android:layout_width="@dimen/pad_height_130"
-                android:layout_height="@dimen/pad_height_35"
-                android:gravity="center"
+                android:id="@+id/tv_machis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/pad_height_10"
+                android:gravity="right"
                 android:text=""
-                android:textColor="@color/jiujiujiu"
-                android:textSize="@dimen/pad_text_size_20" />
+                android:visibility="gone" />
 
-            <View
-                android:layout_width="@dimen/pad_height_130"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/pad_height_3"
-                android:background="@color/liuliuliu" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/liear_grouplist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_height_20"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:gravity="left"
+                    android:text="选择查询的组列表"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_18" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/pad_height_3"
-            android:layout_weight="0.3"
-            android:text="至"
-            android:textColor="@color/black"
-            android:textSize="@dimen/pad_text_size_24" />
+                <ImageView
+                    android:layout_width="@dimen/pad_height_20"
+                    android:layout_height="@dimen/pad_height_20"
+                    android:src="@mipmap/right" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_rightdate"
-                android:layout_width="@dimen/pad_height_130"
-                android:layout_height="@dimen/pad_height_35"
-                android:gravity="center"
+                android:id="@+id/tv_macgroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/pad_height_10"
+                android:gravity="right"
                 android:text=""
-                android:textColor="@color/jiujiujiu"
-                android:textSize="@dimen/pad_text_size_20" />
+                android:visibility="gone" />
 
-            <View
-                android:layout_width="@dimen/pad_height_130"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/pad_height_3"
-                android:background="@color/liuliuliu" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/pad_height_30"
+                android:layout_marginTop="@dimen/pad_height_10"
+                android:gravity="right"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_add"
+                    android:layout_width="@dimen/pad_height_200"
+                    android:layout_height="@dimen/pad_height_35"
+                    android:gravity="center"
+                    android:text="省市区"
+                    android:textColor="@color/jiujiujiu"
+                    android:textSize="@dimen/pad_text_size_20" />
+
+                <View
+                    android:layout_width="@dimen/pad_height_200"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/pad_height_3"
+                    android:background="@color/liuliuliu"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_50"
+                android:layout_margin="@dimen/pad_height_50"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/chu_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="出货查询" />
+
+                <RadioButton
+                    android:id="@+id/tuikuan_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_20"
+                    android:gravity="center"
+                    android:text="退款查询" />
+            </RadioGroup>
+
+
+            <TextView
+                android:id="@+id/btn_startserach"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/pad_height_50"
+                android:layout_marginTop="@dimen/pad_height_100"
+                android:gravity="center"
+                android:text="开始查询"
+                android:textColor="@color/bule_light"
+                android:textSize="@dimen/pad_text_size_22" />
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/liear_machicelist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/pad_height_20"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="left"
-            android:text="选择查询的机器列表"
-            android:textColor="@color/black"
-            android:textSize="@dimen/pad_text_size_18" />
-
-        <ImageView
-            android:layout_width="@dimen/pad_height_20"
-            android:layout_height="@dimen/pad_height_20"
-            android:src="@mipmap/right" />
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/tv_machis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/pad_height_10"
-        android:gravity="right"
-        android:text=""
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/liear_grouplist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/pad_height_20"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="left"
-            android:text="选择查询的组列表"
-            android:textColor="@color/black"
-            android:textSize="@dimen/pad_text_size_18" />
-
-        <ImageView
-            android:layout_width="@dimen/pad_height_20"
-            android:layout_height="@dimen/pad_height_20"
-            android:src="@mipmap/right" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_macgroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/pad_height_10"
-        android:gravity="right"
-        android:text=""
-        android:visibility="gone" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/pad_height_30"
-        android:layout_marginTop="@dimen/pad_height_10"
-        android:gravity="right"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/tv_add"
-            android:layout_width="@dimen/pad_height_200"
-            android:layout_height="@dimen/pad_height_35"
-            android:gravity="center"
-            android:text="省市区"
-            android:textColor="@color/jiujiujiu"
-            android:textSize="@dimen/pad_text_size_20" />
-
-        <View
-            android:layout_width="@dimen/pad_height_200"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/pad_height_3"
-            android:background="@color/liuliuliu"
-            android:gravity="center" />
-    </LinearLayout>
-
-    <RadioGroup
-        android:id="@+id/rg"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pad_height_50"
-        android:layout_margin="@dimen/pad_height_50"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/chu_rb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:gravity="center"
-            android:text="出货查询" />
-
-        <RadioButton
-            android:id="@+id/tuikuan_rb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/pad_height_20"
-            android:gravity="center"
-            android:text="退款查询" />
-    </RadioGroup>
-
-
-    <TextView
-        android:id="@+id/btn_startserach"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/pad_height_50"
-        android:layout_marginTop="@dimen/pad_height_100"
-        android:gravity="center"
-        android:text="开始查询"
-        android:textColor="@color/bule_light"
-        android:textSize="@dimen/pad_text_size_22" />
-
+    </ScrollView>
 </LinearLayout>

@@ -1,5 +1,10 @@
 package com.defence.costomapp.bean;
 
+import android.support.v7.widget.LinearSmoothScroller;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by author Sgq
  * on 2018/3/12.
@@ -13,6 +18,7 @@ public class AddBean {
 
     private String ic;
     private String txt;
+
 
     public String getIc() {
         return ic;

@@ -37,8 +37,10 @@
     <string name="jsserach">结算查询</string>
     <string name="tuikuan">退款</string>
     <string name="tkserach">退款查询</string>
-    <string name="startserach">开始查询</string>
+    <string name="xintiao">心跳</string>
+    <string name="xintiao_tj">心跳统计</string>
 
+    <string name="startserach">开始查询</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

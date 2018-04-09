@@ -55,9 +55,9 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
     public static final int BUHUO_TYPE = 0;
     //管理
     public static final int MANAGER_TYPE = 10100;
+    private static final int BAIDU_READ_PHONE_STATE = 100;
     //统计
     private final int TONGJI_TYPE = 10110;
-
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
@@ -67,6 +67,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
     private ProgressDialog pd;
     private AlertDialog alertDialog;
     private String updateUrl;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +115,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
             public void onLocationChanged(AMapLocation amapLocation) {
 
 
-                if(pd!=null){
+                if (pd != null) {
                     pd.dismiss();
                 }
 
@@ -193,11 +194,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
 
     }
 
-
-
-
-    private static final int BAIDU_READ_PHONE_STATE = 100;
-
     public void showContacts() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -213,8 +209,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         }
 
     }
-
-
 
     public String getVersionCode() {
         PackageManager packageManager = this.getPackageManager();
@@ -239,8 +233,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         bd_lat_lon[1] = z * Math.sin(theta) + 0.006;
         return bd_lat_lon;
     }
-
-    private int type;
 
     @Override
     public void onClick(View view) {
@@ -293,7 +285,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
 //        if(booleanValueFromSp){
 //            startActivity(new Intent(ChoiceTypeActivity.this, LoginActivity.class));
 //        } else
-            if (!TextUtils.isEmpty(nameAndPsw)) {
+        if (!TextUtils.isEmpty(nameAndPsw)) {
             final String userName = nameAndPsw.split("---")[0];
             final String psw = nameAndPsw.split("---")[1];
             RequestParams params = new RequestParams();
@@ -310,7 +302,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                         MyApplication.getApp().setUserInfo(userInfo);
                         SharePerenceUtil.putStringValuetoSp(type + "", userName + "---" + psw);
                         SharePerenceUtil.putIntValuetoSp("loginType", type);
-                        SetRegistrationid(getApplicationContext());
                         startActivity(new Intent(ChoiceTypeActivity.this, clz));
                         finish();
                     } catch (JSONException e) {
@@ -334,6 +325,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
             startActivity(intent);
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -342,26 +334,4 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         }
     }
 
-    //设置注册id
-    private void SetRegistrationid(Context context) {
-        RequestParams params = new RequestParams();
-        params.put("registrationid", JPushInterface.getRegistrationID(context));
-        httpUtils.doPost(Urls.setRegistrationid(), type, params, new HttpInterface() {
-            @Override
-            public void onSuccess(Gson gson, Object result) {
-                Log.d("ChoiceTypeActivity", "registerId设置成功");
-            }
-
-            //sign 等于2
-            @Override
-            public void onError(Context context, String message) {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Context context) {
-            }
-        });
-
-    }
 }

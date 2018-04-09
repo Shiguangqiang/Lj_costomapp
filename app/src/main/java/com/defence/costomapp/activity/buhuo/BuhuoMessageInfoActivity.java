@@ -82,7 +82,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                     JSONObject jb = (JSONObject) result;
                     try {
                         alarmStock = jb.getInt("alarmStock");
-                        machineEntity = gson.fromJson(jb.getJSONObject("machine").toString(), MachineEntity.class);
+                         machineEntity = gson.fromJson(jb.getJSONObject("machine").toString(), MachineEntity.class);
                         machineAddr.setText(machineEntity.getAddress() + machineEntity.getDetailedinstalladdress());
                         AMap aMap = mMapView.getMap();
                         LatLng latLng = new LatLng(machineEntity.getLatitude(), machineEntity.getLongitude());

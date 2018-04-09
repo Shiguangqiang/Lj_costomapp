@@ -8,8 +8,8 @@ android {
         applicationId "com.defence.costomapp"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 15
-        versionName "1.15"
+        versionCode 17
+        versionName "1.17"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     defaultConfig {
@@ -20,9 +20,10 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "cceeab54641f721020526db6", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY : "f5e99f6925fbb0bc484b0fe0", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -48,6 +49,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:support-v4:26.1.0'
@@ -90,6 +92,6 @@ dependencies {
 
     //下拉刷新RV
     compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
-//网络请求
+    //网络请求
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
 }

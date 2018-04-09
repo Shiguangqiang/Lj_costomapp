@@ -51,6 +51,7 @@ public class BuhuoMessageInfoAdapter extends RecyclerView.Adapter<BuhuoMessageIn
 
 //        Collections.sort(buhuoInfoEntities, new order());
         holder.huodao.setText(buhuoInfoEntity.getLatticenumbers() + "-" + buhuoInfoEntity.getDescVal() + "-" + buhuoInfoEntity.getShowName());
+
         if (buhuoInfoEntity.getStocknumber() <= alarmStock) {
             holder.cunliang.setTextColor(Color.RED);
         } else {

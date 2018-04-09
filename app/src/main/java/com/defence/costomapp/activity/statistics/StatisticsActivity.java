@@ -40,6 +40,10 @@ public class StatisticsActivity extends BaseActivity {
     TextView middleTitle;
     @BindView(R.id.right_title)
     TextView rightTitle;
+    @BindView(R.id.liear_xintiao)
+    LinearLayout liearXintiao;
+    //退出时的时间
+    private long mExitTime;
 
     /**
      * 统计
@@ -60,7 +64,7 @@ public class StatisticsActivity extends BaseActivity {
         middleTitle.setText("统计");
     }
 
-    @OnClick({R.id.back, R.id.liear_machicetj, R.id.liear_usertj, R.id.liear_liushui, R.id.liear_dingdan, R.id.liear_jiesuan, R.id.liear_tuikuan})
+    @OnClick({R.id.liear_xintiao, R.id.back, R.id.liear_machicetj, R.id.liear_usertj, R.id.liear_liushui, R.id.liear_dingdan, R.id.liear_jiesuan, R.id.liear_tuikuan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -73,11 +77,15 @@ public class StatisticsActivity extends BaseActivity {
                 }
                 finish();
                 break;
+            case R.id.liear_xintiao:
+                //心跳统计
+                startActivity(new Intent(StatisticsActivity.this, HeartBeatActivity.class));
+                break;
             case R.id.liear_machicetj:
                 //自助机统计
                 startActivity(new Intent(StatisticsActivity.this, MachineSerachActivity.class));
                 break;
-                // 用户统计
+            // 用户统计
             case R.id.liear_usertj:
                 startActivity(new Intent(StatisticsActivity.this, UserTjNewActivity.class));
                 break;
@@ -95,9 +103,6 @@ public class StatisticsActivity extends BaseActivity {
                 break;
         }
     }
-
-    //退出时的时间
-    private long mExitTime;
 
     //对返回键进行监听
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -129,5 +134,9 @@ public class StatisticsActivity extends BaseActivity {
             finishAffinity();
             System.exit(0);
         }
+    }
+
+    @OnClick()
+    public void onViewClicked() {
     }
 }

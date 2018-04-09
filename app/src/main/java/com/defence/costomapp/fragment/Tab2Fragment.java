@@ -88,7 +88,11 @@ public class Tab2Fragment extends BaseFragment {
         public Tab2Adapter(Context context, List<ShopNumBean.ListBean> list) {
             super();
             this.context = context;
-            inflater = LayoutInflater.from(context);
+            try {
+                inflater = LayoutInflater.from(context);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             this.list = list;
         }
 

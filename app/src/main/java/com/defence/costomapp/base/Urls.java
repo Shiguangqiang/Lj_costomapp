@@ -1,17 +1,21 @@
 package com.defence.costomapp.base;
 
+import com.defence.costomapp.utils.SharePerenceUtil;
+
+
 /**
  * Created by fangfafengfu on 2017/12/5.
  */
 
 public class Urls {
+
     public static String BaseUrl = "http://swz.landgy.com/";
-//    测试 yang
+    //    测试 yang
 //    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
 
     //  李
 //    public static String BaseUrl = "http://192.168.0.234:8080/";
-
+//
 
     public static String BuhuoLogin() {
         return BaseUrl + "req-mobile/login/witttth/account0";
@@ -21,12 +25,18 @@ public class Urls {
         return BaseUrl + "req-mobile/alarm/list100/0data1.json";
     }
 
+    /*补货通知详情*/
     public static String getBuhuoMessageInfo() {
         return BaseUrl + "req-mobile/alarm/list/machine/goods/0data1.json";
     }
 
+    //极光注册id
     public static String setRegistrationid() {
-        return BaseUrl + "req-mobile/app/push/replace3/registrationid";
+        int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
+        if (0 == loginType) {
+            return BaseUrl + "req-mobile/app/push/replace3/registrationid";
+        }
+        return BaseUrl + "req-mobile/app/push/replace2/registrationid";
     }
 
     public static String setBuhuoMessageRead() {
@@ -189,5 +199,8 @@ public class Urls {
         return BaseUrl + "req-mobile/ding/dan/dev/qr/refund/order/0item";
     }
 
-
+    //最后一次成交时间，物品及价格表req-mobile/tong-ji/machine/last/0data.json
+    public static String last() {
+        return BaseUrl + "req-mobile/tong-ji/machine/last/0data.json";
+    }
 }

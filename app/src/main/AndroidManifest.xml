@@ -110,7 +110,6 @@
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
-
                 <category android:name="com.defence.costomapp" />
             </intent-filter>
         </receiver>
@@ -205,11 +204,27 @@
         <activity
             android:name=".activity.statistics.TuiKuanSerachActivity"
             android:screenOrientation="portrait" />
-        <!--  -->
-        <activity android:name=".activity.statistics.TkMachinListActivity" />
-        <activity android:name=".activity.statistics.TkShopActivity" />
-        <activity android:name=".activity.statistics.TkGroupActivity" />
-        <activity android:name=".activity.statistics.DingdanNewActivity"></activity>
+        <!-- 机器筛选-->
+        <activity
+            android:name=".activity.statistics.TkMachinListActivity"
+            android:screenOrientation="portrait" />
+        <!--商品筛选-->
+        <activity
+            android:name=".activity.statistics.TkShopActivity"
+            android:screenOrientation="portrait" />
+        <!--机器组筛选-->
+        <activity
+            android:name=".activity.statistics.TkGroupActivity"
+            android:screenOrientation="portrait" />
+        <!--订单-->
+        <activity
+            android:name=".activity.statistics.DingdanNewActivity"
+            android:screenOrientation="portrait" />
+        <!--心跳统计-->
+        <activity
+            android:name=".activity.statistics.HeartBeatActivity"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>
