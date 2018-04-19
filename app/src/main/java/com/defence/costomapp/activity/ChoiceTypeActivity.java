@@ -298,7 +298,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                     try {
                         JSONObject jb = ((JSONObject) result).getJSONObject("data_one");
                         UserInfo userInfo = gson.fromJson(jb.toString(), UserInfo.class);
-                        userInfo.setFuncType(type);
+                         userInfo.setFuncType(type);
                         MyApplication.getApp().setUserInfo(userInfo);
                         SharePerenceUtil.putStringValuetoSp(type + "", userName + "---" + psw);
                         SharePerenceUtil.putIntValuetoSp("loginType", type);

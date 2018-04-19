@@ -36,7 +36,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.maps2d.model.LatLng;
-
 import com.defence.costomapp.qrcode.utils.Constant;
 import com.defence.costomapp.qrcode.zxing.ScanListener;
 import com.defence.costomapp.qrcode.zxing.ScanManager;
@@ -124,15 +123,15 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
                 scan_hint.setText(R.string.scan_allcode_hint);
                 break;
         }
-        scanPreview = (SurfaceView) findViewById(R.id.capture_preview);
+        scanPreview = findViewById(R.id.capture_preview);
         scanContainer = findViewById(R.id.capture_container);
         scanCropView = findViewById(R.id.capture_crop_view);
-        scanLine = (ImageView) findViewById(R.id.capture_scan_line);
+        scanLine = findViewById(R.id.capture_scan_line);
 //        qrcode_g_gallery = (TextView) findViewById(R.id.qrcode_g_gallery);
 //        qrcode_g_gallery.setOnClickListener(this);
 //        qrcode_ic_back = (TextView) findViewById(R.id.qrcode_ic_back);
 //        qrcode_ic_back.setOnClickListener(this);
-        iv_light = (TextView) findViewById(R.id.iv_light);
+        iv_light = findViewById(R.id.iv_light);
         iv_light.setOnClickListener(this);
         // rescan.setOnClickListener(this);
         authorize_return.setOnClickListener(this);

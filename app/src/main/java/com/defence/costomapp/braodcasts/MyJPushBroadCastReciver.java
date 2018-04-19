@@ -15,9 +15,7 @@ import android.util.Log;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.ChoiceTypeActivity;
-import com.defence.costomapp.activity.MainActivity;
-import com.defence.costomapp.app.MyApplication;
-import com.google.gson.Gson;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,8 +50,7 @@ public class MyJPushBroadCastReciver extends BroadcastReceiver {
             processCustomMessage(context, bundle);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
-        }
-        /*else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
+        } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
 //
             //打开自定义的Activity
@@ -62,8 +59,8 @@ public class MyJPushBroadCastReciver extends BroadcastReceiver {
             //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(i);
-
-        } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
+        }
+       /* else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
 
@@ -113,13 +110,17 @@ public class MyJPushBroadCastReciver extends BroadcastReceiver {
             }
 
         }
-//        Intent mIntent = new Intent(context, ChoiceTypeActivity.class);
-//        mIntent.putExtras(bundle);
-//        PendingIntent pendingIntent = PendingIntent.get
-//
-// Activity(context, 0, mIntent, 0);
-//        notification.setContentIntent(pendingIntent);
-        notificationManager.notify(1, notification.build());
+
+        Intent mIntent = new Intent(context, ChoiceTypeActivity.class);
+        mIntent.putExtras(bundle);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mIntent, 0);
+        notification.setContentIntent(pendingIntent);
+
+        try {
+            notificationManager.notify(1, notification.build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

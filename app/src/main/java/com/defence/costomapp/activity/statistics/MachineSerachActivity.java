@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
@@ -20,12 +21,15 @@ import com.defence.costomapp.bean.TongjiBean;
 import com.defence.costomapp.fragment.CommodityFragment;
 import com.defence.costomapp.fragment.MachiceFragment;
 import com.defence.costomapp.utils.AmountUtils;
+import com.defence.costomapp.utils.DateAndTimeUtil;
+import com.defence.costomapp.utils.MyEvent;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -64,8 +68,16 @@ public class MachineSerachActivity extends BaseActivity {
     LinearLayout liearLeft;
     @BindView(R.id.liear_right)
     LinearLayout liearRight;
-    private String leftdate;
-    private String rightdate;
+    @BindView(R.id.tv_switchtext)
+    TextView tvSwitchtext;
+    @BindView(R.id.tv_beforeday)
+    TextView tvBeforeday;
+    @BindView(R.id.tv_afterday)
+    TextView tvAfterday;
+    private String leftdate = SgqUtils.getNowDate();
+    private String rightdate = SgqUtils.getNowDate();
+    private String sleftdate = SgqUtils.getNowDate();
+    private String srightdate = SgqUtils.getNowDate();
 
 
     private String groupid;
@@ -73,9 +85,9 @@ public class MachineSerachActivity extends BaseActivity {
     private String[] titles = new String[]{"商品", "机器"};
     private List<Fragment> list;
     private MyAdapter adapter;
-    private CommodityFragment commodityFragment;
     private String device;
     private String status;
+    private TongjiBean tongjiBean;
 
 
     @Override
@@ -91,23 +103,21 @@ public class MachineSerachActivity extends BaseActivity {
         leftdate = getIntent().getStringExtra("leftdate");
         rightdate = getIntent().getStringExtra("rightdate");
 
-
         device = getIntent().getStringExtra("device");
         status = getIntent().getStringExtra("status");
-
 
         middleTitle.setTextSize(16);
         rightIcon.setImageResource(R.mipmap.all);
 
 
         //展示数据
-        getData();
-        commodityFragment = new CommodityFragment();
+        getData("yes");
+
         //页面，数据源
         list = new ArrayList<>();
-        list.add(commodityFragment);
+        list.add(new CommodityFragment());
         list.add(new MachiceFragment());
-//        list.add(BlankFragment.newInstance("dd"));
+
         //ViewPager的适配器
         adapter = new MyAdapter(getSupportFragmentManager());
         mangerViewpager.setAdapter(adapter);
@@ -119,46 +129,30 @@ public class MachineSerachActivity extends BaseActivity {
 
     }
 
-    private void getData() {
+    private void getData(String no) {
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
-//        if (!TextUtils.isEmpty(tvAdd)) {
-//            if (tvAdd.length() == 3) {
-//                addr1 = "0";
-//                addr2 = "0";
-//                addr3 = "0";
-//            } else {
-//                addr1 = intent_addr1;
-//                addr2 = intent_addr2;
-//                addr3 = intent_addr3;
-//            }
-//        } else {
-//            addr1 = "0";
-//            addr2 = "0";
-//            addr3 = "0";
-//        }
-//
-        RequestParams params = new RequestParams();
-        if (TextUtils.isEmpty(device) && TextUtils.isEmpty(status)) {
-            params.put("adminGroupID", groupid);
-            params.put("addr1", "0");
-            params.put("addr2", "0");
-            params.put("addr3", "0");
-            params.put("date1",  SgqUtils.getNowDate());
+
+        if (TextUtils.isEmpty(leftdate)) {
             leftdate = SgqUtils.getNowDate();
-            params.put("date2", SgqUtils.getNowDate());
+        }
+        if (TextUtils.isEmpty(rightdate)) {
             rightdate = SgqUtils.getNowDate();
-        } else {
-            params.put("adminGroupID", groupid);
-            params.put("date1", leftdate);
-            params.put("date2", rightdate);
-            params.put("addr1", "0");
-            params.put("addr2", "0");
-            params.put("addr3", "0");
+        }
+        RequestParams params = new RequestParams();
+        params.put("adminGroupID", groupid);
+        params.put("date1", leftdate);
+        params.put("date2", rightdate);
+        params.put("addr1", "0");
+        params.put("addr2", "0");
+        params.put("addr3", "0");
+        if(!no.equals("no")){
             params.put("devices", device);
             params.put("status", status);
         }
 
-        middleTitle.setText(leftdate + " 至 " + rightdate);
+
+
+//        middleTitle.setText(leftdate + " 至 " + rightdate);
 
 
         httpUtils.doPost(Urls.tjserach(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
@@ -166,7 +160,7 @@ public class MachineSerachActivity extends BaseActivity {
             @Override
             public void onSuccess(Gson gson, Object result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
-                TongjiBean tongjiBean = gson.fromJson(jsonObject.toString(), TongjiBean.class);
+                tongjiBean = gson.fromJson(jsonObject.toString(), TongjiBean.class);
 
                 if (TextUtils.isEmpty(status)) {
                     sumJinE.setText("金额:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getSumJinE() + "") + "元");
@@ -187,6 +181,7 @@ public class MachineSerachActivity extends BaseActivity {
                     }
                 }
 
+                middleTitle.setText(leftdate + " 至 " + rightdate);
 
                 freecost.setText("赠送成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getFreeCost() + "") + "元");
 
@@ -201,7 +196,7 @@ public class MachineSerachActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.liear_left, R.id.liear_right})
+    @OnClick({R.id.liear_left, R.id.liear_right, R.id.tv_switchtext, R.id.tv_beforeday, R.id.tv_afterday})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.liear_left:
@@ -211,12 +206,51 @@ public class MachineSerachActivity extends BaseActivity {
                 startActivity(new Intent(MachineSerachActivity.this, MachineTjActivity.class));
                 finish();
                 break;
+            case R.id.tv_switchtext:
+                if (tvSwitchtext.getText().equals("全部机器查询")) {
+                    tvSwitchtext.setText("筛选机器查询");
+                    getData("no");
+                    EventBus.getDefault().post(new MyEvent(66, sleftdate, srightdate, "", ""));
+
+                } else if (tvSwitchtext.getText().equals("筛选机器查询")) {
+                    tvSwitchtext.setText("全部机器查询");
+                    //展示数据
+                    getData("yes");
+                    EventBus.getDefault().post(new MyEvent(66, sleftdate, srightdate, device, status));
+                }
+                break;
+
+            case R.id.tv_beforeday:
+
+                sleftdate = DateAndTimeUtil.checkOption("pre", srightdate);
+                srightdate = DateAndTimeUtil.checkOption("pre", srightdate);
+                leftdate = sleftdate;
+                rightdate = srightdate;
+                //展示数据
+                getData("yes");
+                EventBus.getDefault().post(new MyEvent(66, sleftdate, srightdate, device, status));
+
+                break;
+            case R.id.tv_afterday:
+
+                sleftdate = DateAndTimeUtil.checkOption("next", srightdate);
+                srightdate = DateAndTimeUtil.checkOption("next", srightdate);
+                leftdate = sleftdate;
+                rightdate = srightdate;
+                if (rightdate.equals(DateAndTimeUtil.checkOption("next", SgqUtils.getNowDate()))) {
+                    Toast.makeText(MachineSerachActivity.this, "已是最新天数数据!", Toast.LENGTH_SHORT).show();
+                    srightdate = DateAndTimeUtil.checkOption("pre", SgqUtils.getNowDate());
+                } else {
+                    //展示数据
+                    getData("yes");
+                    EventBus.getDefault().post(new MyEvent(66, sleftdate, srightdate, device, status));
+                }
+
+                break;
         }
     }
 
-
     class MyAdapter extends FragmentPagerAdapter {
-
         public MyAdapter(FragmentManager fm) {
             super(fm);
         }

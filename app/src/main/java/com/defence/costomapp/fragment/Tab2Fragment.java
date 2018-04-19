@@ -130,10 +130,7 @@ public class Tab2Fragment extends BaseFragment {
             reg_phone.setText(list.get(position).getDescVal());
             tv_nearlogintime.setText("数量:"+list.get(position).getBcount());
 
-
             return view;
-
         }
     }
-
 }

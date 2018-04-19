@@ -72,6 +72,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme">
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="fb220cc3e8549734ce147248f131be97" />

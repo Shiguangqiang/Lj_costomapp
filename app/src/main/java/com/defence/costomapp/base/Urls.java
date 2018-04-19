@@ -92,7 +92,6 @@ public class Urls {
         return BaseUrl + "req-mobile/tong-ji/between/date/goods/sale/0data1.json";
     }
 
-    //查看统计查询_机器
     public static String tjserach_machine() {
         return BaseUrl + "req-mobile/tong-ji/between/date/machine/sale/0data1.json";
     }
@@ -183,7 +182,7 @@ public class Urls {
 
     //退款查询 listall
     public static String allisttuikuan() {
-        return BaseUrl + "req-mobile/user-tuikuan/list/tuikuan/info/0data1.json";
+          return BaseUrl + "req-mobile/user-tuikuan/list/tuikuan/info/0data1.json";
 
 
     }

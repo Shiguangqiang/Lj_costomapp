@@ -1,19 +1,23 @@
 package com.defence.costomapp.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.activity.statistics.DingdanDetailActivity;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.ShopHistoryDetailBean;
+import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.DateAndTimeUtil;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
@@ -46,12 +50,12 @@ public class ShopHistoryFragment extends BaseFragment {
     ListView listShophistory;
     @BindView(R.id.srl)
     RefreshLayout srl;
-
-    private String uid;
     String Sdate = SgqUtils.getNowYmDate();
+    private String uid;
     private ShopHistoryAdapter shopHistoryAdapter;
     private String wxid = "";
     private String newdate;
+    private List<ShopHistoryDetailBean.ListBean> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,9 +83,6 @@ public class ShopHistoryFragment extends BaseFragment {
         initdata(Sdate);
         return view;
     }
-
-
-    private List<ShopHistoryDetailBean.ListBean> list;
 
     private void initdata(final String date) {
         uid = getActivity().getIntent().getStringExtra("uid");
@@ -133,7 +134,18 @@ public class ShopHistoryFragment extends BaseFragment {
                     list = new ArrayList();
                 list.addAll(l);
                 if (shopHistoryAdapter == null) {
-                    shopHistoryAdapter = new ShopHistoryAdapter(getActivity(), list);
+                    shopHistoryAdapter = new ShopHistoryAdapter(getActivity(), list, new RVItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+//                            numberID
+                            Intent intent = new Intent(getActivity(), DingdanDetailActivity.class);
+                            intent.putExtra("numberID", list.get(position).getNumberID());
+                            intent.putExtra("dis", "dis");
+                            startActivity(intent);
+                        }
+                    });
+
+
                     listShophistory.setAdapter(shopHistoryAdapter);
                 } else {
                     shopHistoryAdapter.notifyDataSetChanged();
@@ -150,13 +162,15 @@ public class ShopHistoryFragment extends BaseFragment {
         private Context context;
         private LayoutInflater inflater;
         private List<ShopHistoryDetailBean.ListBean> list;
+        private RVItemClickListener rvItemClickListener;
 
 
-        public ShopHistoryAdapter(Context context, List<ShopHistoryDetailBean.ListBean> list) {
+        public ShopHistoryAdapter(Context context, List<ShopHistoryDetailBean.ListBean> list, RVItemClickListener rvItemClickListener) {
             super();
             this.context = context;
             inflater = LayoutInflater.from(context);
             this.list = list;
+            this.rvItemClickListener = rvItemClickListener;
         }
 
         @Override
@@ -226,10 +240,18 @@ public class ShopHistoryFragment extends BaseFragment {
                         viewHolder2.tv_show = convertView.findViewById(R.id.tv_show);
                         viewHolder2.tv_date = convertView.findViewById(R.id.tv_date);
                         viewHolder2.tv_pricee = convertView.findViewById(R.id.tv_pricee);
+                        viewHolder2.liearitemll = convertView.findViewById(R.id.buhuoitemll);
                         convertView.setTag(viewHolder2);
                     } else {
                         viewHolder2 = (ViewHolder2) convertView.getTag();
                     }
+
+                    viewHolder2.liearitemll.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            rvItemClickListener.onItemClick(position);
+                        }
+                    });
                     viewHolder2.tv_show.setText(list.get(position).getDescVal());
                     viewHolder2.tv_date.setText(list.get(position).getPayTimeline());
                     viewHolder2.tv_pricee.setText("-" + AmountUtils.changeF2Y(list.get(position).getPayVal() + "") + "元");
@@ -250,6 +272,7 @@ public class ShopHistoryFragment extends BaseFragment {
             TextView tv_show;
             TextView tv_date;
             TextView tv_pricee;
+            LinearLayout liearitemll;
 
         }
     }

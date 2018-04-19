@@ -8,8 +8,8 @@ android {
         applicationId "com.defence.costomapp"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 17
-        versionName "1.17"
+        versionCode 18
+        versionName "1.18"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     defaultConfig {
@@ -60,8 +60,8 @@ dependencies {
     //网络
     implementation files('libs/android-async-http-1.4.4.jar')
     //极光
-    compile 'cn.jiguang.sdk:jpush:3.1.0'
-    compile 'cn.jiguang.sdk:jcore:1.1.8'
+    compile 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。
     //扫码
     compile 'com.google.zxing:core:3.3.0'
     //goole
@@ -94,4 +94,6 @@ dependencies {
     compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
     //网络请求
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
+    //事件总线
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

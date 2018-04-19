@@ -28,5 +28,7 @@ public class JpushBroadCastReceiver extends JPushMessageReceiver {
     @Override
     public IBinder peekService(Context myContext, Intent service) {
         return super.peekService(myContext, service);
+
+
     }
 }
