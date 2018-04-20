@@ -145,11 +145,10 @@ public class MachineSerachActivity extends BaseActivity {
         params.put("addr1", "0");
         params.put("addr2", "0");
         params.put("addr3", "0");
-        if(!no.equals("no")){
+        if (!no.equals("no")) {
             params.put("devices", device);
             params.put("status", status);
         }
-
 
 
 //        middleTitle.setText(leftdate + " 至 " + rightdate);
@@ -232,14 +231,13 @@ public class MachineSerachActivity extends BaseActivity {
 
                 break;
             case R.id.tv_afterday:
-
                 sleftdate = DateAndTimeUtil.checkOption("next", srightdate);
                 srightdate = DateAndTimeUtil.checkOption("next", srightdate);
                 leftdate = sleftdate;
                 rightdate = srightdate;
-                if (rightdate.equals(DateAndTimeUtil.checkOption("next", SgqUtils.getNowDate()))) {
+                if (srightdate.equals(DateAndTimeUtil.checkOption("next", SgqUtils.getNowDate()))) {
                     Toast.makeText(MachineSerachActivity.this, "已是最新天数数据!", Toast.LENGTH_SHORT).show();
-                    srightdate = DateAndTimeUtil.checkOption("pre", SgqUtils.getNowDate());
+                    srightdate =  SgqUtils.getNowDate();
                 } else {
                     //展示数据
                     getData("yes");
