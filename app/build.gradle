@@ -8,8 +8,8 @@ android {
         applicationId "com.defence.costomapp"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 18
-        versionName "1.18"
+        versionCode 21
+        versionName "1.21"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     defaultConfig {

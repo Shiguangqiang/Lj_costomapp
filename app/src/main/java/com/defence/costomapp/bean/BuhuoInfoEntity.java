@@ -19,6 +19,19 @@ public class BuhuoInfoEntity implements Serializable {
     private String descVal;
     private int stocknumber;
 
+
+
+    public String getKu_cun() {
+        return ku_cun == null ? "" : ku_cun;
+    }
+
+    public void setKu_cun(String ku_cun) {
+        this.ku_cun = ku_cun;
+    }
+
+    private String ku_cun;
+
+
     public void setLatticenumbers(int latticenumbers) {
         this.latticenumbers = latticenumbers;
     }

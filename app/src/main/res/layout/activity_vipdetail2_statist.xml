@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.defence.costomapp.activity.statistics.VipStatistActivity">
+
+    <include layout="@layout/include_title_img" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/pad_height_5"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="@dimen/pad_height_10"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/pad_height_10"
+            android:background="@color/liuliuliu" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pad_height_10"
+            android:text="守望会员"
+            android:textColor="@color/black"
+            android:textSize="@dimen/pad_text_size_16" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pad_height_10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="手机号"
+            android:textSize="@dimen/pad_text_size_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="余额"
+            android:textSize="@dimen/pad_text_size_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="会员到期日期"
+            android:textSize="@dimen/pad_text_size_16" />
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/pad_height_10"
+        android:layout_marginRight="@dimen/pad_height_10"
+        android:background="@color/jiujiujiu" />
+
+    <ListView
+        android:id="@+id/lv_xsvipdetail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pad_height_100"></ListView>
+
+
+</LinearLayout>

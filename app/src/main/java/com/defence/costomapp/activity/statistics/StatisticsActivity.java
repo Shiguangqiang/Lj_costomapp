@@ -42,6 +42,8 @@ public class StatisticsActivity extends BaseActivity {
     TextView rightTitle;
     @BindView(R.id.liear_xintiao)
     LinearLayout liearXintiao;
+    @BindView(R.id.liear_vip)
+    LinearLayout liearVip;
     //退出时的时间
     private long mExitTime;
 
@@ -64,9 +66,10 @@ public class StatisticsActivity extends BaseActivity {
         middleTitle.setText("统计");
     }
 
-    @OnClick({R.id.liear_xintiao, R.id.back, R.id.liear_machicetj, R.id.liear_usertj, R.id.liear_liushui, R.id.liear_dingdan, R.id.liear_jiesuan, R.id.liear_tuikuan})
+    @OnClick({R.id.liear_vip,R.id.liear_xintiao, R.id.back, R.id.liear_machicetj, R.id.liear_usertj, R.id.liear_liushui, R.id.liear_dingdan, R.id.liear_jiesuan, R.id.liear_tuikuan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+
             case R.id.back:
                 int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
                 if (loginType != -1) {
@@ -76,6 +79,10 @@ public class StatisticsActivity extends BaseActivity {
                     MyApplication.getApp().setUserInfo(null);
                 }
                 finish();
+                break;
+            case R.id.liear_vip:
+                //Vip统计
+//                startActivity(new Intent(StatisticsActivity.this, VipStatistActivity.class));
                 break;
             case R.id.liear_xintiao:
                 //心跳统计
@@ -101,6 +108,7 @@ public class StatisticsActivity extends BaseActivity {
             case R.id.liear_tuikuan:
                 startActivity(new Intent(StatisticsActivity.this, TuikuanListActivity.class));
                 break;
+
         }
     }
 
@@ -136,7 +144,4 @@ public class StatisticsActivity extends BaseActivity {
         }
     }
 
-    @OnClick()
-    public void onViewClicked() {
-    }
 }

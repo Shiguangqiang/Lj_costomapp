@@ -4,6 +4,7 @@ package com.defence.costomapp.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,12 @@ public class MachiceFragment extends BaseFragment {
 
     private void getData() {
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
+        if (TextUtils.isEmpty(leftdate)) {
+            leftdate = SgqUtils.getNowDate();
+        }
+        if (TextUtils.isEmpty(rightdate)) {
+            rightdate = SgqUtils.getNowDate();
+        }
         RequestParams params = new RequestParams();
         params.put("adminGroupID", groupid);
         params.put("date1", leftdate);

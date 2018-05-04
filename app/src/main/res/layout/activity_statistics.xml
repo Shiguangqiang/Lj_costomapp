@@ -290,12 +290,16 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
+                <!--   android:background="@drawable/tongjibg"-->
                 <LinearLayout
+                    android:id="@+id/liear_vip"
                     android:layout_width="@dimen/pad_height_100"
                     android:layout_height="@dimen/pad_height_100"
+
                     android:gravity="center"
                     android:orientation="vertical">
 
+                    <!--  android:text="@string/vip"-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -304,11 +308,13 @@
                         android:textColor="@color/sansansan"
                         android:textSize="@dimen/pad_text_size_20" />
 
+                    <!--android:text="@string/vip_tj"-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+
                         android:textColor="@color/liuliuliu"
                         android:textSize="@dimen/pad_text_size_14" />
                 </LinearLayout>

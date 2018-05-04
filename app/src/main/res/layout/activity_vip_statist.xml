@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.defence.costomapp.activity.statistics.VipStatistActivity">
+
+    <include layout="@layout/include_title_img" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_vip"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout_vip"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/pad_height_100"
+        android:layout_marginRight="@dimen/pad_height_100"
+        app:tabIndicatorHeight="0dp"
+        app:tabSelectedTextColor="#59D"
+        app:tabTextColor="#999" />
+</LinearLayout>

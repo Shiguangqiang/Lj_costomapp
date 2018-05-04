@@ -109,7 +109,7 @@ public class ShopDetailActivity extends BaseActivity {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TjshopDetailBean tjshopDetailBean = gson.fromJson(jsonObject.toString(), TjshopDetailBean.class);
                 sumJinE.setText("总额:" + AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumJinE() + "") + "元");
-                sumLiRun.setText("总利润:" + AmountUtils.changeF2Y(tjshopDetailBean.getMap_data().getSumLiRun() + "") + "元");
+                sumLiRun.setText("总利润:" + tjshopDetailBean.getMap_data().getSumLiRunStr() + "元");
                 saleCount.setText("总件:" + tjshopDetailBean.getMap_data().getSaleCount() + "个");
                 listShopdetail.setAdapter(new ShopDetailAdapter(ShopDetailActivity.this, tjshopDetailBean.getList()));
 

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_vipst"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/sl_vips"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_chuxu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_height_10"
+                android:text="储值卡"
+                android:textColor="@color/black"
+                android:textSize="@dimen/pad_text_size_24"
+                android:textStyle="bold" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pie_chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_180"
+                android:layout_margin="@dimen/pad_height_20"
+                android:layout_marginLeft="@dimen/pad_height_16"
+                android:layout_marginRight="@dimen/pad_height_16"
+                android:gravity="center" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pad_height_10"
+                android:gravity="center"
+                android:text="截止今日储值卡的发售、库存、购买饼状图"
+                android:textSize="@dimen/pad_text_size_16" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/pad_height_10"
+                android:gravity="center"
+                android:text="(总量1000张)"
+                android:textSize="@dimen/pad_text_size_16" />
+
+            <LinearLayout
+                android:id="@+id/ll_vipsatist"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_120"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/pad_height_20"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginLeft="@dimen/pad_height_30"
+                        android:background="#328bf1"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:layout_width="@dimen/pad_height_40"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginLeft="@dimen/pad_height_20"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="库存" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginRight="@dimen/pad_height_20"
+                        android:layout_weight="1"
+                        android:text="390张(39%)" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/pad_height_20"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginLeft="@dimen/pad_height_30"
+                        android:background="#fcfc4f"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:layout_width="@dimen/pad_height_40"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginLeft="@dimen/pad_height_20"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="出库未售" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginRight="@dimen/pad_height_20"
+                        android:layout_weight="1"
+                        android:text="330张(33%)" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="@dimen/pad_height_20"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginLeft="@dimen/pad_height_30"
+                        android:background="#34f75b"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:layout_width="@dimen/pad_height_40"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginLeft="@dimen/pad_height_20"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="已发售" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/pad_height_20"
+                        android:layout_marginRight="@dimen/pad_height_20"
+                        android:layout_weight="1"
+                        android:text="280张(28%)" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -57,8 +57,10 @@ public class BuhuoMessageInfoAdapter extends RecyclerView.Adapter<BuhuoMessageIn
         } else {
             holder.cunliang.setTextColor(Color.argb(255, 51, 51, 51));
         }
-        holder.cunliang.setText(buhuoInfoEntity.getStocknumber() + "");
-        holder.buqi.setText(buhuoInfoEntity.getICount() + "");
+        holder.cunliang.setText(buhuoInfoEntity.getStocknumber() + " / "+buhuoInfoEntity.getSavenum()+"");
+
+        holder.buqi.setText(buhuoInfoEntity.getICount() + " / "+buhuoInfoEntity.getKu_cun());
+
         holder.infoLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

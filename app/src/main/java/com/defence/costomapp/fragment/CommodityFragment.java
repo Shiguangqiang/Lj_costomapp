@@ -79,6 +79,13 @@ public class CommodityFragment extends BaseFragment {
 
     private void getData() {
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
+
+        if (TextUtils.isEmpty(leftdate)) {
+            leftdate = SgqUtils.getNowDate();
+        }
+        if (TextUtils.isEmpty(rightdate)) {
+            rightdate = SgqUtils.getNowDate();
+        }
         RequestParams params = new RequestParams();
         params.put("adminGroupID", groupid);
         params.put("date1", leftdate);
@@ -89,26 +96,6 @@ public class CommodityFragment extends BaseFragment {
         params.put("devices", device);
         params.put("status", status);
 
-//        if (TextUtils.isEmpty(device) && TextUtils.isEmpty(status)) {
-//            params.put("adminGroupID", groupid);
-//            params.put("addr1", "0");
-//            params.put("addr2", "0");
-//            params.put("addr3", "0");
-//            params.put("date1", SgqUtils.getNowDate());
-//            leftdate = SgqUtils.getNowDate();
-//            params.put("date2", SgqUtils.getNowDate());
-//            rightdate = SgqUtils.getNowDate();
-//        } else {
-//            params.put("adminGroupID", groupid);
-//            params.put("date1", leftdate);
-//            params.put("date2", rightdate);
-//            params.put("addr1", "0");
-//            params.put("addr2", "0");
-//            params.put("addr3", "0");
-//            params.put("devices", device);
-//            params.put("status", status);
-//
-//        }
         httpUtils.doPost(Urls.tjserach(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override

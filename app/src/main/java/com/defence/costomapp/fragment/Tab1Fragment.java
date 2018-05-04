@@ -68,8 +68,6 @@ public class Tab1Fragment extends BaseFragment {
 
         initdata();
 
-//        PieData mPieData = getPieData(6, 100, 0, 0, 0, 5, 15, 0);
-//        showChart(mChart, mPieData);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -96,14 +94,6 @@ public class Tab1Fragment extends BaseFragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             data_list.add((Integer) jsonArray.get(i));
                         }
-
-//                        zeroStarNum = timeSaleBean.getData_list().get(0);
-//                        oneStarNum = timeSaleBean.getData_list().get(1);
-//                        twoStarNum = timeSaleBean.getData_list().get(2);
-//                        threeStarNum = timeSaleBean.getData_list().get(3);
-//                        fourStarNum = timeSaleBean.getData_list().get(4);
-//                        fiveStarNum = timeSaleBean.getData_list().get(5);
-
 
                         PieData mPieData = getPieData(6, 100, data_list.get(0), data_list.get(1), data_list.get(2), data_list.get(3), data_list.get(4), data_list.get(5));
                         showChart(pieChart, mPieData);
@@ -137,7 +127,7 @@ public class Tab1Fragment extends BaseFragment {
         // mChart.setDrawXValues(true);
 
         // enable rotation of the chart by touch
-        pieChart.setRotationEnabled(true); // 可以手动旋转
+        pieChart.setRotationEnabled(false); // 可以手动旋转
 
         // display percentage values
         pieChart.setUsePercentValues(true);  //显示成百分比
