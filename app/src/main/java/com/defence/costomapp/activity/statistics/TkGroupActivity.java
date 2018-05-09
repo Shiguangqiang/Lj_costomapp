@@ -58,6 +58,9 @@ public class TkGroupActivity extends BaseActivity {
         setContentView(R.layout.activity_tk_group);
         ButterKnife.bind(this);
 
+
+        back.setVisibility(View.GONE);
+
         back.setText("返回");
         middleTitle.setText("订单机器组");
         rightTitle.setText("保存");

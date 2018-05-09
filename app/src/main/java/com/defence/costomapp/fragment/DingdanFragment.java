@@ -54,6 +54,10 @@ public class DingdanFragment extends BaseFragment {
 
     private int type;
     private DingdanAdapter dingdanAdapter;
+    private PullLoadMoreRecyclerView pullLoadMoreRecyclerView;
+    private String url;
+    private int length = 0;
+    private List<DingdanBean.ListBean> list;
 
     public DingdanFragment() {
         // Required empty public constructor
@@ -91,8 +95,6 @@ public class DingdanFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_dingdan, container, false);
     }
 
-    private PullLoadMoreRecyclerView pullLoadMoreRecyclerView;
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -120,10 +122,6 @@ public class DingdanFragment extends BaseFragment {
         initData();
     }
 
-    private String url;
-    private int length = 0;
-    private List<DingdanBean.ListBean> list;
-
     private void initData() {
         doPost();
 
@@ -134,24 +132,33 @@ public class DingdanFragment extends BaseFragment {
         String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         RequestParams params = new RequestParams();
         switch (type) {
+//            交易成功订单: 下单时间排序
+//                    status=4
             case 4:
                 url = Urls.dingdan();
                 params.put("iCount", (length * 10) + "");
                 params.put("adminGroupID", groupid);
                 params.put("status", "4");
                 break;
+//            待出货订单: 付款时间排序
+//                    status=3
             case 3:
                 url = Urls.dingdan();
                 params.put("iCount", (length * 10) + "");
                 params.put("adminGroupID", groupid);
                 params.put("status", "3");
                 break;
+//            退款成功订单: 退款时间排序
+//                    status=5,6
             case 5:
                 url = Urls.dingdan();
                 params.put("iCount", (length * 10) + "");
                 params.put("adminGroupID", groupid);
                 params.put("status", "5,6");
                 break;
+
+//          全部订单
+//          status=   传空值
             case 0:
                 url = Urls.dingdan();
                 params.put("iCount", (length * 10) + "");

@@ -95,6 +95,7 @@ public class TuikuanListBean {
          * payVal : 100
          * backTimeline : 2018-03-23 11:34:55
          * payType : 2
+         *
          * orderUID : 0
          * machineID : dev-001
          */
@@ -110,6 +111,15 @@ public class TuikuanListBean {
         private int payType;
         private int orderUID;
         private String machineID;
+        private int tui_val;
+
+        public int getTui_val() {
+            return tui_val;
+        }
+
+        public void setTui_val(int tui_val) {
+            this.tui_val = tui_val;
+        }
 
         public String getWxTransactionID() {
             return wxTransactionID;

@@ -309,8 +309,16 @@ public class TuikuanListActivity extends BaseActivity {
 
             try {
                 tv_show.setText(list.get(position).getDescVal());
-                tv_state.setText("退款成功");
-                tv_state.setTextColor(Color.rgb(255, 204, 0));
+
+
+                if (list.get(position).getTui_val() == 1) {
+                   tv_state.setText("手动退款");
+                   tv_state.setTextColor(Color.rgb(0,204,255));
+                } else {
+                    tv_state.setText("退款成功");
+                    tv_state.setTextColor(Color.rgb(255, 204, 0));
+                }
+
                 tv_ddaddress.setText(list.get(position).getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
                 tv_time.setText(list.get(position).getBackTimeline());
                 tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));

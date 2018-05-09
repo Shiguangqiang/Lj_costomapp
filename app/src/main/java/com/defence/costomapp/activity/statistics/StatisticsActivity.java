@@ -82,7 +82,7 @@ public class StatisticsActivity extends BaseActivity {
                 break;
             case R.id.liear_vip:
                 //Vip统计
-//                startActivity(new Intent(StatisticsActivity.this, VipStatistActivity.class));
+                startActivity(new Intent(StatisticsActivity.this, VipStatistActivity.class));
                 break;
             case R.id.liear_xintiao:
                 //心跳统计

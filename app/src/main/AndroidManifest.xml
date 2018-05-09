@@ -225,19 +225,18 @@
         <activity
             android:name=".activity.statistics.HeartBeatActivity"
             android:screenOrientation="portrait" />
-        <!--vip统计-->
+        <!-- vip统计 -->
         <activity
             android:name=".activity.statistics.VipStatistActivity"
-            android:screenOrientation="portrait"></activity>
-        <!--vip统计详情-->
+            android:screenOrientation="portrait" />
+        <!-- vip统计详情 -->
         <activity
             android:name=".activity.statistics.VipStatistDetailActivity"
-            android:screenOrientation="portrait"></activity>
-        <!--vip储蓄卡详情-->
+            android:screenOrientation="portrait" />
+        <!-- vip储蓄卡详情 -->
         <activity
             android:name=".activity.statistics.VipStatistDetail2Activity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -80,9 +80,18 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_time.setText(list.get(position).getOrderTimeline());
                 holder.tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
                 holder.tv_dannum.setText(list.get(position).getWxTransactionID());
-                holder.tv_state.setText("退款成功");
+
+                if (list.get(position).getTui_val() == 1) {
+                    holder.tv_state.setText("手动退款");
+                    holder.tv_state.setTextColor(Color.rgb(0, 204, 255));
+                } else {
+                    holder.tv_state.setText("退款成功");
+                    holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
+                }
+
+
                 holder.tv_address.setText(list.get(position).getMachine_data().getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
-                holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
+
 
                 break;
             case 0:
