@@ -39,8 +39,8 @@
     <string name="tkserach">退款查询</string>
     <string name="xintiao">心跳</string>
     <string name="xintiao_tj">心跳统计</string>
-    <string name="vip">会员</string>
-    <string name="vip_tj">会员查询</string>
+    <string name="vip">VIP</string>
+    <string name="vip_tj">储值卡与会员</string>
 
     <string name="startserach">开始查询</string>
     <!-- TODO: Remove or change this placeholder text -->

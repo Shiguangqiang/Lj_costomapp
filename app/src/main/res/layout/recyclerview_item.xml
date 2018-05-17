@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/pad_height_10"
         android:layout_weight="1"
-        android:gravity="left"
+        android:gravity="left|center_vertical"
         android:text=""
         android:textSize="15sp" />
 
@@ -20,5 +20,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/pad_height_10"
-        android:gravity="right" />
+        android:gravity="right|center_vertical" />
 </LinearLayout>

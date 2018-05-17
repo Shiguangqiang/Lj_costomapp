@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.ChoiceTypeActivity;
+import com.defence.costomapp.activity.CommonScanActivity;
 import com.defence.costomapp.adapter.BuhuoMessageAdapter;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
@@ -43,13 +44,16 @@ import java.util.ArrayList;
  */
 
 public class BuhuoMessageActivity extends BaseActivity {
+    static Handler handler;
     private RecyclerView rv;
     private BuhuoMessageAdapter adapter;
     private LinearLayout buhuoNomessagell;
     private ArrayList<BuhuoMessageEntity> buhuoMessageEntities;
     private SwipeRefreshLayout sfl;
-    static Handler handler;
     private BuhuoMessageEntity buhuoMessageEntity;
+    private LinearLayout ll_scan;
+    //退出时的时间
+    private long mExitTime;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -60,6 +64,15 @@ public class BuhuoMessageActivity extends BaseActivity {
         rv = findViewById(R.id.buhuomessage_rv);
         RecyclerViewUtils.setReRecyclerView(this, rv);
         sfl = findViewById(R.id.srl);
+        ll_scan = findViewById(R.id.ll_scan);
+        ll_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BuhuoMessageActivity.this, CommonScanActivity.class);
+                intent.putExtra("km_scan","open");
+                startActivity(intent);
+            }
+        });
         sfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -97,9 +110,6 @@ public class BuhuoMessageActivity extends BaseActivity {
 
 
     }
-
-    //退出时的时间
-    private long mExitTime;
 
     //对返回键进行监听
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

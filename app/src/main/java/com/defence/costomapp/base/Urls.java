@@ -13,6 +13,9 @@ public class Urls {
     //    测试 yang
 //    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
 
+
+//    public static String BaseUrl = "http://swz-test.landgy.com/";
+
     //  李
 //    public static String BaseUrl = "http://192.168.0.234:8080/";
 //
@@ -45,6 +48,11 @@ public class Urls {
 
     public static String setMachineLocation() {
         return BaseUrl + "req-mobile/machine/mob/Update/machineInfoByMachineNumber.json";
+    }
+
+    //扫码开门
+    public static String kaimen() {
+        return BaseUrl + "/req-mobile/machine/kaimen/log/add/machine/kaimen/0data1.json";
     }
 
     public static String checkNewVersion() {
@@ -182,7 +190,7 @@ public class Urls {
 
     //退款查询 listall
     public static String allisttuikuan() {
-          return BaseUrl + "req-mobile/user-tuikuan/list/tuikuan/info/0data1.json";
+        return BaseUrl + "req-mobile/user-tuikuan/list/tuikuan/info/0data1.json";
 
 
     }

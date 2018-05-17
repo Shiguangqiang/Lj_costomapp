@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.defence.costomapp.activity.statistics.VipScreenActivity">
+
+    <include layout="@layout/include_title_img" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_100"
+                android:layout_marginTop="@dimen/pad_height_50"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_leftdate"
+                        android:layout_width="@dimen/pad_height_130"
+                        android:layout_height="@dimen/pad_height_35"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/jiujiujiu"
+                        android:textSize="@dimen/pad_text_size_20" />
+
+                    <View
+                        android:layout_width="@dimen/pad_height_130"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/pad_height_3"
+                        android:background="@color/liuliuliu" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/pad_height_3"
+                    android:layout_weight="0.3"
+                    android:text="至"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_24" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_rightdate"
+                        android:layout_width="@dimen/pad_height_130"
+                        android:layout_height="@dimen/pad_height_35"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/jiujiujiu"
+                        android:textSize="@dimen/pad_text_size_20" />
+
+                    <View
+                        android:layout_width="@dimen/pad_height_130"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/pad_height_3"
+                        android:background="@color/liuliuliu" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_100"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/tv_rbtoday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:layout_weight="1"
+                    android:background="@drawable/bgseletor_tvvip"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/pad_height_6"
+                    android:text="查询今天"
+                    android:textSize="@dimen/pad_text_size_14" />
+
+                <RadioButton
+                    android:id="@+id/tv_rb7day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:layout_weight="1"
+                    android:background="@drawable/bgseletor_tvvip"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/pad_height_6"
+                    android:text="查询最近7天"
+                    android:textSize="@dimen/pad_text_size_14" />
+
+                <RadioButton
+                    android:id="@+id/tv_rb30day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:layout_weight="1"
+                    android:background="@drawable/bgseletor_tvvip"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:padding="@dimen/pad_height_6"
+                    android:text="查询最近30天"
+                    android:textSize="@dimen/pad_text_size_14" />
+
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_10"
+                android:background="@color/F4" />
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_ktvip"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pad_height_40"
+                    android:layout_marginLeft="@dimen/pad_height_30"
+                    android:layout_marginRight="@dimen/pad_height_30"
+                    android:layout_marginTop="@dimen/pad_height_5"
+                    android:background="@android:color/transparent"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableRight="@drawable/bgrb_vip"
+                    android:text="时间范围内开通会员"
+                    android:textSize="@dimen/pad_text_size_16" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pad_height_40"
+                    android:layout_marginLeft="@dimen/pad_height_30"
+                    android:layout_marginRight="@dimen/pad_height_30"
+                    android:layout_marginTop="@dimen/pad_height_5"
+                    android:background="@android:color/transparent"
+                    android:button="@null"
+                    android:drawableRight="@drawable/bgrb_vip"
+                    android:text="时间范围内终止会员"
+                    android:textSize="@dimen/pad_text_size_16" />
+
+            </RadioGroup>
+
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_50"
+                android:layout_marginTop="@dimen/pad_height_20"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_20"
+                    android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="全部会员"
+                    android:textSize="@dimen/pad_text_size_16" />
+
+                <RadioButton
+                    android:id="@+id/rb_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_20"
+                    android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="周会员"
+                    android:textSize="@dimen/pad_text_size_16" />
+
+                <RadioButton
+                    android:id="@+id/rb_mouth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_20"
+                    android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="月会员"
+                    android:textSize="@dimen/pad_text_size_16" />
+            </RadioGroup>
+
+
+            <TextView
+                android:id="@+id/btn_startserach"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/pad_height_50"
+                android:layout_marginTop="@dimen/pad_height_120"
+                android:gravity="center"
+                android:text="开始查询"
+                android:textColor="@color/bule_light"
+                android:textSize="@dimen/pad_text_size_22" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

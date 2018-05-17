@@ -59,7 +59,7 @@ public class TkGroupActivity extends BaseActivity {
         ButterKnife.bind(this);
 
 
-        back.setVisibility(View.GONE);
+        back.setVisibility(View.VISIBLE);
 
         back.setText("返回");
         middleTitle.setText("订单机器组");
@@ -129,6 +129,8 @@ public class TkGroupActivity extends BaseActivity {
                 finish();
 
                 break;
+
+
         }
     }
 }

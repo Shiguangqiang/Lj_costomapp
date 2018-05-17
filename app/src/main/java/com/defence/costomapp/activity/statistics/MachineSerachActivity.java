@@ -74,6 +74,12 @@ public class MachineSerachActivity extends BaseActivity {
     TextView tvBeforeday;
     @BindView(R.id.tv_afterday)
     TextView tvAfterday;
+    @BindView(R.id.vip_sumJinE)
+    TextView vipSumJinE;
+    @BindView(R.id.vip_shopgoods)
+    TextView vipShopgoods;
+    @BindView(R.id.vip_shopnum)
+    TextView vipShopnum;
     private String leftdate = SgqUtils.getNowDate();
     private String rightdate = SgqUtils.getNowDate();
     private String sleftdate = SgqUtils.getNowDate();
@@ -237,7 +243,7 @@ public class MachineSerachActivity extends BaseActivity {
                 rightdate = srightdate;
                 if (srightdate.equals(DateAndTimeUtil.checkOption("next", SgqUtils.getNowDate()))) {
                     Toast.makeText(MachineSerachActivity.this, "已是最新天数数据!", Toast.LENGTH_SHORT).show();
-                    srightdate =  SgqUtils.getNowDate();
+                    srightdate = SgqUtils.getNowDate();
                 } else {
                     //展示数据
                     getData("yes");

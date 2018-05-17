@@ -16,6 +16,9 @@ import kotlinx.android.synthetic.main.activity_vip_statist.*
 import kotlinx.android.synthetic.main.include_title_img.*
 
 
+/**
+ * 会员统计  储值卡与会员卡
+ */
 class VipStatistActivity : BaseActivity() {
     private var list: MutableList<Fragment>? = null
     private var adapter: MyAdapter? = null
@@ -50,7 +53,6 @@ class VipStatistActivity : BaseActivity() {
             val tab = tablayout_vip!!.getTabAt(i)
             tab!!.customView = adapter!!.getTabView(i)
         }
-
     }
 
     internal inner class MyAdapter(fm: FragmentManager, private val context: Context) : FragmentPagerAdapter(fm) {
@@ -71,6 +73,7 @@ class VipStatistActivity : BaseActivity() {
          */
         fun getTabView(position: Int): View {
             val v = LayoutInflater.from(context).inflate(R.layout.tab_custom, null)
+
             val tv_title = v.findViewById<View>(R.id.tv_title) as TextView
 
             return v

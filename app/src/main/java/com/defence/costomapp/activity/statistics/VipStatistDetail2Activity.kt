@@ -1,6 +1,7 @@
 package com.defence.costomapp.activity.statistics
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.defence.costomapp.R
 import com.defence.costomapp.base.BaseActivity
@@ -18,12 +19,14 @@ class VipStatistDetail2Activity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vipdetail2_statist)
         context = this.applicationContext
-
         back!!.setOnClickListener {
             finish()
         }
         middle_title.text = "会员"
+        right_icon!!.setImageResource(R.mipmap.shaixuan)
+        right_icon!!.setOnClickListener {
+            startActivity(Intent(this, VipScreenActivity::class.java))
+        }
+
     }
-
-
 }

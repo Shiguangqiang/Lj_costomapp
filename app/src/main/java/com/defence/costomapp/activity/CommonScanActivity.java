@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
@@ -58,6 +59,7 @@ import com.loopj.android.http.RequestParams;
  */
 public final class CommonScanActivity extends Activity implements ScanListener, View.OnClickListener {
     static final String TAG = CommonScanActivity.class.getSimpleName();
+    final int PHOTOREQUESTCODE = 1111;
     SurfaceView scanPreview = null;
     View scanContainer;
     View scanCropView;
@@ -66,17 +68,13 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
     TextView iv_light;
     TextView qrcode_g_gallery;
     TextView qrcode_ic_back;
-    final int PHOTOREQUESTCODE = 1111;
 
     //    @Bind(R.id.service_register_rescan)
 //    Button rescan;
 //    @Bind(R.id.scan_image)
 //    ImageView scan_image;
-
-
     //    @Bind(R.id.authorize_return)
     TextView authorize_return;
-    private int scanMode;//扫描模型（条形，二维码，全部）
     //
 //    @Bind(R.id.common_title_TV_center)
     TextView title;
@@ -84,8 +82,9 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
     TextView scan_hint;
     //    @Bind(R.id.tv_scan_result)
     TextView tv_scan_result;
-
+    private int scanMode;//扫描模型（条形，二维码，全部）
     private LatLng latLng;
+    private String km_scan;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -94,8 +93,9 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_scan_code);
         latLng = getIntent().getParcelableExtra("latlng");
+        km_scan = getIntent().getStringExtra("km_scan");
 
-        if (latLng == null) {
+        if (latLng == null && TextUtils.isEmpty(km_scan)) {
             Toast.makeText(this, "定位失败", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -123,6 +123,7 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
                 scan_hint.setText(R.string.scan_allcode_hint);
                 break;
         }
+
         scanPreview = findViewById(R.id.capture_preview);
         scanContainer = findViewById(R.id.capture_container);
         scanCropView = findViewById(R.id.capture_crop_view);
@@ -189,11 +190,12 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
 //        tv_scan_result.setVisibility(View.VISIBLE);
 //        tv_scan_result.setText("结果：" + rawResult.getText());
         String result = rawResult.getText();
+        RequestParams params = new RequestParams();
         if (result.contains("://swz.landgy.com/phone/data/forward-device-xyz-abc.php?device_id=") || result.contains("://swz.bj-defence.com/phone/data/forward-device-xyz-abc.php?device_id=")) {
             Log.d(TAG, "内容正确");
             String[] contents = result.split("=");
             String machineNo = contents[1];
-            RequestParams params = new RequestParams();
+
             params.put("machineNumber", machineNo);
             params.put("longitude", latLng.longitude + "");
             params.put("latitude", latLng.latitude + "");
@@ -205,6 +207,21 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
                     finish();
                 }
             });
+            //  扫码开门
+        } else if (result.startsWith("number08111124=")) {
+            String[] contents = result.replace("\n", "").split("=");
+            String machineNo = contents[1];
+            params.put("machineNumber", machineNo);
+            HttpUtils httpUtils = new HttpUtils(this);
+            httpUtils.doPost(Urls.kaimen(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
+                @Override
+                public void onSuccess(Gson gson, Object result) {
+                    String s = result.toString();
+                    finish();
+                }
+            });
+
+
         }
     }
 

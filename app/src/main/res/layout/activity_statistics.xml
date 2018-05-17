@@ -90,13 +90,18 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/pad_height_30"
+        android:background="@color/jiujiujiu" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="2"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -251,6 +256,8 @@
             </LinearLayout>
 
             <LinearLayout
+
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -290,31 +297,32 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <!--   android:background="@drawable/tongjibg"-->
+
                 <LinearLayout
                     android:id="@+id/liear_vip"
                     android:layout_width="@dimen/pad_height_100"
                     android:layout_height="@dimen/pad_height_100"
-
+                    android:background="@drawable/tongjibg"
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <!--  android:text="@string/vip"-->
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:text="@string/vip"
                         android:textColor="@color/sansansan"
                         android:textSize="@dimen/pad_text_size_20" />
 
-                    <!--android:text="@string/vip_tj"-->
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-
+                        android:text="@string/vip_tj"
                         android:textColor="@color/liuliuliu"
                         android:textSize="@dimen/pad_text_size_14" />
                 </LinearLayout>

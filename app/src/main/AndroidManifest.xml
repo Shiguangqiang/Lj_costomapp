@@ -237,6 +237,10 @@
         <activity
             android:name=".activity.statistics.VipStatistDetail2Activity"
             android:screenOrientation="portrait" />
+        <!--会员筛选-->
+        <activity
+            android:name=".activity.statistics.VipScreenActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
