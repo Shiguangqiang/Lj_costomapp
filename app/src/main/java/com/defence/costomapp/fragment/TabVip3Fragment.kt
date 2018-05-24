@@ -1,11 +1,15 @@
 package com.defence.costomapp.fragment
 
+import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 
 import com.defence.costomapp.R
 import com.defence.costomapp.base.BaseFragment
@@ -21,6 +25,21 @@ import java.util.ArrayList
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.defence.costomapp.activity.statistics.VipScreenActivity
+import com.defence.costomapp.activity.statistics.VipStatistDetail2Activity
+import com.defence.costomapp.activity.statistics.VipStatistDetail3Activity
+import com.defence.costomapp.base.Urls
+import com.defence.costomapp.bean.VipCardBean
+import com.defence.costomapp.utils.SgqUtils
+import com.defence.costomapp.utils.httputils.HttpInterface
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.utils.Highlight
+import com.google.gson.Gson
+import com.loopj.android.http.RequestParams
+import kotlinx.android.synthetic.main.fragment_tabvip3.*
+import org.json.JSONException
+import org.json.JSONObject
+import java.text.NumberFormat
 
 /**
  * Created by author Sgq
@@ -29,15 +48,64 @@ import butterknife.Unbinder
 
 class TabVip3Fragment : BaseFragment() {
 
-//    var pieChart: PieChart? = null
-//
+    var pieChart: PieChart? = null
+    var ll_tab3: LinearLayout? = null
+    //
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tabvip3, null)
-        var pieChart = view.findViewById<PieChart>(R.id.pie_chart)
-
-        val mPieData = getPieData(2, 100f, 4, 5)
-        showChart(pieChart, mPieData)
+        pieChart = view.findViewById<PieChart>(R.id.pie_chart)
+        ll_tab3 = view.findViewById<LinearLayout>(R.id.ll_tab3)
+        initdata()
         return view
+    }
+
+    private fun initdata() {
+        ll_tab3!!.setOnClickListener {
+            startActivity(Intent(activity, VipStatistDetail3Activity::class.java))
+
+        }
+        pieChart!!.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+
+            override fun onValueSelected(entry: Entry, i: Int, highlight: Highlight) {
+                //第一次点击执行的方法在这个方法内我们不做处理
+            }
+
+            override fun onNothingSelected() {
+                //第二次点击统计图或者其他位置，统计图的状态恢复就会执行该方法，也就是我们想要的点击事件
+                startActivity(Intent(activity, VipStatistDetail3Activity::class.java))
+            }
+        })
+
+        // 创建一个数值格式化对象
+        val numberFormat = NumberFormat.getInstance()
+        // 设置精确到小数点后2位
+        numberFormat.maximumFractionDigits = 2
+
+        val params = RequestParams()
+        httpUtils.doPost(Urls.iaofeika_huiyuan(), SgqUtils.TONGJI_TYPE, params, object : HttpInterface() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Throws(JSONException::class)
+            override fun onSuccess(gson: Gson, result: Any?) {
+
+                try {
+                    if (result != null) {
+                        val jsonObject = JSONObject(result.toString())
+                        val vipCardBean = gson.fromJson(jsonObject.toString(), VipCardBean::class.java)
+
+                        tv_zongshu.text = "(总量" + vipCardBean.zongshu + "人)"
+                        tv_cardvip.text = vipCardBean.huiyuanshu.toString() + "人(" + numberFormat.format((vipCardBean.huiyuanshu.toFloat() / vipCardBean.zongshu.toFloat() * 100).toDouble()) + "%)"
+                        tv_cardnovip.text = vipCardBean.feihuiyuan.toString() + "人(" + numberFormat.format((vipCardBean.feihuiyuan.toFloat() / vipCardBean.zongshu.toFloat() * 100).toDouble()) + "%)"
+
+                        val mPieData = getPieData(2, 100f, vipCardBean.huiyuanshu, vipCardBean.feihuiyuan)
+                        showChart(pieChart, mPieData)
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+        })
+
     }
 
     /**

@@ -114,7 +114,6 @@ public class HttpUtils {
                             } else {
                                 integerface.onSuccess(gson, result);
                             }
-
                         } else if ("4".equals(sign)) {
                             integerface.onError(context, message);
                         } else if ("3".equals(sign)) {

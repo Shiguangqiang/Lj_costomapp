@@ -114,8 +114,8 @@ public class SgqUtils {
     }
 
     //Day:日期字符串例如 2015-3-10  Num:需要减少的天数例如 7
-    public static String getDateStr(String day, int Num) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+    public static String getReduceDateStr(String day, int Num) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date nowDate = null;
         try {
             nowDate = df.parse(day);
@@ -124,14 +124,14 @@ public class SgqUtils {
         }
         //如果需要向后计算日期 -改为+
         Date newDate2 = new Date(nowDate.getTime() - (long) Num * 24 * 60 * 60 * 1000);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateOk = simpleDateFormat.format(newDate2);
         return dateOk;
     }
 
-    //Day:日期字符串例如 2015-3-10  Num:需要减少的天数例如 7
+    //Day:日期字符串例如 2015-3-10  Num:需要增加的天数例如 7
     public static String getAddDateStr(String day, int Num) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date nowDate = null;
         try {
             nowDate = df.parse(day);
@@ -140,7 +140,7 @@ public class SgqUtils {
         }
         //如果需要向后计算日期 -改为+
         Date newDate2 = new Date(nowDate.getTime() + (long) Num * 24 * 60 * 60 * 1000);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateOk = simpleDateFormat.format(newDate2);
         return dateOk;
     }

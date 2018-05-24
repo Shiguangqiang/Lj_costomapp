@@ -13,8 +13,10 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/ll_tab2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
 
@@ -47,6 +49,7 @@
                 android:textSize="@dimen/pad_text_size_16" />
 
             <TextView
+                android:id="@+id/tv_zongshu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/pad_height_10"
@@ -58,6 +61,7 @@
                 android:id="@+id/ll_vipsatist"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/pad_height_120"
+                android:layout_marginTop="@dimen/pad_height_20"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -80,17 +84,19 @@
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="守望会员" />
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/pad_height_20"
                         android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/tv_huiyuan"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/pad_height_20"
                         android:layout_marginRight="@dimen/pad_height_20"
                         android:layout_weight="1"
-                        android:text="280张(28%)" />
+                        android:text="0张(0%)" />
 
 
                 </LinearLayout>
@@ -122,11 +128,12 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/tv_feihuiyuan"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/pad_height_20"
                         android:layout_marginRight="@dimen/pad_height_20"
                         android:layout_weight="1"
-                        android:text="280张(28%)" />
+                        android:text="0张(0%)" />
 
                 </LinearLayout>
             </LinearLayout>

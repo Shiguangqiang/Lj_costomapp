@@ -88,13 +88,14 @@
     <ListView
         android:id="@+id/lv_xsvipdetail"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pad_height_100"></ListView>
+        android:layout_height="100dp"
+        android:divider="@null"></ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_marginTop="@dimen/pad_height_20"
         android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/pad_height_20"
         android:orientation="horizontal">
 
 
@@ -107,10 +108,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/pad_height_10"
             android:gravity="center"
             android:text="储值情况"
-            android:layout_marginLeft="@dimen/pad_height_10"
             android:textColor="@color/black"
+            android:textSize="@dimen/pad_text_size_16" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_vipyue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/pad_height_20"
+            android:gravity="center"
+            android:text=""
             android:textSize="@dimen/pad_text_size_16" />
 
 
@@ -123,25 +138,25 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
             android:gravity="center"
             android:text="卡号"
             android:textSize="@dimen/pad_text_size_16" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="余额"
             android:textSize="@dimen/pad_text_size_16" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
             android:gravity="center"
             android:text="会员到期日期"
             android:textSize="@dimen/pad_text_size_16" />
@@ -157,8 +172,15 @@
         android:layout_marginRight="@dimen/pad_height_10"
         android:background="@color/jiujiujiu" />
 
-    <ListView
-        android:id="@+id/lv_czvipdetail"
+    <com.defence.costomapp.utils.RefreshUtils.RefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pad_height_100"></ListView>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/lv_czvipdetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"></ListView>
+    </com.defence.costomapp.utils.RefreshUtils.RefreshLayout>
 </LinearLayout>

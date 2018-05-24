@@ -9,7 +9,7 @@ import com.defence.costomapp.utils.SharePerenceUtil;
 
 public class Urls {
 
-    public static String BaseUrl = "http://swz.landgy.com/";
+//    public static String BaseUrl = "http://swz.landgy.com/";
     //    测试 yang
 //    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
 
@@ -17,8 +17,9 @@ public class Urls {
 //    public static String BaseUrl = "http://swz-test.landgy.com/";
 
     //  李
-//    public static String BaseUrl = "http://192.168.0.234:8080/";
+    public static String BaseUrl = "http://192.168.0.234:8080/";
 //
+
 
     public static String BuhuoLogin() {
         return BaseUrl + "req-mobile/login/witttth/account0";
@@ -210,4 +211,44 @@ public class Urls {
     public static String last() {
         return BaseUrl + "req-mobile/tong-ji/machine/last/0data.json";
     }
+
+
+    //查询消费卡的总数、库存、出库未售、已售的数量
+    public static String xiaofeika() {
+        return BaseUrl + "req-mobile/huiyuan/tongji/query/list/xiaofeika/0data1.json";
+    }
+
+    //守望会员
+    public static String user_huiyuan() {
+        return BaseUrl + "req-mobile/huiyuan/tongji/query/user/huiyuan/0data1.json";
+    }
+
+    //储值卡  会员非会员
+    public static String iaofeika_huiyuan() {
+        return BaseUrl + "req-mobile/huiyuan/tongji/query/xiaofeika/huiyuan/0data1.json";
+    }
+
+
+    //储值卡 销售人员
+    public static String xiaoshou_xiaofeika() {
+        return BaseUrl + "req-mobile/huiyuan/tongji/query/xiaoshou/xiaofeika/0data1.json";
+    }
+
+    //储值卡 储值情况
+    public static String xiaofeika_xiangxi() {
+        return BaseUrl + "req-mobile/huiyuan/tongji/query/xiaofeika/xiangxi/info/0data1.json";
+    }
+
+
+    //守望会员筛选
+    public static String shouwang_vip() {
+        return BaseUrl + "req-mobile/huiyuan/tongji/query/app/chongzhi/huiyuan/info/0data1.json";
+    }
+
+    //消费卡会员筛选
+    public static String card_vip() {
+        return BaseUrl + "req-mobile/huiyuan/tongji/query/xiaofeika/chongzhi/huiyuan/info/0data1.json";
+    }
+
+
 }

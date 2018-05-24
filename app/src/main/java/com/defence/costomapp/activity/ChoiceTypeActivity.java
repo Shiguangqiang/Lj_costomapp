@@ -28,6 +28,7 @@ import com.amap.api.maps2d.model.LatLng;
 import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
 import com.defence.costomapp.activity.manage.ManagerActivity;
 import com.defence.costomapp.activity.statistics.StatisticsActivity;
+import com.defence.costomapp.bean.NewVersionBean;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.R;
@@ -65,8 +66,9 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
     private ProgressDialog pd;
-    private AlertDialog alertDialog;
+    //    private AlertDialog alertDialog;
     private String updateUrl;
+    private String updateTip;
     private int type;
 
     @Override
@@ -79,19 +81,19 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         findViewById(R.id.guanlill).setOnClickListener(this);
         LinearLayout liear_saoma = findViewById(R.id.liear_saoma);
 
-        alertDialog = new AlertDialog.Builder(this).setMessage("有新版本").setNegativeButton("更新", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Uri uri = Uri.parse(updateUrl);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                alertDialog.dismiss();
-            }
-        }).create();
+//        alertDialog = new AlertDialog.Builder(this).setMessage("有新版本" + updateTip).setNegativeButton("更新", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                Uri uri = Uri.parse(updateUrl);
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(intent);
+//            }
+//        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                alertDialog.dismiss();
+//            }
+//        }).create();
 
 
         pd = new ProgressDialog(this);
@@ -181,18 +183,53 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
             public void onSuccess(Gson gson, Object result) {
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());
-                    updateUrl = jsonObject.getString("href");
-                    alertDialog.show();
+
+                    NewVersionBean newVersionBean = gson.fromJson(jsonObject.toString(), NewVersionBean.class);
+                    updateUrl = newVersionBean.getHref();
+                    updateTip = newVersionBean.getDescription();
+
+                    ShowDialog(updateUrl, updateTip);
+
+//                    updateUrl = jsonObject.getString("href");
+//                    updateTip = jsonObject.optString("description");
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-
             }
         });
-
-
     }
+
+    private void ShowDialog(String updateUrl, String updateTip) {
+        AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(this);
+//        normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setTitle("有更新");
+        normalDialog.setMessage(updateTip);
+        normalDialog.setPositiveButton("更新",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                        Uri uri = Uri.parse(updateUrl);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }
+                });
+        normalDialog.setNegativeButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                        dialog.dismiss();
+                    }
+                });
+        // 显示
+        normalDialog.show();
+    }
+
 
     public void showContacts() {
 
@@ -298,7 +335,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                     try {
                         JSONObject jb = ((JSONObject) result).getJSONObject("data_one");
                         UserInfo userInfo = gson.fromJson(jb.toString(), UserInfo.class);
-                         userInfo.setFuncType(type);
+                        userInfo.setFuncType(type);
                         MyApplication.getApp().setUserInfo(userInfo);
                         SharePerenceUtil.putStringValuetoSp(type + "", userName + "---" + psw);
                         SharePerenceUtil.putIntValuetoSp("loginType", type);

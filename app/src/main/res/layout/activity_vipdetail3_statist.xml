@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/pad_height_10"
-            android:text="守望会员"
+            android:text="储值卡会员"
             android:textColor="@color/black"
             android:textSize="@dimen/pad_text_size_16" />
 
@@ -46,7 +46,6 @@
             android:gravity="center"
             android:text=""
             android:textSize="@dimen/pad_text_size_16" />
-
 
     </LinearLayout>
 

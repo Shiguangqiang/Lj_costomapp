@@ -8,13 +8,13 @@ import com.defence.costomapp.R
 import com.defence.costomapp.adapter.VipShouWangAdapter
 import com.defence.costomapp.base.BaseActivity
 import com.defence.costomapp.base.Urls
-import com.defence.costomapp.bean.ChiZhiListBean
 import com.defence.costomapp.bean.ShouWangVipBean
 import com.defence.costomapp.utils.SgqUtils
 import com.defence.costomapp.utils.httputils.HttpInterface
 import com.google.gson.Gson
 import com.loopj.android.http.RequestParams
-import kotlinx.android.synthetic.main.activity_vipdetail2_statist.*
+import kotlinx.android.synthetic.main.activity_vipdetail3_statist.*
+
 import kotlinx.android.synthetic.main.include_title_img.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -23,19 +23,17 @@ import org.json.JSONObject
  * Created by author Sgq
  * on 2018/5/3.
  */
-class VipStatistDetail2Activity : BaseActivity() {
+class VipStatistDetail3Activity : BaseActivity() {
 
     private var context: Context? = null
-    private var iskaitong: String? = "1"
-    private var huiyuantype: String? = "0"
+    var iskaitong: String? = "1"
+    var huiyuantype: String? = "0"
     private var leftdate: String? = SgqUtils.getReduceDateStr(SgqUtils.getNowDate(), 30)
     private var rightdate: String? = SgqUtils.getNowDate()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vipdetail2_statist)
+        setContentView(R.layout.activity_vipdetail3_statist)
         context = this.applicationContext
         liear_left!!.setOnClickListener {
             finish()
@@ -43,7 +41,7 @@ class VipStatistDetail2Activity : BaseActivity() {
         middle_title.text = "会员"
         right_icon!!.setImageResource(R.mipmap.shaixuan)
         right_icon!!.setOnClickListener {
-            startActivityForResult(Intent(this, VipScreenActivity::class.java), 233)
+            startActivityForResult(Intent(this, VipScreenActivity::class.java), 255)
         }
 
 
@@ -102,7 +100,7 @@ class VipStatistDetail2Activity : BaseActivity() {
         params.add("iskaitong", iskaitong)
         params.add("huiyuantype", huiyuantype)
 
-        httpUtils.doPost(Urls.shouwang_vip(), SgqUtils.TONGJI_TYPE, params, object : HttpInterface() {
+        httpUtils.doPost(Urls.card_vip(), SgqUtils.TONGJI_TYPE, params, object : HttpInterface() {
             @Throws(JSONException::class)
             override fun onSuccess(gson: Gson, result: Any) {
                 srl.isRefreshing = false
@@ -116,15 +114,13 @@ class VipStatistDetail2Activity : BaseActivity() {
                 }else if("1".equals(iskaitong)){
                     tv_vipnum.text = "会员人数:" + shouWangVipBean.huiyuanzongshu + "人"
                 }
-
-
                 if (swviplist == null)
                     swviplist = ArrayList()
 
                 swviplist!!.addAll(shouWangVipBean.xfkList)
 
                 if (swvipAdapter == null) {
-                    swvipAdapter = VipShouWangAdapter(swviplist!!, this@VipStatistDetail2Activity)
+                    swvipAdapter = VipShouWangAdapter(swviplist!!, this@VipStatistDetail3Activity)
                     lv_czvipdetail.adapter = swvipAdapter
                 } else {
                     swvipAdapter!!.notifyDataSetChanged()

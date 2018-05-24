@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.ChoiceTypeActivity;
 import com.defence.costomapp.activity.CommonScanActivity;
+import com.defence.costomapp.activity.WebViewActivity;
 import com.defence.costomapp.adapter.BuhuoMessageAdapter;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
@@ -69,7 +71,7 @@ public class BuhuoMessageActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BuhuoMessageActivity.this, CommonScanActivity.class);
-                intent.putExtra("km_scan","open");
+                intent.putExtra("km_scan", "open");
                 startActivity(intent);
             }
         });
@@ -108,6 +110,16 @@ public class BuhuoMessageActivity extends BaseActivity {
             }
         };
 
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(BuhuoMessageActivity.this, WebViewActivity.class));
+               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+            }
+        });
 
     }
 

@@ -8,8 +8,8 @@ android {
         applicationId "com.defence.costomapp"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 21
-        versionName "1.21"
+        versionCode 23
+        versionName "1.23"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     defaultConfig {
@@ -35,12 +35,18 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
+            release {
+                // 使用签名打包时不显示Log
+                buildConfigField "boolean", "LOG_DEBUG", "false"
+            }
+
             /*
             * key store psd: difansi123
             * alias:defence
             * */
         }
     }
+
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8

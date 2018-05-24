@@ -233,14 +233,22 @@
         <activity
             android:name=".activity.statistics.VipStatistDetailActivity"
             android:screenOrientation="portrait" />
-        <!-- vip储蓄卡详情 -->
+        <!-- 守望会员详情 -->
         <activity
             android:name=".activity.statistics.VipStatistDetail2Activity"
             android:screenOrientation="portrait" />
-        <!--会员筛选-->
+        <!-- vip储蓄卡详情 -->
+        <activity
+            android:name=".activity.statistics.VipStatistDetail3Activity"
+            android:screenOrientation="portrait" />
+        <!-- 会员筛选 -->
         <activity
             android:name=".activity.statistics.VipScreenActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <!-- 网页 -->
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

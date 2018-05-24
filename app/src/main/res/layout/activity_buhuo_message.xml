@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -53,33 +54,57 @@
         android:layout_height="1dp"
         android:background="#999999" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/nomessageLL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/buhuonomessage" />
+                <LinearLayout
+                    android:id="@+id/nomessageLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/buhuonomessage" />
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/buhuomessage_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/buhuomessage_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|end"
+            app:srcCompat="@mipmap/machinetask"
+            app:backgroundTint="@color/F4"
+            app:backgroundTintMode="multiply"
+            app:borderWidth="0dp"
+            app:elevation="@dimen/activity_horizontal_margin"
+            app:fabSize="auto"
+            app:pressedTranslationZ="@dimen/activity_horizontal_margin"
+            app:rippleColor="@color/F4"
+            app:useCompatPadding="true" />
+
+    </FrameLayout>
 </LinearLayout>
