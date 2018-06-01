@@ -38,13 +38,13 @@ class VipCZlistAdapter(var mList: List<ChiZhiListBean.XfkListBean>?, var context
 
         //为TextView设置内容
         holder.tv_cardnum.text = mList!!.get(position).chongzhikahao
-        holder.tv_cardyue.text = AmountUtils.changeF2Y(mList!![position].yuemoney.toString())
+        holder.tv_cardyue.text = AmountUtils.changeF2Y(mList!![position].yuemoney.toString())+"元"
 
         if (!mList!![position].ct.equals("")) {
             if (mList!![position].ct.toInt() < 1) {
                 holder.tv_cardtime.text = " -- "
             } else {
-                holder.tv_cardtime.text = mList!![position].ct.toString()
+                holder.tv_cardtime.text = "还有" + mList!![position].ct.toString() + "天到期"
             }
 
         }

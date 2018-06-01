@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.activity.ChoiceTypeActivity;
+import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.utils.SharePerenceUtil;
@@ -66,18 +68,20 @@ public class StatisticsActivity extends BaseActivity {
         middleTitle.setText("统计");
     }
 
-    @OnClick({R.id.liear_vip,R.id.liear_xintiao, R.id.back, R.id.liear_machicetj, R.id.liear_usertj, R.id.liear_liushui, R.id.liear_dingdan, R.id.liear_jiesuan, R.id.liear_tuikuan})
+    @OnClick({R.id.liear_vip, R.id.liear_xintiao, R.id.back, R.id.liear_machicetj, R.id.liear_usertj, R.id.liear_liushui, R.id.liear_dingdan, R.id.liear_jiesuan, R.id.liear_tuikuan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-
             case R.id.back:
                 int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
                 if (loginType != -1) {
                     SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+                    SharePerenceUtil.putStringValuetoSp("groupid", "0");
                     SharePerenceUtil.putIntValuetoSp("loginType", -1);
                     SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
                     MyApplication.getApp().setUserInfo(null);
+
                 }
+                startActivity(new Intent(StatisticsActivity.this, ChoiceTypeActivity.class));
                 finish();
                 break;
             case R.id.liear_vip:

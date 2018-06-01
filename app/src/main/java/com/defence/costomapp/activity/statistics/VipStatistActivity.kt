@@ -3,6 +3,7 @@ package com.defence.costomapp.activity.statistics
 
 import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -34,8 +35,8 @@ class VipStatistActivity : BaseActivity() {
             finish()
         }
         middle_title.text = "储蓄卡和会员"
-
         init()
+
     }
 
     private fun init() {
@@ -43,9 +44,12 @@ class VipStatistActivity : BaseActivity() {
         list!!.add(TabVip1Fragment())
         list!!.add(TabVip2Fragment())
         list!!.add(TabVip3Fragment())
+        list!!.add(TabVip4Fragment())
 
+//        TabVip4Fragment().setUserVisibleHint()
         adapter = MyAdapter(supportFragmentManager, this.context!!)
         viewpager_vip!!.adapter = adapter
+
         //绑定
         tablayout_vip!!.setupWithViewPager(viewpager_vip)
         //设置自定义视图
@@ -53,7 +57,24 @@ class VipStatistActivity : BaseActivity() {
             val tab = tablayout_vip!!.getTabAt(i)
             tab!!.customView = adapter!!.getTabView(i)
         }
+
+        tablayout_vip.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> middle_title.text = "储蓄卡和会员"
+                    1 -> middle_title.text = "储蓄卡和会员"
+                    2 -> middle_title.text = "储蓄卡和会员"
+                    3 -> middle_title.text = "机器注册统计"
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
     }
+
 
     internal inner class MyAdapter(fm: FragmentManager, private val context: Context) : FragmentPagerAdapter(fm) {
 

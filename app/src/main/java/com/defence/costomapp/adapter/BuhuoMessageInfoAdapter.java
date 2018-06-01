@@ -62,10 +62,11 @@ public class BuhuoMessageInfoAdapter extends RecyclerView.Adapter<BuhuoMessageIn
         holder.buqi.setText(buhuoInfoEntity.getKu_cun());
 
 
-        holder.infoLL.setOnClickListener(new View.OnClickListener() {
+        holder.infoLL.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View view) {
                 rvItemClickListener.onItemClick(position);
+                return false;
             }
         });
     }

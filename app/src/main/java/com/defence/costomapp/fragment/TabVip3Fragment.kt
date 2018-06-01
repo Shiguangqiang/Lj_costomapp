@@ -68,11 +68,12 @@ class TabVip3Fragment : BaseFragment() {
 
             override fun onValueSelected(entry: Entry, i: Int, highlight: Highlight) {
                 //第一次点击执行的方法在这个方法内我们不做处理
+                startActivity(Intent(activity, VipStatistDetail3Activity::class.java))
             }
 
             override fun onNothingSelected() {
                 //第二次点击统计图或者其他位置，统计图的状态恢复就会执行该方法，也就是我们想要的点击事件
-                startActivity(Intent(activity, VipStatistDetail3Activity::class.java))
+
             }
         })
 
@@ -155,7 +156,8 @@ class TabVip3Fragment : BaseFragment() {
             if (v == 0f) {
                 v.toString()
             } else {
-                v.toString() + "%"
+                String.format("%.2f", v) + "%"
+//                v.toString() + "%"
             }
         }
 

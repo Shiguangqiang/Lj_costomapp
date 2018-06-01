@@ -112,7 +112,7 @@ public class TabVip1Fragment extends BaseFragment {
         httpUtils.doPost(Urls.xiaofeika(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result) {
 
                 try {
                     if (result != null) {
@@ -193,7 +193,7 @@ public class TabVip1Fragment extends BaseFragment {
                 if (v == 0) {
                     return String.valueOf(v);
                 } else {
-                    return v + "%";
+                    return String.format("%.2f", v) + "%";
                 }
             }
         });

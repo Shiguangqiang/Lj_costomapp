@@ -9,24 +9,31 @@ import com.defence.costomapp.utils.SharePerenceUtil;
 
 public class Urls {
 
-//    public static String BaseUrl = "http://swz.landgy.com/";
-    //    测试 yang
-//    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
 
+    //    public static String BaseUrl = "http://swz.landgy.com/";
+    //    测试 yang
+    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
 
 //    public static String BaseUrl = "http://swz-test.landgy.com/";
-
     //  李
-    public static String BaseUrl = "http://192.168.0.234:8080/";
+//    public static String BaseUrl = "http://192.168.0.234:8080/";
 //
-
-
     public static String BuhuoLogin() {
         return BaseUrl + "req-mobile/login/witttth/account0";
     }
 
     public static String getBuhuoMessage() {
         return BaseUrl + "req-mobile/alarm/list100/0data1.json";
+    }
+
+    /*筛选所有机器*/
+    public static String getAllMachine() {
+        return BaseUrl + "web/test/data/shdb/machine.json?columns=id,machinename,machinenumber";
+    }
+
+    /*生成调货任务*/
+    public static String machineTask() {
+        return BaseUrl + "req-mobile/machine/task/new/swap/item0";
     }
 
     /*补货通知详情*/
@@ -250,5 +257,9 @@ public class Urls {
         return BaseUrl + "req-mobile/huiyuan/tongji/query/xiaofeika/chongzhi/huiyuan/info/0data1.json";
     }
 
+    //机器注册统计
+    public static String machineStatics() {
+        return BaseUrl + "req-mobile/huiyuan/tongji/query/yonghu/huiyuan/shu/0data1.json";
+    }
 
 }

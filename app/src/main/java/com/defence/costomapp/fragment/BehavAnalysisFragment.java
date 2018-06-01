@@ -45,8 +45,8 @@ public class BehavAnalysisFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_behavanalys, null);
         //实例化
-        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
+        viewPager = view.findViewById(R.id.viewpager);
+        tabLayout = view.findViewById(R.id.tablayout);
         init();
         return view;
     }
@@ -57,6 +57,7 @@ public class BehavAnalysisFragment extends Fragment {
         list.add(new Tab1Fragment());
         list.add(new Tab2Fragment());
         list.add(new Tab3Fragment());
+
         //ViewPager的适配器
         adapter = new MyAdapter(getChildFragmentManager(), getContext());
         viewPager.setAdapter(adapter);
@@ -96,7 +97,7 @@ public class BehavAnalysisFragment extends Fragment {
          */
         public View getTabView(int position) {
             View v = LayoutInflater.from(context).inflate(R.layout.tab_custom, null);
-            TextView tv_title = (TextView) v.findViewById(R.id.tv_title);
+            TextView tv_title = v.findViewById(R.id.tv_title);
 //            TextView tv_circle = (TextView) v.findViewById(R.id.tv_circle);
 //            if (tabLayout.getSelectedTabPosition()==position) {
 //                tv_title.setText(titles[position]);

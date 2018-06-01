@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/F4"
+    android:orientation="vertical"
+    tools:context="com.defence.costomapp.fragment.TabVip4Fragment">
+
+    <com.defence.costomapp.utils.RefreshUtils.RefreshLayout
+        android:id="@+id/srl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/lv_machineRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"></ListView>
+    </com.defence.costomapp.utils.RefreshUtils.RefreshLayout>
+</LinearLayout>

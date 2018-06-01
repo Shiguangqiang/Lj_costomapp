@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.ChoiceTypeActivity;
+import com.defence.costomapp.activity.statistics.StatisticsActivity;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
@@ -156,10 +157,12 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
         int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
         if (loginType != -1) {
             SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+            SharePerenceUtil.putStringValuetoSp("groupid", "0");
             SharePerenceUtil.putIntValuetoSp("loginType", -1);
             SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
             MyApplication.getApp().setUserInfo(null);
         }
+        startActivity(new Intent(ManagerActivity.this, ChoiceTypeActivity.class));
         finish();
 
     }

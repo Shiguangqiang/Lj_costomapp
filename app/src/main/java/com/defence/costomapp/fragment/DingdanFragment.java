@@ -156,7 +156,8 @@ public class DingdanFragment extends BaseFragment {
                 params.put("adminGroupID", groupid);
                 params.put("status", "5,6");
                 break;
-
+            //            退款成功订单: 退款时间排序
+//                    status=5,6
 //          全部订单
 //          status=   传空值
             case 0:

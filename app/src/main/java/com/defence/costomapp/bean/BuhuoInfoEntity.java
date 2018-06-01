@@ -19,6 +19,16 @@ public class BuhuoInfoEntity implements Serializable {
     private String descVal;
     private int stocknumber;
 
+    public String getGui_ge_id() {
+        return gui_ge_id == null ? "" : gui_ge_id;
+    }
+
+    public void setGui_ge_id(String gui_ge_id) {
+        this.gui_ge_id = gui_ge_id;
+    }
+
+    private String gui_ge_id; // 商品规格ID编号
+
 
 
     public String getKu_cun() {

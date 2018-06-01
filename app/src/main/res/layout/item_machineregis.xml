@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_communityName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="right|center_vertical"
+        android:paddingRight="@dimen/pad_height_20"
+        android:text="富卓苑一区"
+        android:textColor="@color/black"
+        android:textSize="@dimen/pad_text_size_20" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="@dimen/pad_height_30"
+            android:layout_height="@dimen/pad_height_30"
+            android:layout_margin="@dimen/pad_height_15"
+            android:background="#face1c"
+            android:gravity="center" />
+
+
+        <TextView
+            android:id="@+id/tv_watchUsers"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="守 望 用 户:300人"
+            android:textColor="@color/black"
+            android:textSize="@dimen/pad_text_size_16" />
+
+        <TextView
+            android:id="@+id/tv_watchMembers"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="守 望 会 员:100人"
+            android:textColor="@color/black"
+            android:textSize="@dimen/pad_text_size_16" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="@dimen/pad_height_30"
+            android:layout_height="@dimen/pad_height_30"
+            android:layout_margin="@dimen/pad_height_15"
+            android:background="#c603f53c"
+            android:gravity="center" />
+
+
+        <TextView
+            android:id="@+id/tv_storeCardUsers"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="储值卡用户:300人"
+            android:textColor="@color/black"
+            android:textSize="@dimen/pad_text_size_16" />
+
+        <TextView
+            android:id="@+id/tv_prepaidCardMembers"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="储值卡会员:100人"
+            android:textColor="@color/black"
+            android:textSize="@dimen/pad_text_size_16" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pad_height_1"
+        android:layout_marginBottom="@dimen/pad_height_6"
+        android:layout_marginLeft="@dimen/pad_height_30"
+        android:layout_marginRight="@dimen/pad_height_30"
+        android:layout_marginTop="@dimen/pad_height_6"
+        android:background="@color/jiujiujiu" />
+</LinearLayout>

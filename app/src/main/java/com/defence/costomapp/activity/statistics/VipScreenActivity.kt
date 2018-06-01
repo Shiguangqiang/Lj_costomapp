@@ -138,6 +138,7 @@ class VipScreenActivity : AppCompatActivity() {
         tv_leftdate.text = days
     }
 
+
     private val onDateSetListenerright = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
         mYear = year
         mMonth = monthOfYear

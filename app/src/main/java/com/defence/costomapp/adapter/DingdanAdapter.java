@@ -82,14 +82,15 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                 holder.tv_dannum.setText(list.get(position).getWxTransactionID());
 
                 if (list.get(position).getTui_val() == 1) {
-                    holder.tv_state.setText("手动退款");
+                    holder.tv_state.setText("手动退款(待出货)");
+                    holder.tv_state.setTextColor(Color.rgb(0, 204, 255));
+                } else if (list.get(position).getTui_val() == 2) {
+                    holder.tv_state.setText("手动退款(已出货)");
                     holder.tv_state.setTextColor(Color.rgb(0, 204, 255));
                 } else {
                     holder.tv_state.setText("退款成功");
                     holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
                 }
-
-
                 holder.tv_address.setText(list.get(position).getMachine_data().getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
 
 
@@ -111,12 +112,37 @@ public class DingdanAdapter extends RecyclerView.Adapter<DingdanAdapter.ViewHold
                         holder.tv_state.setTextColor(Color.rgb(26, 233, 50));
                         break;
                     case 5:
-                        holder.tv_state.setText("退款成功");
-                        holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
+                        if (list.get(position).getTui_val() == 1) {
+                            holder.tv_state.setText("手动退款(待出货)");
+                            holder.tv_state.setTextColor(Color.rgb(0, 204, 255));
+                        } else if (list.get(position).getTui_val() == 2) {
+                            holder.tv_state.setText("手动退款(已出货)");
+                            holder.tv_state.setTextColor(Color.rgb(0, 204, 255));
+                        } else {
+                            holder.tv_state.setText("退款成功");
+                            holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
+                        }
+//                        holder.tv_state.setText("退款成功");
+//                        holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
                         break;
                     case 6:
-                        holder.tv_state.setText("退款成功");
-                        holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
+                        if (list.get(position).getTui_val() == 1) {
+                            holder.tv_state.setText("手动退款(待出货)");
+                            holder.tv_state.setTextColor(Color.rgb(0, 204, 255));
+                        } else if (list.get(position).getTui_val() == 2) {
+                            holder.tv_state.setText("手 动退款(已出货)");
+                            holder.tv_state.setTextColor(Color.rgb(0, 204, 255));
+                        } else {
+                            holder.tv_state.setText("退款成功");
+                            holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
+                        }
+//                        holder.tv_state.setText("退款成功");
+//                        holder.tv_state.setTextColor(Color.rgb(255, 204, 0));
+                        break;
+//                 订单已取消
+                    case 7:
+                        holder.tv_state.setText("Cancel");
+                        holder.tv_state.setTextColor(Color.rgb(255, 51, 0));
                         break;
                 }
                 break;

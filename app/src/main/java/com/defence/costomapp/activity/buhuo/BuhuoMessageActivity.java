@@ -90,6 +90,7 @@ public class BuhuoMessageActivity extends BaseActivity {
                 int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
                 if (loginType != -1) {
                     SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+                    SharePerenceUtil.putStringValuetoSp("groupid","0");
                     SharePerenceUtil.putIntValuetoSp("loginType", -1);
                     SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
                     MyApplication.getApp().setUserInfo(null);

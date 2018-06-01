@@ -357,12 +357,32 @@ public class DingdHistoryActivity extends BaseActivity {
                     tv_state.setTextColor(Color.rgb(26, 233, 50));
                     break;
                 case 5:
-                    tv_state.setText("退款成功");
-                    tv_state.setTextColor(Color.rgb(255, 204, 0));
+                    if (list.get(position).getTui_val() == 1) {
+                        tv_state.setText("手动退款(待出货)");
+                        tv_state.setTextColor(Color.rgb(0, 204, 255));
+                    } else if (list.get(position).getTui_val() == 2) {
+                        tv_state.setText("手动退款(已出货)");
+                        tv_state.setTextColor(Color.rgb(0, 204, 255));
+                    } else {
+                        tv_state.setText("退款成功");
+                        tv_state.setTextColor(Color.rgb(255, 204, 0));
+                    }
+//                    tv_state.setText("退款成功");
+//                    tv_state.setTextColor(Color.rgb(255, 204, 0));
                     break;
                 case 6:
-                    tv_state.setText("退款成功");
-                    tv_state.setTextColor(Color.rgb(255, 204, 0));
+                    if (list.get(position).getTui_val() == 1) {
+                        tv_state.setText("手动退款(待出货)");
+                        tv_state.setTextColor(Color.rgb(0, 204, 255));
+                    } else if (list.get(position).getTui_val() == 2) {
+                        tv_state.setText("手动退款(已出货)");
+                        tv_state.setTextColor(Color.rgb(0, 204, 255));
+                    } else {
+                        tv_state.setText("退款成功");
+                        tv_state.setTextColor(Color.rgb(255, 204, 0));
+                    }
+//                    tv_state.setText("退款成功");
+//                    tv_state.setTextColor(Color.rgb(255, 204, 0));
                     break;
             }
 

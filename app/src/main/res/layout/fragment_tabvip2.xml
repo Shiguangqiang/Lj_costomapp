@@ -3,7 +3,7 @@
     android:id="@+id/rl_vipst"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/F4"
     android:clickable="true"
     android:orientation="vertical">
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pad_height_10"
                 android:gravity="center"
-                android:text="截止今日守望会员与普通用户病状图"
+                android:text="截止今日守望会员与普通用户饼状图"
                 android:textSize="@dimen/pad_text_size_16" />
 
             <TextView

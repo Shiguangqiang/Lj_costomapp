@@ -29,7 +29,6 @@ class VipStatistDetailActivity : BaseActivity() {
     private var context: Context? = null
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vipdetail_statist)
@@ -76,8 +75,10 @@ class VipStatistDetailActivity : BaseActivity() {
         httpUtils.doPost(Urls.xiaofeika_xiangxi(), SgqUtils.TONGJI_TYPE, paramscz, object : HttpInterface() {
             @Throws(JSONException::class)
             override fun onSuccess(gson: Gson, result: Any) {
+
                 srl.isRefreshing = false
                 srl.setLoading(false)
+
                 val czjsonObject = JSONObject(result.toString())
                 var chiZhiListBean = gson.fromJson(czjsonObject.toString(), ChiZhiListBean::class.java)
                 tv_vipyue.text = AmountUtils.changeF2Y(chiZhiListBean.yuezongshu.toString()) + "元(卡内总余额)"
@@ -94,6 +95,19 @@ class VipStatistDetailActivity : BaseActivity() {
                     czAdapter!!.notifyDataSetChanged()
                 }
             }
+
+            override fun onFailure(context: Context?) {
+                super.onFailure(context)
+                srl.isRefreshing = false
+                srl.setLoading(false)
+            }
+
+            override fun onError(context: Context?, message: String?) {
+                super.onError(context, message)
+                srl.isRefreshing = false
+                srl.setLoading(false)
+            }
+
         })
     }
 

@@ -81,7 +81,8 @@ public class TuikuanListActivity extends BaseActivity {
     private String formatid;
     private String machineNumber;
     private String groupMachineNumber;
-
+    private List<TuikuanListBean.ListBean> list;
+    private List<TuikuanListBean.ListBean> listdetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,10 +131,6 @@ public class TuikuanListActivity extends BaseActivity {
         });
         initdata(length);
     }
-
-    private List<TuikuanListBean.ListBean> list;
-    private List<TuikuanListBean.ListBean> listdetail;
-
 
     private void initdata(int length) {
         rightIcon.setImageResource(R.mipmap.all);
@@ -312,8 +309,11 @@ public class TuikuanListActivity extends BaseActivity {
 
 
                 if (list.get(position).getTui_val() == 1) {
-                   tv_state.setText("手动退款");
-                   tv_state.setTextColor(Color.rgb(0,204,255));
+                    tv_state.setText("手动退款(待出货)");
+                    tv_state.setTextColor(Color.rgb(0, 204, 255));
+                } else if (list.get(position).getTui_val() == 2) {
+                    tv_state.setText("手动退款(已出货)");
+                    tv_state.setTextColor(Color.rgb(0, 204, 255));
                 } else {
                     tv_state.setText("退款成功");
                     tv_state.setTextColor(Color.rgb(255, 204, 0));
@@ -322,7 +322,7 @@ public class TuikuanListActivity extends BaseActivity {
                 tv_ddaddress.setText(list.get(position).getDetailedinstalladdress() + "-" + list.get(position).getItemNo());
                 tv_time.setText(list.get(position).getBackTimeline());
                 tv_money.setText(AmountUtils.changeF2Y(list.get(position).getPayVal() + ""));
-                tv_dannum.setText(list.get(position). getWxTransactionID());
+                tv_dannum.setText(list.get(position).getWxTransactionID());
             } catch (Exception e) {
                 e.printStackTrace();
             }

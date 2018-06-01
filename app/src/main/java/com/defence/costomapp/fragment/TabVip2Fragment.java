@@ -90,12 +90,13 @@ public class TabVip2Fragment extends BaseFragment {
             @Override
             public void onValueSelected(Entry entry, int i, Highlight highlight) {
                 //第一次点击执行的方法在这个方法内我们不做处理
+                startActivity(new Intent(getActivity(), VipStatistDetail2Activity.class));
             }
 
             @Override
             public void onNothingSelected() {
                 //第二次点击统计图或者其他位置，统计图的状态恢复就会执行该方法，也就是我们想要的点击事件
-                startActivity(new Intent(getActivity(), VipStatistDetail2Activity.class));
+
             }
         });
 
@@ -108,7 +109,7 @@ public class TabVip2Fragment extends BaseFragment {
         httpUtils.doPost(Urls.user_huiyuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result) {
 
                 try {
                     if (result != null) {
@@ -182,7 +183,7 @@ public class TabVip2Fragment extends BaseFragment {
                 if (v == 0) {
                     return String.valueOf(v);
                 } else {
-                    return v + "%";
+                    return String.format("%.2f", v) + "%";
                 }
             }
         });
