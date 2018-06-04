@@ -1,1 +1,1 @@
-[{"outputType":{"type":"PROCESSED_RES"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":1},"path":"resources-debug.ap_","properties":{"packageId":"com.frosty.jfactionsheetmenu","split":"","minSdkVersion":"14"}}]
+[{"outputType":{"type":"PROCESSED_RES"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":1,"versionName":"1.0","enabled":true,"outputFile":"actionSheetMenumaster-debug.apk","fullName":"debug","baseName":"debug"},"path":"resources-debug.ap_","properties":{"packageId":"com.frosty.jfactionsheetmenu","split":"","minSdkVersion":"14"}}]

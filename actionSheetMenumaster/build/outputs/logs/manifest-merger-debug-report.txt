@@ -51,7 +51,7 @@ ADDED from D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\AndroidManif
 		ADDED from D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\AndroidManifest.xml:18:13-45
 	android:name
 		ADDED from D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\AndroidManifest.xml:17:13-69
-intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\AndroidManifest.xml:19:13-23:29
 action#android.intent.action.MAIN
 ADDED from D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\AndroidManifest.xml:20:17-69

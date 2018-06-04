@@ -1,1 +1,1 @@
-[{"outputType":{"type":"PROCESSED_RES"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":310},"path":"resources-debug.ap_","properties":{"packageId":"com.defence.costomapp","split":"","minSdkVersion":"9"}}]
+[{"outputType":{"type":"PROCESSED_RES"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":310,"versionName":"3.1.0","enabled":true,"outputFile":"JpushExample-debug.apk","fullName":"debug","baseName":"debug"},"path":"resources-debug.ap_","properties":{"packageId":"com.defence.costomapp","split":"","minSdkVersion":"9"}}]

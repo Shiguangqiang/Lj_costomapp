@@ -68,7 +68,7 @@
         <item name="otherButtonSpacing">0dp</item>
         <item name="cancelButtonMarginTop">5dp</item>
         <item name="actionSheetTextSize">16sp</item>
-    </style></file><file path="D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\res\values-sw720dp-land\dimens.xml" qualifiers="sw720dp-land-v13"><dimen name="activity_horizontal_margin">128dp</dimen></file><file path="D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\res\values-v11\styles.xml" qualifiers="v11"><style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+    </style></file><file path="D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\res\values-sw600dp\dimens.xml" qualifiers="sw600dp-v13"/><file path="D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\res\values-sw720dp-land\dimens.xml" qualifiers="sw720dp-land-v13"><dimen name="activity_horizontal_margin">128dp</dimen></file><file path="D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\res\values-v11\styles.xml" qualifiers="v11"><style name="AppBaseTheme" parent="android:Theme.Holo.Light">
         
     </style></file><file path="D:\Workspace\Lj_costomapp\actionSheetMenumaster\src\main\res\values-v14\styles.xml" qualifiers="v14"><style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         

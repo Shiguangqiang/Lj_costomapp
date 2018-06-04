@@ -1,0 +1,2012 @@
+Index: app/src/main/java/com/defence/costomapp/fragment/Tab1Fragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/fragment/Tab1Fragment.java	(revision 109)
++++ app/src/main/java/com/defence/costomapp/fragment/Tab1Fragment.java	(revision )
+@@ -1,8 +1,8 @@
+ package com.defence.costomapp.fragment;
+ 
++import android.graphics.Color;
+ import android.os.Bundle;
+ import android.support.annotation.Nullable;
+-import android.support.v4.app.Fragment;
+ import android.util.DisplayMetrics;
+ import android.view.LayoutInflater;
+ import android.view.View;
+@@ -11,15 +11,16 @@
+ import com.defence.costomapp.R;
+ import com.defence.costomapp.base.BaseFragment;
+ import com.defence.costomapp.base.Urls;
++import com.defence.costomapp.bean.TimeSaleBean;
+ import com.defence.costomapp.utils.SgqUtils;
+ import com.defence.costomapp.utils.SharePerenceUtil;
+ import com.defence.costomapp.utils.httputils.HttpInterface;
+ import com.github.mikephil.charting.charts.PieChart;
+ import com.github.mikephil.charting.components.Legend;
+-import com.github.mikephil.charting.data.BarEntry;
+ import com.github.mikephil.charting.data.Entry;
+ import com.github.mikephil.charting.data.PieData;
+ import com.github.mikephil.charting.data.PieDataSet;
++import com.github.mikephil.charting.utils.ValueFormatter;
+ import com.google.gson.Gson;
+ import com.loopj.android.http.RequestParams;
+ 
+@@ -39,12 +40,12 @@
+  */
+ 
+ public class Tab1Fragment extends BaseFragment {
+-    @BindView(R.id.pie_chart)
+-    PieChart pieChart;
+-    Unbinder unbinder;
+ 
+     List<Integer> list_allcolor = new ArrayList<>();//全部颜色
+     private String groupid;
++    private String uid;
++    private PieChart mChart;
++    private String wxid;
+ 
+     @Nullable
+     @Override
+@@ -52,22 +53,41 @@
+         View view = inflater.inflate(R.layout.fragment_tab1, null);
+ //        initPreView();
+         initdata();
+-        unbinder = ButterKnife.bind(this, view);
++        mChart = (PieChart) view.findViewById(R.id.pie_chart);
++        PieData mPieData = getPieData(6, 100, 2, 3, 4, 5, 6, 7);
++        showChart(mChart, mPieData);
+         return view;
+     }
+ 
+     private void initdata() {
+ 
+         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
++
++        uid = getActivity().getIntent().getStringExtra("uid");
++        wxid = getActivity().getIntent().getStringExtra("wxid");
+         RequestParams params = new RequestParams();
++        params.put("whoID", "1");
++        params.put("wxOpenID",wxid);
+         params.put("json_val", "@@@[{\"start_\":\"00:00:00\",\"to_\":\"04:00:00\"},{\"start_\":\"04:00:00\",\"to_\":\"08:00:00\"},{\"start_\":\"08:00:00\",\"to_\":\"12:00:00\"},{\"start_\":\"12:00:00\",\"to_\":\"16:00:00\"},{\"start_\":\"16:00:00\",\"to_\":\"20:00:00\"},{\"start_\":\"20:00:00\",\"to_\":\"24:00:00\"}]");
+         params.put("adminGroupID", groupid);
+         httpUtils.doPost(Urls.timesale(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+             @Override
+             public void onSuccess(Gson gson, Object result) throws JSONException {
+                 try {
+-                    if(result!=null){
++                    if (result != null) {
+                         JSONObject jsonObject = new JSONObject(result.toString());
++                        TimeSaleBean timeSaleBean = gson.fromJson(jsonObject.toString(), TimeSaleBean.class);
++
++                        int zeroStarNum = timeSaleBean.getData_list().get(0);
++                        int oneStarNum = timeSaleBean.getData_list().get(1);
++                        int twoStarNum = timeSaleBean.getData_list().get(2);
++                        int threeStarNum = timeSaleBean.getData_list().get(3);
++                        int fourStarNum = timeSaleBean.getData_list().get(4);
++                        int fiveStarNum = timeSaleBean.getData_list().get(5);
++
++//                        PieData mPieData = getPieData(6, 100, zeroStarNum, oneStarNum, twoStarNum, threeStarNum, fourStarNum, fiveStarNum);
++//                        showChart(mChart, mPieData);
++
+                     }
+                 } catch (JSONException e) {
+                     e.printStackTrace();
+@@ -76,71 +96,130 @@
+         });
+     }
+ 
+-//    /**
+-//     * 配置饼状图
+-//     */
+-//    public void initPreView() {
+-//        //1、基本设置
+-//        pieChart.setDrawCenterText(false);  //饼状图中间文字不显示
+-//        pieChart.setDescription("");
+-//        pieChart.setDrawHoleEnabled(false);    //设置实心
+-//        pieChart.setRotationAngle(90); // 初始旋转角度
+-//    }
+-//
+-//    /**
+-//     * 设置饼状图数据
+-//     */
+-//    public void initPieData(List<UserStartStaticBean.StartsListBean> list) {
+-//        //2、添加数据
+-//        ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
+-//        ArrayList<Entry> yValues = new ArrayList<Entry>();
+-//        ArrayList<Integer> colors = new ArrayList<Integer>();
+-//        int count = 0;
+-//        if (list.size() > 0) {
+-//            for (int i = 0; i < list.size(); i++) {
+-//                UserStartStaticBean.StartsListBean jobListBean = list.get(i);
+-//                if (jobListBean != null) {
+-//                    int leves = jobListBean.getStarLevel();
+-//                    if (leves == 0) {
+-//                        xValues.add("零星");
+-//                    } else if (leves == 1) {
+-//                        xValues.add("一星");
+-//                    } else if (leves == 2) {
+-//                        xValues.add("二星");
+-//                    } else if (leves == 3) {
+-//                        xValues.add("三星");
+-//                    }
+-//                    colors.add(list_allcolor.get(i));
+-//                    //new BarEntry(20, 0)前面代表数据，后面代码柱状图的位置；
+-//                    yValues.add(new BarEntry(jobListBean.getRoleMobileUserNum(), i));
+-//                    count += jobListBean.getRoleMobileUserNum();
+-//                }
+-//            }
+-//        }
+ 
+-//                //3、y轴数据
+-//                PieDataSet pieDataSet = new PieDataSet(yValues, ""/*显示在比例图上*/);
+-//                pieDataSet.setSliceSpace(5f); //设置个饼状图之间的距离
+-//
+-//                pieDataSet.setColors(colors);
+-//
+-//                //5、 设置数据
+-//                PieData pieData = new PieData(xValues, pieDataSet);
+-//                DisplayMetrics metrics = getResources().getDisplayMetrics();
+-//                float px = 5 * (metrics.densityDpi / 160f);
+-//                pieDataSet.setSelectionShift(px); // 选中态多出的长度
+-//                pieData.setValueTextSize(12f);
+-//                //6、去掉比例尺和说明
+-//                Legend legend = pieChart.getLegend();//下标说明，false
+-//                legend.setEnabled(false);
+-//                //8、显示
+-//                pieChart.setData(pieData);
++    private void showChart(PieChart pieChart, PieData pieData) {
++        pieChart.setHoleColorTransparent(true);
+ 
+-//    }
++        pieChart.setHoleRadius(20f);  //半径
++        pieChart.setTransparentCircleRadius(4f); // 半透明圈
++        //pieChart.setHoleRadius(0)  //实心圆
+ 
+-    @Override
+-    public void onDestroyView() {
+-        super.onDestroyView();
+-        unbinder.unbind();
++        pieChart.setDescription("饼状图");
++
++        // mChart.setDrawYValues(true);
++        pieChart.setDrawCenterText(true);  //饼状图中间可以添加文字
++
++        pieChart.setDrawHoleEnabled(true);
++
++        pieChart.setRotationAngle(90); // 初始旋转角度
++
++        // draws the corresponding description value into the slice
++        // mChart.setDrawXValues(true);
++
++        // enable rotation of the chart by touch
++        pieChart.setRotationEnabled(true); // 可以手动旋转
++
++        // display percentage values
++        pieChart.setUsePercentValues(true);  //显示成百分比
++        // mChart.setUnit(" €");
++        // mChart.setDrawUnitsInChart(true);
++
++        // add a selection listener
++//      mChart.setOnChartValueSelectedListener(this);
++        // mChart.setTouchEnabled(false);
++
++//      mChart.setOnAnimationListener(this);
++
++        pieChart.setCenterText("");  //饼状图中间的文字
++
++        //设置数据
++        pieChart.setData(pieData);
++
++        // undo all highlights
++//      pieChart.highlightValues(null);
++//      pieChart.invalidate();
++
++        Legend mLegend = pieChart.getLegend();  //设置比例图
++        mLegend.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);  //最右边显示
++//      mLegend.setForm(LegendForm.LINE);  //设置比例图的形状，默认是方形
++        mLegend.setXEntrySpace(7f);
++        mLegend.setYEntrySpace(5f);
++
++        pieChart.animateXY(1000, 1000);  //设置动画
++        // mChart.spin(2000, 0, 360);
++    }
++
++    /**
++     * @param count        分成几部分
++     * @param range
++     * @param zeroStarNum
++     * @param oneStarNum
++     * @param twoStarNum
++     * @param threeStarNum
++     * @param fourStarNum
++     * @param fiveStarNum
++     */
++    private PieData getPieData(int count, float range, float zeroStarNum, float oneStarNum, float twoStarNum, float threeStarNum, float fourStarNum, float fiveStarNum) {
++
++        ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
++
++
++        xValues.add("00:00 - 04:00");  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
++        xValues.add("04:00 - 08:00");
++        xValues.add("08:00 - 12:00");
++        xValues.add("12:00 - 16:00");
++        xValues.add("16:00 - 20:00");
++        xValues.add("20:00 - 24:00");
++
++        ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据
++
++        // 饼图数据
++        /**
++         * 将一个饼形图分成四部分， 四部分的数值比例为14:14:34:38
++         * 所以 14代表的百分比就是14%
++         */
++
++
++        yValues.add(new Entry(zeroStarNum, 0));
++        yValues.add(new Entry(oneStarNum, 1));
++        yValues.add(new Entry(twoStarNum, 2));
++        yValues.add(new Entry(threeStarNum, 3));
++        yValues.add(new Entry(fourStarNum, 4));
++        yValues.add(new Entry(fiveStarNum, 5));
++
++        //y轴的集合
++        PieDataSet pieDataSet = new PieDataSet(yValues, ""/*显示在比例图上*/);
++        pieDataSet.setSliceSpace(0f); //设置个饼状图之间的距离
++
++        ArrayList<Integer> colors = new ArrayList<Integer>();
++
++        // 饼图颜色
++        colors.add(Color.rgb(51, 51, 51));
++        colors.add(Color.rgb(242, 242, 242));
++        colors.add(Color.rgb(0, 204, 255));
++        colors.add(Color.rgb(255, 204, 0));
++        colors.add(Color.rgb(255, 51, 0));
++        colors.add(Color.rgb(204, 0, 255));
++
++        pieDataSet.setColors(colors);
++
++        DisplayMetrics metrics = getResources().getDisplayMetrics();
++        float px = 5 * (metrics.densityDpi / 160f);
++        pieDataSet.setSelectionShift(px); // 选中态多出的长度
++
++
++        PieData pieData = new PieData(xValues, pieDataSet);
++        pieData.setValueFormatter(new ValueFormatter() {
++            @Override
++            public String getFormattedValue(float v) {
++                if (v == 0) {
++                    return String.valueOf(v);
++                } else {
++                    return v + "%";
++                }
++            }
++        });
++
++        return pieData;
+     }
+ }
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision 109)
++++ app/src/main/res/values/colors.xml	(revision )
+@@ -13,16 +13,22 @@
+     <color name="scan_bg">#7f000000</color>
+     <color name="contents_text">#7f000000</color>
+     <color name="transparent">#000000</color>
+-    <color name="sansansan">#333333</color>
++
+     <color name="liuliuliu">#666666</color>
+     <color name="jiujiujiu">#999999</color>
+     <color name="red">#f90606</color>
+     <color name="black">#000000</color>
+     <color name="orange">#FFD700</color>
+     <color name="blue">#191df9</color>
+-    <color name="F2">#F2F2F2</color>
++
+     <color name="F4">#F4F4F4</color>
+ 
++    <color name="sansansan">#333333</color>
++    <color name="F2">#F2F2F2</color>
++    <color name="bule_light">#00ccff</color>
++    <color name="orange_light">#ffcc00</color>
++    <color name="red_light">#ff3300</color>
++    <color name="pink_light">#cc00ff</color>
+ 
+ 
+ </resources>
+Index: app/src/main/res/layout/item_usertj.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/item_usertj.xml	(revision 109)
++++ app/src/main/res/layout/item_usertj.xml	(revision )
+@@ -2,15 +2,16 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/liearitemll"
+     android:layout_width="match_parent"
+-    android:layout_height="80dp"
++    android:layout_height="50dp"
+     android:background="@color/white"
+     android:orientation="vertical">
+ 
+     <TextView
+         android:id="@+id/reg_phone"
+         android:layout_width="match_parent"
+-        android:layout_height="50dp"
++        android:layout_height="40dp"
+         android:layout_margin="@dimen/pad_height_10"
++        android:singleLine="true"
+         android:gravity="left"
+         android:textColor="@color/sansansan"
+         android:textSize="@dimen/pad_text_size_20"
+@@ -35,7 +36,8 @@
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+-            android:gravity="center_horizontal"
++            android:gravity="right"
++            android:layout_marginRight="@dimen/pad_height_10"
+             android:textColor="@color/jiujiujiu"
+             android:textSize="@dimen/pad_text_size_14" />
+ 
+Index: app/src/main/java/com/defence/costomapp/activity/statistics/UserTjActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/activity/statistics/UserTjActivity.java	(revision 109)
++++ app/src/main/java/com/defence/costomapp/activity/statistics/UserTjActivity.java	(revision )
+@@ -21,6 +21,7 @@
+ import com.defence.costomapp.base.BaseActivity;
+ import com.defence.costomapp.base.Urls;
+ import com.defence.costomapp.bean.UserTjBean;
++import com.defence.costomapp.bean.WxpayBean;
+ import com.defence.costomapp.myinterface.RVItemClickListener;
+ import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
+ import com.defence.costomapp.utils.SgqUtils;
+@@ -68,6 +69,8 @@
+     int length = 0;
+     String sortOrderBy = "timeline";
+     private UserTjAdapter userTjAdapter;
++    String typetj = "user";
++    private WxpayAdapter wxpayAdapter;
+ 
+ 
+     @Override
+@@ -91,7 +94,7 @@
+             public void onRefresh() {
+                 if (length > 0) {
+                     length--;
+-                    getData(length, sortOrderBy);
++                    getData(length, sortOrderBy, typetj);
+                     userTjAdapter.notifyDataSetChanged();
+                 } else {
+                     srl.setRefreshing(false);
+@@ -106,7 +109,7 @@
+             public void onLoad() {
+ 
+                 length++;
+-                getData(length, sortOrderBy);
++                getData(length, sortOrderBy, typetj);
+                 userTjAdapter.notifyDataSetChanged();
+ 
+             }
+@@ -119,7 +122,7 @@
+                 finish();
+             }
+         });
+-        getData(length, sortOrderBy);
++        getData(length, sortOrderBy, typetj);
+ 
+         initpopdialog();
+ 
+@@ -144,7 +147,8 @@
+             public void onClick(View view) {
+                 middleTitle.setText("用户统计 - 登录时间");
+                 sortOrderBy = "timeline";
+-                getData(length, sortOrderBy);
++                typetj = "user";
++                getData(length, sortOrderBy, typetj);
+                 if (pop.isShowing()) {
+                     pop.dismiss();
+                 }
+@@ -155,7 +159,8 @@
+             public void onClick(View view) {
+                 middleTitle.setText("用户统计 - 账户余额");
+                 sortOrderBy = "bankNo";
+-                getData(length, sortOrderBy);
++                typetj = "user";
++                getData(length, sortOrderBy, typetj);
+                 if (pop.isShowing()) {
+                     pop.dismiss();
+                 }
+@@ -167,7 +172,8 @@
+             public void onClick(View view) {
+                 middleTitle.setText("用户统计 - 注册时间");
+                 sortOrderBy = "reg_time";
+-                getData(length, sortOrderBy);
++                typetj = "user";
++                getData(length, sortOrderBy, typetj);
+                 if (pop.isShowing()) {
+                     pop.dismiss();
+                 }
+@@ -178,7 +184,8 @@
+             @Override
+             public void onClick(View view) {
+                 middleTitle.setText("用户统计 - 微信支付");
+-                getData(length, sortOrderBy);
++                typetj = "wx";
++                getData(length, sortOrderBy, typetj);
+                 if (pop.isShowing()) {
+                     pop.dismiss();
+                 }
+@@ -188,7 +195,8 @@
+             @Override
+             public void onClick(View view) {
+                 middleTitle.setText("用户统计 - 充值记录");
+-                getData(length, sortOrderBy);
++                typetj = "recharge";
++                getData(length, sortOrderBy, typetj);
+                 if (pop.isShowing()) {
+                     pop.dismiss();
+                 }
+@@ -219,43 +227,142 @@
+     }
+ 
+     /*得到数据*/
+-    private void getData(int length, String sortOrderBy) {
++    private void getData(int length, String sortOrderBy, final String type) {
+ 
+         RequestParams params = new RequestParams();
++        if (type.equals("wx")) {
++            params.put("orderUID", "0");
++        }
+         params.put("length", length + "");
+         params.put("sortOrderBy", sortOrderBy);
+         params.put("order", "desc");
+         params.put("orderBy", "2");
+         params.put("endpag", "10");
+ 
+-        httpUtils.doPost(Urls.userTj(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+-
+-            @Override
+-            public void onSuccess(Gson gson, Object result) throws JSONException {
+-                srl.setRefreshing(false);
+-                srl.setLoading(false);
+-                JSONObject jsonObject = new JSONObject(result.toString());
+-                final UserTjBean userTjBean = gson.fromJson(jsonObject.toString(), UserTjBean.class);
+-                regusernum.setText("注册人数:" + userTjBean.getReg_user());
+-                pingtaiPay.setText("平台付款次数:" + userTjBean.getPingtaiNum());
+-                weixinpay.setText("微信付款次数" + userTjBean.getWeixinNum());
+-
+-                userTjAdapter = new UserTjAdapter(UserTjActivity.this, userTjBean.getUserList(), new RVItemClickListener() {
+-                    @Override
+-                    public void onItemClick(int position) {
+-                        Intent intent = new Intent(UserTjActivity.this, UserTjDetailActivity.class);
+-                        intent.putExtra("uid", (userTjBean.getUserList().get(position).getId())+"");
+-                        intent.putExtra("uname", userTjBean.getUserList().get(position).getName());
+-                        startActivity(intent);
+-                    }
+-                });
++        if (type.equals("user")) {
++
++            httpUtils.doPost(Urls.userTj(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
++                @Override
++                public void onSuccess(Gson gson, Object result) throws JSONException {
++                    srl.setRefreshing(false);
++                    srl.setLoading(false);
++                    JSONObject jsonObject = new JSONObject(result.toString());
++                    final UserTjBean userTjBean = gson.fromJson(jsonObject.toString(), UserTjBean.class);
++                    regusernum.setText("注册人数:" + userTjBean.getReg_user());
++                    pingtaiPay.setText("平台付款次数:" + userTjBean.getPingtaiNum());
++                    weixinpay.setText("微信付款次数" + userTjBean.getWeixinNum());
++                    userTjAdapter = new UserTjAdapter(UserTjActivity.this, userTjBean.getUserList(), new RVItemClickListener() {
++                        @Override
++                        public void onItemClick(int position) {
++                            Intent intent = new Intent(UserTjActivity.this, UserTjDetailActivity.class);
++                            intent.putExtra("uid", (userTjBean.getUserList().get(position).getId()) + "");
++                            intent.putExtra("uname", userTjBean.getUserList().get(position).getName());
++                            intent.putExtra("ttype",type);
++                            startActivity(intent);
++                        }
++                    });
+ 
+-                listUsertj.setAdapter(userTjAdapter);
+-            }
+-        });
++                    listUsertj.setAdapter(userTjAdapter);
++                }
++            });
++        } else if (type.equals("wx")) {
++            httpUtils.doPost(Urls.wxpay(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
++                @Override
++                public void onSuccess(Gson gson, Object result) throws JSONException {
++                    srl.setRefreshing(false);
++                    srl.setLoading(false);
++                    JSONObject jsonObject = new JSONObject(result.toString());
++                    final WxpayBean wxpayBean = gson.fromJson(jsonObject.toString(), WxpayBean.class);
++                    regusernum.setText("注册人数:" + wxpayBean.getReg_user());
++                    pingtaiPay.setText("平台付款次数:" + wxpayBean.getPingtaiNum());
++                    weixinpay.setText("微信付款次数" + wxpayBean.getWeixinNum());
+ 
+-    }
++                    wxpayAdapter = new WxpayAdapter(UserTjActivity.this, wxpayBean.getList(), new RVItemClickListener() {
++                        @Override
++                        public void onItemClick(int position) {
++                            Intent intent = new Intent(UserTjActivity.this, UserTjDetailActivity.class);
++                            intent.putExtra("uid", (wxpayBean.getList().get(position).getOrderUID()) + "");
++                            intent.putExtra("wxid", wxpayBean.getList().get(position).getWxOpenID());
++                            intent.putExtra("ttype",type);
++                            startActivity(intent);
++                        }
++                    });
+ 
++                    listUsertj.setAdapter(wxpayAdapter);
++
++                }
++            });
++        }
++
++    }
++
++
++
++
++
++    private class WxpayAdapter extends BaseAdapter {
++
++        private Context context;
++        private LayoutInflater inflater;
++        private List<WxpayBean.ListBean> list;
++        private RVItemClickListener rvItemClickListener;
++
++        public WxpayAdapter(Context context, List<WxpayBean.ListBean> list, RVItemClickListener rvItemClickListener) {
++            super();
++            this.context = context;
++            inflater = LayoutInflater.from(context);
++            this.list = list;
++            this.rvItemClickListener = rvItemClickListener;
++
++        }
++
++        @Override
++        public int getCount() {
++            // TODO Auto-generated method stub
++            if (list != null && list.size() > 0) {
++                return list.size();
++            }
++            return 0;
++        }
++
++        @Override
++        public Object getItem(int arg0) {
++            // TODO Auto-generated method stub
++            return list.get(arg0);
++        }
++
++        @Override
++        public long getItemId(int arg0) {
++            // TODO Auto-generated method stub
++            return arg0;
++        }
++
++        @Override
++        public View getView(final int position, View view, ViewGroup arg2) {
++            // TODO Auto-generated method stub
++            if (view == null) {
++                view = inflater.inflate(R.layout.item_usertj, null);
++            }
++            TextView reg_phone = view.findViewById(R.id.reg_phone);
++            TextView tv_yue = view.findViewById(R.id.tv_yue);
++            TextView tv_nearlogintime = view.findViewById(R.id.tv_nearlogintime);
++            LinearLayout liearitemll = view.findViewById(R.id.liearitemll);
++
++            reg_phone.setText(list.get(position).getWx());
++            tv_yue.setVisibility(View.GONE);
++            tv_nearlogintime.setVisibility(View.GONE);
++
++            liearitemll.setOnClickListener(new View.OnClickListener() {
++                @Override
++                public void onClick(View view) {
++                    rvItemClickListener.onItemClick(position);
++                }
++            });
++
++            return view;
++
++        }
++    }
+ 
+     private class UserTjAdapter extends BaseAdapter {
+ 
+Index: app/src/main/java/com/defence/costomapp/bean/WxpayBean.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/bean/WxpayBean.java	(revision )
++++ app/src/main/java/com/defence/costomapp/bean/WxpayBean.java	(revision )
+@@ -0,0 +1,101 @@
++package com.defence.costomapp.bean;
++
++import java.util.List;
++
++/**
++ * Created by author Sgq
++ * on 2018/3/15.
++ */
++
++public class WxpayBean {
++
++    /**
++     * pingtaiNum : 346
++     * list : [{"wx":"W9HYbr7eIY","wxOpenID":"oAyIL1Zta7UH2qFMHJW9HYbr7eIY","pv":18600,"orderUID":0},{"wx":"z5B9ES3ORo","wxOpenID":"oAyIL1XnKex4uWumP5z5B9ES3ORo","pv":12930,"orderUID":0},{"wx":"2muSGfmClM","wxOpenID":"oAyIL1cTMuKiNhlP2y2muSGfmClM","pv":8950,"orderUID":0},{"wx":"AD04xKM-aU","wxOpenID":"oAyIL1Z4974kOQx2sCAD04xKM-aU","pv":8910,"orderUID":0},{"wx":"VqClckc9wg","wxOpenID":"oAyIL1denh0wGuE_Q2VqClckc9wg","pv":6770,"orderUID":0},{"wx":"P5IrbgsZ3o","wxOpenID":"oAyIL1aWpyWD1pBJPgP5IrbgsZ3o","pv":6260,"orderUID":0},{"wx":"Nu2pxlW7Mk","wxOpenID":"oAyIL1f7oFEgTwEkpwNu2pxlW7Mk","pv":5360,"orderUID":0},{"wx":"jVazQOq79Q","wxOpenID":"oAyIL1WF6PZNWCYAjTjVazQOq79Q","pv":5300,"orderUID":0},{"wx":"wFvbHrjAgM","wxOpenID":"oAyIL1eGhV2VoMsOc0wFvbHrjAgM","pv":4740,"orderUID":0},{"wx":"gQkJs4csh4","wxOpenID":"oAyIL1XhDKHBiX8LcegQkJs4csh4","pv":4410,"orderUID":0}]
++     * weixinNum : 1092
++     * reg_user : 186
++     */
++
++    private int pingtaiNum;
++    private int weixinNum;
++    private int reg_user;
++    private List<ListBean> list;
++
++    public int getPingtaiNum() {
++        return pingtaiNum;
++    }
++
++    public void setPingtaiNum(int pingtaiNum) {
++        this.pingtaiNum = pingtaiNum;
++    }
++
++    public int getWeixinNum() {
++        return weixinNum;
++    }
++
++    public void setWeixinNum(int weixinNum) {
++        this.weixinNum = weixinNum;
++    }
++
++    public int getReg_user() {
++        return reg_user;
++    }
++
++    public void setReg_user(int reg_user) {
++        this.reg_user = reg_user;
++    }
++
++    public List<ListBean> getList() {
++        return list;
++    }
++
++    public void setList(List<ListBean> list) {
++        this.list = list;
++    }
++
++    public static class ListBean {
++        /**
++         * wx : W9HYbr7eIY
++         * wxOpenID : oAyIL1Zta7UH2qFMHJW9HYbr7eIY
++         * pv : 18600
++         * orderUID : 0
++         */
++
++        private String wx;
++        private String wxOpenID;
++        private int pv;
++        private int orderUID;
++
++        public String getWx() {
++            return wx;
++        }
++
++        public void setWx(String wx) {
++            this.wx = wx;
++        }
++
++        public String getWxOpenID() {
++            return wxOpenID;
++        }
++
++        public void setWxOpenID(String wxOpenID) {
++            this.wxOpenID = wxOpenID;
++        }
++
++        public int getPv() {
++            return pv;
++        }
++
++        public void setPv(int pv) {
++            this.pv = pv;
++        }
++
++        public int getOrderUID() {
++            return orderUID;
++        }
++
++        public void setOrderUID(int orderUID) {
++            this.orderUID = orderUID;
++        }
++    }
++}
+Index: app/src/main/java/com/defence/costomapp/activity/statistics/UserTjDetailActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/activity/statistics/UserTjDetailActivity.java	(revision 109)
++++ app/src/main/java/com/defence/costomapp/activity/statistics/UserTjDetailActivity.java	(revision )
+@@ -38,6 +38,7 @@
+ 
+     private String uid;
+     private String uname;
++    private String wxid;
+ 
+     private String[] titles = new String[]{"消费记录", "行为分析"};
+     private List<Fragment> list;
+@@ -53,9 +54,17 @@
+     }
+ 
+     private void initData() {
+-        uid = getIntent().getStringExtra("uid");
+-        uname = getIntent().getStringExtra("uname");
+-        middleTitle.setText(uname);
++        String ttype = getIntent().getStringExtra("ttype");
++        if (ttype.equals("user")) {
++            uid = getIntent().getStringExtra("uid");
++            uname = getIntent().getStringExtra("uname");
++            middleTitle.setText(uname);
++        } else if (ttype.equals("wx")) {
++            uid = getIntent().getStringExtra("uid");
++            wxid = getIntent().getStringExtra("wxid");
++            middleTitle.setText(uid);
++        }
++
+ 
+         //页面，数据源
+         list = new ArrayList<>();
+Index: app/src/main/res/layout/fragment_tab2.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_tab2.xml	(revision )
++++ app/src/main/res/layout/fragment_tab2.xml	(revision )
+@@ -0,0 +1,37 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@color/white"
++    android:orientation="vertical">
++
++    <ListView
++        android:id="@+id/list_tab2"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"></ListView>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="@dimen/pad_height_50"
++        android:layout_alignParentBottom="true"
++        android:layout_gravity="center"
++        android:orientation="vertical">
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="2dp"
++            android:layout_marginLeft="@dimen/pad_height_50"
++            android:layout_marginRight="@dimen/pad_height_50"
++            android:background="@color/jiujiujiu" />
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:gravity="center"
++            android:text="购买商品数量"
++            android:textColor="@color/jiujiujiu"
++            android:textSize="@dimen/pad_text_size_18" />
++
++    </LinearLayout>
++
++</RelativeLayout>
+Index: app/src/main/res/layout/fragment_tab3.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_tab3.xml	(revision )
++++ app/src/main/res/layout/fragment_tab3.xml	(revision )
+@@ -0,0 +1,37 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@color/white"
++    android:orientation="vertical">
++
++    <ListView
++        android:id="@+id/list_tab3"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"></ListView>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="@dimen/pad_height_50"
++        android:layout_alignParentBottom="true"
++        android:layout_gravity="center"
++        android:orientation="vertical">
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="2dp"
++            android:layout_marginLeft="@dimen/pad_height_50"
++            android:layout_marginRight="@dimen/pad_height_50"
++            android:background="@color/jiujiujiu" />
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:gravity="center"
++            android:text="机器出货数量"
++            android:textColor="@color/jiujiujiu"
++            android:textSize="@dimen/pad_text_size_18" />
++
++    </LinearLayout>
++
++</RelativeLayout>
+Index: app/src/main/java/com/defence/costomapp/fragment/Tab2Fragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/fragment/Tab2Fragment.java	(revision )
++++ app/src/main/java/com/defence/costomapp/fragment/Tab2Fragment.java	(revision )
+@@ -0,0 +1,135 @@
++package com.defence.costomapp.fragment;
++
++import android.content.Context;
++import android.os.Bundle;
++import android.support.annotation.Nullable;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.BaseAdapter;
++import android.widget.ListView;
++import android.widget.TextView;
++
++import com.defence.costomapp.R;
++import com.defence.costomapp.base.BaseFragment;
++import com.defence.costomapp.base.Urls;
++import com.defence.costomapp.bean.ShopNumBean;
++import com.defence.costomapp.myinterface.RVItemClickListener;
++import com.defence.costomapp.utils.SgqUtils;
++import com.defence.costomapp.utils.SharePerenceUtil;
++import com.defence.costomapp.utils.httputils.HttpInterface;
++import com.google.gson.Gson;
++import com.loopj.android.http.RequestParams;
++
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.util.List;
++
++import butterknife.BindView;
++import butterknife.ButterKnife;
++import butterknife.Unbinder;
++
++/**
++ * Created by author Sgq
++ * on 2018/3/14.
++ */
++
++public class Tab2Fragment extends BaseFragment {
++    @BindView(R.id.list_tab2)
++    ListView listTab2;
++    Unbinder unbinder;
++    private String groupid;
++    private String uid;
++    private String wxid;
++
++
++    @Nullable
++    @Override
++    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
++        View view = inflater.inflate(R.layout.fragment_tab2, null);
++        initdata();
++        unbinder = ButterKnife.bind(this, view);
++        return view;
++    }
++
++    private void initdata() {
++        groupid = SharePerenceUtil.getStringValueFromSp("groupid");
++        uid = getActivity().getIntent().getStringExtra("uid");
++        wxid = getActivity().getIntent().getStringExtra("wxid");
++        RequestParams params = new RequestParams();
++        params.put("orderUID", uid);
++        params.put("wxopenID",wxid);
++        params.put("orderBy", "2");
++        httpUtils.doPost(Urls.shopnum(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
++            @Override
++            public void onSuccess(Gson gson, Object result) throws JSONException {
++                JSONObject jsonObject = new JSONObject(result.toString());
++                ShopNumBean shopNumBean = gson.fromJson(jsonObject.toString(), ShopNumBean.class);
++                Tab2Adapter tab2Adapter = new Tab2Adapter(getActivity(), shopNumBean.getList());
++                listTab2.setAdapter(tab2Adapter);
++            }
++        });
++    }
++
++    @Override
++    public void onDestroyView() {
++        super.onDestroyView();
++        unbinder.unbind();
++    }
++
++    private class Tab2Adapter extends BaseAdapter {
++
++        private Context context;
++        private LayoutInflater inflater;
++        private List<ShopNumBean.ListBean> list;
++        private RVItemClickListener rvItemClickListener;
++
++        public Tab2Adapter(Context context, List<ShopNumBean.ListBean> list) {
++            super();
++            this.context = context;
++            inflater = LayoutInflater.from(context);
++            this.list = list;
++        }
++
++        @Override
++        public int getCount() {
++            // TODO Auto-generated method stub
++            if (list != null && list.size() > 0) {
++                return list.size();
++            }
++            return 0;
++        }
++
++        @Override
++        public Object getItem(int arg0) {
++            // TODO Auto-generated method stub
++            return list.get(arg0);
++        }
++
++        @Override
++        public long getItemId(int arg0) {
++            // TODO Auto-generated method stub
++            return arg0;
++        }
++
++        @Override
++        public View getView(final int position, View view, ViewGroup arg2) {
++            // TODO Auto-generated method stub
++            if (view == null) {
++                view = inflater.inflate(R.layout.item_usertj, null);
++            }
++            TextView reg_phone = view.findViewById(R.id.reg_phone);
++            TextView tv_yue = view.findViewById(R.id.tv_yue);
++            TextView tv_nearlogintime = view.findViewById(R.id.tv_nearlogintime);
++            tv_yue.setVisibility(View.GONE);
++            reg_phone.setText(list.get(position).getDescVal());
++            tv_nearlogintime.setText("数量:"+list.get(position).getBcount());
++
++
++            return view;
++
++        }
++    }
++
++}
+Index: app/src/main/java/com/defence/costomapp/fragment/BehavAnalysisFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/fragment/BehavAnalysisFragment.java	(revision 109)
++++ app/src/main/java/com/defence/costomapp/fragment/BehavAnalysisFragment.java	(revision )
+@@ -55,8 +55,8 @@
+         //页面，数据源
+         list = new ArrayList<>();
+         list.add(new Tab1Fragment());
+-        list.add(new Tab1Fragment());
+-        list.add(new Tab1Fragment());
++        list.add(new Tab2Fragment());
++        list.add(new Tab3Fragment());
+         //ViewPager的适配器
+         adapter = new MyAdapter(getChildFragmentManager(), getContext());
+         viewPager.setAdapter(adapter);
+@@ -98,7 +98,7 @@
+         public View getTabView(int position) {
+             View v = LayoutInflater.from(context).inflate(R.layout.tab_custom, null);
+             TextView tv_title = (TextView) v.findViewById(R.id.tv_title);
+-            TextView tv_circle = (TextView) v.findViewById(R.id.tv_circle);
++//            TextView tv_circle = (TextView) v.findViewById(R.id.tv_circle);
+ //            if (tabLayout.getSelectedTabPosition()==position) {
+ //                tv_title.setText(titles[position]);
+ //                tv_title.setVisibility(View.VISIBLE);
+Index: app/src/main/res/drawable/shape_rectangle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/shape_rectangle.xml	(revision 109)
++++ app/src/main/res/drawable/shape_rectangle.xml	(revision )
+@@ -9,6 +9,6 @@
+     <!-- 设置矩形的四个角为弧形 -->
+     <corners android:radius="10dip" />
+     <size android:height="20dp"
+-    android:width="20dp"/>
++    android:width="80dp"/>
+ 
+ </shape>
+\ No newline at end of file
+Index: app/src/main/java/com/defence/costomapp/fragment/Tab3Fragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/fragment/Tab3Fragment.java	(revision )
++++ app/src/main/java/com/defence/costomapp/fragment/Tab3Fragment.java	(revision )
+@@ -0,0 +1,140 @@
++package com.defence.costomapp.fragment;
++
++import android.content.Context;
++import android.os.Bundle;
++import android.support.annotation.Nullable;
++import android.support.v4.app.FragmentActivity;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.BaseAdapter;
++import android.widget.ListView;
++import android.widget.TextView;
++
++import com.defence.costomapp.R;
++import com.defence.costomapp.base.BaseFragment;
++import com.defence.costomapp.base.Urls;
++import com.defence.costomapp.bean.MaciChuNumBean;
++import com.defence.costomapp.bean.ShopHistoryDetailBean;
++import com.defence.costomapp.bean.ShopNumBean;
++import com.defence.costomapp.myinterface.RVItemClickListener;
++import com.defence.costomapp.utils.SgqUtils;
++import com.defence.costomapp.utils.SharePerenceUtil;
++import com.defence.costomapp.utils.httputils.HttpInterface;
++import com.google.gson.Gson;
++import com.loopj.android.http.RequestParams;
++
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.util.List;
++
++import butterknife.BindView;
++import butterknife.ButterKnife;
++import butterknife.Unbinder;
++
++/**
++ * Created by author Sgq
++ * on 2018/3/14.
++ */
++
++public class Tab3Fragment extends BaseFragment {
++
++
++    @BindView(R.id.list_tab3)
++    ListView listTab3;
++    Unbinder unbinder;
++    private String groupid;
++    private String uid;
++    private String wxid;
++
++    @Nullable
++    @Override
++    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
++        View view = inflater.inflate(R.layout.fragment_tab3, null);
++        unbinder = ButterKnife.bind(this, view);
++        initdata();
++        return view;
++    }
++
++    private void initdata() {
++        groupid = SharePerenceUtil.getStringValueFromSp("groupid");
++        wxid = getActivity().getIntent().getStringExtra("wxid");
++        uid = getActivity().getIntent().getStringExtra("uid");
++        RequestParams params = new RequestParams();
++        params.put("orderUID", uid);
++        params.put("wxopenID",wxid);
++        params.put("orderBy", "2");
++        httpUtils.doPost(Urls.macchunum(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
++            @Override
++            public void onSuccess(Gson gson, Object result) throws JSONException {
++                JSONObject jsonObject = new JSONObject(result.toString());
++                MaciChuNumBean maciChuNumBean = gson.fromJson(jsonObject.toString(), MaciChuNumBean.class);
++                Tab3Adapter tab2Adapter = new Tab3Adapter(getActivity(), maciChuNumBean.getList());
++                listTab3.setAdapter(tab2Adapter);
++            }
++        });
++    }
++
++    private class Tab3Adapter extends BaseAdapter {
++
++        private Context context;
++        private LayoutInflater inflater;
++        private List<MaciChuNumBean.ListBean> list;
++        private RVItemClickListener rvItemClickListener;
++
++        public Tab3Adapter(Context context, List<MaciChuNumBean.ListBean> list) {
++            super();
++            this.context = context;
++            inflater = LayoutInflater.from(context);
++            this.list = list;
++
++
++        }
++
++        @Override
++        public int getCount() {
++            // TODO Auto-generated method stub
++            if (list != null && list.size() > 0) {
++                return list.size();
++            }
++            return 0;
++        }
++
++        @Override
++        public Object getItem(int arg0) {
++            // TODO Auto-generated method stub
++            return list.get(arg0);
++        }
++
++        @Override
++        public long getItemId(int arg0) {
++            // TODO Auto-generated method stub
++            return arg0;
++        }
++
++        @Override
++        public View getView(final int position, View view, ViewGroup arg2) {
++            // TODO Auto-generated method stub
++            if (view == null) {
++                view = inflater.inflate(R.layout.item_usertj, null);
++            }
++            TextView reg_phone = view.findViewById(R.id.reg_phone);
++            TextView tv_yue = view.findViewById(R.id.tv_yue);
++            TextView tv_nearlogintime = view.findViewById(R.id.tv_nearlogintime);
++            tv_yue.setVisibility(View.GONE);
++            reg_phone.setText(list.get(position).getAd());
++            tv_nearlogintime.setText("数量:"+list.get(position).getCt());
++
++
++            return view;
++
++        }
++    }
++
++    @Override
++    public void onDestroyView() {
++        super.onDestroyView();
++        unbinder.unbind();
++    }
++}
+Index: app/src/main/java/com/defence/costomapp/base/Urls.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/base/Urls.java	(revision 109)
++++ app/src/main/java/com/defence/costomapp/base/Urls.java	(revision )
+@@ -88,17 +88,31 @@
+     public static String userTj() {
+         return BaseUrl + "req-mobile/user-tongji/list/user/0data1.json";
+     }
++    //查看用户统计
++    public static String wxpay() {
++        return BaseUrl + "req-mobile/user-tongji/list/weixinzhifu/0data1.json";
++    }
++
+ 
+     //查看消费记录
+     public static String shophistory() {
+         return BaseUrl + "req-mobile/user-tongji/list/user/dingdannumber/0data1.json";
+     }
+ 
+-
+     //时间段统计销量
+     public static String timesale() {
+         return BaseUrl + "req-mobile/ding/dan/time/area/sale/0count.json";
+     }
+ 
++    //购买数量统计
++    public static String shopnum() {
++        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/0data1.json";
++    }
++
++    //机器出货量统计
++    public static String macchunum() {
++        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/machine/0data1.json";
++    }
++
+ 
+ }
+Index: app/src/main/java/com/defence/costomapp/bean/ShopNumBean.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/bean/ShopNumBean.java	(revision )
++++ app/src/main/java/com/defence/costomapp/bean/ShopNumBean.java	(revision )
+@@ -0,0 +1,398 @@
++package com.defence.costomapp.bean;
++
++import java.util.List;
++
++/**
++ * Created by author Sgq
++ * on 2018/3/15.
++ */
++
++public class ShopNumBean {
++
++
++    private List<ListBean> list;
++
++    public List<ListBean> getList() {
++        return list;
++    }
++
++    public void setList(List<ListBean> list) {
++        this.list = list;
++    }
++
++    public static class ListBean {
++        /**
++         * test_shang_pin : 0
++         * numberID : 40201802161958407360598401146091
++         * orderBy : 2
++         * payVal : 90
++         * orderUID : 275
++         * adminGroupID : 1
++         * machineID : lj-010-04-001-002
++         * wxTransactionID :
++         * kuaiDiNumber :
++         * liRun : 44
++         * orderTimeline : 2018-02-16 19:58:40
++         * kuaiDiName :
++         * kuaiDiTimeline : 2018-02-16 19:59:59
++         * shouHuoTimeline :
++         * shouHuoRen :
++         * shouHuoRenIDCard :
++         * payTimeline : 2018-02-16 19:59:44
++         * totalVal : 100
++         * voucherMoneyID : 0
++         * bcount : 4
++         * shouHuoAddr :
++         * itemNo : 53
++         * returnAdminID : 0
++         * status : 4
++         * howMuch : 0
++         * orderMessage :
++         * groupNID : 41201802161958407363370801199424
++         * shouHuoPhone :
++         * kuaiDiAdminID : 0
++         * jsonData : <===>
++         * discount : 90
++         * tui_val : 0
++         * wxOpenID :
++         * descVal : 冰露矿泉水-550ml
++         * cancelTimeline :
++         * payType : 1
++         * kuaiDiFee : 0
++         */
++
++        private int test_shang_pin;
++        private String numberID;
++        private int orderBy;
++        private int payVal;
++        private int orderUID;
++        private int adminGroupID;
++        private String machineID;
++        private String wxTransactionID;
++        private String kuaiDiNumber;
++        private int liRun;
++        private String orderTimeline;
++        private String kuaiDiName;
++        private String kuaiDiTimeline;
++        private String shouHuoTimeline;
++        private String shouHuoRen;
++        private String shouHuoRenIDCard;
++        private String payTimeline;
++        private int totalVal;
++        private int voucherMoneyID;
++        private int bcount;
++        private String shouHuoAddr;
++        private int itemNo;
++        private int returnAdminID;
++        private int status;
++        private int howMuch;
++        private String orderMessage;
++        private String groupNID;
++        private String shouHuoPhone;
++        private int kuaiDiAdminID;
++        private String jsonData;
++        private int discount;
++        private int tui_val;
++        private String wxOpenID;
++        private String descVal;
++        private String cancelTimeline;
++        private int payType;
++        private int kuaiDiFee;
++
++        public int getTest_shang_pin() {
++            return test_shang_pin;
++        }
++
++        public void setTest_shang_pin(int test_shang_pin) {
++            this.test_shang_pin = test_shang_pin;
++        }
++
++        public String getNumberID() {
++            return numberID;
++        }
++
++        public void setNumberID(String numberID) {
++            this.numberID = numberID;
++        }
++
++        public int getOrderBy() {
++            return orderBy;
++        }
++
++        public void setOrderBy(int orderBy) {
++            this.orderBy = orderBy;
++        }
++
++        public int getPayVal() {
++            return payVal;
++        }
++
++        public void setPayVal(int payVal) {
++            this.payVal = payVal;
++        }
++
++        public int getOrderUID() {
++            return orderUID;
++        }
++
++        public void setOrderUID(int orderUID) {
++            this.orderUID = orderUID;
++        }
++
++        public int getAdminGroupID() {
++            return adminGroupID;
++        }
++
++        public void setAdminGroupID(int adminGroupID) {
++            this.adminGroupID = adminGroupID;
++        }
++
++        public String getMachineID() {
++            return machineID;
++        }
++
++        public void setMachineID(String machineID) {
++            this.machineID = machineID;
++        }
++
++        public String getWxTransactionID() {
++            return wxTransactionID;
++        }
++
++        public void setWxTransactionID(String wxTransactionID) {
++            this.wxTransactionID = wxTransactionID;
++        }
++
++        public String getKuaiDiNumber() {
++            return kuaiDiNumber;
++        }
++
++        public void setKuaiDiNumber(String kuaiDiNumber) {
++            this.kuaiDiNumber = kuaiDiNumber;
++        }
++
++        public int getLiRun() {
++            return liRun;
++        }
++
++        public void setLiRun(int liRun) {
++            this.liRun = liRun;
++        }
++
++        public String getOrderTimeline() {
++            return orderTimeline;
++        }
++
++        public void setOrderTimeline(String orderTimeline) {
++            this.orderTimeline = orderTimeline;
++        }
++
++        public String getKuaiDiName() {
++            return kuaiDiName;
++        }
++
++        public void setKuaiDiName(String kuaiDiName) {
++            this.kuaiDiName = kuaiDiName;
++        }
++
++        public String getKuaiDiTimeline() {
++            return kuaiDiTimeline;
++        }
++
++        public void setKuaiDiTimeline(String kuaiDiTimeline) {
++            this.kuaiDiTimeline = kuaiDiTimeline;
++        }
++
++        public String getShouHuoTimeline() {
++            return shouHuoTimeline;
++        }
++
++        public void setShouHuoTimeline(String shouHuoTimeline) {
++            this.shouHuoTimeline = shouHuoTimeline;
++        }
++
++        public String getShouHuoRen() {
++            return shouHuoRen;
++        }
++
++        public void setShouHuoRen(String shouHuoRen) {
++            this.shouHuoRen = shouHuoRen;
++        }
++
++        public String getShouHuoRenIDCard() {
++            return shouHuoRenIDCard;
++        }
++
++        public void setShouHuoRenIDCard(String shouHuoRenIDCard) {
++            this.shouHuoRenIDCard = shouHuoRenIDCard;
++        }
++
++        public String getPayTimeline() {
++            return payTimeline;
++        }
++
++        public void setPayTimeline(String payTimeline) {
++            this.payTimeline = payTimeline;
++        }
++
++        public int getTotalVal() {
++            return totalVal;
++        }
++
++        public void setTotalVal(int totalVal) {
++            this.totalVal = totalVal;
++        }
++
++        public int getVoucherMoneyID() {
++            return voucherMoneyID;
++        }
++
++        public void setVoucherMoneyID(int voucherMoneyID) {
++            this.voucherMoneyID = voucherMoneyID;
++        }
++
++        public int getBcount() {
++            return bcount;
++        }
++
++        public void setBcount(int bcount) {
++            this.bcount = bcount;
++        }
++
++        public String getShouHuoAddr() {
++            return shouHuoAddr;
++        }
++
++        public void setShouHuoAddr(String shouHuoAddr) {
++            this.shouHuoAddr = shouHuoAddr;
++        }
++
++        public int getItemNo() {
++            return itemNo;
++        }
++
++        public void setItemNo(int itemNo) {
++            this.itemNo = itemNo;
++        }
++
++        public int getReturnAdminID() {
++            return returnAdminID;
++        }
++
++        public void setReturnAdminID(int returnAdminID) {
++            this.returnAdminID = returnAdminID;
++        }
++
++        public int getStatus() {
++            return status;
++        }
++
++        public void setStatus(int status) {
++            this.status = status;
++        }
++
++        public int getHowMuch() {
++            return howMuch;
++        }
++
++        public void setHowMuch(int howMuch) {
++            this.howMuch = howMuch;
++        }
++
++        public String getOrderMessage() {
++            return orderMessage;
++        }
++
++        public void setOrderMessage(String orderMessage) {
++            this.orderMessage = orderMessage;
++        }
++
++        public String getGroupNID() {
++            return groupNID;
++        }
++
++        public void setGroupNID(String groupNID) {
++            this.groupNID = groupNID;
++        }
++
++        public String getShouHuoPhone() {
++            return shouHuoPhone;
++        }
++
++        public void setShouHuoPhone(String shouHuoPhone) {
++            this.shouHuoPhone = shouHuoPhone;
++        }
++
++        public int getKuaiDiAdminID() {
++            return kuaiDiAdminID;
++        }
++
++        public void setKuaiDiAdminID(int kuaiDiAdminID) {
++            this.kuaiDiAdminID = kuaiDiAdminID;
++        }
++
++        public String getJsonData() {
++            return jsonData;
++        }
++
++        public void setJsonData(String jsonData) {
++            this.jsonData = jsonData;
++        }
++
++        public int getDiscount() {
++            return discount;
++        }
++
++        public void setDiscount(int discount) {
++            this.discount = discount;
++        }
++
++        public int getTui_val() {
++            return tui_val;
++        }
++
++        public void setTui_val(int tui_val) {
++            this.tui_val = tui_val;
++        }
++
++        public String getWxOpenID() {
++            return wxOpenID;
++        }
++
++        public void setWxOpenID(String wxOpenID) {
++            this.wxOpenID = wxOpenID;
++        }
++
++        public String getDescVal() {
++            return descVal;
++        }
++
++        public void setDescVal(String descVal) {
++            this.descVal = descVal;
++        }
++
++        public String getCancelTimeline() {
++            return cancelTimeline;
++        }
++
++        public void setCancelTimeline(String cancelTimeline) {
++            this.cancelTimeline = cancelTimeline;
++        }
++
++        public int getPayType() {
++            return payType;
++        }
++
++        public void setPayType(int payType) {
++            this.payType = payType;
++        }
++
++        public int getKuaiDiFee() {
++            return kuaiDiFee;
++        }
++
++        public void setKuaiDiFee(int kuaiDiFee) {
++            this.kuaiDiFee = kuaiDiFee;
++        }
++    }
++}
+Index: app/src/main/java/com/defence/costomapp/fragment/ShopHistoryFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/fragment/ShopHistoryFragment.java	(revision 109)
++++ app/src/main/java/com/defence/costomapp/fragment/ShopHistoryFragment.java	(revision )
+@@ -17,6 +17,7 @@
+ import com.defence.costomapp.myinterface.RVItemClickListener;
+ import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
+ import com.defence.costomapp.utils.SgqUtils;
++import com.defence.costomapp.utils.SharePerenceUtil;
+ import com.defence.costomapp.utils.httputils.HttpInterface;
+ import com.google.gson.Gson;
+ import com.loopj.android.http.RequestParams;
+@@ -52,6 +53,8 @@
+     private String uid;
+     String Sdate = SgqUtils.getNowYmDate();
+     private ShopHistoryAdapter shopHistoryAdapter;
++    private String wxid;
++    private String ttype;
+ 
+     @Override
+     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+@@ -88,17 +91,24 @@
+ 
+     private void initdata(final String date) {
+         uid = getActivity().getIntent().getStringExtra("uid");
++        wxid = getActivity().getIntent().getStringExtra("wxid");
++        ttype = getActivity().getIntent().getStringExtra("ttype");
++
+         RequestParams params = new RequestParams();
+         params.put("orderUID", uid);
+         params.put("sdate", date);
+-//        params.put("sdate", "2018-02");
++        if (ttype.equals("wx")) {
++            params.put("wxopenID", wxid);
++
++        }
++        params.put("sdate", "2018-02");
+         params.put("orderBy", "2");
+ 
+         httpUtils.doPost(Urls.shophistory(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
+ 
+             @Override
+             public void onSuccess(Gson gson, Object result) throws JSONException {
+-                Sdate=date;
++                Sdate = date;
+                 srl.setRefreshing(false);
+                 srl.setLoading(false);
+ 
+@@ -111,12 +121,15 @@
+                 tvDate.setText(newdate + "月");
+                 tvXiaofei.setText("本月消费:" + shopHistoryDetailBean.getPayval() + "元");
+ 
++
+                 shopHistoryAdapter = new ShopHistoryAdapter(getActivity(), shopHistoryDetailBean.getList(), new RVItemClickListener() {
+                     @Override
+                     public void onItemClick(int position) {
+ 
++
+                     }
+                 });
++
+                 listShophistory.setAdapter(shopHistoryAdapter);
+ 
+ 
+Index: app/src/main/res/drawable/circle_white.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/circle_white.xml	(revision 109)
++++ app/src/main/res/drawable/circle_white.xml	(revision )
+@@ -1,14 +1,13 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<shape
+-    xmlns:android="http://schemas.android.com/apk/res/android"
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
+     android:shape="oval"
+     android:useLevel="false">
+ 
+-    <solid android:color="@color/white"/>
++    <solid android:color="@color/white" />
+     <size
+-        android:width="20dp"
+-        android:height="20dp"/>
++        android:width="80dp"
++        android:height="20dp" />
+     <stroke
+         android:width="1dp"
+-        android:color="#999"/>
++        android:color="#999" />
+ </shape>
+\ No newline at end of file
+Index: app/src/main/res/layout/tab_custom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/tab_custom.xml	(revision 109)
++++ app/src/main/res/layout/tab_custom.xml	(revision )
+@@ -15,13 +15,13 @@
+         android:gravity="center"
+         android:background="@drawable/home_selector"/>
+ 
+-    <TextView
+-        android:id="@+id/tv_circle"
+-        android:layout_width="20dp"
+-        android:layout_height="20dp"
+-        android:gravity="center"
+-        android:visibility="gone"
+-        android:background="@drawable/circle_white"/>
++    <!--<TextView-->
++        <!--android:id="@+id/tv_circle"-->
++        <!--android:layout_width="20dp"-->
++        <!--android:layout_height="20dp"-->
++        <!--android:gravity="center"-->
++        <!--android:visibility="gone"-->
++        <!--android:background="@drawable/circle_white"/>-->
+ 
+ 
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_tab1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_tab1.xml	(revision 109)
++++ app/src/main/res/layout/fragment_tab1.xml	(revision )
+@@ -1,14 +1,169 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent">
++    android:layout_height="match_parent"
++    android:background="@color/white"
++    android:orientation="vertical">
+ 
+ 
+     <com.github.mikephil.charting.charts.PieChart
+         android:id="@+id/pie_chart"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/pad_height_220"
++        android:layout_margin="@dimen/pad_height_20"
+         android:layout_marginLeft="@dimen/pad_height_16"
+-        android:layout_marginRight="@dimen/pad_height_16" />
++        android:layout_marginRight="@dimen/pad_height_16"
++        android:gravity="center" />
++
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="@dimen/pad_height_120"
++        android:layout_marginTop="@dimen/pad_height_250"
++        android:orientation="vertical">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_margin="@dimen/pad_height_10"
++            android:orientation="horizontal">
++
++            <TextView
++                android:layout_width="@dimen/pad_height_20"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_30"
++                android:background="#333333"
++                android:gravity="center" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:layout_weight="1"
++                android:gravity="left"
++                android:text="00:00 - 04:00" />
++
++
++            <TextView
++                android:layout_width="@dimen/pad_height_20"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:background="#f2f2f2"
++                android:gravity="center" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:layout_weight="1"
++                android:gravity="left"
++                android:text="04:00 - 08:00" />
+ 
+-</LinearLayout>
++        </LinearLayout>
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_margin="@dimen/pad_height_10"
++            android:orientation="horizontal">
++
++            <TextView
++                android:layout_width="@dimen/pad_height_20"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_30"
++                android:background="#00ccff"
++                android:gravity="center" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:layout_weight="1"
++                android:gravity="left"
++                android:text="08:00 - 12:00" />
++
++
++            <TextView
++                android:layout_width="@dimen/pad_height_20"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:background="#ffcc00"
++                android:gravity="center" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:layout_weight="1"
++                android:gravity="left"
++                android:text="12:00 - 16:00" />
++
++        </LinearLayout>
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_margin="@dimen/pad_height_10"
++            android:orientation="horizontal">
++
++            <TextView
++                android:layout_width="@dimen/pad_height_20"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_30"
++                android:background="#ff3300"
++                android:gravity="center" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:layout_weight="1"
++                android:gravity="left"
++                android:text="16:00 - 20:00" />
++
++
++            <TextView
++                android:layout_width="@dimen/pad_height_20"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:background="#cc00ff"
++                android:gravity="center" />
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="@dimen/pad_height_20"
++                android:layout_marginLeft="@dimen/pad_height_20"
++                android:layout_weight="1"
++                android:gravity="left"
++                android:text="20:00 - 24:00" />
++
++        </LinearLayout>
++
++    </LinearLayout>
++
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="@dimen/pad_height_50"
++        android:layout_alignParentBottom="true"
++        android:layout_gravity="center"
++        android:orientation="vertical">
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="2dp"
++            android:layout_marginLeft="@dimen/pad_height_50"
++            android:layout_marginRight="@dimen/pad_height_50"
++            android:background="@color/jiujiujiu" />
++
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:gravity="center"
++            android:text="购买时间段"
++            android:textColor="@color/jiujiujiu"
++            android:textSize="@dimen/pad_text_size_18" />
++
++    </LinearLayout>
++
++</RelativeLayout>
+Index: app/src/main/java/com/defence/costomapp/bean/MaciChuNumBean.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/defence/costomapp/bean/MaciChuNumBean.java	(revision )
++++ app/src/main/java/com/defence/costomapp/bean/MaciChuNumBean.java	(revision )
+@@ -0,0 +1,57 @@
++package com.defence.costomapp.bean;
++
++import java.util.List;
++
++/**
++ * Created by author Sgq
++ * on 2018/3/15.
++ */
++
++public class MaciChuNumBean {
++
++    private List<ListBean> list;
++
++    public List<ListBean> getList() {
++        return list;
++    }
++
++    public void setList(List<ListBean> list) {
++        this.list = list;
++    }
++
++    public static class ListBean {
++        /**
++         * ad : 北京市北京市丰台区富卓苑小区2号林内壁炉门东
++         * ct : 4
++         * machinenumber : LJ-010-04-001-002
++         */
++
++        private String ad;
++        private int ct;
++        private String machinenumber;
++
++        public String getAd() {
++            return ad;
++        }
++
++        public void setAd(String ad) {
++            this.ad = ad;
++        }
++
++        public int getCt() {
++            return ct;
++        }
++
++        public void setCt(int ct) {
++            this.ct = ct;
++        }
++
++        public String getMachinenumber() {
++            return machinenumber;
++        }
++
++        public void setMachinenumber(String machinenumber) {
++            this.machinenumber = machinenumber;
++        }
++    }
++}
