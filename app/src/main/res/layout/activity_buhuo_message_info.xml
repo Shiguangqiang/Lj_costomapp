@@ -160,6 +160,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_newtasktype"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="@dimen/pad_height_10"
@@ -169,6 +170,7 @@
                 android:textSize="23sp" />
 
             <TextView
+                android:id="@+id/tv_tasktype"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="@dimen/pad_height_10"

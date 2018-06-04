@@ -1,6 +1,9 @@
 package com.defence.costomapp.activity.buhuo;
 
-import android.annotation.SuppressLint;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,10 +48,8 @@ import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.APPUtils;
 import com.defence.costomapp.utils.ActionSheelUtil;
-import com.defence.costomapp.utils.RecyclerViewUtils;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +75,8 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
     List<String> machinename = new ArrayList<>();
     String selectNum = "";
+    //    任务类型   0调货   1回库
+    int taskType = 0;
     private BuhuoMessageEntity buhuoMessageEntity;
     private int alarmStock;
     private MachineEntity machineEntity;
@@ -87,7 +90,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     private NavigationView navigationView;
     private Spinner tv_selectMachine;
     private ArrayAdapter<String> arr_adapter;
-
     // 构建Runnable对象，在runnable中更新界面
     Runnable runnableUi = new Runnable() {
         //更新界面
@@ -102,18 +104,13 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
         }
     };
-
-
     private int mIndex = 0;//位置
     private boolean move = false;
-
-
-    private TextView tv_transferMachine, tv_arrangingGoods, tv_transferAmount;
+    private TextView tv_newtasktype, tv_tasktype, tv_transferMachine, tv_arrangingGoods, tv_transferAmount;
     private Handler handler = null;
     private TextView tv_confirm;
     private String gui_ge_id;
     private String tv_transferAmountbefore;
-
     private LinearLayoutManager mLinearLayoutManager;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -233,41 +230,86 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                         buhuoMessageInfoAdapter = new BuhuoMessageInfoAdapter(alarmStock, buhuoInfoEntities, BuhuoMessageInfoActivity.this, new RVItemClickListener() {
                             @Override
                             public void onItemClick(int position) {
-                                if (Integer.parseInt(buhuoInfoEntities.get(position).getKu_cun()) <= 0) {
-                                    Toast.makeText(BuhuoMessageInfoActivity.this, "剩余量为0，不能调货", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    tv_transferMachine.setText(machineEntity.getAddress() + machineEntity.getDetailedinstalladdress());
-                                    tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
-                                    tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
-                                    tv_transferAmount.setText(buhuoInfoEntities.get(position).getKu_cun().toString());
-                                    gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
 
-                                    if (drawerLayout.isDrawerOpen(navigationView)) {
-                                        drawerLayout.closeDrawer(navigationView);
-                                    } else {
-                                        drawerLayout.openDrawer(navigationView);
-                                        //监听RecyclerView滚动状态
-                                        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                AlertDialog dialog = new AlertDialog.Builder(BuhuoMessageInfoActivity.this)
+                                        .setTitle("请选择任务")
+//                                        .setMessage("请选择任务")
+                                        .setPositiveButton("新建调货任务", new DialogInterface.OnClickListener() {
                                             @Override
-                                            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                                                super.onScrollStateChanged(recyclerView, newState);
-                                                if (recyclerView.getLayoutManager() != null) {
-                                                    LinearLayoutManager layoutManager = (LinearLayoutManager) rv.getLayoutManager();
-                                                    //获取可视的第一个view
-                                                    View topView = layoutManager.getChildAt(0);
-                                                    if (topView != null) {
-                                                        //得到该View的数组位置
-                                                        mIndex = layoutManager.getPosition(topView);
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                taskType = 0;
+                                                tv_newtasktype.setText("新增机器任务");
+                                                tv_tasktype.setText("机器调货");
+
+                                                if (Integer.parseInt(buhuoInfoEntities.get(position).getKu_cun()) <= 0) {
+                                                    Toast.makeText(BuhuoMessageInfoActivity.this, "剩余量为0，不能调货", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    tv_transferMachine.setText(machineEntity.getAddress() + machineEntity.getDetailedinstalladdress());
+                                                    tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
+                                                    tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
+                                                    tv_transferAmount.setText(buhuoInfoEntities.get(position).getKu_cun().toString());
+                                                    tv_selectMachine.setVisibility(View.VISIBLE);
+                                                    gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
+
+                                                    if (drawerLayout.isDrawerOpen(navigationView)) {
+                                                        drawerLayout.closeDrawer(navigationView);
+                                                    } else {
+                                                        drawerLayout.openDrawer(navigationView);
+//                                                        //监听RecyclerView滚动状态
+//                                                        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//                                                            @Override
+//                                                            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                                                                super.onScrollStateChanged(recyclerView, newState);
+//                                                                if (recyclerView.getLayoutManager() != null) {
+//                                                                    LinearLayoutManager layoutManager = (LinearLayoutManager) rv.getLayoutManager();
+//                                                                    //获取可视的第一个view
+//                                                                    View topView = layoutManager.getChildAt(0);
+//                                                                    if (topView != null) {
+//                                                                        //得到该View的数组位置
+//                                                                        mIndex = layoutManager.getPosition(topView);
+//                                                                    }
+//                                                                }
+//                                                            }
+//                                                        });
+                                                    }
+                                                }
+
+                                            }
+                                        })
+                                        .setNegativeButton("回库任务", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                taskType = 1;
+                                                tv_newtasktype.setText("新增回库任务");
+                                                tv_tasktype.setText("机器退回");
+                                                if (Integer.parseInt(buhuoInfoEntities.get(position).getKu_cun()) <= 0) {
+                                                    Toast.makeText(BuhuoMessageInfoActivity.this, "剩余量为0，不能回库", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    tv_transferMachine.setText(machineEntity.getAddress() + machineEntity.getDetailedinstalladdress());
+                                                    tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
+                                                    tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
+                                                    tv_transferAmount.setText(buhuoInfoEntities.get(position).getKu_cun().toString());
+                                                    tv_selectMachine.setVisibility(View.GONE);
+                                                    gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
+
+                                                    if (drawerLayout.isDrawerOpen(navigationView)) {
+                                                        drawerLayout.closeDrawer(navigationView);
+                                                    } else {
+                                                        drawerLayout.openDrawer(navigationView);
                                                     }
                                                 }
                                             }
-                                        });
-                                    }
-                                }
+                                        })
+                                        .create();
+                                dialog.show();
+                                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
+                                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextSize(16);
+                                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextSize(16);
+                                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLUE);
+
                             }
                         });
                         rv.setAdapter(buhuoMessageInfoAdapter);
-
 
 //                        } else {qina
 //                            buhuoMessageInfoAdapter.notifyDataSetChanged();
@@ -281,9 +323,12 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         }
     }
 
+
     /*侧滑菜单*/
     private void ShowNavigation() {
 
+        tv_newtasktype = findViewById(R.id.tv_newtasktype);
+        tv_tasktype = findViewById(R.id.tv_tasktype);
         tv_transferMachine = findViewById(R.id.tv_transferMachine);
         tv_arrangingGoods = findViewById(R.id.tv_arrangingGoods);
         tv_transferAmount = findViewById(R.id.tv_transferAmount);
@@ -308,20 +353,64 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         tv_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 int after = Integer.parseInt(tv_transferAmount.getText().toString());
                 int before = Integer.parseInt(tv_transferAmountbefore.toString());
-                if (after > before) {
-                    Toast.makeText(getApplicationContext(), "调离量不能大于库存量", Toast.LENGTH_SHORT).show();
-                } else {
-                    //   生成调货任务
-                    machineTask();
+                switch (taskType) {
+                    case 0:
+
+                        if (after > before) {
+                            Toast.makeText(getApplicationContext(), "调离量不能大于库存量", Toast.LENGTH_SHORT).show();
+                        } else {
+                            //   生成调货任务
+                            machineTask();
+                        }
+                        break;
+                    case 1:
+                        if (after > before) {
+                            Toast.makeText(getApplicationContext(), "回库量不能大于库存量", Toast.LENGTH_SHORT).show();
+                        } else {
+                            //   机器回库任务
+                            backGoods();
+                        }
+                        break;
+                    default:
+                        break;
                 }
+
+
             }
         });
     }
 
+    //回库
+    private void backGoods() {
+//        guigeid          规格id
+//        guigename        规格名称
+//        shangpinname     商品名称
+//        huikunumber      回库数量
+//        machine_no       机器编号
+
+        String[] splitgoods = tv_arrangingGoods.getText().toString().split("-");
+        RequestParams params = new RequestParams();
+        params.put("guigeid", gui_ge_id);
+        params.put("guigename", splitgoods[1]);
+        params.put("shangpinname", splitgoods[2]);
+        params.put("huikunumber", tv_transferAmount.getText().toString());
+        params.put("machine_no",buhuoMessageEntity.getMachinenumber());
+        httpUtils.doPost(Urls.backGoods(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
+
+            @Override
+            public void onSuccess(Gson gson, Object result) {
+                Toast.makeText(getApplicationContext(), "回库成功", Toast.LENGTH_SHORT).show();
+                drawerLayout.closeDrawer(navigationView);
+                getdata();
+
+            }
+        });
+
+    }
+
+    //调货
     private void machineTask() {
         String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         String[] splitgoods = tv_arrangingGoods.getText().toString().split("-");
@@ -350,10 +439,8 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 //                buhuoMessageInfoAdapter.notifyDataSetChanged();
 //                move(mIndex);
 
-
             }
         });
-
     }
 
     private void getAllMachineData() {
