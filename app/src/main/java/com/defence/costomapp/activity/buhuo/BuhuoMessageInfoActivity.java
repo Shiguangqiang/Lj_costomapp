@@ -1,6 +1,7 @@
 package com.defence.costomapp.activity.buhuo;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -15,13 +16,20 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdate;
@@ -31,14 +39,18 @@ import com.amap.api.maps2d.UiSettings;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.amap.api.maps2d.model.Text;
+import com.bumptech.glide.util.ExceptionCatchingInputStream;
 import com.defence.actionsheetmenumlib.JFActionSheetMenu;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.adapter.BuhuoCeguiGoodsAdapter;
 import com.defence.costomapp.adapter.BuhuoMessageInfoAdapter;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.bean.AllMachineBean;
 import com.defence.costomapp.bean.BuhuoInfoEntity;
 import com.defence.costomapp.bean.BuhuoMessageEntity;
+import com.defence.costomapp.bean.CeGuiGoodsBean;
 import com.defence.costomapp.bean.MachineEntity;
 import com.defence.costomapp.utils.DividerItemDecoration;
 import com.defence.costomapp.utils.SgqUtils;
@@ -48,6 +60,7 @@ import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.APPUtils;
 import com.defence.costomapp.utils.ActionSheelUtil;
+import com.defence.costomapp.utils.view.ListViewPopuWindow;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
@@ -112,6 +125,10 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     private String gui_ge_id;
     private String tv_transferAmountbefore;
     private LinearLayoutManager mLinearLayoutManager;
+    private RelativeLayout mRl_sm;
+    private Button mBtn_selectMachine;
+    private ToggleButton mBtn_toggleFiltering;
+    private TextView mTv_shelfForSale;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -125,17 +142,30 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
         rv = findViewById(R.id.buhuoinforv);
         machineAddr = findViewById(R.id.machineAddr);
-
-        //创建属于主线程的handler
-        handler = new Handler();
+        mBtn_toggleFiltering = findViewById(R.id.btn_toggleFiltering);
+        mTv_shelfForSale = findViewById(R.id.tv_shelfForSale);
 
 //        所有机器
         getAllMachineData();
-
 //        侧滑菜单
         ShowNavigation();
+//        监听侧滑状态
+        drawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                tv_transferAmount.setText("");
+                mBtn_selectMachine.setText("");
 
-//        RecyclerViewUtils.setReRecyclerView(this, rv);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        });
+
+
         mLinearLayoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setItemAnimator(new DefaultItemAnimator());
@@ -149,7 +179,11 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             }
         });
 
+        //在售商品
         getdata();
+        ToggleButtonListener();
+
+
         rv.addOnScrollListener(new RecyclerViewListener());
 
         findViewById(R.id.buhuodone).setOnClickListener(new View.OnClickListener() {
@@ -170,8 +204,117 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         });
     }
 
-    private void getdata() {
+    String sType = "";
 
+    private void ToggleButtonListener() {
+
+        mBtn_toggleFiltering.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBtn_toggleFiltering.getText().equals("未售商品")) {
+                    //在售商品
+                    getdata();
+                    mTv_shelfForSale.setVisibility(View.VISIBLE);
+                } else if (mBtn_toggleFiltering.getText().equals("在售商品")) {
+                    //未售商品
+                    getUnsoldGoods();
+                    mTv_shelfForSale.setVisibility(View.GONE);
+                }
+            }
+        });
+        mBtn_toggleFiltering.setOnCheckedChangeListener(new ToggleButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked)
+                    sType = "未售";
+                else
+                    sType = "在售";
+            }
+        });
+    }
+
+    private void getUnsoldGoods() {
+        buhuoMessageEntity = (BuhuoMessageEntity) getIntent().getSerializableExtra("bundle");
+
+        RequestParams params = new RequestParams();
+        params.put("machineNo", buhuoMessageEntity.getMachinenumber());
+        params.put("machineID", buhuoMessageEntity.getId());
+        httpUtils.doPost(Urls.getCeguiGoods(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
+            @Override
+            public void onSuccess(Gson gson, Object result) {
+                JSONObject jb = (JSONObject) result;
+                CeGuiGoodsBean ceGuiGoodsBean = gson.fromJson(jb.toString(), CeGuiGoodsBean.class);
+
+                BuhuoCeguiGoodsAdapter buhuoCeguiGoodsAdapter = new BuhuoCeguiGoodsAdapter(ceGuiGoodsBean.getList(), BuhuoMessageInfoActivity.this, new RVItemClickListener() {
+
+                    @Override
+                    public void onItemClick(int position) {
+
+                        if (ceGuiGoodsBean.getList().get(position).getKu_cun() <= 0) {
+                            Toast.makeText(BuhuoMessageInfoActivity.this, "侧柜剩余量为0，不能执行操作", Toast.LENGTH_SHORT).show();
+                        } else {
+                            ActionSheelUtil.showMenu(BuhuoMessageInfoActivity.this, "执行选项",
+                                    new String[]{"调货", "回库"}, false, new JFActionSheetMenu.OnActionSheetItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int itemPosition) {
+                                            switch (itemPosition) {
+                                                case 0:
+                                                    taskType = 0;
+                                                    tv_newtasktype.setText("新增调货任务");
+                                                    tv_tasktype.setText("机器调货");
+                                                    tv_confirm.setText("确认并生成调货任务");
+
+                                                    tv_transferMachine.setText(machineEntity.getDetailedinstalladdress());
+                                                    tv_arrangingGoods.setText(ceGuiGoodsBean.getList().get(position).getShangpin_name());
+                                                    tv_transferAmountbefore = (ceGuiGoodsBean.getList().get(position).getKu_cun() + "");
+                                                    mRl_sm.setVisibility(View.VISIBLE);
+
+                                                    gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id() + "";
+
+                                                    if (drawerLayout.isDrawerOpen(navigationView)) {
+                                                        drawerLayout.closeDrawer(navigationView);
+
+                                                    } else {
+                                                        drawerLayout.openDrawer(navigationView);
+                                                    }
+                                                    break;
+
+                                                case 1:
+                                                    taskType = 1;
+                                                    tv_newtasktype.setText("新增回库任务");
+                                                    tv_tasktype.setText("商品回库");
+                                                    tv_confirm.setText("提交回库请求");
+                                                    tv_transferMachine.setText(machineEntity.getDetailedinstalladdress());
+                                                    tv_arrangingGoods.setText(ceGuiGoodsBean.getList().get(position).getShangpin_name());
+                                                    tv_transferAmountbefore = ceGuiGoodsBean.getList().get(position).getKu_cun() + "";
+                                                    mRl_sm.setVisibility(View.GONE);
+                                                    gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id()+"";
+
+                                                    if (drawerLayout.isDrawerOpen(navigationView)) {
+                                                        drawerLayout.closeDrawer(navigationView);
+                                                    } else {
+                                                        drawerLayout.openDrawer(navigationView);
+                                                    }
+
+                                                    break;
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCanceClick(View view) {
+
+                                        }
+                                    });
+                        }
+                    }
+                });
+                rv.setAdapter(buhuoCeguiGoodsAdapter);
+            }
+        });
+    }
+
+    private void getdata() {
         buhuoMessageEntity = (BuhuoMessageEntity) getIntent().getSerializableExtra("bundle");
         buhuoInfoEntities = new ArrayList<>();
         if (buhuoMessageEntity != null) {
@@ -231,83 +374,64 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                             @Override
                             public void onItemClick(int position) {
 
-                                AlertDialog dialog = new AlertDialog.Builder(BuhuoMessageInfoActivity.this)
-                                        .setTitle("请选择任务")
-//                                        .setMessage("请选择任务")
-                                        .setPositiveButton("新建调货任务", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                taskType = 0;
-                                                tv_newtasktype.setText("新增机器任务");
-                                                tv_tasktype.setText("机器调货");
+                                if (Integer.parseInt(buhuoInfoEntities.get(position).getKu_cun()) <= 0) {
+                                    Toast.makeText(BuhuoMessageInfoActivity.this, "侧柜剩余量为0，不能执行操作", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    ActionSheelUtil.showMenu(BuhuoMessageInfoActivity.this, "执行选项",
+                                            new String[]{"调货", "回库"}, false, new JFActionSheetMenu.OnActionSheetItemClickListener() {
+                                                @Override
+                                                public void onItemClick(View view, int itemPosition) {
+                                                    switch (itemPosition) {
+                                                        case 0:
+                                                            taskType = 0;
+                                                            tv_newtasktype.setText("新增调货任务");
+                                                            tv_tasktype.setText("机器调货");
+                                                            tv_confirm.setText("确认并生成调货任务");
 
-                                                if (Integer.parseInt(buhuoInfoEntities.get(position).getKu_cun()) <= 0) {
-                                                    Toast.makeText(BuhuoMessageInfoActivity.this, "剩余量为0，不能调货", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    tv_transferMachine.setText(machineEntity.getAddress() + machineEntity.getDetailedinstalladdress());
-                                                    tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
-                                                    tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
-                                                    tv_transferAmount.setText(buhuoInfoEntities.get(position).getKu_cun().toString());
-                                                    tv_selectMachine.setVisibility(View.VISIBLE);
-                                                    gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
+                                                            tv_transferMachine.setText(machineEntity.getDetailedinstalladdress());
+                                                            tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
+                                                            tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
+                                                            mRl_sm.setVisibility(View.VISIBLE);
+                                                            gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
 
-                                                    if (drawerLayout.isDrawerOpen(navigationView)) {
-                                                        drawerLayout.closeDrawer(navigationView);
-                                                    } else {
-                                                        drawerLayout.openDrawer(navigationView);
-//                                                        //监听RecyclerView滚动状态
-//                                                        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//                                                            @Override
-//                                                            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                                                                super.onScrollStateChanged(recyclerView, newState);
-//                                                                if (recyclerView.getLayoutManager() != null) {
-//                                                                    LinearLayoutManager layoutManager = (LinearLayoutManager) rv.getLayoutManager();
-//                                                                    //获取可视的第一个view
-//                                                                    View topView = layoutManager.getChildAt(0);
-//                                                                    if (topView != null) {
-//                                                                        //得到该View的数组位置
-//                                                                        mIndex = layoutManager.getPosition(topView);
-//                                                                    }
-//                                                                }
-//                                                            }
-//                                                        });
+                                                            if (drawerLayout.isDrawerOpen(navigationView)) {
+                                                                drawerLayout.closeDrawer(navigationView);
+
+                                                            } else {
+                                                                drawerLayout.openDrawer(navigationView);
+                                                            }
+                                                            break;
+
+                                                        case 1:
+                                                            taskType = 1;
+                                                            tv_newtasktype.setText("新增回库任务");
+                                                            tv_tasktype.setText("商品回库");
+                                                            tv_confirm.setText("提交回库请求");
+                                                            tv_transferMachine.setText(machineEntity.getDetailedinstalladdress());
+                                                            tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
+                                                            tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
+                                                            mRl_sm.setVisibility(View.GONE);
+                                                            gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
+
+                                                            if (drawerLayout.isDrawerOpen(navigationView)) {
+                                                                drawerLayout.closeDrawer(navigationView);
+                                                            } else {
+                                                                drawerLayout.openDrawer(navigationView);
+                                                            }
+
+                                                            break;
                                                     }
                                                 }
 
-                                            }
-                                        })
-                                        .setNegativeButton("回库任务", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                taskType = 1;
-                                                tv_newtasktype.setText("新增回库任务");
-                                                tv_tasktype.setText("机器退回");
-                                                if (Integer.parseInt(buhuoInfoEntities.get(position).getKu_cun()) <= 0) {
-                                                    Toast.makeText(BuhuoMessageInfoActivity.this, "剩余量为0，不能回库", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    tv_transferMachine.setText(machineEntity.getAddress() + machineEntity.getDetailedinstalladdress());
-                                                    tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
-                                                    tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
-                                                    tv_transferAmount.setText(buhuoInfoEntities.get(position).getKu_cun().toString());
-                                                    tv_selectMachine.setVisibility(View.GONE);
-                                                    gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
+                                                @Override
+                                                public void onCanceClick(View view) {
 
-                                                    if (drawerLayout.isDrawerOpen(navigationView)) {
-                                                        drawerLayout.closeDrawer(navigationView);
-                                                    } else {
-                                                        drawerLayout.openDrawer(navigationView);
-                                                    }
                                                 }
-                                            }
-                                        })
-                                        .create();
-                                dialog.show();
-                                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
-                                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextSize(16);
-                                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextSize(16);
-                                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLUE);
-
+                                            });
+                                }
                             }
+
+
                         });
                         rv.setAdapter(buhuoMessageInfoAdapter);
 
@@ -315,7 +439,10 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 //                            buhuoMessageInfoAdapter.notifyDataSetChanged();
 //                        }
 
-                    } catch (JSONException e) {
+                    } catch (
+                            JSONException e)
+
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -335,9 +462,13 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         drawerLayout = findViewById(R.id.activity_navigation);
         navigationView = findViewById(R.id.nav);
         tv_selectMachine = findViewById(R.id.tv_selectMachine);
+        mBtn_selectMachine = findViewById(R.id.btn_selectMachine);
         tv_confirm = findViewById(R.id.tv_confirm);
+        mRl_sm = findViewById(R.id.rl_sm);
 
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+
 //关闭手势滑动
 //        mDrawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 //打开手势滑动
@@ -346,35 +477,79 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 drawerLayout.closeDrawer(navigationView);
+
                 return true;
             }
         });
 
+
         tv_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int after = Integer.parseInt(tv_transferAmount.getText().toString());
+                int after = tv_transferAmount.getText().toString().equals("") ? 0 : Integer.parseInt(tv_transferAmount.getText().toString());
                 int before = Integer.parseInt(tv_transferAmountbefore.toString());
-                switch (taskType) {
-                    case 0:
 
-                        if (after > before) {
-                            Toast.makeText(getApplicationContext(), "调离量不能大于库存量", Toast.LENGTH_SHORT).show();
-                        } else {
-                            //   生成调货任务
-                            machineTask();
-                        }
-                        break;
-                    case 1:
-                        if (after > before) {
-                            Toast.makeText(getApplicationContext(), "回库量不能大于库存量", Toast.LENGTH_SHORT).show();
-                        } else {
-                            //   机器回库任务
-                            backGoods();
-                        }
-                        break;
-                    default:
-                        break;
+                if (after > before || after == 0) {
+                    Toast.makeText(getApplicationContext(), "填写数量不在规定范围内", Toast.LENGTH_SHORT).show();
+                } else {
+                    switch (taskType) {
+                        case 0:
+                            if (mBtn_selectMachine.getText().toString().equals("")) {
+                                Toast.makeText(getApplicationContext(), "请选择目标机器", Toast.LENGTH_SHORT).show();
+                            } else {
+                                AlertDialog dialog = new AlertDialog.Builder(BuhuoMessageInfoActivity.this)
+                                        .setMessage("是否确认本次调货操作?")//设置对话框的内容
+                                        //设置对话框的按钮
+                                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                //   生成调货任务
+                                                machineTask();
+                                                dialog.dismiss();
+                                            }
+                                        }).create();
+                                dialog.show();
+                            }
+                            break;
+                        case 1:
+                            AlertDialog dialog1 = new AlertDialog.Builder(BuhuoMessageInfoActivity.this)
+
+                                    .setMessage("是否确认本次回库操作?")//设置对话框的内容
+                                    //设置对话框的按钮
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if (after > before) {
+                                                Toast.makeText(getApplicationContext(), "填写数量不在规定范围内", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                //   机器回库任务
+                                                backGoods();
+                                            }
+                                            dialog.dismiss();
+                                        }
+                                    }).create();
+                            dialog1.show();
+
+
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
 
@@ -389,31 +564,50 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 //        shangpinname     商品名称
 //        huikunumber      回库数量
 //        machine_no       机器编号
-
         String[] splitgoods = tv_arrangingGoods.getText().toString().split("-");
+        String guigename;
+        String shangpinname;
+
+        if (sType.equals("未售")) {
+            guigename= splitgoods[1];
+            shangpinname=splitgoods[0];
+        } else {
+            guigename= splitgoods[1];
+            shangpinname=splitgoods[2];
+        }
+
         RequestParams params = new RequestParams();
         params.put("guigeid", gui_ge_id);
-        params.put("guigename", splitgoods[1]);
-        params.put("shangpinname", splitgoods[2]);
+        params.put("guigename", guigename);
+        params.put("shangpinname", shangpinname);
         params.put("huikunumber", tv_transferAmount.getText().toString());
-        params.put("machine_no",buhuoMessageEntity.getMachinenumber());
+        params.put("machine_no", buhuoMessageEntity.getMachinenumber());
         httpUtils.doPost(Urls.backGoods(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
 
             @Override
             public void onSuccess(Gson gson, Object result) {
                 Toast.makeText(getApplicationContext(), "回库成功", Toast.LENGTH_SHORT).show();
                 drawerLayout.closeDrawer(navigationView);
-                getdata();
-
+                if (sType.equals("未售")) {
+                    getUnsoldGoods();
+                } else {
+                    getdata();
+                }
             }
         });
-
     }
 
     //调货
     private void machineTask() {
         String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         String[] splitgoods = tv_arrangingGoods.getText().toString().split("-");
+        String vvval1_mkl;
+        if (sType.equals("未售")) {
+            vvval1_mkl=tv_arrangingGoods.getText().toString();
+        } else {
+            vvval1_mkl=splitgoods[2] + "-" + splitgoods[1];
+        }
+
 
         RequestParams params = new RequestParams();
 //       当前详情面机器编号 LJ-010-04-001-001
@@ -424,7 +618,9 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 //       调货至某台机器上, 机器列表中手动选中的机器
         params.put("machine_tt_mtl", selectNum);
 //       商品规格全称, 商品名-规格名
-        params.put("vvval1_mkl", splitgoods[2] + "-" + splitgoods[1]);
+        params.put("vvval1_mkl", vvval1_mkl);
+
+
 //       调货的数量, 最小值是壹(1),最大值是当前所选商品规格柜子库存剩余量
         params.put("iiint1_mkl", tv_transferAmount.getText().toString());
 //        {登录返回的adminGroupID}
@@ -435,13 +631,16 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             public void onSuccess(Gson gson, Object result) {
                 Toast.makeText(getApplicationContext(), "调货成功", Toast.LENGTH_SHORT).show();
                 drawerLayout.closeDrawer(navigationView);
-                getdata();
-//                buhuoMessageInfoAdapter.notifyDataSetChanged();
-//                move(mIndex);
-
+                if (sType.equals("未售")) {
+                    getUnsoldGoods();
+                } else {
+                    getdata();
+                }
             }
         });
     }
+
+    boolean b = true;
 
     private void getAllMachineData() {
 
@@ -478,32 +677,46 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                     for (int i = 0; i < list_sum2.size(); i++) {
                         machinename.add(list_sum2.get(i).getMachinename());
                     }
-                    new Thread() {
-                        public void run() {
-                            //更新ui
-                            handler.post(runnableUi);
-                        }
-                    }.start();
 
-                    tv_selectMachine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+                    mBtn_selectMachine.setOnClickListener(new View.OnClickListener() {
+                        @SuppressLint("Range")
                         @Override
-                        public void onItemSelected(AdapterView<?> parent, View view,
-                                                   int position, long id) {
-                            //拿到被选择项的值
-                            String selectedItem = (String) tv_selectMachine.getSelectedItem();
-                            for (int i = 0; i < list_sum2.size(); i++) {
-                                if (selectedItem.equals(list_sum2.get(i).getMachinename())) {
-                                    selectNum = list_sum2.get(i).getMachinenumber();
+                        public void onClick(View v) {
+
+                            int[] location = new int[machinename.size()];
+                            mBtn_selectMachine.getLocationOnScreen(location);
+
+                            final ListViewPopuWindow popupWindow = new ListViewPopuWindow(
+                                    BuhuoMessageInfoActivity.this, machinename, ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT, 0);//这里的最后一个参数是popupWindow的背景
+                            popupWindow.setOnMyItemClickListener(new ListViewPopuWindow.MyClickListener() {
+                                @Override
+                                public void ItemClick(int index, String str) {
+                                    mBtn_selectMachine.setText(str);
+                                    String selectedItem = (String) mBtn_selectMachine.getText();
+                                    for (int i = 0; i < list_sum2.size(); i++) {
+                                        if (selectedItem.equals(list_sum2.get(i).getMachinename())) {
+                                            selectNum = list_sum2.get(i).getMachinenumber();
+                                        }
+                                    }
+                                    popupWindow.dismiss();
                                 }
-                            }
-                        }
+                            });
+                            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                            // TODO Auto-generated method stub
+                                @Override
+                                public void onDismiss() {
+                                    //处理popupWindow消失时处理的事情
+                                }
+                            });
+                            popupWindow.showAtLocation(mBtn_selectMachine, Gravity.NO_GRAVITY,
+                                    location[0], location[1] + mBtn_selectMachine.getHeight());
+
                         }
                     });
+
+
                 }
             }
         });

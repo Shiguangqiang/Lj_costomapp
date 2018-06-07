@@ -32,7 +32,6 @@ class VipStatistDetail2Activity : BaseActivity() {
     private var rightdate: String? = SgqUtils.getNowDate()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vipdetail2_statist)

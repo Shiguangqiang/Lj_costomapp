@@ -90,10 +90,8 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
                     for (int i = 0; i < list.size(); i++) {
                         if (list.get(i).getNotRepairCount() > 0) {
                             size += list.get(i).getNotRepairCount();
-
                         }
                     }
-
                     if (size == 0) {
                         imgRedlittle.setVisibility(View.GONE);
                     } else {
@@ -113,7 +111,6 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
     private void init() {
         back.setText("退出登录");
         middleTitle.setText("管理客户端");
-
 
         //页面，数据源
         list = new ArrayList<>();

@@ -19,7 +19,6 @@ import java.util.*
  */
 class VipScreenActivity : AppCompatActivity() {
 
-
     private var huiyuantype: String? = "0"
     private var iskaitong: String? = "1"
     private var leftdate: String? = SgqUtils.getNowDate()
@@ -73,12 +72,15 @@ class VipScreenActivity : AppCompatActivity() {
             }
         }
 
-        //0 全部   1 周会员  2 全部会员
+        //0 全部   1 月会员  2 年会员  3 季度会员   4  半年会员
         rg_date.setOnCheckedChangeListener { radioGroup, i ->
             when (radioGroup.checkedRadioButtonId) {
                 R.id.rb_all -> huiyuantype = "0"
-                R.id.rb_week -> huiyuantype = "1"
-                R.id.rb_mouth -> huiyuantype = "2"
+                R.id.rb_mouth -> huiyuantype = "1"
+                R.id.rb_year -> huiyuantype = "2"
+                R.id.rb_quarterly -> huiyuantype = "3"
+                R.id.rb_halfOfAYear -> huiyuantype = "4"
+
             }
         }
 

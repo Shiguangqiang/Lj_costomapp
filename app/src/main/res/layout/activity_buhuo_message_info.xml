@@ -84,19 +84,34 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-
             android:background="@drawable/fangkuai"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:gravity="center_vertical"
-                android:paddingStart="10dp"
-                android:text="机器货道状态:"
-                android:textColor="#333"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    android:text="机器货道状态:"
+                    android:textColor="#333"
+                    android:textSize="18sp" />
+
+                <ToggleButton
+                    android:id="@+id/btn_toggleFiltering"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:textColor="#333"
+                    android:textOff="未售商品"
+                    android:textOn="在售商品"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -117,6 +132,7 @@
                     android:background="#999999" />
 
                 <TextView
+                    android:id="@+id/tv_shelfForSale"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -135,6 +151,8 @@
                     android:gravity="center"
                     android:text="侧柜剩余量" />
             </LinearLayout>
+
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/buhuoinforv"
@@ -212,24 +230,54 @@
                 style="?android:attr/textViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="@dimen/pad_height_20"
+                android:layout_marginLeft="@dimen/pad_height_20"
+                android:layout_marginRight="@dimen/pad_height_20"
+                android:layout_marginTop="@dimen/pad_height_20"
                 android:background="@color/F4"
                 android:gravity="center"
-                android:hint="调离量"
+                android:hint="--选择物品数量--"
                 android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <Spinner
-                android:id="@+id/tv_selectMachine"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="@dimen/pad_height_20"
+                android:layout_marginRight="@dimen/pad_height_20"
+                android:gravity="center"
+                android:text="最大值为所选商品的剩余量,最小值需大于零"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_sm"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="@dimen/pad_height_20"
-                android:background="@color/F4"
-                android:gravity="center"
-                android:text="选择机器"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:background="@color/white">
+
+                <Button
+                    android:id="@+id/btn_selectMachine"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="选择机器"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <Spinner
+                    android:id="@+id/tv_selectMachine"
+                    style="?android:attr/spinnerDropDownItemStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="选择机器"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/tv_confirm"

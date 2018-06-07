@@ -174,20 +174,22 @@
             </RadioGroup>
 
 
-            <RadioGroup
+            <com.defence.costomapp.utils.view.MyRadioGroup
                 android:id="@+id/rg_date"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pad_height_50"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pad_height_20"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rb_all"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/pad_height_96"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
                     android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_marginTop="@dimen/pad_height_6"
                     android:layout_weight="1"
                     android:checked="true"
                     android:gravity="center"
@@ -195,27 +197,73 @@
                     android:textSize="@dimen/pad_text_size_16" />
 
                 <RadioButton
-                    android:id="@+id/rb_week"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/rb_mouth"
+                    android:layout_width="@dimen/pad_height_96"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
                     android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_marginTop="@dimen/pad_height_6"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="周会员"
+                    android:text="月 会 员"
                     android:textSize="@dimen/pad_text_size_16" />
 
                 <RadioButton
-                    android:id="@+id/rb_mouth"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/rb_year"
+                    android:layout_width="@dimen/pad_height_96"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
                     android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_marginTop="@dimen/pad_height_6"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="年会员"
+                    android:text="年 会 员"
                     android:textSize="@dimen/pad_text_size_16" />
-            </RadioGroup>
+
+
+                <RadioButton
+                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pad_height_6"
+                    android:layout_marginLeft="@dimen/pad_height_20"
+                    android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_marginTop="@dimen/pad_height_6"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="      " />
+
+                <RadioButton
+                    android:id="@+id/rb_quarterly"
+                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pad_height_6"
+                    android:layout_marginLeft="@dimen/pad_height_20"
+                    android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_marginTop="@dimen/pad_height_6"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="季度会员"
+                    android:textSize="@dimen/pad_text_size_16" />
+
+
+                <RadioButton
+                    android:id="@+id/rb_halfOfAYear"
+                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pad_height_6"
+                    android:layout_marginLeft="@dimen/pad_height_20"
+                    android:layout_marginRight="@dimen/pad_height_20"
+                    android:layout_marginTop="@dimen/pad_height_6"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="半年会员"
+                    android:textSize="@dimen/pad_text_size_16" />
+
+
+            </com.defence.costomapp.utils.view.MyRadioGroup>
 
 
             <TextView

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buhuoinfoll"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/fangkuai">
+
+
+    <TextView
+        android:id="@+id/huodao"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#333333" />
+
+    <ImageView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#999999" />
+
+    <TextView
+        android:id="@+id/buhuoinfokucun"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#333333" />
+</LinearLayout>
+

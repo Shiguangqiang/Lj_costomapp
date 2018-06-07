@@ -250,7 +250,8 @@
             android:name=".activity.WebViewActivity"
             android:configChanges="orientation|keyboard"
             android:launchMode="standard"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.Main2Activity"></activity>
     </application>
 
 </manifest>

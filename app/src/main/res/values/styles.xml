@@ -24,4 +24,9 @@
     </style>
 
     <style name="TranslucentTheme" parent="AppTheme.NoActionBar"></style>
+    <!--自定义listViewPopuWindoew动画-->
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popupwindow_show</item>
+        <item name="android:windowExitAnimation">@anim/popupwindow_gone</item>
+    </style>
 </resources>

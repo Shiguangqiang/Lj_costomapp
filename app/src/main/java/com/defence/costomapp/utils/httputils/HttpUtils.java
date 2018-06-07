@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.TextView;
 
 
 import com.defence.costomapp.app.MyApplication;
@@ -19,12 +20,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 
 
 public class HttpUtils {
-
     private AsyncHttpClient client;
     private ProgressDialog pd;
     private Context context;

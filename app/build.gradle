@@ -3,6 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+
+    signingConfigs {
+        myConfig {
+            keyAlias 'defence'
+            keyPassword 'difansi123'
+            storeFile file('D:/jks/Defence')
+            storePassword 'difansi123'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.defence.costomapp"
@@ -11,6 +20,12 @@ android {
         versionCode 24
         versionName "1.24"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    /*解决打包问题*/
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
     defaultConfig {
         ndk {
