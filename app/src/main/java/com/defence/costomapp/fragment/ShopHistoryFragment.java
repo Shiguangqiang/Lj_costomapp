@@ -97,7 +97,7 @@ public class ShopHistoryFragment extends BaseFragment {
         httpUtils.doPost(Urls.shophistory(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
 
                 Sdate = date;
                 srl.setRefreshing(false);

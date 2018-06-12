@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +21,7 @@ import com.defence.costomapp.utils.SgqUtils
 import com.defence.costomapp.utils.httputils.HttpInterface
 import com.google.gson.Gson
 import com.loopj.android.http.RequestParams
-import kotlinx.android.synthetic.main.activity_vipdetail3_statist.*
 import org.json.JSONException
-import org.json.JSONObject
 import java.util.ArrayList
 
 /**
@@ -103,7 +100,7 @@ class TabVip4Fragment : BaseFragment() {
         httpUtils.doPost(Urls.machineStatics(), SgqUtils.TONGJI_TYPE, params, object : HttpInterface() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Throws(JSONException::class)
-            override fun onSuccess(gson: Gson, result: Any?) {
+            override fun onSuccess(gson: Gson, result: Any, message: String) {
 
                 srl!!.isRefreshing = false
                 srl!!.setLoading(false)

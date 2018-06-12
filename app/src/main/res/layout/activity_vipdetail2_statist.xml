@@ -33,10 +33,13 @@
             android:textColor="@color/black"
             android:textSize="@dimen/pad_text_size_16" />
 
-        <View
+        <TextView
+            android:id="@+id/tv_filterConditions"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:paddingLeft="@dimen/pad_height_10"
+            android:layout_weight="1"
+            android:textSize="@dimen/pad_text_size_16" />
 
         <TextView
             android:id="@+id/tv_vipnum"
@@ -64,22 +67,27 @@
             android:text="手机号"
             android:textSize="@dimen/pad_text_size_16" />
 
-        <TextView
+        <ToggleButton
+            android:id="@+id/tv_memberStarts"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:gravity="center"
-            android:text="会员开始日期"
+            android:textOff="会员开始日期"
+            android:textOn="会员开始日期"
             android:textSize="@dimen/pad_text_size_16" />
 
-        <TextView
+        <ToggleButton
+            android:id="@+id/tv_memberExpires"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@null"
             android:gravity="center"
-            android:text="会员到期日期"
+            android:textOff="会员到期日期"
+            android:textOn="会员到期日期"
             android:textSize="@dimen/pad_text_size_16" />
-
 
     </LinearLayout>
 

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
@@ -24,8 +23,6 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +71,7 @@ public class TkMachinListActivity extends BaseActivity {
 
         httpUtils.doPost(Urls.dingdtuikuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TuikuanMachineBean tuikuanMachineBean = gson.fromJson(jsonObject.toString(), TuikuanMachineBean.class);
                 mAdapter = new TkSelectAdapter(tuikuanMachineBean.getList(), "machine");

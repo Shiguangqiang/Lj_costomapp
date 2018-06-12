@@ -4,29 +4,29 @@ package com.defence.costomapp.activity.buhuo;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -39,27 +39,25 @@ import com.amap.api.maps2d.UiSettings;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.maps2d.model.Text;
-import com.bumptech.glide.util.ExceptionCatchingInputStream;
 import com.defence.actionsheetmenumlib.JFActionSheetMenu;
-
 import com.defence.costomapp.R;
+import com.defence.costomapp.activity.WebViewActivity;
 import com.defence.costomapp.adapter.BuhuoCeguiGoodsAdapter;
 import com.defence.costomapp.adapter.BuhuoMessageInfoAdapter;
 import com.defence.costomapp.base.BaseActivity;
+import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.AllMachineBean;
 import com.defence.costomapp.bean.BuhuoInfoEntity;
 import com.defence.costomapp.bean.BuhuoMessageEntity;
 import com.defence.costomapp.bean.CeGuiGoodsBean;
 import com.defence.costomapp.bean.MachineEntity;
+import com.defence.costomapp.myinterface.RVItemClickListener;
+import com.defence.costomapp.utils.APPUtils;
+import com.defence.costomapp.utils.ActionSheelUtil;
 import com.defence.costomapp.utils.DividerItemDecoration;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
-import com.defence.costomapp.base.Urls;
-import com.defence.costomapp.myinterface.RVItemClickListener;
-import com.defence.costomapp.utils.APPUtils;
-import com.defence.costomapp.utils.ActionSheelUtil;
 import com.defence.costomapp.utils.view.ListViewPopuWindow;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
@@ -74,6 +72,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -90,6 +91,8 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     String selectNum = "";
     //    任务类型   0调货   1回库
     int taskType = 0;
+    @BindView(R.id.fab_detail)
+    FloatingActionButton fabDetail;
     private BuhuoMessageEntity buhuoMessageEntity;
     private int alarmStock;
     private MachineEntity machineEntity;
@@ -101,22 +104,9 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     //侧滑菜单
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private Spinner tv_selectMachine;
+    private EditText tv_returnLibraryDescription;
     private ArrayAdapter<String> arr_adapter;
-    // 构建Runnable对象，在runnable中更新界面
-    Runnable runnableUi = new Runnable() {
-        //更新界面
-        @Override
-        public void run() {
-            //适配器
-            arr_adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, machinename);
-            //设置样式
-            arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            //加载适配器
-            tv_selectMachine.setAdapter(arr_adapter);
 
-        }
-    };
     private int mIndex = 0;//位置
     private boolean move = false;
     private TextView tv_newtasktype, tv_tasktype, tv_transferMachine, tv_arrangingGoods, tv_transferAmount;
@@ -135,6 +125,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buhuo_message_info);
+        ButterKnife.bind(this);
         //获取地图控件引用
         mMapView = findViewById(R.id.map);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
@@ -156,6 +147,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                 super.onDrawerClosed(drawerView);
                 tv_transferAmount.setText("");
                 mBtn_selectMachine.setText("");
+                tv_returnLibraryDescription.setText("");
 
             }
 
@@ -196,7 +188,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                 params.put("itemNo", "");
                 httpUtils.doPost(Urls.setBuhuoMessageRead(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
                     @Override
-                    public void onSuccess(Gson gson, Object result) {
+                    public void onSuccess(Gson gson, Object result, String message) {
                         BuhuoMessageActivity.handler.sendEmptyMessage(1);
                     }
                 });
@@ -242,7 +234,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         params.put("machineID", buhuoMessageEntity.getId());
         httpUtils.doPost(Urls.getCeguiGoods(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 JSONObject jb = (JSONObject) result;
                 CeGuiGoodsBean ceGuiGoodsBean = gson.fromJson(jb.toString(), CeGuiGoodsBean.class);
 
@@ -268,7 +260,9 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                                                     tv_transferMachine.setText(machineEntity.getDetailedinstalladdress());
                                                     tv_arrangingGoods.setText(ceGuiGoodsBean.getList().get(position).getShangpin_name());
                                                     tv_transferAmountbefore = (ceGuiGoodsBean.getList().get(position).getKu_cun() + "");
-                                                    mRl_sm.setVisibility(View.VISIBLE);
+//                                                    mRl_sm.setVisibility(View.VISIBLE);
+                                                    mBtn_selectMachine.setVisibility(View.VISIBLE);
+                                                    tv_returnLibraryDescription.setVisibility(View.GONE);
 
                                                     gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id() + "";
 
@@ -288,8 +282,12 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                                                     tv_transferMachine.setText(machineEntity.getDetailedinstalladdress());
                                                     tv_arrangingGoods.setText(ceGuiGoodsBean.getList().get(position).getShangpin_name());
                                                     tv_transferAmountbefore = ceGuiGoodsBean.getList().get(position).getKu_cun() + "";
-                                                    mRl_sm.setVisibility(View.GONE);
-                                                    gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id()+"";
+//                                                    mRl_sm.setVisibility(View.GONE);
+
+                                                    mBtn_selectMachine.setVisibility(View.GONE);
+                                                    tv_returnLibraryDescription.setVisibility(View.VISIBLE);
+
+                                                    gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id() + "";
 
                                                     if (drawerLayout.isDrawerOpen(navigationView)) {
                                                         drawerLayout.closeDrawer(navigationView);
@@ -323,7 +321,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             params.put("machineID", buhuoMessageEntity.getId());
             httpUtils.doPost(Urls.getBuhuoMessageInfo(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
                 @Override
-                public void onSuccess(Gson gson, Object result) {
+                public void onSuccess(Gson gson, Object result, String message) {
                     JSONObject jb = (JSONObject) result;
                     try {
                         alarmStock = jb.getInt("alarmStock");
@@ -391,7 +389,9 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                                                             tv_transferMachine.setText(machineEntity.getDetailedinstalladdress());
                                                             tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
                                                             tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
-                                                            mRl_sm.setVisibility(View.VISIBLE);
+//                                                            mRl_sm.setVisibility(View.VISIBLE);
+                                                            mBtn_selectMachine.setVisibility(View.VISIBLE);
+                                                            tv_returnLibraryDescription.setVisibility(View.GONE);
                                                             gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
 
                                                             if (drawerLayout.isDrawerOpen(navigationView)) {
@@ -410,7 +410,9 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                                                             tv_transferMachine.setText(machineEntity.getDetailedinstalladdress());
                                                             tv_arrangingGoods.setText(buhuoInfoEntities.get(position).getLatticenumbers() + "-" + buhuoInfoEntities.get(position).getDescVal() + "-" + buhuoInfoEntities.get(position).getShowName());
                                                             tv_transferAmountbefore = buhuoInfoEntities.get(position).getKu_cun().toString();
-                                                            mRl_sm.setVisibility(View.GONE);
+//                                                            mRl_sm.setVisibility(View.GONE);
+                                                            mBtn_selectMachine.setVisibility(View.GONE);
+                                                            tv_returnLibraryDescription.setVisibility(View.VISIBLE);
                                                             gui_ge_id = buhuoInfoEntities.get(position).getGui_ge_id();
 
                                                             if (drawerLayout.isDrawerOpen(navigationView)) {
@@ -418,7 +420,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                                                             } else {
                                                                 drawerLayout.openDrawer(navigationView);
                                                             }
-
                                                             break;
                                                     }
                                                 }
@@ -430,8 +431,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                                             });
                                 }
                             }
-
-
                         });
                         rv.setAdapter(buhuoMessageInfoAdapter);
 
@@ -461,7 +460,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         tv_transferAmount = findViewById(R.id.tv_transferAmount);
         drawerLayout = findViewById(R.id.activity_navigation);
         navigationView = findViewById(R.id.nav);
-        tv_selectMachine = findViewById(R.id.tv_selectMachine);
+        tv_returnLibraryDescription = findViewById(R.id.tv_returnLibraryDescription);
         mBtn_selectMachine = findViewById(R.id.btn_selectMachine);
         tv_confirm = findViewById(R.id.tv_confirm);
         mRl_sm = findViewById(R.id.rl_sm);
@@ -567,13 +566,14 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         String[] splitgoods = tv_arrangingGoods.getText().toString().split("-");
         String guigename;
         String shangpinname;
+        String remark = TextUtils.isEmpty(tv_returnLibraryDescription.getText().toString()) ? "" : tv_returnLibraryDescription.getText().toString();
 
         if (sType.equals("未售")) {
-            guigename= splitgoods[1];
-            shangpinname=splitgoods[0];
+            guigename = splitgoods[1];
+            shangpinname = splitgoods[0];
         } else {
-            guigename= splitgoods[1];
-            shangpinname=splitgoods[2];
+            guigename = splitgoods[1];
+            shangpinname = splitgoods[2];
         }
 
         RequestParams params = new RequestParams();
@@ -582,11 +582,12 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         params.put("shangpinname", shangpinname);
         params.put("huikunumber", tv_transferAmount.getText().toString());
         params.put("machine_no", buhuoMessageEntity.getMachinenumber());
+        params.put("beizhu", remark);
         httpUtils.doPost(Urls.backGoods(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) {
-                Toast.makeText(getApplicationContext(), "回库成功", Toast.LENGTH_SHORT).show();
+            public void onSuccess(Gson gson, Object result, String message) {
+                Toast.makeText(getApplicationContext(), "操作成功", Toast.LENGTH_SHORT).show();
                 drawerLayout.closeDrawer(navigationView);
                 if (sType.equals("未售")) {
                     getUnsoldGoods();
@@ -603,11 +604,10 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         String[] splitgoods = tv_arrangingGoods.getText().toString().split("-");
         String vvval1_mkl;
         if (sType.equals("未售")) {
-            vvval1_mkl=tv_arrangingGoods.getText().toString();
+            vvval1_mkl = tv_arrangingGoods.getText().toString();
         } else {
-            vvval1_mkl=splitgoods[2] + "-" + splitgoods[1];
+            vvval1_mkl = splitgoods[2] + "-" + splitgoods[1];
         }
-
 
         RequestParams params = new RequestParams();
 //       当前详情面机器编号 LJ-010-04-001-001
@@ -620,7 +620,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 //       商品规格全称, 商品名-规格名
         params.put("vvval1_mkl", vvval1_mkl);
 
-
 //       调货的数量, 最小值是壹(1),最大值是当前所选商品规格柜子库存剩余量
         params.put("iiint1_mkl", tv_transferAmount.getText().toString());
 //        {登录返回的adminGroupID}
@@ -628,7 +627,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         httpUtils.doPost(Urls.machineTask(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 Toast.makeText(getApplicationContext(), "调货成功", Toast.LENGTH_SHORT).show();
                 drawerLayout.closeDrawer(navigationView);
                 if (sType.equals("未售")) {
@@ -786,6 +785,11 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.fab_detail)
+    public void onViewClicked() {
+        startActivity(new Intent(BuhuoMessageInfoActivity.this, WebViewActivity.class));
+    }
+
     class RecyclerViewListener extends RecyclerView.OnScrollListener {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -806,5 +810,4 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             super.onScrolled(recyclerView, dx, dy);
         }
     }
-
 }

@@ -101,7 +101,10 @@ public class BeepManager implements MediaPlayer.OnCompletionListener, MediaPlaye
                 file.close();
             }
             mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
-            mediaPlayer.prepare();
+            if(mediaPlayer!=null){
+                mediaPlayer.prepare();
+            }
+
             return mediaPlayer;
         } catch (IOException ioe) {
             Log.w(TAG, ioe);

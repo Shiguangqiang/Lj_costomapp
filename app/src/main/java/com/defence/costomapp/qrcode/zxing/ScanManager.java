@@ -45,7 +45,7 @@ public class ScanManager implements SurfaceHolder.Callback {
     PhotoScanHandler photoScanHandler;
     Rect mCropRect = null;
     InactivityTimer inactivityTimer;
-    public BeepManager beepManager;
+//    public BeepManager beepManager;
     SurfaceView scanPreview = null;
     View scanContainer;
     View scanCropView;
@@ -104,7 +104,7 @@ public class ScanManager implements SurfaceHolder.Callback {
         // wrong size and partially
         // off screen.
         inactivityTimer = new InactivityTimer(activity);
-        beepManager = new BeepManager(activity);
+//        beepManager = new BeepManager(activity);
         cameraManager = new CameraManager(activity.getApplicationContext());
 
         handler = null;
@@ -127,7 +127,7 @@ public class ScanManager implements SurfaceHolder.Callback {
             handler = null;
         }
         inactivityTimer.onPause();
-        beepManager.close();
+//        beepManager.close();
         cameraManager.closeDriver();
         if (!isHasSurface) {
             scanPreview.getHolder().removeCallback(this);
@@ -224,7 +224,7 @@ public class ScanManager implements SurfaceHolder.Callback {
     public void handleDecode(Result rawResult, Bundle bundle) {
         inactivityTimer.onActivity();
         //扫描成功播放声音滴一下，可根据需要自行确定什么时候播
-        beepManager.playBeepSoundAndVibrate();
+//        beepManager.playBeepSoundAndVibrate();
         bundle.putInt("width", mCropRect.width());
         bundle.putInt("height", mCropRect.height());
         bundle.putString("result", rawResult.getText());

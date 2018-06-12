@@ -167,7 +167,9 @@
         <!-- 用户统计 -->
         <activity
             android:name=".activity.statistics.UserTjNewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
         <!-- 用户统计详情 -->
         <activity
             android:name=".activity.statistics.UserTjDetailActivity"

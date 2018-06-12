@@ -20,13 +20,10 @@ import com.amap.api.maps2d.UiSettings;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.defence.actionsheetmenumlib.JFActionSheetMenu;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.DingdDetailBean;
-import com.defence.costomapp.utils.APPUtils;
-import com.defence.costomapp.utils.ActionSheelUtil;
 import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
@@ -34,7 +31,6 @@ import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -115,7 +111,7 @@ public class DingdanDetailActivity extends BaseActivity {
         httpUtils.doPost(Urls.dingdandetail(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 final DingdDetailBean.DataBean dingdDetailBean = gson.fromJson(jsonObject.toString(), DingdDetailBean.DataBean.class);
                 tvAddress.setText(dingdDetailBean.getMachine_data().getDetailedinstalladdress());
@@ -285,7 +281,7 @@ public class DingdanDetailActivity extends BaseActivity {
         httpUtils.doPost(Urls.dingdantuikuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 liearDaichuhuo.setVisibility(View.GONE);
                 tvState.setText("退款成功");

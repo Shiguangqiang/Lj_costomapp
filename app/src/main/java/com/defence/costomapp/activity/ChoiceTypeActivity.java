@@ -42,8 +42,6 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.jpush.android.api.JPushInterface;
-
 /**
  * 选择
  */
@@ -58,7 +56,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
     public static final int MANAGER_TYPE = 10100;
     private static final int BAIDU_READ_PHONE_STATE = 100;
     //统计
-    private final int TONGJI_TYPE = 10110;
+    private static final int TONGJI_TYPE = 10110;
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
@@ -180,7 +178,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         params.put("versionInt", versionCode);
         httpUtils.doPost(Urls.checkNewVersion(), type, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());
 
@@ -278,6 +276,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
             case R.id.buhuoll:
                 type = BUHUO_TYPE;
                 intent.putExtra("loginType", BUHUO_TYPE + "");
+                startActivity(intent);
 //                SharePerenceUtil.putIntValuetoSp("loginT",BUHUO_TYPE);
                 break;
 //            case R.id.liear_saoma:
@@ -288,40 +287,39 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
             case R.id.tongji:
                 type = TONGJI_TYPE;
                 intent.putExtra("loginType", TONGJI_TYPE + "");
+                startActivity(intent);
                 break;
             case R.id.kefull:
                 break;
             case R.id.guanlill:
                 type = MANAGER_TYPE;
                 intent.putExtra("loginType", MANAGER_TYPE + "");
+                startActivity(intent);
                 break;
         }
 
-
-        switch (type) {
-            case BUHUO_TYPE:
-                //补货页面
-                checkTypeOrLogined(intent, type, BuhuoMessageActivity.class);
-                break;
-            case TONGJI_TYPE:
-                //统计页面
-                checkTypeOrLogined(intent, type, StatisticsActivity.class);
-                break;
-            case MANAGER_TYPE:
-                //管理页面
-                checkTypeOrLogined(intent, type, ManagerActivity.class);
-                break;
-        }
+//
+//        switch (type) {
+//            case BUHUO_TYPE:
+//                //补货页面
+//                checkTypeOrLogined(intent, type, BuhuoMessageActivity.class);
+//                break;
+//            case TONGJI_TYPE:
+//                //统计页面
+//                checkTypeOrLogined(intent, type, StatisticsActivity.class);
+//                break;
+//            case MANAGER_TYPE:
+//                //管理页面
+//                checkTypeOrLogined(intent, type, ManagerActivity.class);
+//                break;
+//        }
 
     }
 
     //检查是否已经登录
     private void checkTypeOrLogined(Intent intent, final int type, final Class<?> clz) {
         String nameAndPsw = SharePerenceUtil.getStringValueFromSp(type + "");
-        boolean booleanValueFromSp = SharePerenceUtil.getBooleanValueFromSp(type + "isLogin");
-//        if(booleanValueFromSp){
-//            startActivity(new Intent(ChoiceTypeActivity.this, LoginActivity.class));
-//        } else
+
         if (!TextUtils.isEmpty(nameAndPsw)) {
             final String userName = nameAndPsw.split("---")[0];
             final String psw = nameAndPsw.split("---")[1];
@@ -331,7 +329,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
 
             httpUtils.doPost(Urls.BuhuoLogin(), type, params, new HttpInterface() {
                 @Override
-                public void onSuccess(Gson gson, Object result) {
+                public void onSuccess(Gson gson, Object result, String message) {
                     try {
                         JSONObject jb = ((JSONObject) result).getJSONObject("data_one");
                         UserInfo userInfo = gson.fromJson(jb.toString(), UserInfo.class);
@@ -340,7 +338,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                         SharePerenceUtil.putStringValuetoSp(type + "", userName + "---" + psw);
                         SharePerenceUtil.putIntValuetoSp("loginType", type);
                         startActivity(new Intent(ChoiceTypeActivity.this, clz));
-                        finish();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -356,7 +353,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                 public void onFailure(Context context) {
                 }
             });
-
 
         } else {
             startActivity(intent);

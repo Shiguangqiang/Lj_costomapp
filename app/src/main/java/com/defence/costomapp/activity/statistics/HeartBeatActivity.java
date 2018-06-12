@@ -22,8 +22,6 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,7 +62,7 @@ public class HeartBeatActivity extends BaseActivity {
         params.put("adminGroupID", groupid);
         httpUtils.doPost(Urls.last(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 LastBean lastBean = gson.fromJson(jsonObject.toString(),  LastBean.class);
                 rvHeartbeat.setAdapter(new LastAdapter(HeartBeatActivity.this,  lastBean.getList()));

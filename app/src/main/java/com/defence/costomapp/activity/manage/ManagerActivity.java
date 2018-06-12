@@ -1,7 +1,6 @@
 package com.defence.costomapp.activity.manage;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,14 +19,12 @@ import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.ChoiceTypeActivity;
-import com.defence.costomapp.activity.statistics.StatisticsActivity;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.MachineBean;
 import com.defence.costomapp.fragment.LogFragment;
 import com.defence.costomapp.fragment.PoliceFragment;
-import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
@@ -80,7 +76,7 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
         params.put("adminGroupID", groupid);
         httpUtils.doPost(Urls.alarmPolice(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
 
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());
@@ -121,7 +117,6 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
         mangerViewpager.setAdapter(adapter);
         //绑定
         mangerTablayout.setupWithViewPager(mangerViewpager);
-
 
 
         SgqUtils.setIndicator(mangerTablayout, 60, 60);

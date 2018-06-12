@@ -3,7 +3,6 @@ package com.defence.costomapp.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.MaciChuNumBean;
-import com.defence.costomapp.bean.ShopHistoryDetailBean;
-import com.defence.costomapp.bean.ShopNumBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
@@ -27,7 +24,6 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,7 +64,7 @@ public class Tab3Fragment extends BaseFragment {
         params.put("orderBy", "2");
         httpUtils.doPost(Urls.macchunum(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 MaciChuNumBean maciChuNumBean = gson.fromJson(jsonObject.toString(), MaciChuNumBean.class);
 

@@ -19,15 +19,11 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.DingdanBean;
-import com.defence.costomapp.bean.UserInfo;
-import com.defence.costomapp.bean.WxpayBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.AmountUtils;
-import com.defence.costomapp.utils.HttpUtils;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
@@ -38,16 +34,11 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class DingdanActivity extends BaseActivity {
 
@@ -123,7 +114,7 @@ public class DingdanActivity extends BaseActivity {
         params.put("status", sstate);
         httpUtils.doPost(Urls.dingdan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 srl.setRefreshing(false);
                 srl.setLoading(false);
                 JSONObject jsonObject = new JSONObject(result.toString());

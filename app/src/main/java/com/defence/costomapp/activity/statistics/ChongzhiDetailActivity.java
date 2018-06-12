@@ -12,14 +12,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.ChongzhiDetailBean;
-import com.defence.costomapp.bean.ShopHistoryDetailBean;
-import com.defence.costomapp.fragment.ShopHistoryFragment;
 import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.DateAndTimeUtil;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
@@ -132,7 +129,7 @@ public class ChongzhiDetailActivity extends BaseActivity {
         httpUtils.doPost(Urls.chongzhidetail(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
 
                 Sdate = date;
                 srl.setRefreshing(false);

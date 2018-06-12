@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.BaseAdapter
+import android.widget.CompoundButton
 import com.defence.costomapp.R
 import com.defence.costomapp.adapter.VipShouWangAdapter
 import com.defence.costomapp.base.BaseActivity
@@ -14,7 +15,6 @@ import com.defence.costomapp.utils.httputils.HttpInterface
 import com.google.gson.Gson
 import com.loopj.android.http.RequestParams
 import kotlinx.android.synthetic.main.activity_vipdetail3_statist.*
-
 import kotlinx.android.synthetic.main.include_title_img.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -28,8 +28,11 @@ class VipStatistDetail3Activity : BaseActivity() {
     private var context: Context? = null
     var iskaitong: String? = "1"
     var huiyuantype: String? = "0"
+    private var openString: String? = ""
     private var leftdate: String? = SgqUtils.getReduceDateStr(SgqUtils.getNowDate(), 30)
     private var rightdate: String? = SgqUtils.getNowDate()
+    private var sequence: String? = "2"
+    private var dora: String? = "desc"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,40 @@ class VipStatistDetail3Activity : BaseActivity() {
             startActivityForResult(Intent(this, VipScreenActivity::class.java), 255)
         }
 
+        //  会员开始筛选
+        tv_memberStarts.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
+                length = 0
+                if (swviplist != null) {
+                    swviplist!!.clear()
+                }
+                sequence = "1"
+                if (isChecked) {
+                    dora = "asc"
+                    getScreenData()
+                } else {
+                    dora = "desc"
+                    getScreenData()
+                }
+            }
+        })
+        //会员到期筛选
+        tv_memberExpires.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
+                length = 0
+                if (swviplist != null) {
+                    swviplist!!.clear()
+                }
+                sequence = "2"
+                if (isChecked) {
+                    dora = "asc"
+                    getScreenData()
+                } else {
+                    dora = "desc"
+                    getScreenData()
+                }
+            }
+        })
 
         // 设置下拉刷新监听器
         srl.setOnRefreshListener {
@@ -83,6 +120,14 @@ class VipStatistDetail3Activity : BaseActivity() {
                 }
                 //守望会员卡
                 getScreenData()
+                val dropleft = leftdate!!.drop(5)
+                val dropright = rightdate!!.drop(5)
+                if (iskaitong.equals("1")) {
+                    openString="开通会员"
+                } else {
+                    openString="终止会员"
+                }
+                tv_filterConditions.text = dropleft + "至" + dropright + openString
             }
         }
     }
@@ -99,10 +144,12 @@ class VipStatistDetail3Activity : BaseActivity() {
         params.add("jieshutime", rightdate + " 23:59:59")
         params.add("iskaitong", iskaitong)
         params.add("huiyuantype", huiyuantype)
+        params.add("paixu", sequence)
+        params.add("dora", dora)
 
         httpUtils.doPost(Urls.card_vip(), SgqUtils.TONGJI_TYPE, params, object : HttpInterface() {
             @Throws(JSONException::class)
-            override fun onSuccess(gson: Gson, result: Any) {
+            override fun onSuccess(gson: Gson, result: Any, message: String) {
                 srl.isRefreshing = false
                 srl.setLoading(false)
 
@@ -110,7 +157,7 @@ class VipStatistDetail3Activity : BaseActivity() {
                 var shouWangVipBean = gson.fromJson(jsonObject.toString(), ShouWangVipBean::class.java)
 
                 if("0".equals(iskaitong)){
-                    tv_vipnum.text = "终止会员人数:" + shouWangVipBean.huiyuanzongshu + "人"
+                    tv_vipnum.text = "会员人数:" + shouWangVipBean.huiyuanzongshu + "人"
                 }else if("1".equals(iskaitong)){
                     tv_vipnum.text = "会员人数:" + shouWangVipBean.huiyuanzongshu + "人"
                 }

@@ -162,7 +162,7 @@ public class BuhuoMessageActivity extends BaseActivity {
         params.put("faultType", "102");
         httpUtils.doPost(Urls.getBuhuoMessage(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 sfl.setRefreshing(false);
                 try {
                     JSONArray ja = ((JSONObject) result).getJSONArray("list");

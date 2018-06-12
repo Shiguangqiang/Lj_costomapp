@@ -202,7 +202,7 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
             HttpUtils httpUtils = new HttpUtils(this);
             httpUtils.doPost(Urls.setMachineLocation(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
                 @Override
-                public void onSuccess(Gson gson, Object result) {
+                public void onSuccess(Gson gson, Object result, String message) {
                     Toast.makeText(CommonScanActivity.this, "位置更新成功", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -215,7 +215,7 @@ public final class CommonScanActivity extends Activity implements ScanListener, 
             HttpUtils httpUtils = new HttpUtils(this);
             httpUtils.doPost(Urls.kaimen(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
                 @Override
-                public void onSuccess(Gson gson, Object result) {
+                public void onSuccess(Gson gson, Object result, String message) {
                     String s = result.toString();
                     finish();
                 }

@@ -66,14 +66,30 @@
                 android:textSize="@dimen/pad_text_size_16" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/fangkuai"
-            android:padding="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/alarmnot"
+                android:textSize="@dimen/pad_text_size_18" />
 
-            android:text="@string/alarmnot"
-            android:textSize="@dimen/pad_text_size_18" />
+            <TextView
+                android:id="@+id/tv_machineState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"
+                android:text=""
+                android:autoLink="all"
+                android:textColor="@color/red"
+                android:textSize="@dimen/pad_text_size_18" />
+        </LinearLayout>
 
         <ListView
             android:id="@+id/liear_alarmnot"

@@ -33,7 +33,6 @@ import com.github.mikephil.charting.utils.ValueFormatter;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
@@ -112,7 +111,7 @@ public class TabVip1Fragment extends BaseFragment {
         httpUtils.doPost(Urls.xiaofeika(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
 
                 try {
                     if (result != null) {

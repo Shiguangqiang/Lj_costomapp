@@ -105,7 +105,7 @@ public class WorkLogInfoActivity extends BaseActivity implements AbstractSpinerA
         httpUtils.doPost(Urls.worklogdate(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 workLogDateBean = gson.fromJson(jsonObject.toString(), WorkLogDateBean.class);
                 for (int i = 0; i < workLogDateBean.getList().size(); i++) {
@@ -130,7 +130,7 @@ public class WorkLogInfoActivity extends BaseActivity implements AbstractSpinerA
         params.put("adminGroupID", groupid);
         httpUtils.doPost(Urls.workloginfo(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());
                     WorkLogInfoBean.ResultBean workUserInfoBean = gson.fromJson(jsonObject.toString(), WorkLogInfoBean.ResultBean.class);

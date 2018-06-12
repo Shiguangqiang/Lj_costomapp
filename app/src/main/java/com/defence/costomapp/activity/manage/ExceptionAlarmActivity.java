@@ -1,6 +1,8 @@
 package com.defence.costomapp.activity.manage;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdate;
@@ -19,13 +22,10 @@ import com.amap.api.maps2d.UiSettings;
 import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.defence.actionsheetmenumlib.JFActionSheetMenu;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.AlarmNotBean;
-import com.defence.costomapp.utils.APPUtils;
-import com.defence.costomapp.utils.ActionSheelUtil;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
@@ -63,6 +63,8 @@ public class ExceptionAlarmActivity extends BaseActivity {
     ListView liearAlarmyet;
     @BindView(R.id.cb_alarm)
     CheckBox cbAlarm;
+    @BindView(R.id.tv_machineState)
+    TextView tvMachineState;
     private String machineID;
     private String machineNo;
     String groupid;
@@ -83,7 +85,6 @@ public class ExceptionAlarmActivity extends BaseActivity {
     }
 
     private void initdata() {
-
         back.setText("返回");
         middleTitle.setText("异常报警");
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
@@ -95,6 +96,7 @@ public class ExceptionAlarmActivity extends BaseActivity {
         getAlarmNot();
         //已解决的报警
         getAlarmYet();
+
         cbAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,7 +120,47 @@ public class ExceptionAlarmActivity extends BaseActivity {
             }
         });
 
+        tvMachineState.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
 
+                AlertDialog dialog = new AlertDialog.Builder(ExceptionAlarmActivity.this)
+                        .setMessage("是否立即重启此机器?")//设置对话框的内容
+                        //设置对话框的按钮
+                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //   是否立即重启
+                                restartImmediately();
+                                dialog.dismiss();
+                            }
+                        }).create();
+                dialog.show();
+                return true;
+            }
+        });
+
+
+    }
+
+    //   是否立即重启
+    private void restartImmediately() {
+        RequestParams params = new RequestParams();
+        params.put("machineID", machineID);
+        params.put("machineNo", machineNo);
+        httpUtils.doPost(Urls.restartImmediately(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
+            @Override
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
+                Toast.makeText(ExceptionAlarmActivity.this,message,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     //已解决报警列表
@@ -131,7 +173,7 @@ public class ExceptionAlarmActivity extends BaseActivity {
         httpUtils.doPost(Urls.alarmYet(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 AlarmNotBean alarmNotBean = gson.fromJson(jsonObject.toString(), AlarmNotBean.class);
                 listyet = alarmNotBean.getList();
@@ -153,51 +195,32 @@ public class ExceptionAlarmActivity extends BaseActivity {
         httpUtils.doPost(Urls.alarmNot(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result.toString());
-                AlarmNotBean alarmNotBean = gson.fromJson(jsonObject.toString(), AlarmNotBean.class);
-                listnot = alarmNotBean.getList();
-                not = new ExceptionAdapter(ExceptionAlarmActivity.this, alarmNotBean.getList(), "not");
-                liearAlarmnot.setAdapter(not);
-                machineAddr.setText(alarmNotBean.getMachine().getDetailedinstalladdress());
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
+                if(result!=null){
+                    JSONObject jsonObject = new JSONObject(result.toString());
+                    AlarmNotBean alarmNotBean = gson.fromJson(jsonObject.toString(), AlarmNotBean.class);
 
-                AMap aMap = map.getMap();
-                LatLng latLng = new LatLng(alarmNotBean.getMachine().getLatitude(), alarmNotBean.getMachine().getLongitude());
-                UiSettings uiSettings = aMap.getUiSettings();
-                // 通过UISettings.setZoomControlsEnabled(boolean)来设置缩放按钮是否能显示
-                uiSettings.setZoomControlsEnabled(true);
-                uiSettings.setScrollGesturesEnabled(true);
-                uiSettings.setZoomGesturesEnabled(true);
-                //可视化区域，将指定位置指定到屏幕中心位置
-                CameraUpdate cameraUpdate = CameraUpdateFactory
-                        .newCameraPosition(new CameraPosition(latLng, 19, 0, 30));
-                aMap.moveCamera(cameraUpdate);
-                aMap.addMarker(new MarkerOptions().position(latLng).title(alarmNotBean.getMachine().getDetailedinstalladdress()));
-
-
-              /*  aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(final LatLng latLng) {
-                        ActionSheelUtil.showMenu(ExceptionAlarmActivity.this, "选择导航",
-                                new String[]{"百度地图"}, false, new JFActionSheetMenu.OnActionSheetItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View view, int itemPosition) {
-                                        switch (itemPosition) {
-                                            case 0:
-                                                APPUtils.jumpBaiduNav(ExceptionAlarmActivity.this, latLng);
-                                                break;
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCanceClick(View view) {
-
-                                    }
-                                });
+                    if (!alarmNotBean.getContent().isEmpty()) {
+                        tvMachineState.setText(alarmNotBean.getContent());
                     }
-                });*/
+                    listnot = alarmNotBean.getList();
+                    not = new ExceptionAdapter(ExceptionAlarmActivity.this, alarmNotBean.getList(), "not");
+                    liearAlarmnot.setAdapter(not);
+                    machineAddr.setText(alarmNotBean.getMachine().getDetailedinstalladdress());
 
-
+                    AMap aMap = map.getMap();
+                    LatLng latLng = new LatLng(alarmNotBean.getMachine().getLatitude(), alarmNotBean.getMachine().getLongitude());
+                    UiSettings uiSettings = aMap.getUiSettings();
+                    // 通过UISettings.setZoomControlsEnabled(boolean)来设置缩放按钮是否能显示
+                    uiSettings.setZoomControlsEnabled(true);
+                    uiSettings.setScrollGesturesEnabled(true);
+                    uiSettings.setZoomGesturesEnabled(true);
+                    //可视化区域，将指定位置指定到屏幕中心位置
+                    CameraUpdate cameraUpdate = CameraUpdateFactory
+                            .newCameraPosition(new CameraPosition(latLng, 19, 0, 30));
+                    aMap.moveCamera(cameraUpdate);
+                    aMap.addMarker(new MarkerOptions().position(latLng).title(alarmNotBean.getMachine().getDetailedinstalladdress()));
+                }
             }
         });
 

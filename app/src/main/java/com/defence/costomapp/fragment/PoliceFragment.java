@@ -1,7 +1,6 @@
 package com.defence.costomapp.fragment;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -66,7 +65,7 @@ public class PoliceFragment extends BaseFragment {
     }
 
     private void initdata() {
-//        groupid= getActivity().getIntent().getStringExtra("groupidmm");
+
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -84,7 +83,7 @@ public class PoliceFragment extends BaseFragment {
         params.put("adminGroupID", groupid);
         httpUtils.doPost(Urls.alarmPolice(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 srl.setRefreshing(false);
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());

@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
-import com.defence.costomapp.bean.TimeSaleBean;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
@@ -29,12 +28,10 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -85,7 +82,7 @@ public class Tab1Fragment extends BaseFragment {
         httpUtils.doPost(Urls.timesale(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
 
                 try {
                     if (result != null) {

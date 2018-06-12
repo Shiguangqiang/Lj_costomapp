@@ -145,7 +145,7 @@ public class TuikuanListActivity extends BaseActivity {
             httpUtils.doPost(Urls.allisttuikuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
                 @Override
-                public void onSuccess(Gson gson, Object result) throws JSONException {
+                public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                     srl.setRefreshing(false);
                     srl.setLoading(false);
 
@@ -203,7 +203,7 @@ public class TuikuanListActivity extends BaseActivity {
             httpUtils.doPost(Urls.allisttuikuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
                 @Override
-                public void onSuccess(Gson gson, Object result) throws JSONException {
+                public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                     srl.setRefreshing(false);
                     srl.setLoading(false);
                     liearTk1.setVisibility(View.GONE);

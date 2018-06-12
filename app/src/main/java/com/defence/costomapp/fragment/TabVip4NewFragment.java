@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.adapter.MachineRegisAdapter;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
-import com.defence.costomapp.bean.AllMachineBean;
 import com.defence.costomapp.bean.MachineStaticsBean;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
 import com.defence.costomapp.utils.SgqUtils;
@@ -21,10 +19,6 @@ import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +65,7 @@ public class TabVip4NewFragment extends BaseFragment {
         params.add("pags", "5");
         httpUtils.doPost(Urls.machineStatics(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 try {
                     if (result != null) {
 

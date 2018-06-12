@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -82,7 +81,7 @@ public class TkGroupActivity extends BaseActivity {
         params.put("userid", userInfo.getId() + "");
         httpUtils.doPost(Urls.listtkgroup(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TuikuanMachineBean tuikuanMachineBean = gson.fromJson(jsonObject.toString(), TuikuanMachineBean.class);
                 List<TuikuanMachineBean.ListBean> listgroup = tuikuanMachineBean.getList();

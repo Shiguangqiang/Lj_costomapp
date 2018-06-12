@@ -62,7 +62,7 @@ public class JieSuanActivity extends BaseActivity {
         params.put("adminGroupID", groupid);
         httpUtils.doPost(Urls.jiesuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
 
             }

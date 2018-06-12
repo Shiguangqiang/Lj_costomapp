@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.TextView;
 
 
 import com.defence.costomapp.app.MyApplication;
@@ -18,9 +17,6 @@ import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.concurrent.TimeUnit;
-import okhttp3.OkHttpClient;
 
 
 public class HttpUtils {
@@ -109,11 +105,11 @@ public class HttpUtils {
                             Object data_list = jb.opt("data_list");
                             Object data = jb.opt("data");
                             if (result == null && data != null && data_list != null) {
-                                integerface.onSuccess(gson, data_list);
+                                integerface.onSuccess(gson, data_list, message);
                             } else if (result == null && data_list == null && data != null) {
-                                integerface.onSuccess(gson, data);
+                                integerface.onSuccess(gson, data, message);
                             } else {
-                                integerface.onSuccess(gson, result);
+                                integerface.onSuccess(gson, result, message);
                             }
                         } else if ("4".equals(sign)) {
                             integerface.onError(context, message);
@@ -138,7 +134,6 @@ public class HttpUtils {
                     integerface.onFailure(context);
                 }
             });
-
 
         } else {
             integerface.onFailure(context);

@@ -98,7 +98,7 @@ public class MachineDetailActivity extends BaseActivity {
 
         httpUtils.doPost(Urls.tjserach_machine(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TjMachineDetailBean tjMachineDetailBean = gson.fromJson(jsonObject.toString(), TjMachineDetailBean.class);
                 sumJinE.setText("总额:" + AmountUtils.changeF2Y(tjMachineDetailBean.getMap_data().getSumJinE() + "") + "元");

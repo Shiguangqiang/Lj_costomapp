@@ -63,7 +63,7 @@ public class Tab2Fragment extends BaseFragment {
         params.put("orderBy", "2");
         httpUtils.doPost(Urls.shopnum(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 ShopNumBean shopNumBean = gson.fromJson(jsonObject.toString(), ShopNumBean.class);
                 Tab2Adapter tab2Adapter = new Tab2Adapter(getActivity(), shopNumBean.getList());

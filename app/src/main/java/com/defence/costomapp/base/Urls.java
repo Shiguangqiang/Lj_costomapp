@@ -9,13 +9,13 @@ import com.defence.costomapp.utils.SharePerenceUtil;
 
 public class Urls {
 
-//        public static String BaseUrl = "http://swz.landgy.com/";
+        public static String BaseUrl = "http://swz.landgy.com/";
     //    测试 yang
 //    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
-
-//        public static String BaseUrl = "http://swz-test.landgy.com/";
+    //        public static String BaseUrl = "http://swz-test.landgy.com/";
     //  李
-    public static String BaseUrl = "http://192.168.0.234:8080/";
+//    public static String BaseUrl = "http://192.168.0.234:8080/";
+
     //
     public static String BuhuoLogin() {
         return BaseUrl + "req-mobile/login/witttth/account0";
@@ -100,6 +100,12 @@ public class Urls {
     public static String alarmYet() {
         return BaseUrl + "req-mobile/alarm/list/machine/alarm1/detail100/0data1.json";
     }
+
+    //是否立即重启
+    public static String restartImmediately() {
+        return BaseUrl + "req-mobile/alarm/is/chongqi/machine/0data1.json";
+    }
+
 
     //查看统计查询
     public static String tjserach() {
@@ -255,6 +261,7 @@ public class Urls {
     public static String shouwang_vip() {
         return BaseUrl + "req-mobile/huiyuan/tongji/query/app/chongzhi/huiyuan/info/0data1.json";
     }
+
 
     //消费卡会员筛选
     public static String card_vip() {

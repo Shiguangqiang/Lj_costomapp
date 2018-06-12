@@ -219,7 +219,7 @@ public class DingdHistoryActivity extends BaseActivity {
         httpUtils.doPost(Urls.dingdhistoryllist(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 srl.setRefreshing(false);
                 srl.setLoading(false);
                 JSONObject jsonObject = new JSONObject(result.toString());
@@ -261,7 +261,7 @@ public class DingdHistoryActivity extends BaseActivity {
 
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 DingdHistoryBean dingdHistoryBean = gson.fromJson(jsonObject.toString(), DingdHistoryBean.class);
                 successCount.setText("成功次数:" + dingdHistoryBean.getSuccess_count() + "");

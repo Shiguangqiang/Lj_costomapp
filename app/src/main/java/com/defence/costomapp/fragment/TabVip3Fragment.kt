@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,15 +17,9 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.utils.ValueFormatter
 
 import java.util.ArrayList
 
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Unbinder
-import com.defence.costomapp.activity.statistics.VipScreenActivity
-import com.defence.costomapp.activity.statistics.VipStatistDetail2Activity
 import com.defence.costomapp.activity.statistics.VipStatistDetail3Activity
 import com.defence.costomapp.base.Urls
 import com.defence.costomapp.bean.VipCardBean
@@ -86,7 +79,7 @@ class TabVip3Fragment : BaseFragment() {
         httpUtils.doPost(Urls.iaofeika_huiyuan(), SgqUtils.TONGJI_TYPE, params, object : HttpInterface() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Throws(JSONException::class)
-            override fun onSuccess(gson: Gson, result: Any?) {
+            override fun onSuccess(gson: Gson, result: Any, message: String) {
 
                 try {
                     if (result != null) {

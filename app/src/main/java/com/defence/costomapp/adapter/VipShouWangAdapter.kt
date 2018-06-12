@@ -46,6 +46,8 @@ class VipShouWangAdapter(var mList: List<ShouWangVipBean.XfkListBean>?, var cont
             } else {
                 holder.tv_cardtime.text = "还有" + mList!![position].ct.toString() + "天到期"
             }
+        }else{
+            holder.tv_cardtime.text = " -- "
         }
 
         return v

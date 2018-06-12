@@ -44,9 +44,11 @@ public class UserTjFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private int type;
+    private String mphone;
 
 
     public UserTjFragment() {
@@ -61,10 +63,11 @@ public class UserTjFragment extends Fragment {
      * @return A new instance of fragment UserTjFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserTjFragment newInstance(int type) {
+    public static UserTjFragment newInstance(int type, String mphone) {
         UserTjFragment fragment = new UserTjFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, type);
+        args.putString(ARG_PARAM2, mphone);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,6 +79,7 @@ public class UserTjFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getInt(ARG_PARAM1);
+            mphone = getArguments().getString(ARG_PARAM2);
         }
         httpUtils = new HttpUtils(getContext());
     }
@@ -125,14 +129,14 @@ public class UserTjFragment extends Fragment {
     }
 
     private UserTjAdapter userTjAdapter;
-    private  List<UserTjBean.ListBean> list;
+    private List<UserTjBean.ListBean> list;
 
     private void doPost() {
 
         RequestParams params = setUrlRequestParams();
         httpUtils.doPost(url, SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());
@@ -143,8 +147,6 @@ public class UserTjFragment extends Fragment {
 
                     if (list == null)
                         list = new ArrayList();
-
-
 
                     UserTjFragment.this.list.addAll(userTjBean.getList());
 
@@ -227,6 +229,7 @@ public class UserTjFragment extends Fragment {
                 params.put("order", "desc");
                 params.put("orderBy", "2");
                 params.put("endpag", "10");
+                params.put("mphone", mphone);
                 break;
             case 2:
                 url = Urls.userTj();
@@ -235,6 +238,7 @@ public class UserTjFragment extends Fragment {
                 params.put("order", "desc");
                 params.put("orderBy", "2");
                 params.put("endpag", "10");
+                params.put("mphone",mphone);
                 break;
             case 3:
                 url = Urls.userTj();
@@ -243,6 +247,7 @@ public class UserTjFragment extends Fragment {
                 params.put("order", "desc");
                 params.put("orderBy", "2");
                 params.put("endpag", "10");
+                params.put("mphone",mphone);
                 break;
             case 4:
                 url = Urls.wxpay();
@@ -250,12 +255,14 @@ public class UserTjFragment extends Fragment {
                 params.put("orderUID", "0");
                 params.put("orderBy", "2");
                 params.put("endpag", "10");
+                params.put("mphone",mphone);
                 break;
             case 5:
                 url = Urls.chongzhi();
                 params.put("begin", (length * 10) + "");
                 params.put("end", "10");
                 params.put("orderBy", "2");
+                params.put("mphone",mphone);
                 break;
         }
         return params;

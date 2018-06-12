@@ -163,7 +163,7 @@ public class MachineSerachActivity extends BaseActivity {
         httpUtils.doPost(Urls.tjserach(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 tongjiBean = gson.fromJson(jsonObject.toString(), TongjiBean.class);
 
@@ -189,6 +189,9 @@ public class MachineSerachActivity extends BaseActivity {
                 middleTitle.setText(leftdate + " 至 " + rightdate);
 
                 freecost.setText("赠送成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getFreeCost() + "") + "元");
+                vipSumJinE.setText("会员金额:"+AmountUtils.changeF2Y(tongjiBean.getMember_data().getSumJinE()+"")+"元");
+                vipShopgoods.setText("会员商品:"+tongjiBean.getMember_data().getSaleCount()+""+"个");
+                vipShopnum.setText("会员购物人数:"+tongjiBean.getMember_data().getCount()+""+"人");
 
 
                 List<TongjiBean.GoodsListBean> goods_list = tongjiBean.getGoods_list();

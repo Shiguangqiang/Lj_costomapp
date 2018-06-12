@@ -63,10 +63,7 @@ public class LogFragment extends BaseFragment {
     }
 
     private void initdata() {
-
-//        groupid= getActivity().getIntent().getStringExtra("groupidmm");
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
-
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -83,7 +80,7 @@ public class LogFragment extends BaseFragment {
         params.put("adminGroupID", groupid);
         httpUtils.doPost(Urls.worklog(), SgqUtils.MANAGER_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 srl.setRefreshing(false);
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());

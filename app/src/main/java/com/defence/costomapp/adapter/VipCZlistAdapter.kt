@@ -46,7 +46,8 @@ class VipCZlistAdapter(var mList: List<ChiZhiListBean.XfkListBean>?, var context
             } else {
                 holder.tv_cardtime.text = "还有" + mList!![position].ct.toString() + "天到期"
             }
-
+        }else{
+            holder.tv_cardtime.text = " -- "
         }
 
 

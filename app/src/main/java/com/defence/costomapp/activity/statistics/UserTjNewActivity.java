@@ -1,6 +1,7 @@
 package com.defence.costomapp.activity.statistics;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,9 +10,13 @@ import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -53,11 +58,14 @@ public class UserTjNewActivity extends BaseActivity {
     LinearLayout liearLeft;
     @BindView(R.id.liear_right)
     LinearLayout liearRight;
+    @BindView(R.id.et_FuzzyQuery)
+    EditText etFuzzyQuery;
 
 
     private PopupWindow pop;
     private Handler handler;
     private int type = 1;
+    private String mphone = "";
 
     @Override
 
@@ -66,13 +74,30 @@ public class UserTjNewActivity extends BaseActivity {
         setContentView(R.layout.activity_user_tj_new);
         ButterKnife.bind(this);
 
-
         middleTitle.setText("用户统计 - 登录时间");
         if (fragmentManager == null)
             fragmentManager = UserTjNewActivity.this.getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.usertj_LL, UserTjFragment.newInstance(type)).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().replace(R.id.usertj_LL, UserTjFragment.newInstance(type, mphone)).commitAllowingStateLoss();
         initpopdialog();
         initHanlder();
+
+        etFuzzyQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    mphone=etFuzzyQuery.getText().toString();
+                    FragmentTransaction tf = fragmentManager.beginTransaction();
+                    replaceFragment(tf, type, mphone);
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+                    etFuzzyQuery.setText("");
+
+
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -130,8 +155,6 @@ public class UserTjNewActivity extends BaseActivity {
 
                         break;
                 }
-
-
             }
         };
     }
@@ -152,28 +175,33 @@ public class UserTjNewActivity extends BaseActivity {
                 case R.id.tv_logintime:
                     middleTitle.setText("用户统计 - 登录时间");
                     type = 1;
-                    replaceFragment(tf, type);
+                    mphone = "";
+                    replaceFragment(tf, type, mphone);
                     break;
                 case R.id.tv_yue:
                     middleTitle.setText("用户统计 - 账户余额");
                     type = 2;
-                    replaceFragment(tf, type);
+                    mphone = "";
+                    replaceFragment(tf, type, mphone);
                     break;
                 case R.id.tv_reg_time:
                     middleTitle.setText("用户统计 - 注册时间");
                     type = 3;
-                    replaceFragment(tf, type);
+                    mphone = "";
+                    replaceFragment(tf, type, mphone);
                     break;
 
                 case R.id.tv_weixinpay:
                     middleTitle.setText("用户统计 - 微信支付");
                     type = 4;
-                    replaceFragment(tf, type);
+                    mphone = "";
+                    replaceFragment(tf, type, mphone);
                     break;
                 case R.id.tv_shouwang_history:
                     middleTitle.setText("用户统计 - 充值记录");
                     type = 5;
-                    replaceFragment(tf, type);
+                    mphone = "";
+                    replaceFragment(tf, type, mphone);
                     break;
             }
             if (pop.isShowing()) {
@@ -182,8 +210,8 @@ public class UserTjNewActivity extends BaseActivity {
         }
     }
 
-    private void replaceFragment(FragmentTransaction tf, int type) {
-        tf.replace(R.id.usertj_LL, UserTjFragment.newInstance(type));
+    private void replaceFragment(FragmentTransaction tf, int type, String mphone) {
+        tf.replace(R.id.usertj_LL, UserTjFragment.newInstance(type, mphone));
         tf.commitAllowingStateLoss();
     }
 

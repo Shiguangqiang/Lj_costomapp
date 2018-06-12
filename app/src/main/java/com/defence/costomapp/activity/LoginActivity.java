@@ -71,6 +71,14 @@ public class LoginActivity extends BaseActivity {
         }
         initdata(loginType);
 
+        String nameAndPsw = SharePerenceUtil.getStringValueFromSp(loginType + "");
+        if (!TextUtils.isEmpty(nameAndPsw)) {
+            final String userNameintent = nameAndPsw.split("---")[0];
+            final String pswintent = nameAndPsw.split("---")[1];
+            username.setText(userNameintent);
+            psw.setText(pswintent);
+        }
+
 
         switch (loginType) {
             case 0:
@@ -104,7 +112,7 @@ public class LoginActivity extends BaseActivity {
                 params.put("password", psw.getText().toString());
                 httpUtils.doPost(Urls.BuhuoLogin(), loginType, params, new HttpInterface() {
                     @Override
-                    public void onSuccess(Gson gson, Object result) {
+                    public void onSuccess(Gson gson, Object result, String message) {
                         try {
                             JSONObject jb = ((JSONObject) result).getJSONObject("data_one");
                             UserInfo userInfo = gson.fromJson(jb.toString(), UserInfo.class);
@@ -163,7 +171,7 @@ public class LoginActivity extends BaseActivity {
 
         httpUtils.doPost(Urls.setRegistrationid(), loginType, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
 
                 Log.d("ChoiceTypeActivity", "registerId设置成功");
             }

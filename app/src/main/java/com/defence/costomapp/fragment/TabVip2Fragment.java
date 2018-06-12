@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.statistics.VipStatistDetail2Activity;
-import com.defence.costomapp.activity.statistics.VipStatistDetailActivity;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.VipCardBean;
@@ -109,7 +108,7 @@ public class TabVip2Fragment extends BaseFragment {
         httpUtils.doPost(Urls.user_huiyuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
 
                 try {
                     if (result != null) {

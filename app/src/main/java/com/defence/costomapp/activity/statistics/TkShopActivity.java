@@ -67,7 +67,7 @@ public class TkShopActivity extends BaseActivity {
         RequestParams params = new RequestParams();
         httpUtils.doPost(Urls.shangpintuikuan(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TuikuanMachineBean tuikuanMachineBean = gson.fromJson(jsonObject.toString(), TuikuanMachineBean.class);
                 mAdapter = new TkSelectAdapter(tuikuanMachineBean.getList(), "shop");

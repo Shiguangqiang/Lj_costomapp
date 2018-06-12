@@ -32,10 +32,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 /**
  * Created by author Sgq
@@ -119,7 +115,7 @@ public class MachiceFragment extends BaseFragment {
         httpUtils.doPost(Urls.tjserach(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
             @Override
-            public void onSuccess(Gson gson, Object result) throws JSONException {
+            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 TongjiBean tongjiBean = gson.fromJson(jsonObject.toString(), TongjiBean.class);
                 machine_list = tongjiBean.getMachine_list();

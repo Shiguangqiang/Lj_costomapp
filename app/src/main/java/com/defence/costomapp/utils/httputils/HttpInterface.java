@@ -9,7 +9,7 @@ import org.json.JSONException;
 
 public abstract class HttpInterface {
 
-    public abstract void onSuccess(Gson gson, Object result) throws JSONException;
+    public abstract void onSuccess(Gson gson, Object result, String message) throws JSONException;
 
     public void onError(Context context, String message) {
 

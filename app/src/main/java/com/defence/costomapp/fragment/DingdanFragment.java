@@ -2,28 +2,20 @@ package com.defence.costomapp.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.defence.costomapp.R;
-import com.defence.costomapp.activity.statistics.ChongzhiDetailActivity;
-import com.defence.costomapp.activity.statistics.DingdanActivity;
 import com.defence.costomapp.activity.statistics.DingdanDetailActivity;
-import com.defence.costomapp.activity.statistics.UserTjDetailActivity;
 import com.defence.costomapp.activity.statistics.UserTjNewActivity;
 import com.defence.costomapp.adapter.DingdanAdapter;
-import com.defence.costomapp.adapter.UserTjAdapter;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.DingdanBean;
-import com.defence.costomapp.bean.UserTjBean;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.DividerItemDecoration;
 import com.defence.costomapp.utils.SgqUtils;
@@ -175,7 +167,7 @@ public class DingdanFragment extends BaseFragment {
         RequestParams params = setUrlRequestParams();
         httpUtils.doPost(url, SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
-            public void onSuccess(Gson gson, Object result) {
+            public void onSuccess(Gson gson, Object result, String message) {
                 pullLoadMoreRecyclerView.setPullLoadMoreCompleted();
                 try {
                     JSONObject jsonObject = new JSONObject(result.toString());

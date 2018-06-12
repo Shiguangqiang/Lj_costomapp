@@ -74,7 +74,7 @@ class VipStatistDetailActivity : BaseActivity() {
         paramscz.add("pags", "10")
         httpUtils.doPost(Urls.xiaofeika_xiangxi(), SgqUtils.TONGJI_TYPE, paramscz, object : HttpInterface() {
             @Throws(JSONException::class)
-            override fun onSuccess(gson: Gson, result: Any) {
+            override fun onSuccess(gson: Gson, result: Any, message: String) {
 
                 srl.isRefreshing = false
                 srl.setLoading(false)
@@ -89,7 +89,7 @@ class VipStatistDetailActivity : BaseActivity() {
                 xfkList!!.addAll(chiZhiListBean.xfkList)
 
                 if (czAdapter == null) {
-                    czAdapter = VipCZlistAdapter(xfkList!!, this@VipStatistDetailActivity)
+                    czAdapter = VipCZlistAdapter( xfkList!!,this@VipStatistDetailActivity)
                     lv_czvipdetail.adapter = czAdapter
                 } else {
                     czAdapter!!.notifyDataSetChanged()
@@ -115,7 +115,7 @@ class VipStatistDetailActivity : BaseActivity() {
         val params = RequestParams()
         httpUtils.doPost(Urls.xiaoshou_xiaofeika(), SgqUtils.TONGJI_TYPE, params, object : HttpInterface() {
             @Throws(JSONException::class)
-            override fun onSuccess(gson: Gson, result: Any) {
+            override fun onSuccess(gson: Gson, result: Any, message: String) {
 
                 val jsonObject = JSONObject(result.toString())
                 val cardSaleBean = gson.fromJson(jsonObject.toString(), CardSaleBean::class.java)
