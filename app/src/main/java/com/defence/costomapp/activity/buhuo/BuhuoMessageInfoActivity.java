@@ -228,7 +228,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
     private void getUnsoldGoods() {
         buhuoMessageEntity = (BuhuoMessageEntity) getIntent().getSerializableExtra("bundle");
-
         RequestParams params = new RequestParams();
         params.put("machineNo", buhuoMessageEntity.getMachinenumber());
         params.put("machineID", buhuoMessageEntity.getId());
@@ -787,7 +786,10 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
     @OnClick(R.id.fab_detail)
     public void onViewClicked() {
-        startActivity(new Intent(BuhuoMessageInfoActivity.this, WebViewActivity.class));
+
+        Intent intent = new Intent(BuhuoMessageInfoActivity.this, WebViewActivity.class);
+        intent.putExtra("machine_no", machineEntity.getMachinenumber());
+        startActivity(intent);
     }
 
     class RecyclerViewListener extends RecyclerView.OnScrollListener {

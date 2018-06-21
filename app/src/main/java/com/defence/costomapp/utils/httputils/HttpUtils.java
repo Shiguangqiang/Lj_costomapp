@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.bean.UserInfo;
+import com.defence.costomapp.utils.SgqUtils;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -53,12 +54,16 @@ public class HttpUtils {
             params.put("uniqueCode", user.getAuthorizationKey());
             params.put("phoneAID", user.getId() + "");
             params.put("funcType", funcType + "");
+            params.put("android_swz_manage_request", "android");
+            params.put("android_swz_manage_version_int", SgqUtils.getVersionCode(context) + "");
             params.put("_t", Math.random());
             // TODO: 16/9/14 尚未添加登录和未登录 目前视为未登录,修改后把上面两行代码删除即可
         } else {
             params.put("uniqueCode", "009900");
             params.put("phoneAID", "0");
             params.put("funcType", funcType + "");
+            params.put("android_swz_manage_request", "android");
+            params.put("android_swz_manage_version_int", SgqUtils.getVersionCode(context) + "");
             params.put("_t", Math.random());
         }
         return params;

@@ -40,9 +40,9 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="@dimen/pad_height_30"
-                android:layout_height="@dimen/pad_height_30"
-                android:src="@mipmap/iconfont_shumajiadian" />
+                android:layout_width="@dimen/pad_height_25"
+                android:layout_height="@dimen/pad_height_25"
+                android:src="@mipmap/qrcode" />
 
         </LinearLayout>
 
@@ -96,7 +96,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|end"
-            app:srcCompat="@mipmap/machinetask"
+            android:visibility="gone"
             app:backgroundTint="@color/F4"
             app:backgroundTintMode="multiply"
             app:borderWidth="0dp"
@@ -104,6 +104,7 @@
             app:fabSize="auto"
             app:pressedTranslationZ="@dimen/activity_horizontal_margin"
             app:rippleColor="@color/F4"
+            app:srcCompat="@mipmap/machinetask"
             app:useCompatPadding="true" />
 
     </FrameLayout>

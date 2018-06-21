@@ -288,7 +288,7 @@ public class ChongzhiDetailActivity extends BaseActivity {
                     }
 
                     viewHolder1.tv_dateyy.setText(list.get(position).getNewdate());
-                    viewHolder1.tv_xiaofei.setText("本月消费:" + AmountUtils.changeF2Y(list.get(position).getMoneyy()) + "元");
+                    viewHolder1.tv_xiaofei.setText("本月充值:" + AmountUtils.changeF2Y(list.get(position).getMoneyy()) + "元");
                     break;
 
                 case TYPE_COMPANY:
@@ -302,7 +302,12 @@ public class ChongzhiDetailActivity extends BaseActivity {
                     } else {
                         viewHolder2 = (ViewHolder2) convertView.getTag();
                     }
-                    viewHolder2.tv_show.setText("充值");
+                    if(list.get(position).getChargeKey()==6){
+                        viewHolder2.tv_show.setText("购买会员");
+                    }else{
+                        viewHolder2.tv_show.setText("充值");
+                    }
+
                     viewHolder2.tv_date.setText(list.get(position).getTimeline());
                     viewHolder2.tv_pricee.setText("+" + AmountUtils.changeF2Y(list.get(position).getHowMuch() + ""));
                     viewHolder2.tv_pricee.setTextSize(20);

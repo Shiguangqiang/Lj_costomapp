@@ -38,7 +38,7 @@
                         android:layout_height="@dimen/pad_height_35"
                         android:gravity="center"
                         android:text=""
-                        android:textColor="@color/jiujiujiu"
+                        android:textColor="@color/blue"
                         android:textSize="@dimen/pad_text_size_20" />
 
                     <View
@@ -71,7 +71,7 @@
                         android:layout_height="@dimen/pad_height_35"
                         android:gravity="center"
                         android:text=""
-                        android:textColor="@color/jiujiujiu"
+                        android:textColor="@color/blue"
                         android:textSize="@dimen/pad_text_size_20" />
 
                     <View
@@ -184,7 +184,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_all"
-                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_width="@dimen/pad_height_90"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
@@ -194,11 +194,11 @@
                     android:checked="true"
                     android:gravity="center"
                     android:text="全部会员"
-                    android:textSize="@dimen/pad_text_size_16" />
+                    android:textSize="@dimen/pad_text_size_12" />
 
                 <RadioButton
                     android:id="@+id/rb_mouth"
-                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_width="@dimen/pad_height_90"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
@@ -207,11 +207,11 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="月 会 员"
-                    android:textSize="@dimen/pad_text_size_16" />
+                    android:textSize="@dimen/pad_text_size_12" />
 
                 <RadioButton
                     android:id="@+id/rb_year"
-                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_width="@dimen/pad_height_90"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
@@ -220,11 +220,11 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="年 会 员"
-                    android:textSize="@dimen/pad_text_size_16" />
+                    android:textSize="@dimen/pad_text_size_12" />
 
 
                 <RadioButton
-                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_width="@dimen/pad_height_90"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
@@ -237,7 +237,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_quarterly"
-                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_width="@dimen/pad_height_90"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
@@ -246,12 +246,12 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="季度会员"
-                    android:textSize="@dimen/pad_text_size_16" />
+                    android:textSize="@dimen/pad_text_size_12" />
 
 
                 <RadioButton
                     android:id="@+id/rb_halfOfAYear"
-                    android:layout_width="@dimen/pad_height_96"
+                    android:layout_width="@dimen/pad_height_90"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/pad_height_6"
                     android:layout_marginLeft="@dimen/pad_height_20"
@@ -260,7 +260,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="半年会员"
-                    android:textSize="@dimen/pad_text_size_16" />
+                    android:textSize="@dimen/pad_text_size_12" />
 
 
             </com.defence.costomapp.utils.view.MyRadioGroup>

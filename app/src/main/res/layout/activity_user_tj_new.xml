@@ -14,8 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/pad_height_10"
-        android:layout_marginRight="@dimen/pad_height_10"
+        android:layout_margin="@dimen/pad_height_5"
         android:background="@drawable/shape_rectangle_white"
         android:orientation="horizontal">
 
@@ -40,24 +39,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pad_height_10"
-        android:layout_marginTop="@dimen/pad_height_10"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_chongzhi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/pad_height_18"
             android:layout_weight="1"
             android:textColor="@color/liuliuliu"
-            android:textSize="@dimen/pad_text_size_14"
-            android:visibility="gone" />
+            android:textSize="@dimen/pad_text_size_14" />
 
         <TextView
             android:id="@+id/regusernum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/pad_height_18"
             android:layout_weight="1"
             android:textColor="@color/liuliuliu"
             android:textSize="@dimen/pad_text_size_14" />
@@ -67,7 +62,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:textColor="@color/liuliuliu"
             android:textSize="@dimen/pad_text_size_14" />
 
@@ -76,21 +70,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/pad_height_10"
+        android:layout_margin="@dimen/pad_height_5"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/pingtai_pay"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/pad_height_18"
+            android:layout_marginLeft="@dimen/pad_height_5"
             android:layout_weight="1"
             android:textColor="@color/liuliuliu"
             android:textSize="@dimen/pad_text_size_14" />
 
         <TextView
             android:id="@+id/weixinpay"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -98,6 +92,31 @@
             android:textSize="@dimen/pad_text_size_14" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_retain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/pad_height_5"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_totalRetention"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pad_height_5"
+            android:layout_weight="1"
+            android:textColor="@color/liuliuliu"
+            android:textSize="@dimen/pad_text_size_14" />
+
+        <TextView
+            android:id="@+id/tv_consumerCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/liuliuliu"
+            android:textSize="@dimen/pad_text_size_14" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/usertj_LL"

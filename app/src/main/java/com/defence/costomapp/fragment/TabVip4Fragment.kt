@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ListView
+import android.widget.Toast
 
 import com.defence.costomapp.R
 import com.defence.costomapp.adapter.MachineRegisAdapter
@@ -58,6 +59,8 @@ class TabVip4Fragment : BaseFragment() {
 
         lv_machineRegistration = view.findViewById<ListView>(R.id.lv_machineRegistration)
 
+
+
         srl = view.findViewById<RefreshLayout>(R.id.srl)
 
 
@@ -65,6 +68,7 @@ class TabVip4Fragment : BaseFragment() {
             length++
             //注册机器统计
             getMachineData()
+
         }
 
         srl!!.setOnRefreshListener {
@@ -161,6 +165,14 @@ class TabVip4Fragment : BaseFragment() {
 
     }
 
+//    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+//
+//
+//        if (isVisibleToUser) {
+//            getMachineData()
+//        }
+//        super.setUserVisibleHint(isVisibleToUser)
+//    }
 
     companion object {
         // TODO: Rename parameter arguments, choose names that match

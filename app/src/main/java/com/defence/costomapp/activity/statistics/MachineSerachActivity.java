@@ -187,7 +187,6 @@ public class MachineSerachActivity extends BaseActivity {
                 }
 
                 middleTitle.setText(leftdate + " 至 " + rightdate);
-
                 freecost.setText("赠送成本:" + AmountUtils.changeF2Y(tongjiBean.getMap_data().getFreeCost() + "") + "元");
                 vipSumJinE.setText("会员金额:"+AmountUtils.changeF2Y(tongjiBean.getMember_data().getSumJinE()+"")+"元");
                 vipShopgoods.setText("会员商品:"+tongjiBean.getMember_data().getSaleCount()+""+"个");

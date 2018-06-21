@@ -52,6 +52,17 @@ public class ShouWangVipBean {
         private String goumaishijian;
         private String kaishihuiyuanshijian;
         private String ct;
+        private String cccctype;
+
+
+        public String getCccctype() {
+            return cccctype;
+        }
+
+        public void setCccctype(String cccctype) {
+            this.cccctype = cccctype;
+        }
+
 
         public String getHaoma() {
             return haoma;

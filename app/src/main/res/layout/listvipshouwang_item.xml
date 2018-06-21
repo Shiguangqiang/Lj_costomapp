@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="35dp"
+    android:id="@+id/ll_item_vip"
     android:layout_margin="@dimen/pad_height_10"
     android:gravity="center_vertical"
     android:orientation="horizontal">
@@ -12,8 +13,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="手机号"
-        android:textSize="@dimen/pad_text_size_16" />
+        android:text=" -- "
+        android:textSize="@dimen/pad_text_size_14" />
 
     <TextView
         android:id="@+id/tv_cardyue"
@@ -22,7 +23,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text=" -- "
-        android:textSize="@dimen/pad_text_size_16" />
+        android:textSize="@dimen/pad_text_size_14" />
 
     <TextView
         android:id="@+id/tv_cardtime"
@@ -31,7 +32,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text=" -- "
-        android:textSize="@dimen/pad_text_size_16" />
+        android:textSize="@dimen/pad_text_size_14" />
 
 
 </LinearLayout>

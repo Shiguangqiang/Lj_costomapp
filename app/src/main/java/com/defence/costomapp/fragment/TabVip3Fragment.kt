@@ -48,7 +48,7 @@ class TabVip3Fragment : BaseFragment() {
         val view = inflater.inflate(R.layout.fragment_tabvip3, null)
         pieChart = view.findViewById<PieChart>(R.id.pie_chart)
         ll_tab3 = view.findViewById<LinearLayout>(R.id.ll_tab3)
-        initdata()
+//        initdata()
         return view
     }
 
@@ -96,10 +96,8 @@ class TabVip3Fragment : BaseFragment() {
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-
             }
         })
-
     }
 
     /**
@@ -111,7 +109,6 @@ class TabVip3Fragment : BaseFragment() {
     private fun getPieData(count: Int, range: Float, zeroStarNum: Int, oneStarNum: Int): PieData {
 
         val xValues = ArrayList<String>()  //xVals用来表示每个饼块上的内容
-
 
         xValues.add("储值卡会员")  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
         xValues.add("储值卡普通用户")
@@ -208,6 +205,15 @@ class TabVip3Fragment : BaseFragment() {
 
         pieChart.animateXY(1000, 1000)  //设置动画
         // mChart.spin(2000, 0, 360);
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+
+
+        if (isVisibleToUser) {
+            initdata()
+        }
+        super.setUserVisibleHint(isVisibleToUser)
     }
 
 }

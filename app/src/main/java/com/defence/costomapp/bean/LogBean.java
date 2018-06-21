@@ -11,8 +11,8 @@ public class LogBean {
 
 
     /**
-     * list_size : 4
-     * list : [{"shelvesdate":"2018-03-07 16:07:28","username":"cjf","unreadCount":438,"userphoto":"","realname":"曹井夫","shelvesuserid":1,"telphone":"18901309182"},{"shelvesdate":"2018-02-02 10:30:27","username":"ljz","unreadCount":7,"userphoto":"","realname":"刘佳振","shelvesuserid":3,"telphone":"13264415615"},{"shelvesdate":"2018-03-07 09:45:55","username":"lxy","unreadCount":209,"userphoto":"","realname":"李新原","shelvesuserid":7,"telphone":"13801202242"},{"shelvesdate":"2018-03-07 23:44:11","username":"fn911","unreadCount":44,"userphoto":"","realname":"方楠","shelvesuserid":9,"telphone":"18610527597"}]
+     * list_size : 7
+     * list : [{"shelvesdate":"2018-06-19 16:01:48","username":"yuan","unreadCount":"","userphoto":"","realname":"袁泉","shelvesuserid":17,"telphone":"15944237542"},{"shelvesdate":"2018-06-18 21:15:48","username":"fn911","unreadCount":"","userphoto":"","realname":"方楠","shelvesuserid":9,"telphone":"18610527597"},{"shelvesdate":"2018-06-17 16:17:45","username":"cjf","unreadCount":"","userphoto":"","realname":"曹井夫","shelvesuserid":1,"telphone":"18901309182"},{"shelvesdate":"2018-06-15 17:47:45","username":"lxy","unreadCount":"","userphoto":"","realname":"李新原","shelvesuserid":7,"telphone":"13801202242"},{"shelvesdate":"2018-06-15 12:37:53","username":"ljz","unreadCount":"","userphoto":"","realname":"刘佳振","shelvesuserid":3,"telphone":"13264415615"},{"shelvesdate":"2018-06-13 10:11:02","username":"mhw","unreadCount":"","userphoto":"","realname":"米橫文","shelvesuserid":5,"telphone":"15010761108"},{"shelvesdate":"2018-06-12 10:31:29","username":"wz","unreadCount":"","userphoto":"","realname":"王增","shelvesuserid":15,"telphone":"13910757065"}]
      */
 
     private int list_size;
@@ -36,18 +36,18 @@ public class LogBean {
 
     public static class ListBean {
         /**
-         * shelvesdate : 2018-03-07 16:07:28
-         * username : cjf
-         * unreadCount : 438
+         * shelvesdate : 2018-06-19 16:01:48
+         * username : yuan
+         * unreadCount :
          * userphoto :
-         * realname : 曹井夫
-         * shelvesuserid : 1
-         * telphone : 18901309182
+         * realname : 袁泉
+         * shelvesuserid : 17
+         * telphone : 15944237542
          */
 
         private String shelvesdate;
         private String username;
-        private int unreadCount;
+        private String unreadCount;
         private String userphoto;
         private String realname;
         private int shelvesuserid;
@@ -69,11 +69,11 @@ public class LogBean {
             this.username = username;
         }
 
-        public int getUnreadCount() {
+        public String getUnreadCount() {
             return unreadCount;
         }
 
-        public void setUnreadCount(int unreadCount) {
+        public void setUnreadCount(String unreadCount) {
             this.unreadCount = unreadCount;
         }
 

@@ -60,6 +60,12 @@ public class UserTjNewActivity extends BaseActivity {
     LinearLayout liearRight;
     @BindView(R.id.et_FuzzyQuery)
     EditText etFuzzyQuery;
+    @BindView(R.id.tv_totalRetention)
+    TextView tvTotalRetention;
+    @BindView(R.id.tv_consumerCard)
+    TextView tvConsumerCard;
+    @BindView(R.id.ll_retain)
+    LinearLayout llRetain;
 
 
     private PopupWindow pop;
@@ -85,7 +91,7 @@ public class UserTjNewActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    mphone=etFuzzyQuery.getText().toString();
+                    mphone = etFuzzyQuery.getText().toString();
                     FragmentTransaction tf = fragmentManager.beginTransaction();
                     replaceFragment(tf, type, mphone);
 
@@ -117,19 +123,25 @@ public class UserTjNewActivity extends BaseActivity {
                         UserTjBean bean = (UserTjBean) msg.obj;
 
                         if (type == 5) {
-                            tvChongzhi.setText("守望注册人数:" + bean.getRegnum());
-                            regusernum.setText("平台付款次数:" + bean.getPingtaiNum());
-                            saomausernum.setText("微信付款次数:" + bean.getWeixinNum());
-                            pingtaiPay.setText("充值金额:" + AmountUtils.changeF2Y(bean.getChongzhinum() + ""));
-                            weixinpay.setText("平台留存余额:" + AmountUtils.changeF2Y(bean.getBankNo() + ""));
+                            tvChongzhi.setText("守望注册人数:" + bean.getRegnum()+"人");
+                            regusernum.setText("平台付款次数:" + bean.getPingtaiNum()+"次");
+                            saomausernum.setText("微信付款次数:" + bean.getWeixinNum()+"次");
+                            pingtaiPay.setText("充值金额:" + AmountUtils.changeF2Y(bean.getChongzhinum() + "")+"元");
+                            weixinpay.setText("平台留存余额:" + AmountUtils.changeF2Y(bean.getBankNo() + "")+"元");
+                            tvTotalRetention.setText("总留存金额:" + AmountUtils.changeF2Y(bean.getBankNo() + bean.getXfkyuemony() + "")+"元");
+                            tvConsumerCard.setText("消费卡留存:" + AmountUtils.changeF2Y(bean.getXfkyuemony() + "")+"元");
                             tvChongzhi.setVisibility(View.VISIBLE);
                             saomausernum.setVisibility(View.VISIBLE);
+                            llRetain.setVisibility(View.VISIBLE);
                         } else {
-                            regusernum.setText("注册人数:" + bean.getReg_user());
-                            pingtaiPay.setText("平台付款次数:" + bean.getPingtaiNum());
-                            weixinpay.setText("微信付款次数" + bean.getWeixinNum());
+                            regusernum.setText("注册人数:" + bean.getReg_user()+"人");
+                            pingtaiPay.setText("平台付款次数:" + bean.getPingtaiNum()+"次");
+                            weixinpay.setText("微信付款次数" + bean.getWeixinNum()+"次");
+
                             tvChongzhi.setVisibility(View.GONE);
                             saomausernum.setVisibility(View.GONE);
+                            llRetain.setVisibility(View.GONE);
+
 
                         }
                         break;
@@ -142,14 +154,19 @@ public class UserTjNewActivity extends BaseActivity {
                             saomausernum.setText("微信付款次数:");
                             pingtaiPay.setText("充值金额:");
                             weixinpay.setText("平台留存余额:");
+                            tvTotalRetention.setText("总留存金额:");
+                            tvConsumerCard.setText("消费卡留存:");
                             tvChongzhi.setVisibility(View.VISIBLE);
                             saomausernum.setVisibility(View.VISIBLE);
+                            llRetain.setVisibility(View.VISIBLE);
                         } else {
                             regusernum.setText("注册人数:");
                             pingtaiPay.setText("平台付款次数:");
                             weixinpay.setText("微信付款次数");
                             tvChongzhi.setVisibility(View.GONE);
                             saomausernum.setVisibility(View.GONE);
+                            tvTotalRetention.setVisibility(View.GONE);
+                            llRetain.setVisibility(View.GONE);
 
                         }
 

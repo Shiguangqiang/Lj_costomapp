@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.activity.statistics.VipStatistDetailActivity;
 import com.defence.costomapp.base.BaseFragment;
 import com.defence.costomapp.base.Urls;
-import com.defence.costomapp.bean.VipCardBean;
+import com.defence.costomapp.bean.VipCardNewBean;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.github.mikephil.charting.charts.PieChart;
@@ -49,30 +50,30 @@ import butterknife.Unbinder;
 
 public class TabVip1Fragment extends BaseFragment {
 
-    @BindView(R.id.pie_chart)
-    PieChart pieChart;
-    Unbinder unbinder;
-    @BindView(R.id.rl_vipst)
-    RelativeLayout rlVipst;
-    @BindView(R.id.ll_vipsatist)
-    LinearLayout llVipsatist;
-    @BindView(R.id.ll_vipintent)
-    LinearLayout llVipintent;
-    @BindView(R.id.tv_zongshu)
-    TextView tvZongshu;
-    @BindView(R.id.tv_kucun)
-    TextView tvKucun;
-    @BindView(R.id.tv_chukuweishou)
-    TextView tvChukuweishou;
-    @BindView(R.id.tv_yifashou)
-    TextView tvYifashou;
-    @BindView(R.id.sl_vips)
-    ScrollView slVips;
 
+    private PieChart mPieChart;
+    private RelativeLayout mRlVipst;
+    private LinearLayout mLlVipsatist;
+    private LinearLayout mLlVipintent;
+    private TextView mTvZongshu;
+    private TextView mTvKucun;
+    private TextView mTvChukuweishou;
+    private TextView mTvYifashou;
+    private TextView mTvNewziduan;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tabvip1, null);
-        unbinder = ButterKnife.bind(this, view);
+
+        mPieChart = view.findViewById(R.id.pie_chart);
+        mRlVipst = view.findViewById(R.id.rl_vipst);
+        mLlVipsatist = view.findViewById(R.id.ll_vipsatist);
+        mLlVipintent = view.findViewById(R.id.ll_vipintent);
+        mTvZongshu = view.findViewById(R.id.tv_zongshu);
+        mTvKucun = view.findViewById(R.id.tv_kucun);
+        mTvChukuweishou = view.findViewById(R.id.tv_chukuweishou);
+        mTvYifashou = view.findViewById(R.id.tv_yifashou);
+        mTvNewziduan = view.findViewById(R.id.tv_newziduan);
+
         initdata();
 
         return view;
@@ -80,14 +81,13 @@ public class TabVip1Fragment extends BaseFragment {
 
     private void initdata() {
 
-
-        llVipintent.setOnClickListener(new View.OnClickListener() {
+        mLlVipintent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), VipStatistDetailActivity.class));
             }
         });
-        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+        mPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
 
             @Override
             public void onValueSelected(Entry entry, int i, Highlight highlight) {
@@ -100,7 +100,6 @@ public class TabVip1Fragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), VipStatistDetailActivity.class));
             }
         });
-
 
         // 创建一个数值格式化对象
         NumberFormat numberFormat = NumberFormat.getInstance();
@@ -116,16 +115,17 @@ public class TabVip1Fragment extends BaseFragment {
                 try {
                     if (result != null) {
                         JSONObject jsonObject = new JSONObject(result.toString());
-                        VipCardBean vipCardBean = gson.fromJson(jsonObject.toString(), VipCardBean.class);
+                        VipCardNewBean vipCardBean = gson.fromJson(jsonObject.toString(), VipCardNewBean.class);
 
-                        tvZongshu.setText("(总量" + vipCardBean.getZongshu() + "张)");
+                        mTvZongshu.setText("(总量" + vipCardBean.getZongshu() + "张)");
 
-                        tvKucun.setText(vipCardBean.getKucun() + "张(" + numberFormat.format((float) vipCardBean.getKucun() / (float) vipCardBean.getZongshu() * 100) + "%)");
-                        tvChukuweishou.setText(vipCardBean.getChukuweishou() + "张(" + numberFormat.format((float) vipCardBean.getChukuweishou() / (float) vipCardBean.getZongshu() * 100) + "%)");
-                        tvYifashou.setText(vipCardBean.getYixiaoshou() + "张(" + numberFormat.format((float) vipCardBean.getYixiaoshou() / (float) vipCardBean.getZongshu() * 100) + "%)");
+                        mTvNewziduan.setText(vipCardBean.getIActiveCardCount() + "张(" + numberFormat.format((float) vipCardBean.getIActiveCardCount() / (float) vipCardBean.getZongshu() * 100) + "%)");
+                        mTvKucun.setText(vipCardBean.getIUnbindCardCount() + "张(" + numberFormat.format((float) vipCardBean.getIUnbindCardCount() / (float) vipCardBean.getZongshu() * 100) + "%)");
+                        mTvChukuweishou.setText(vipCardBean.getITestCardCount() + "张(" + numberFormat.format((float) vipCardBean.getITestCardCount() / (float) vipCardBean.getZongshu() * 100) + "%)");
+                        mTvYifashou.setText(vipCardBean.getIBindNotActive() + "张(" + numberFormat.format((float) vipCardBean.getIBindNotActive() / (float) vipCardBean.getZongshu() * 100) + "%)");
 
-                        PieData mPieData = getPieData(3, 100, vipCardBean.getKucun(), vipCardBean.getChukuweishou(), vipCardBean.getYixiaoshou());
-                        showChart(pieChart, mPieData);
+                        PieData mPieData = getPieData(4, 100, vipCardBean.getIActiveCardCount(), vipCardBean.getIUnbindCardCount(), vipCardBean.getITestCardCount(), vipCardBean.getIBindNotActive());
+                        showChart(mPieChart, mPieData);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,14 +144,15 @@ public class TabVip1Fragment extends BaseFragment {
      * @param oneStarNum
      * @param twoStarNum
      */
-    private PieData getPieData(int count, float range, int zeroStarNum, int oneStarNum, int twoStarNum) {
+    private PieData getPieData(int count, float range, int startnum, int zeroStarNum, int oneStarNum, int twoStarNum) {
 
         ArrayList<String> xValues = new ArrayList<String>();  //xVals用来表示每个饼块上的内容
 
+        xValues.add("已激活");
+        xValues.add("未绑定");  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
+        xValues.add("测试卡");
+        xValues.add("待销售");
 
-        xValues.add("库存");  //饼块上显示成Quarterly1, Quarterly2, Quarterly3, Quarterly4
-        xValues.add("出库未售");
-        xValues.add("已发售");
 
         ArrayList<Entry> yValues = new ArrayList<Entry>();  //yVals用来表示封装每个饼块的实际数据
 
@@ -160,10 +161,10 @@ public class TabVip1Fragment extends BaseFragment {
          * 将一个饼形图分成四部分， 四部分的数值比例为14:14:34:38
          * 所以 14代表的百分比就是14%
          */
-
-        yValues.add(new Entry(zeroStarNum, 0));
-        yValues.add(new Entry(oneStarNum, 1));
-        yValues.add(new Entry(twoStarNum, 2));
+        yValues.add(new Entry(startnum, 0));
+        yValues.add(new Entry(zeroStarNum, 1));
+        yValues.add(new Entry(oneStarNum, 2));
+        yValues.add(new Entry(twoStarNum, 3));
 
 
         //y轴的集合
@@ -173,6 +174,7 @@ public class TabVip1Fragment extends BaseFragment {
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         // 饼图颜色
+        colors.add(Color.rgb(223, 38, 38));
         colors.add(Color.rgb(50, 139, 241));
         colors.add(Color.rgb(252, 252, 79));
         colors.add(Color.rgb(52, 247, 91));
@@ -207,9 +209,7 @@ public class TabVip1Fragment extends BaseFragment {
         pieChart.setHoleRadius(60f);  //半径
         pieChart.setTransparentCircleRadius(4f); // 半透明圈
         //pieChart.setHoleRadius(0)  //实心圆
-
         pieChart.setDescription("饼状图");
-
         // mChart.setDrawYValues(true);
         pieChart.setDrawCenterText(true);  //饼状图中间可以添加文字
 
@@ -252,11 +252,13 @@ public class TabVip1Fragment extends BaseFragment {
         pieChart.animateXY(1000, 1000);  //设置动画
         // mChart.spin(2000, 0, 360);
     }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+//
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//
+//        if (isVisibleToUser) {
+//            initdata();
+//        }
+//        super.setUserVisibleHint(isVisibleToUser);
+//    }
 }

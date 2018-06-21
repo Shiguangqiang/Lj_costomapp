@@ -73,7 +73,7 @@ public class TabVip2Fragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tabvip2, null);
         unbinder = ButterKnife.bind(this, view);
-        init();
+//        init();
         return view;
     }
 
@@ -243,7 +243,15 @@ public class TabVip2Fragment extends BaseFragment {
         pieChart.animateXY(1000, 1000);  //设置动画
         // mChart.spin(2000, 0, 360);
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
 
+
+        if (isVisibleToUser) {
+            init();
+        }
+        super.setUserVisibleHint(isVisibleToUser);
+    }
 
     @Override
     public void onDestroyView() {

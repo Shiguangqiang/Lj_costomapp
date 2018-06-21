@@ -76,7 +76,8 @@
             android:gravity="center"
             android:textOff="会员开始日期"
             android:textOn="会员开始日期"
-            android:textSize="@dimen/pad_text_size_16" />
+            android:textColor="@color/blue"
+            android:textSize="15sp"/>
 
         <ToggleButton
             android:id="@+id/tv_memberExpires"
@@ -86,8 +87,9 @@
             android:background="@null"
             android:gravity="center"
             android:textOff="会员到期日期"
+            android:textColor="@color/blue"
             android:textOn="会员到期日期"
-            android:textSize="@dimen/pad_text_size_16" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 

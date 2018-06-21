@@ -59,6 +59,7 @@
                     android:layout_below="@+id/login_username"
                     android:layout_marginTop="@dimen/pad_height_10"
                     android:hint="请输入密码"
+                    android:inputType="textPassword"
                     android:maxLines="1" />
             </RelativeLayout>
 

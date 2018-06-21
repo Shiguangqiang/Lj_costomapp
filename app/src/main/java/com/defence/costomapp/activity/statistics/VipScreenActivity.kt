@@ -55,18 +55,18 @@ class VipScreenActivity : AppCompatActivity() {
 
             when (radioGroup.checkedRadioButtonId) {
                 R.id.tv_rbtoday -> {
-
+                    tv_leftdate.text = SgqUtils.getNowDate()
                     leftdate = SgqUtils.getNowDate()
-                    rightdate = SgqUtils.getNowDate()
+//                    rightdate = SgqUtils.getNowDate()
                 }
                 R.id.tv_rb7day -> {
-
-                    leftdate = SgqUtils.getReduceDateStr(SgqUtils.getNowDate(), 7)
+                    tv_leftdate.text = SgqUtils.getReduceDateStr(SgqUtils.getNowDate(), 7)
+//                    leftdate = SgqUtils.getReduceDateStr(SgqUtils.getNowDate(), 7)
                     rightdate = SgqUtils.getNowDate()
                 }
                 R.id.tv_rb30day -> {
-
-                    leftdate = SgqUtils.getReduceDateStr(SgqUtils.getNowDate(), 30)
+                    tv_leftdate.text = SgqUtils.getReduceDateStr(SgqUtils.getNowDate(), 30)
+//                    leftdate = SgqUtils.getReduceDateStr(SgqUtils.getNowDate(), 30)
                     rightdate = SgqUtils.getNowDate()
                 }
             }
@@ -100,8 +100,8 @@ class VipScreenActivity : AppCompatActivity() {
                 rightdate = tv_rightdate.text.toString()
             }
             val intent = Intent()
-            intent.putExtra("leftdate", leftdate)
-            intent.putExtra("rightdate", rightdate)
+            intent.putExtra("leftdate", tv_leftdate.text.toString())
+            intent.putExtra("rightdate", tv_rightdate.text.toString())
             intent.putExtra("huiyuantype", huiyuantype)
             intent.putExtra("iskaitong", iskaitong)
             setResult(234, intent)

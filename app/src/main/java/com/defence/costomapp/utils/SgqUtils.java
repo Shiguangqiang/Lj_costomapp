@@ -1,11 +1,16 @@
 package com.defence.costomapp.utils;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.defence.costomapp.app.MyApplication;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,6 +55,25 @@ public class SgqUtils {
         }
         return sb.toString();
     }
+
+    /**
+     * 获取当前本地apk的版本
+     *
+     * @param mContext
+     * @return
+     */
+    public static int getVersionCode(Context mContext) {
+        int versionCode = 0;
+        try {
+            //获取软件版本号，对应AndroidManifest.xml下android:versionCode
+            versionCode = mContext.getPackageManager().
+                    getPackageInfo(mContext.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
     //将list转换为带有 ， 的字符串
     public static String listToStringSerializable(List<Serializable> list) {
 
@@ -66,6 +90,7 @@ public class SgqUtils {
         }
         return sb.toString();
     }
+
     /**
      * 日期转星期
      *
@@ -74,7 +99,7 @@ public class SgqUtils {
      */
     public static String dateToWeek(String datetime) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        String[] weekDays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
         Calendar cal = Calendar.getInstance(); // 获得一个日历
         Date datet = null;
         try {
@@ -88,7 +113,6 @@ public class SgqUtils {
             w = 0;
         return weekDays[w];
     }
-
 
 
     public static String getAssetsFile(Context context) {

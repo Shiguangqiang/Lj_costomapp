@@ -23,7 +23,15 @@ public class UserTjBean {
     private int weixinNum;
     private int chongzhinum;
     private int regnum;
+    private int xfkyuemony;
 
+    public int getXfkyuemony() {
+        return xfkyuemony;
+    }
+
+    public void setXfkyuemony(int xfkyuemony) {
+        this.xfkyuemony = xfkyuemony;
+    }
 
     private List<ListBean> list;
 

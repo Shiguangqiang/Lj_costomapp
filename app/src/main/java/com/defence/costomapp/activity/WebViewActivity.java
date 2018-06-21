@@ -93,12 +93,17 @@ public class WebViewActivity extends AppCompatActivity {
         }
     };
     private UserInfo userInfo;
+    private String mMachine_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+
         ButterKnife.bind(this);
+
+
+        mMachine_no = getIntent().getStringExtra("machine_no");
 
         back.setText("关闭");
         back.setTextColor(Color.RED);
@@ -114,7 +119,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView = findViewById(R.id.webview);
 //        webView.loadUrl("file:///android_asset/test.html");//加载asset文件夹下html
         userInfo = MyApplication.getApp().getUserInfo();
-        webView.loadUrl(Urls.BaseUrl + "req-mobile/view/machine_task.html?" + "phoneAID=" + userInfo.getId() + "&uniqueCode=" + userInfo.getAuthorizationKey() + "&funcType=" + SgqUtils.BUHUO_TYPE + "&adminGroupID=" + userInfo.getId()+"&_t="+ Math.random());//加载url
+        webView.loadUrl(Urls.BaseUrl + "req-mobile/view/machine_task.html?" + "phoneAID=" + userInfo.getId() + "&uniqueCode=" + userInfo.getAuthorizationKey() + "&funcType=" + SgqUtils.BUHUO_TYPE + "&adminGroupID=" + userInfo.getId() + "&_t=" + Math.random() + "&machine_no=" + mMachine_no);//加载url
 //        webView.loadUrl("http://www.baidu.com");//加载url
 
         //使用webview显示html代码

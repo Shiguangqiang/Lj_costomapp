@@ -9,13 +9,13 @@ import com.defence.costomapp.utils.SharePerenceUtil;
 
 public class Urls {
 
-        public static String BaseUrl = "http://swz.landgy.com/";
+//    public static String BaseUrl = "http://swz.landgy.com/";
+
     //    测试 yang
-//    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
-    //        public static String BaseUrl = "http://swz-test.landgy.com/";
+    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
+//      public static String BaseUrl = "http://swz-test.landgy.com/";
     //  李
 //    public static String BaseUrl = "http://192.168.0.234:8080/";
-
     //
     public static String BuhuoLogin() {
         return BaseUrl + "req-mobile/login/witttth/account0";

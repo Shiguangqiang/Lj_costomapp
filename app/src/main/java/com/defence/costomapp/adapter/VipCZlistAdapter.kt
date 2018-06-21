@@ -54,6 +54,7 @@ class VipCZlistAdapter(var mList: List<ChiZhiListBean.XfkListBean>?, var context
         return v
     }
 
+
     override fun getItem(position: Int): Any {
         return mList!![position]
     }

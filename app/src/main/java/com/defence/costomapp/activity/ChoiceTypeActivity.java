@@ -29,6 +29,7 @@ import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
 import com.defence.costomapp.activity.manage.ManagerActivity;
 import com.defence.costomapp.activity.statistics.StatisticsActivity;
 import com.defence.costomapp.bean.NewVersionBean;
+import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.R;
@@ -68,6 +69,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
     private String updateUrl;
     private String updateTip;
     private int type;
+    private String mNewversion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,14 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
 //        findViewById(R.id.kefull).setOnClickListener(this);
         findViewById(R.id.tongji).setOnClickListener(this);
         findViewById(R.id.guanlill).setOnClickListener(this);
+
+        findViewById(R.id.guanlill).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(ChoiceTypeActivity.this, "当前守望客服版本是V_1." + SgqUtils.getVersionCode(ChoiceTypeActivity.this), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
         LinearLayout liear_saoma = findViewById(R.id.liear_saoma);
 
 //        alertDialog = new AlertDialog.Builder(this).setMessage("有新版本" + updateTip).setNegativeButton("更新", new DialogInterface.OnClickListener() {
@@ -185,8 +195,10 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
                     NewVersionBean newVersionBean = gson.fromJson(jsonObject.toString(), NewVersionBean.class);
                     updateUrl = newVersionBean.getHref();
                     updateTip = newVersionBean.getDescription();
+                    mNewversion = newVersionBean.getVersion();
 
-                    ShowDialog(updateUrl, updateTip);
+
+                    ShowDialog(updateUrl, updateTip, mNewversion);
 
 //                    updateUrl = jsonObject.getString("href");
 //                    updateTip = jsonObject.optString("description");
@@ -200,11 +212,11 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         });
     }
 
-    private void ShowDialog(String updateUrl, String updateTip) {
+    private void ShowDialog(String updateUrl, String updateTip, String newversion) {
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(this);
 //        normalDialog.setIcon(R.drawable.icon_dialog);
-        normalDialog.setTitle("有更新");
+        normalDialog.setTitle("发现新版本" + newversion);
         normalDialog.setMessage(updateTip);
         normalDialog.setPositiveButton("更新",
                 new DialogInterface.OnClickListener() {

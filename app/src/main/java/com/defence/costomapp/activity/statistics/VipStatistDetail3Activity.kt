@@ -1,8 +1,10 @@
 package com.defence.costomapp.activity.statistics
 
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.BaseAdapter
 import android.widget.CompoundButton
 import com.defence.costomapp.R
@@ -10,6 +12,7 @@ import com.defence.costomapp.adapter.VipShouWangAdapter
 import com.defence.costomapp.base.BaseActivity
 import com.defence.costomapp.base.Urls
 import com.defence.costomapp.bean.ShouWangVipBean
+import com.defence.costomapp.myinterface.RVItemClickListener
 import com.defence.costomapp.utils.SgqUtils
 import com.defence.costomapp.utils.httputils.HttpInterface
 import com.google.gson.Gson
@@ -54,6 +57,8 @@ class VipStatistDetail3Activity : BaseActivity() {
                 if (swviplist != null) {
                     swviplist!!.clear()
                 }
+                tv_memberStarts.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F); //22像素
+                tv_memberExpires.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40F);
                 sequence = "1"
                 if (isChecked) {
                     dora = "asc"
@@ -71,6 +76,8 @@ class VipStatistDetail3Activity : BaseActivity() {
                 if (swviplist != null) {
                     swviplist!!.clear()
                 }
+                tv_memberStarts.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40F); //22像素
+                tv_memberExpires.setTextSize(TypedValue.COMPLEX_UNIT_PX, 50F);
                 sequence = "2"
                 if (isChecked) {
                     dora = "asc"
@@ -120,14 +127,14 @@ class VipStatistDetail3Activity : BaseActivity() {
                 }
                 //守望会员卡
                 getScreenData()
-                val dropleft = leftdate!!.drop(5)
-                val dropright = rightdate!!.drop(5)
-                if (iskaitong.equals("1")) {
-                    openString="开通会员"
-                } else {
-                    openString="终止会员"
-                }
-                tv_filterConditions.text = dropleft + "至" + dropright + openString
+//                val dropleft = leftdate!!.drop(5)
+//                val dropright = rightdate!!.drop(5)
+//                if (iskaitong.equals("1")) {
+//                    openString="开通会员"
+//                } else {
+//                    openString="终止会员"
+//                }
+//                tv_filterConditions.text = dropleft + "至" + dropright + openString
             }
         }
     }
@@ -153,12 +160,21 @@ class VipStatistDetail3Activity : BaseActivity() {
                 srl.isRefreshing = false
                 srl.setLoading(false)
 
+                val dropleft = leftdate!!.drop(5)
+                val dropright = rightdate!!.drop(5)
+                if (iskaitong.equals("1")) {
+                    openString = "开通会员"
+                } else {
+                    openString = "终止会员"
+                }
+                tv_filterConditions.text = dropleft + "至" + dropright + openString
+
                 val jsonObject = JSONObject(result.toString())
                 var shouWangVipBean = gson.fromJson(jsonObject.toString(), ShouWangVipBean::class.java)
 
-                if("0".equals(iskaitong)){
+                if ("0".equals(iskaitong)) {
                     tv_vipnum.text = "会员人数:" + shouWangVipBean.huiyuanzongshu + "人"
-                }else if("1".equals(iskaitong)){
+                } else if ("1".equals(iskaitong)) {
                     tv_vipnum.text = "会员人数:" + shouWangVipBean.huiyuanzongshu + "人"
                 }
                 if (swviplist == null)
@@ -167,7 +183,9 @@ class VipStatistDetail3Activity : BaseActivity() {
                 swviplist!!.addAll(shouWangVipBean.xfkList)
 
                 if (swvipAdapter == null) {
-                    swvipAdapter = VipShouWangAdapter(swviplist!!, this@VipStatistDetail3Activity)
+                    swvipAdapter = VipShouWangAdapter(swviplist!!, this@VipStatistDetail3Activity, RVItemClickListener {
+
+                    })
                     lv_czvipdetail.adapter = swvipAdapter
                 } else {
                     swvipAdapter!!.notifyDataSetChanged()
