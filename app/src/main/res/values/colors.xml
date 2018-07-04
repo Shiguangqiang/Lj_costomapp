@@ -33,5 +33,10 @@
     <color name="red_light">#ff3300</color>
     <color name="pink_light">#cc00ff</color>
 
+    <color name="orderForm1">#ffe4e4</color>
+    <color name="orderForm2">#deeaff</color>
+    <color name="orderForm3">#dcffda</color>
+    <color name="orderForm4">#fffbc3</color>
+
 
 </resources>

@@ -184,6 +184,14 @@ class VipStatistDetail3Activity : BaseActivity() {
 
                 if (swvipAdapter == null) {
                     swvipAdapter = VipShouWangAdapter(swviplist!!, this@VipStatistDetail3Activity, RVItemClickListener {
+                        val intent = Intent(this@VipStatistDetail3Activity, UserTjDetailActivity::class.java)
+                        val id = swviplist!!.get(it).uid!!
+                        val haoma = swviplist!!.get(it).haoma!!
+                        intent.putExtra("phone", haoma)
+                        intent.putExtra("uid", id.toString())
+                        intent.putExtra("ttype", "1")
+                        intent.putExtra("payType", "3")
+                        startActivity(intent)
 
                     })
                     lv_czvipdetail.adapter = swvipAdapter

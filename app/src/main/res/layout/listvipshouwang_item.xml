@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="35dp"
     android:id="@+id/ll_item_vip"
-    android:layout_margin="@dimen/pad_height_10"
-    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/pad_height_50"
+    android:gravity="center"
     android:orientation="horizontal">
 
     <TextView
@@ -14,7 +13,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text=" -- "
-        android:textSize="@dimen/pad_text_size_14" />
+        android:textSize="@dimen/pad_text_size_16" />
 
     <TextView
         android:id="@+id/tv_cardyue"
@@ -23,7 +22,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text=" -- "
-        android:textSize="@dimen/pad_text_size_14" />
+        android:textSize="@dimen/pad_text_size_16" />
 
     <TextView
         android:id="@+id/tv_cardtime"
@@ -32,7 +31,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text=" -- "
-        android:textSize="@dimen/pad_text_size_14" />
+        android:textSize="@dimen/pad_text_size_16" />
 
 
 </LinearLayout>

@@ -41,7 +41,6 @@ class VipStatistDetail2Activity : BaseActivity() {
     private var sequence: String? = "2"
     private var dora: String? = "desc"
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vipdetail2_statist)
@@ -228,7 +227,6 @@ class VipStatistDetail2Activity : BaseActivity() {
     private var swviplist: MutableList<ShouWangVipBean.XfkListBean>? = null
 
     private fun getScreenData() {
-
         val params = RequestParams()
         params.add("listNum", ((length * 10).toString()))
         params.add("pags", "10")
@@ -272,13 +270,14 @@ class VipStatistDetail2Activity : BaseActivity() {
                 swviplist!!.addAll(shouWangVipBean.xfkList)
 
                 if (swvipAdapter == null) {
-                    swvipAdapter = VipShouWangAdapter(swviplist!!, this@VipStatistDetail2Activity, RVItemClickListener{
+                    swvipAdapter = VipShouWangAdapter(swviplist!!, this@VipStatistDetail2Activity, RVItemClickListener {
                         val intent = Intent(this@VipStatistDetail2Activity, UserTjDetailActivity::class.java)
-                        val id = swviplist!!.get(it).id!!;
+                        val id = swviplist!!.get(it).uid!!
                         val haoma = swviplist!!.get(it).haoma!!
                         intent.putExtra("phone", haoma)
                         intent.putExtra("uid", id.toString())
                         intent.putExtra("ttype", "1")
+                        intent.putExtra("payType", "1")
                         startActivity(intent)
                     })
                     lv_czvipdetail.adapter = swvipAdapter

@@ -56,6 +56,25 @@ public class DingdanBean {
         private String descVal;
         private String backTimeline;
         private String payTimeline;
+        private String ccccustome;
+        private String payType;
+
+
+        public String getCcccustome() {
+            return ccccustome;
+        }
+
+        public void setCcccustome(String ccccustome) {
+            this.ccccustome = ccccustome;
+        }
+
+        public String getPayType() {
+            return payType;
+        }
+
+        public void setPayType(String payType) {
+            this.payType = payType;
+        }
 
         public String getNumberID() {
             return numberID;

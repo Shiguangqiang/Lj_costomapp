@@ -20,6 +20,7 @@ import com.defence.costomapp.utils.SharePerenceUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import tech.linjiang.pandora.Pandora;
 
 public class StatisticsActivity extends BaseActivity {
 
@@ -68,7 +69,7 @@ public class StatisticsActivity extends BaseActivity {
         middleTitle.setText("统计");
     }
 
-    @OnClick({R.id.liear_vip, R.id.liear_xintiao, R.id.back, R.id.liear_machicetj, R.id.liear_usertj, R.id.liear_liushui, R.id.liear_dingdan, R.id.liear_jiesuan, R.id.liear_tuikuan})
+    @OnClick({R.id.liear_vip, R.id.liear_xintiao, R.id.back, R.id.liear_machicetj, R.id.liear_usertj, R.id.liear_liushui, R.id.liear_dingdan, R.id.liear_jiesuan, R.id.liear_tuikuan, R.id.liear_statistics})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -100,17 +101,26 @@ public class StatisticsActivity extends BaseActivity {
             case R.id.liear_usertj:
                 startActivity(new Intent(StatisticsActivity.this, UserTjNewActivity.class));
                 break;
+//                流水
             case R.id.liear_liushui:
                 startActivity(new Intent(StatisticsActivity.this, DailyCostActivity.class));
                 break;
+//                订单
             case R.id.liear_dingdan:
                 startActivity(new Intent(StatisticsActivity.this, DingdanNewActivity.class));
                 break;
+//                结算
             case R.id.liear_jiesuan:
                 startActivity(new Intent(StatisticsActivity.this, JieSuanActivity.class));
                 break;
+//                退款
             case R.id.liear_tuikuan:
                 startActivity(new Intent(StatisticsActivity.this, TuikuanListActivity.class));
+                break;
+//                数据统计
+            case R.id.liear_statistics:
+                VipStatic2NewActivity.start();
+
                 break;
 
         }

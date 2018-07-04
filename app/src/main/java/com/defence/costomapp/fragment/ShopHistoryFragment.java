@@ -56,6 +56,7 @@ public class ShopHistoryFragment extends BaseFragment {
     private String wxid = "";
     private String newdate;
     private List<ShopHistoryDetailBean.ListBean> list;
+    private String mPayType;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,12 +88,14 @@ public class ShopHistoryFragment extends BaseFragment {
     private void initdata(final String date) {
         uid = getActivity().getIntent().getStringExtra("uid");
         wxid = getActivity().getIntent().getStringExtra("wxid");
+        mPayType = getActivity().getIntent().getStringExtra("payType");
 
         RequestParams params = new RequestParams();
         params.put("orderUID", uid);
         params.put("sdate", date);
         params.put("wxopenID", wxid);
         params.put("orderBy", "2");
+        params.put("payType", mPayType);
 
         httpUtils.doPost(Urls.shophistory(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
 
@@ -168,7 +171,11 @@ public class ShopHistoryFragment extends BaseFragment {
         public ShopHistoryAdapter(Context context, List<ShopHistoryDetailBean.ListBean> list, RVItemClickListener rvItemClickListener) {
             super();
             this.context = context;
-            inflater = LayoutInflater.from(context);
+
+            if (getActivity() != null) { // your code here}
+                inflater = LayoutInflater.from(context);
+            }
+
             this.list = list;
             this.rvItemClickListener = rvItemClickListener;
         }

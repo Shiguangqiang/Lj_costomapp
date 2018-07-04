@@ -72,9 +72,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme">
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="fb220cc3e8549734ce147248f131be97" />
+            android:value="491351e451db1c2545df196977ad0db3" />
 
         <activity android:name=".activity.ChoiceTypeActivity">
             <intent-filter>
@@ -167,9 +168,9 @@
         <!-- 用户统计 -->
         <activity
             android:name=".activity.statistics.UserTjNewActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:configChanges="orientation|keyboardHidden"/>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <!-- 用户统计详情 -->
         <activity
             android:name=".activity.statistics.UserTjDetailActivity"
@@ -253,7 +254,9 @@
             android:configChanges="orientation|keyboard"
             android:launchMode="standard"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.Main2Activity"></activity>
+
+        <activity android:name=".activity.statistics.Statisticstj_Activity" />
+        <activity android:name=".activity.statistics.VipStatic2NewActivity"></activity>
     </application>
 
 </manifest>

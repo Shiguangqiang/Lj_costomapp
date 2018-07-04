@@ -42,6 +42,8 @@ public class Tab2Fragment extends BaseFragment {
     private String groupid;
     private String uid;
     private String wxid;
+    private String PayType;
+    private String mPayType;
 
 
     @Nullable
@@ -57,10 +59,12 @@ public class Tab2Fragment extends BaseFragment {
         groupid = SharePerenceUtil.getStringValueFromSp("groupid");
         uid = getActivity().getIntent().getStringExtra("uid");
         wxid = getActivity().getIntent().getStringExtra("wxid");
+        mPayType = getActivity().getIntent().getStringExtra("payType");
         RequestParams params = new RequestParams();
         params.put("orderUID", uid);
-        params.put("wxopenID",wxid);
+        params.put("wxopenID", wxid);
         params.put("orderBy", "2");
+        params.put("payType", mPayType);
         httpUtils.doPost(Urls.shopnum(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
             public void onSuccess(Gson gson, Object result, String message) throws JSONException {
@@ -128,7 +132,7 @@ public class Tab2Fragment extends BaseFragment {
             TextView tv_nearlogintime = view.findViewById(R.id.tv_nearlogintime);
             tv_yue.setVisibility(View.GONE);
             reg_phone.setText(list.get(position).getDescVal());
-            tv_nearlogintime.setText("数量:"+list.get(position).getBcount());
+            tv_nearlogintime.setText("数量:" + list.get(position).getBcount());
 
             return view;
         }

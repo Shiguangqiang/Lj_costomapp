@@ -130,7 +130,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="货到号及商品名称" />
+                        android:text="货道号及商品名称" />
 
                     <ImageView
                         android:layout_width="1dp"

@@ -42,7 +42,7 @@ public class DingdanNewActivity extends BaseActivity {
 
     private PopupWindow pop;
     private int type = 4;
-
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,53 +56,6 @@ public class DingdanNewActivity extends BaseActivity {
         fragmentManager.beginTransaction().replace(R.id.usertj_LL, DingdanFragment.newInstance(type)).commitAllowingStateLoss();
         initpopdialog();
 
-    }
-
-    private FragmentManager fragmentManager;
-
-    @OnClick(R.id.liear_left)
-    public void onViewClicked() {
-        finish();
-    }
-
-
-    private class DialogOnclickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-
-            FragmentTransaction tf = fragmentManager.beginTransaction();
-
-            switch (view.getId()) {
-                case R.id.tv_jiaoyisucc:
-                    middleTitle.setText("交易成功");
-                    type = 4;
-                    replaceFragment(tf, type);
-                    break;
-                case R.id.tv_daichuhuo:
-                    middleTitle.setText("待出货");
-                    type = 3;
-                    replaceFragment(tf, type);
-                    break;
-                case R.id.tv_tuikuan:
-                    middleTitle.setText("退款成功");
-                    type = 5;
-                    replaceFragment(tf, type);
-                    break;
-                case R.id.tv_alllist:
-                    middleTitle.setText("全部订单");
-                    type = 0;
-                    replaceFragment(tf, type);
-                    break;
-            }
-            if (pop.isShowing()) {
-                pop.dismiss();
-            }
-        }
-    }
-
-    private void replaceFragment(FragmentTransaction tf, int type) {
-        tf.replace(R.id.usertj_LL, DingdanFragment.newInstance(type));
-        tf.commitAllowingStateLoss();
     }
 
     private void initpopdialog() {
@@ -150,5 +103,49 @@ public class DingdanNewActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @OnClick(R.id.liear_left)
+    public void onViewClicked() {
+        finish();
+    }
+
+    private void replaceFragment(FragmentTransaction tf, int type) {
+        tf.replace(R.id.usertj_LL, DingdanFragment.newInstance(type));
+        tf.commitAllowingStateLoss();
+    }
+
+    private class DialogOnclickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+
+            FragmentTransaction tf = fragmentManager.beginTransaction();
+
+            switch (view.getId()) {
+                case R.id.tv_jiaoyisucc:
+                    middleTitle.setText("交易成功");
+                    type = 4;
+                    replaceFragment(tf, type);
+                    break;
+                case R.id.tv_daichuhuo:
+                    middleTitle.setText("待出货");
+                    type = 3;
+                    replaceFragment(tf, type);
+                    break;
+                case R.id.tv_tuikuan:
+                    middleTitle.setText("退款成功");
+                    type = 5;
+                    replaceFragment(tf, type);
+                    break;
+                case R.id.tv_alllist:
+                    middleTitle.setText("全部订单");
+                    type = 0;
+                    replaceFragment(tf, type);
+                    break;
+            }
+            if (pop.isShowing()) {
+                pop.dismiss();
+            }
+        }
     }
 }

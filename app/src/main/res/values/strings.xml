@@ -39,6 +39,8 @@
     <string name="tkserach">退款查询</string>
     <string name="xintiao">心跳</string>
     <string name="xintiao_tj">心跳统计</string>
+    <string name="statistics">数据</string>
+    <string name="statistics_tj">数据统计</string>
     <string name="vip">VIP</string>
     <string name="vip_tj">储值卡与会员</string>
 
@@ -47,6 +49,8 @@
     <string name="hello_blank_fragment">机器注册统计</string>
     <string name="title_activity_test2">Test2Activity</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="no_network_connection">无网络连接</string>
 
 
 </resources>

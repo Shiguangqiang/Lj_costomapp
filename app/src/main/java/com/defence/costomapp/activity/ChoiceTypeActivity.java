@@ -89,20 +89,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         });
         LinearLayout liear_saoma = findViewById(R.id.liear_saoma);
 
-//        alertDialog = new AlertDialog.Builder(this).setMessage("有新版本" + updateTip).setNegativeButton("更新", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                Uri uri = Uri.parse(updateUrl);
-//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                startActivity(intent);
-//            }
-//        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                alertDialog.dismiss();
-//            }
-//        }).create();
-
 
         pd = new ProgressDialog(this);
         pd.setCanceledOnTouchOutside(false);
@@ -216,7 +202,7 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(this);
 //        normalDialog.setIcon(R.drawable.icon_dialog);
-        normalDialog.setTitle("发现新版本" + newversion);
+        normalDialog.setTitle("发现新版本:" + newversion);
         normalDialog.setMessage(updateTip);
         normalDialog.setPositiveButton("更新",
                 new DialogInterface.OnClickListener() {

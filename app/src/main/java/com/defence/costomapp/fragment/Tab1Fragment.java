@@ -209,9 +209,11 @@ public class Tab1Fragment extends BaseFragment {
 
         pieDataSet.setColors(colors);
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        float px = 5 * (metrics.densityDpi / 160f);
-        pieDataSet.setSelectionShift(px); // 选中态多出的长度
+        if (getActivity() != null) { // your code here}
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            float px = 5 * (metrics.densityDpi / 160f);
+            pieDataSet.setSelectionShift(px); // 选中态多出的长度
+        }
 
 
         PieData pieData = new PieData(xValues, pieDataSet);

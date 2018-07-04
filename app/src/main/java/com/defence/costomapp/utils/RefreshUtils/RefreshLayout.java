@@ -166,26 +166,6 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     }
 
     /**
-     * 判断是否到了最底部
-     */
-    private boolean isBottom() {
-
-        if (mListView != null && mListView.getAdapter() != null) {
-            return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount()-1);
-        }
-        return false;
-    }
-
-    /**
-     * 是否是上拉操作
-     *
-     * @return
-     */
-    private boolean isPullUp() {
-        return (mYDown - mLastY) >= mTouchSlop;
-    }
-
-    /**
      * 如果到了最底部,而且是上拉操作.那么执行onLoad方法
      */
     private void loadData() {
@@ -198,6 +178,30 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     }
 
     /**
+     * 判断是否到了最底部
+     */
+    private boolean isBottom() {
+
+        if (mListView != null && mListView.getAdapter() != null) {
+            return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount() - 1);
+        }
+        return false;
+    }
+
+    /**
+     * 是否是上拉操作
+     *
+     * @return
+     */
+    private boolean isPullUp() {
+
+        if (mLastY == 0) {
+            mLastY = mYDown;
+        }
+        return (mYDown - mLastY) >= mTouchSlop;
+    }
+
+    /**
      * @param loading
      */
     public void setLoading(boolean loading) {
@@ -205,7 +209,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
         if (isLoading) {
             mListView.addFooterView(mListViewFooter);
         } else {
-            if(mListView!=null&&mListViewFooter!=null){
+            if (mListView != null && mListViewFooter != null) {
                 mListView.removeFooterView(mListViewFooter);
             }
             mYDown = 0;

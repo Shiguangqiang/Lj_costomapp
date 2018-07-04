@@ -10,6 +10,7 @@ import android.util.Log;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.bean.UserInfo;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SystemUtil;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -54,7 +55,7 @@ public class HttpUtils {
             params.put("uniqueCode", user.getAuthorizationKey());
             params.put("phoneAID", user.getId() + "");
             params.put("funcType", funcType + "");
-            params.put("android_swz_manage_request", "android");
+            params.put("android_swz_manage_request", "android-" + SystemUtil.getSystemModel() + "-" + SystemUtil.getSystemVersion());
             params.put("android_swz_manage_version_int", SgqUtils.getVersionCode(context) + "");
             params.put("_t", Math.random());
             // TODO: 16/9/14 尚未添加登录和未登录 目前视为未登录,修改后把上面两行代码删除即可
@@ -62,7 +63,7 @@ public class HttpUtils {
             params.put("uniqueCode", "009900");
             params.put("phoneAID", "0");
             params.put("funcType", funcType + "");
-            params.put("android_swz_manage_request", "android");
+            params.put("android_swz_manage_request", "android-" + SystemUtil.getSystemModel() + "-" + SystemUtil.getSystemVersion());
             params.put("android_swz_manage_version_int", SgqUtils.getVersionCode(context) + "");
             params.put("_t", Math.random());
         }
@@ -70,7 +71,11 @@ public class HttpUtils {
     }
 
     public void doPost(String url, int funcType, RequestParams params, final HttpInterface integerface) {
-        addBaseParams(params, funcType);
+        try {
+            addBaseParams(params, funcType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Log.d("HttpUtils", url);
         Log.d("HttpUtils", params + "");
         if (isNetworkAvailable()) {
@@ -98,6 +103,7 @@ public class HttpUtils {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
                     Log.d("HttpUtils", "statusCode:" + statusCode);
                     Log.d("HttpUtils", new String(responseBody));
                     try {

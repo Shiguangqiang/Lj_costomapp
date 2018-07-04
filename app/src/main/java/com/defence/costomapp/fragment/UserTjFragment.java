@@ -49,7 +49,12 @@ public class UserTjFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int type;
     private String mphone;
-
+    private HttpUtils httpUtils;
+    private PullLoadMoreRecyclerView pullLoadMoreRecyclerView;
+    private String url;
+    private int length = 0;
+    private UserTjAdapter userTjAdapter;
+    private List<UserTjBean.ListBean> list;
 
     public UserTjFragment() {
         // Required empty public constructor
@@ -72,8 +77,6 @@ public class UserTjFragment extends Fragment {
         return fragment;
     }
 
-    private HttpUtils httpUtils;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +93,6 @@ public class UserTjFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_tj, container, false);
     }
-
-    private PullLoadMoreRecyclerView pullLoadMoreRecyclerView;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -120,16 +121,10 @@ public class UserTjFragment extends Fragment {
         initData();
     }
 
-    private String url;
-    private int length = 0;
-
     private void initData() {
         doPost();
 
     }
-
-    private UserTjAdapter userTjAdapter;
-    private List<UserTjBean.ListBean> list;
 
     private void doPost() {
 
@@ -167,6 +162,7 @@ public class UserTjFragment extends Fragment {
                                     intent.putExtra("phone", list.get(position).getMphone() + "");
                                     intent.putExtra("ttype", type + "");
                                     intent.putExtra("wxid", list.get(position).getWxOpenID() + "");
+                                    intent.putExtra("payType", "1");
                                     startActivity(intent);
                                 }
 
@@ -238,7 +234,7 @@ public class UserTjFragment extends Fragment {
                 params.put("order", "desc");
                 params.put("orderBy", "2");
                 params.put("endpag", "10");
-                params.put("mphone",mphone);
+                params.put("mphone", mphone);
                 break;
             case 3:
                 url = Urls.userTj();
@@ -247,7 +243,7 @@ public class UserTjFragment extends Fragment {
                 params.put("order", "desc");
                 params.put("orderBy", "2");
                 params.put("endpag", "10");
-                params.put("mphone",mphone);
+                params.put("mphone", mphone);
                 break;
             case 4:
                 url = Urls.wxpay();
@@ -255,14 +251,14 @@ public class UserTjFragment extends Fragment {
                 params.put("orderUID", "0");
                 params.put("orderBy", "2");
                 params.put("endpag", "10");
-                params.put("mphone",mphone);
+                params.put("mphone", mphone);
                 break;
             case 5:
                 url = Urls.chongzhi();
                 params.put("begin", (length * 10) + "");
                 params.put("end", "10");
                 params.put("orderBy", "2");
-                params.put("mphone",mphone);
+                params.put("mphone", mphone);
                 break;
         }
         return params;

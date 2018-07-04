@@ -86,7 +86,6 @@ import okhttp3.Response;
  */
 public class BuhuoMessageInfoActivity extends BaseActivity {
 
-
     List<String> machinename = new ArrayList<>();
     String selectNum = "";
     //    任务类型   0调货   1回库
@@ -112,7 +111,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     private TextView tv_newtasktype, tv_tasktype, tv_transferMachine, tv_arrangingGoods, tv_transferAmount;
     private Handler handler = null;
     private TextView tv_confirm;
-    private String gui_ge_id;
+    private int gui_ge_id;
     private String tv_transferAmountbefore;
     private LinearLayoutManager mLinearLayoutManager;
     private RelativeLayout mRl_sm;
@@ -263,7 +262,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                                                     mBtn_selectMachine.setVisibility(View.VISIBLE);
                                                     tv_returnLibraryDescription.setVisibility(View.GONE);
 
-                                                    gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id() + "";
+                                                    gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id();
 
                                                     if (drawerLayout.isDrawerOpen(navigationView)) {
                                                         drawerLayout.closeDrawer(navigationView);
@@ -286,7 +285,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                                                     mBtn_selectMachine.setVisibility(View.GONE);
                                                     tv_returnLibraryDescription.setVisibility(View.VISIBLE);
 
-                                                    gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id() + "";
+                                                    gui_ge_id = ceGuiGoodsBean.getList().get(position).getGuige_id();
 
                                                     if (drawerLayout.isDrawerOpen(navigationView)) {
                                                         drawerLayout.closeDrawer(navigationView);
@@ -576,8 +575,8 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         }
 
         RequestParams params = new RequestParams();
-        params.put("guigeid", gui_ge_id);
         params.put("guigename", guigename);
+        params.put("guigeid", gui_ge_id+"");
         params.put("shangpinname", shangpinname);
         params.put("huikunumber", tv_transferAmount.getText().toString());
         params.put("machine_no", buhuoMessageEntity.getMachinenumber());
@@ -613,7 +612,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
         params.put("machine_ff_mtl", buhuoMessageEntity.getMachinenumber());
 //       当前长按所选的商品规格ID
-        params.put("iiint2_mkl", gui_ge_id);
+        params.put("iiint2_mkl", gui_ge_id+"");
 //       调货至某台机器上, 机器列表中手动选中的机器
         params.put("machine_tt_mtl", selectNum);
 //       商品规格全称, 商品名-规格名

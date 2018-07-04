@@ -9,14 +9,15 @@ import com.defence.costomapp.utils.SharePerenceUtil;
 
 public class Urls {
 
-//    public static String BaseUrl = "http://swz.landgy.com/";
-
+    //    正式的
+    public static String BaseUrl = "http://swz.landgy.com/";
     //    测试 yang
-    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
-//      public static String BaseUrl = "http://swz-test.landgy.com/";
-    //  李
+//    public static String BaseUrl = "http://192.168.0 127:8080/mp2017/";
+//    public static String BaseUrl = "http://swz-test.landgy.com/";
+//     李
 //    public static String BaseUrl = "http://192.168.0.234:8080/";
     //
+
     public static String BuhuoLogin() {
         return BaseUrl + "req-mobile/login/witttth/account0";
     }
@@ -143,8 +144,11 @@ public class Urls {
     }
 
     //查看消费记录
+    // 新修改
     public static String shophistory() {
-        return BaseUrl + "req-mobile/user-tongji/list/user/dingdannumber/0data1.json";
+
+//        return BaseUrl + "req-mobile/user-tongji/list/user/dingdannumber/0data1.json";
+        return BaseUrl + "req-mobile/user-tongji/list/user/dingdannumber/vv/0data1.json";
     }
 
     //时间段统计销量
@@ -153,13 +157,16 @@ public class Urls {
     }
 
     //购买数量统计
+    //新修改
     public static String shopnum() {
-        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/0data1.json";
+//        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/0data1.json";
+        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/vv/0data1.json";
     }
 
     //机器出货量统计
     public static String macchunum() {
-        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/machine/0data1.json";
+//        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/machine/0data1.json";
+        return BaseUrl + "req-mobile/user-tongji/list/user/dingdanshangpin/machine/vv/0data1.json";
     }
 
     //今日流水
@@ -197,7 +204,6 @@ public class Urls {
     //退款查询 机器
     public static String dingdtuikuan() {
         return BaseUrl + "req-mobile/user-tuikuan/list/user/tuikuan/machine/0data1.json";
-
     }
 
     //退款查询 商品
@@ -217,7 +223,6 @@ public class Urls {
     public static String listtkgroup() {
         return BaseUrl + "req-mobile/user-tuikuan/list/info/dingdangroupmachine/0data1.json";
     }
-
 
     //退款退款
     public static String dingdantuikuan() {
@@ -277,5 +282,10 @@ public class Urls {
     public static String backGoods() {
         return BaseUrl + "req-mobile/huiku/shangpin/device/back/goods/0data1.json";
     }
+
+    public static String filter() {
+        return BaseUrl + "req-mobile/tong-ji/zhexiantu/query/zhexiantu/by/shaixuantiaojian/9data.json";
+    }
+
 
 }

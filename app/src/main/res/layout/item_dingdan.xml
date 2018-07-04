@@ -31,13 +31,30 @@
             android:textSize="@dimen/pad_text_size_16" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_time"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/pad_height_10"
-        android:gravity="left"
-        android:textSize="@dimen/pad_text_size_12" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/pad_height_7"
+            android:gravity="left"
+            android:textSize="@dimen/pad_text_size_12" />
+
+        <TextView
+            android:id="@+id/tv_orderFormstate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/pad_height_7"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="@dimen/pad_text_size_16" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_money"

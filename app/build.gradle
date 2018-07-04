@@ -3,23 +3,31 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-
     signingConfigs {
-        myConfig {
-            keyAlias 'defence'
-            keyPassword 'difansi123'
-            storeFile file('D:/jks/Defence')
-            storePassword 'difansi123'
+        config {
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
         }
     }
-    compileSdkVersion 26
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.defence.costomapp"
-        minSdkVersion 15
-        targetSdkVersion 26
-        versionCode 29
-        versionName "1.29"
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        multiDexEnabled true
     }
 
     /*解决打包问题*/
@@ -42,24 +50,20 @@ android {
     }
 
     buildTypes {
-        debug {
-            minifyEnabled false
-            debuggable true
-        }
         release {
             minifyEnabled false
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-            release {
-                // 使用签名打包时不显示Log
-                buildConfigField "boolean", "LOG_DEBUG", "false"
-            }
-
-            /*
-            * key store psd: difansi123
-            * alias:defence
-            * */
+            // 使用签名打包时不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
         }
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            signingConfig signingConfigs.config
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
     }
 
     compileOptions {
@@ -70,17 +74,50 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    api 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    api 'com.android.support:support-v4:26.1.0'
     implementation 'com.google.android.gms:play-services-plus:11.8.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
+    api rootProject.ext.dependencies["appcompat-v7"]
+    api rootProject.ext.dependencies["support-v4"]
+
+    implementation rootProject.ext.dependencies["cardview"]
+    implementation rootProject.ext.dependencies["design"]
+    implementation rootProject.ext.dependencies["recyclerview"]
+    implementation rootProject.ext.dependencies["constraint-layout"]
+
+    implementation rootProject.ext.dependencies["preference"]
+    implementation rootProject.ext.dependencies["retrofit2"]
+    implementation rootProject.ext.dependencies["converter-scalars"]
+    implementation rootProject.ext.dependencies["converter-gson"]
+    implementation rootProject.ext.dependencies["adapter-rxjava2"]
+    implementation rootProject.ext.dependencies["rxlifecycle2"]
+    implementation rootProject.ext.dependencies["rxlifecomponents"]
+    implementation rootProject.ext.dependencies["dagger"]
+    annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+
+    implementation rootProject.ext.dependencies["rxjava"]
+    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["rxbinding2"]
+    implementation rootProject.ext.dependencies["banner"]
+    implementation rootProject.ext.dependencies["circleimageview"]
+    implementation rootProject.ext.dependencies["utilcode"]
+    implementation rootProject.ext.dependencies["agentweb"]
+    implementation rootProject.ext.dependencies["BaseAdapterHelper"]
+    implementation rootProject.ext.dependencies["arouter-api"]
+    compile rootProject.ext.dependencies["fragmentation"]
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+
+//    调试利器Pandora
+    debugImplementation 'com.github.whataa:pandora:v1.0.1'
+    releaseImplementation 'com.github.whataa:pandora-no-op:v1.0.1'
+
     //网络
     implementation files('libs/android-async-http-1.4.4.jar')
-
     //极光
     implementation 'cn.jiguang.sdk:jpush:3.1.1'
     // 此处以JPush 3.1.1 版本为例。
@@ -88,51 +125,32 @@ dependencies {
     // 此处以JCore 1.1.9 版本为例。
     //扫码
     implementation 'com.google.zxing:core:3.3.0'
-
-    //goole
-    api 'com.android.support:recyclerview-v7:26.1.0'
-    api 'com.android.support:design:26.1.0'
-
     // 2D地图
     implementation 'com.amap.api:map2d:latest.integration'
-
     // 搜索
     implementation 'com.amap.api:search:latest.integration'
-
     // 定位
     implementation 'com.amap.api:location:latest.integration'
-
     //图片下载
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-
     //仿ios 弹出菜单
     implementation project(':actionsheetmenumlib')
-
     //解析
     implementation 'com.google.code.gson:gson:2.8.2'
-
     //View注入框架
     implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
     //三级联动
     implementation 'com.contrarywind:Android-PickerView:3.2.5'
-
     //统计图
     implementation files('libs/mpchartlib.jar')
 
     //下拉刷新RV
     implementation 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
-
-    //网络请求
-    implementation 'com.squareup.okhttp3:okhttp:3.4.2'
-
     //事件总线
     implementation 'org.greenrobot:eventbus:3.0.0'
-
     //必选 Android快速生成通用Adapter
     implementation 'com.dyhdyh.adapters:adapters:1.0.0'
     implementation files('libs/systembartint-1.0.4.jar')

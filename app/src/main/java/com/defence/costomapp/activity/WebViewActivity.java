@@ -23,6 +23,7 @@ import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.UserInfo;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.SharePerenceUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -119,7 +120,8 @@ public class WebViewActivity extends AppCompatActivity {
         webView = findViewById(R.id.webview);
 //        webView.loadUrl("file:///android_asset/test.html");//加载asset文件夹下html
         userInfo = MyApplication.getApp().getUserInfo();
-        webView.loadUrl(Urls.BaseUrl + "req-mobile/view/machine_task.html?" + "phoneAID=" + userInfo.getId() + "&uniqueCode=" + userInfo.getAuthorizationKey() + "&funcType=" + SgqUtils.BUHUO_TYPE + "&adminGroupID=" + userInfo.getId() + "&_t=" + Math.random() + "&machine_no=" + mMachine_no);//加载url
+        String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
+        webView.loadUrl(Urls.BaseUrl + "req-mobile/view/machine_task.html?" + "phoneAID=" + userInfo.getId() + "&uniqueCode=" + userInfo.getAuthorizationKey() + "&funcType=" + SgqUtils.BUHUO_TYPE + "&adminGroupID=" + groupid + "&_t=" + Math.random() + "&machine_no=" + mMachine_no);//加载url
 //        webView.loadUrl("http://www.baidu.com");//加载url
 
         //使用webview显示html代码

@@ -53,7 +53,15 @@ public class ShouWangVipBean {
         private String kaishihuiyuanshijian;
         private String ct;
         private String cccctype;
+        private String uid;
 
+        public String getUid() {
+            return uid == null ? "" : uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
 
         public String getCccctype() {
             return cccctype;
