@@ -46,14 +46,14 @@ public class Statisticstj_Activity extends BaseNewActivity<StaticstjPresenter> i
 
     @Override
     protected void initInjector() {
-        mActivityComponent.inject(this);
+
     }
 
     @Override
     protected void initView() {
         back.setImageResource(R.mipmap.back);
         middleTitle.setText(R.string.statistics_tj);
-//        mPresenter.getLineChartData(SharePerenceUtil.getStringValueFromSp("groupid"), "10100");
+        mPresenter.getLineChartData(SharePerenceUtil.getStringValueFromSp("groupid"), "10100");
         mPresenter.getGailycost(SharePerenceUtil.getStringValueFromSp("groupid"), "10100", "2018-07-02");
     }
 
@@ -69,7 +69,6 @@ public class Statisticstj_Activity extends BaseNewActivity<StaticstjPresenter> i
 
     @Override
     public void setGailycost(DailyCostBean.ResultBean resultBean) {
-
         Toast.makeText(this, resultBean.getDate().toString(), Toast.LENGTH_SHORT).show();
 
     }

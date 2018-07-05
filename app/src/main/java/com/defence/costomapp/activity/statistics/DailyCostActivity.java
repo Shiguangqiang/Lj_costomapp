@@ -30,7 +30,7 @@ import butterknife.OnClick;
  * 今日流水
  */
 
-public class DailyCostActivity extends BaseActivity {
+public class DailyCostActivity extends BaseActivity  {
 
     @BindView(R.id.back)
     ImageView back;

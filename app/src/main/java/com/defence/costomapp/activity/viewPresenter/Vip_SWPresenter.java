@@ -8,7 +8,6 @@ import com.defence.costomapp.net.ApiService;
 import com.defence.costomapp.net.RetrofitManager;
 import com.defence.costomapp.net.RxSchedulers;
 
-import javax.inject.Inject;
 
 import io.reactivex.functions.Consumer;
 import retrofit2.http.Field;
@@ -20,7 +19,6 @@ import retrofit2.http.Field;
  */
 public class Vip_SWPresenter extends BasePresenter<Vip_SWContract.View> implements Vip_SWContract.Presenter {
 
-    @Inject
     public Vip_SWPresenter() {
 
     }

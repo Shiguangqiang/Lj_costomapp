@@ -16,16 +16,15 @@ import com.defence.costomapp.di.component.ApplicationComponent;
 import com.defence.costomapp.di.component.DaggerApplicationComponent;
 import com.defence.costomapp.di.module.ApplicationModule;
 
-import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
-import me.yokeyword.fragmentation.Fragmentation;
 import tech.linjiang.pandora.Pandora;
 
 public class MyApplication extends MultiDexApplication {
     private static MyApplication mInstance;
     private UserInfo userInfo;
     private ApplicationComponent mApplicationComponent;
+
 
     public static Context getAppContext() {
         return mInstance.getApplicationContext();
@@ -47,11 +46,6 @@ public class MyApplication extends MultiDexApplication {
 
     }
 
-    private void initJPUSH() {
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
-    }
-
     /**
      * 初始化ApplicationComponent
      */
@@ -59,6 +53,15 @@ public class MyApplication extends MultiDexApplication {
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+    }
+
+    public ApplicationComponent getApplicationComponent() {
+        return mApplicationComponent;
+    }
+
+    private void initJPUSH() {
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     /**
@@ -72,9 +75,6 @@ public class MyApplication extends MultiDexApplication {
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return mApplicationComponent;
-    }
 
     public UserInfo getUserInfo() {
         return userInfo;

@@ -2,7 +2,6 @@ package com.defence.costomapp.adapter
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.ColorSpace
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View

@@ -5,8 +5,8 @@ import android.util.Log;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.defence.costomapp.BuildConfig;
 import com.defence.costomapp.app.MyApplication;
+import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.UserInfo;
-import com.defence.costomapp.constant.Constant;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.SystemUtil;
@@ -119,7 +119,7 @@ public class RetrofitManager {
      */
 
     public static <T> T create(Class<T> clazz) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constant.REQUEST_BASE_URL)
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Urls.BaseUrl)
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();

@@ -119,8 +119,7 @@ public class StatisticsActivity extends BaseActivity {
                 break;
 //                数据统计
             case R.id.liear_statistics:
-                VipStatic2NewActivity.start();
-
+                AnalysisFilterActivity.start();
                 break;
 
         }

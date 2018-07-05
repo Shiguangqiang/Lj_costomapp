@@ -2,6 +2,7 @@ package com.defence.costomapp.di.module;
 
 import android.content.Context;
 
+
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.di.scope.ContextLife;
 import com.defence.costomapp.di.scope.PerApp;
@@ -11,7 +12,7 @@ import dagger.Provides;
 
 
 /**
- * Created by Sgq on 2017/1/19.
+ * Created by lw on 2017/1/19.
  */
 @Module
 public class ApplicationModule {

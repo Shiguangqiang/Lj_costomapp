@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -26,6 +29,8 @@ import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.google.gson.Gson;
+import com.just.agentweb.AgentWeb;
+import com.just.agentweb.ChromeClientCallbackManager;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
@@ -76,6 +81,10 @@ public class TuikuanListActivity extends BaseActivity {
     LinearLayout liearTk1;
     @BindView(R.id.liear_tk2)
     LinearLayout liearTk2;
+    @BindView(R.id.fab_refundMoney)
+    FloatingActionButton fabRefundMoney;
+    @BindView(R.id.fl_tk)
+    FrameLayout flTk;
     private DingdanAdapter dingdanAdapter;
     private TuikuanListBean tuikuanListBean;
     private String formatid;
@@ -83,6 +92,13 @@ public class TuikuanListActivity extends BaseActivity {
     private String groupMachineNumber;
     private List<TuikuanListBean.ListBean> list;
     private List<TuikuanListBean.ListBean> listdetail;
+    private ChromeClientCallbackManager.ReceivedTitleCallback mReceivedTitleCallback = new ChromeClientCallbackManager.ReceivedTitleCallback() {
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            middleTitle.setText(title);
+            rightIcon.setVisibility(View.GONE);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +142,21 @@ public class TuikuanListActivity extends BaseActivity {
                 length++;
                 initdata(length);
 
+
+            }
+        });
+
+        fabRefundMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AgentWeb.with(TuikuanListActivity.this)//传入Activity
+                        .setAgentWebParent(flTk, new LinearLayout.LayoutParams(-1, -1))//传入AgentWeb 的父控件 ，如果父控件为 RelativeLayout ， 那么第二参数需要传入 RelativeLayout.LayoutParams
+                        .useDefaultIndicator()// 使用默认进度条
+                        .defaultProgressBarColor() // 使用默认进度条颜色
+                        .setReceivedTitleCallback(mReceivedTitleCallback) //设置 Web 页面的 title 回调
+                        .createAgentWeb()//
+                        .ready()
+                        .go("http://www.jd.com");
 
             }
         });
@@ -173,7 +204,7 @@ public class TuikuanListActivity extends BaseActivity {
                                 intent.putExtra("numberID", list.get(position).getNumberID());
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
-                                finish();
+
                             }
                         });
                         listTuikuan.setAdapter(dingdanAdapter);
@@ -232,8 +263,6 @@ public class TuikuanListActivity extends BaseActivity {
                     } else {
                         dingdanAdapter.notifyDataSetChanged();
                     }
-
-
                 }
             });
         }
@@ -248,7 +277,7 @@ public class TuikuanListActivity extends BaseActivity {
                 break;
             case R.id.liear_right:
                 startActivity(new Intent(TuikuanListActivity.this, TuiKuanSerachActivity.class));
-                finish();
+
                 break;
         }
     }

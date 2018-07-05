@@ -115,9 +115,9 @@
                 android:id="@+id/liear_liushui"
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
                 android:layout_weight="1"
                 android:background="@drawable/tongjibg"
-                android:layout_margin="@dimen/pad_height_8"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -146,9 +146,9 @@
                 android:id="@+id/liear_dingdan"
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
                 android:layout_weight="1"
                 android:background="@drawable/tongjibg"
-                android:layout_margin="@dimen/pad_height_8"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -177,9 +177,9 @@
                 android:id="@+id/liear_jiesuan"
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
                 android:layout_weight="1"
                 android:background="@drawable/tongjibg"
-                android:layout_margin="@dimen/pad_height_8"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -215,9 +215,9 @@
                 android:id="@+id/liear_tuikuan"
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
                 android:layout_weight="1"
                 android:background="@drawable/tongjibg"
-                android:layout_margin="@dimen/pad_height_8"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -244,9 +244,9 @@
                 android:id="@+id/liear_xintiao"
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
                 android:layout_weight="1"
                 android:background="@drawable/tongjibg"
-                android:layout_margin="@dimen/pad_height_8"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -275,9 +275,9 @@
                 android:id="@+id/liear_vip"
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
                 android:layout_weight="1"
                 android:background="@drawable/tongjibg"
-                android:layout_margin="@dimen/pad_height_8"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -310,33 +310,33 @@
             android:orientation="horizontal">
 
 
-                <LinearLayout
-                    android:id="@+id/liear_statistics"
-                    android:layout_width="@dimen/pad_height_100"
-                    android:layout_height="@dimen/pad_height_100"
-                    android:background="@drawable/tongjibg"
-                    android:gravity="center"
+            <LinearLayout
+                android:id="@+id/liear_statistics"
+                android:layout_width="@dimen/pad_height_100"
+                android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
+                android:layout_weight="1"
+                android:background="@drawable/tongjibg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="@dimen/pad_height_8"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:text="@string/statistics"
+                    android:textColor="@color/sansansan"
+                    android:textSize="@dimen/pad_text_size_20" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/statistics"
-                        android:textColor="@color/sansansan"
-                        android:textSize="@dimen/pad_text_size_20" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/statistics_tj"
-                        android:textColor="@color/liuliuliu"
-                        android:textSize="@dimen/pad_text_size_14" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/statistics_tj"
+                    android:textColor="@color/liuliuliu"
+                    android:textSize="@dimen/pad_text_size_14" />
 
             </LinearLayout>
 
@@ -344,9 +344,9 @@
             <LinearLayout
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_margin="@dimen/pad_height_8"
                 android:orientation="vertical">
 
                 <TextView
@@ -370,9 +370,9 @@
             <LinearLayout
                 android:layout_width="@dimen/pad_height_100"
                 android:layout_height="@dimen/pad_height_100"
+                android:layout_margin="@dimen/pad_height_8"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_margin="@dimen/pad_height_8"
                 android:orientation="vertical">
 
 

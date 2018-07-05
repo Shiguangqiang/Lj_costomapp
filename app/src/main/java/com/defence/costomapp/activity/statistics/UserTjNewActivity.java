@@ -72,6 +72,7 @@ public class UserTjNewActivity extends BaseActivity {
     private Handler handler;
     private int type = 1;
     private String mphone = "";
+    private FragmentManager fragmentManager;
 
     @Override
 
@@ -107,8 +108,51 @@ public class UserTjNewActivity extends BaseActivity {
 
     }
 
-    public Handler getHandler() {
-        return handler;
+    private void initpopdialog() {
+        DialogOnclickListener dialogOnclickListener = new DialogOnclickListener();
+        final View view = getLayoutInflater().inflate(R.layout.pop_dialog, null);
+        pop = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        view.findViewById(R.id.tv_logintime).setOnClickListener(dialogOnclickListener);
+        view.findViewById(R.id.tv_yue).setOnClickListener(dialogOnclickListener);
+        view.findViewById(R.id.tv_reg_time).setOnClickListener(dialogOnclickListener);
+        view.findViewById(R.id.tv_weixinpay).setOnClickListener(dialogOnclickListener);
+        view.findViewById(R.id.tv_shouwang_history).setOnClickListener(dialogOnclickListener);
+
+
+        pop.setOutsideTouchable(true);
+        pop.setFocusable(true);// 点击back退出pop
+        pop.setAnimationStyle(R.style.add_new_style);
+
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().setAttributes(lp);
+            }
+        });
+        pop.setBackgroundDrawable(new ColorDrawable(Color.argb(136, 0, 0, 0)));// 设置背景透明，点击back退出pop
+        rightIcon.setImageResource(R.mipmap.all);
+        rightIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (pop.isShowing()) {
+                    pop.dismiss();
+                } else {
+                    pop.showAtLocation(view, Gravity.BOTTOM, 0, -560);//在父控件下方出来
+                    pop.showAsDropDown(view);
+                    // 设置背景颜色变暗
+                    WindowManager.LayoutParams lp = getWindow().getAttributes();
+                    lp.alpha = 0.7f;
+                    getWindow().setAttributes(lp);
+                }
+            }
+        });
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -123,26 +167,24 @@ public class UserTjNewActivity extends BaseActivity {
                         UserTjBean bean = (UserTjBean) msg.obj;
 
                         if (type == 5) {
-                            tvChongzhi.setText("守望注册人数:" + bean.getRegnum()+"人");
-                            regusernum.setText("平台付款次数:" + bean.getPingtaiNum()+"次");
-                            saomausernum.setText("微信付款次数:" + bean.getWeixinNum()+"次");
-                            pingtaiPay.setText("充值金额:" + AmountUtils.changeF2Y(bean.getChongzhinum() + "")+"元");
-                            weixinpay.setText("平台留存余额:" + AmountUtils.changeF2Y(bean.getBankNo() + "")+"元");
-                            tvTotalRetention.setText("总留存金额:" + AmountUtils.changeF2Y(bean.getBankNo() + bean.getXfkyuemony() + "")+"元");
-                            tvConsumerCard.setText("消费卡留存:" + AmountUtils.changeF2Y(bean.getXfkyuemony() + "")+"元");
+                            tvChongzhi.setText("守望注册人数:" + bean.getRegnum() + "人");
+                            regusernum.setText("平台付款次数:" + bean.getPingtaiNum() + "次");
+                            saomausernum.setText("微信付款次数:" + bean.getWeixinNum() + "次");
+                            pingtaiPay.setText("充值金额:" + AmountUtils.changeF2Y(bean.getChongzhinum() + "") + "元");
+                            weixinpay.setText("平台留存余额:" + AmountUtils.changeF2Y(bean.getBankNo() + "") + "元");
+                            tvTotalRetention.setText("总留存金额:" + AmountUtils.changeF2Y(bean.getBankNo() + bean.getXfkyuemony() + "") + "元");
+                            tvConsumerCard.setText("消费卡留存:" + AmountUtils.changeF2Y(bean.getXfkyuemony() + "") + "元");
                             tvChongzhi.setVisibility(View.VISIBLE);
                             saomausernum.setVisibility(View.VISIBLE);
                             llRetain.setVisibility(View.VISIBLE);
                         } else {
-                            regusernum.setText("注册人数:" + bean.getReg_user()+"人");
-                            pingtaiPay.setText("平台付款次数:" + bean.getPingtaiNum()+"次");
-                            weixinpay.setText("微信付款次数" + bean.getWeixinNum()+"次");
+                            regusernum.setText("注册人数:" + bean.getReg_user() + "人");
+                            pingtaiPay.setText("平台付款次数:" + bean.getPingtaiNum() + "次");
+                            weixinpay.setText("微信付款次数" + bean.getWeixinNum() + "次");
 
                             tvChongzhi.setVisibility(View.GONE);
                             saomausernum.setVisibility(View.GONE);
                             llRetain.setVisibility(View.GONE);
-
-
                         }
                         break;
 
@@ -176,7 +218,14 @@ public class UserTjNewActivity extends BaseActivity {
         };
     }
 
-    private FragmentManager fragmentManager;
+    private void replaceFragment(FragmentTransaction tf, int type, String mphone) {
+        tf.replace(R.id.usertj_LL, UserTjFragment.newInstance(type, mphone));
+        tf.commitAllowingStateLoss();
+    }
+
+    public Handler getHandler() {
+        return handler;
+    }
 
     @OnClick(R.id.liear_left)
     public void onViewClicked() {
@@ -225,58 +274,6 @@ public class UserTjNewActivity extends BaseActivity {
                 pop.dismiss();
             }
         }
-    }
-
-    private void replaceFragment(FragmentTransaction tf, int type, String mphone) {
-        tf.replace(R.id.usertj_LL, UserTjFragment.newInstance(type, mphone));
-        tf.commitAllowingStateLoss();
-    }
-
-    private void initpopdialog() {
-        DialogOnclickListener dialogOnclickListener = new DialogOnclickListener();
-        final View view = getLayoutInflater().inflate(R.layout.pop_dialog, null);
-        pop = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        view.findViewById(R.id.tv_logintime).setOnClickListener(dialogOnclickListener);
-        view.findViewById(R.id.tv_yue).setOnClickListener(dialogOnclickListener);
-        view.findViewById(R.id.tv_reg_time).setOnClickListener(dialogOnclickListener);
-        view.findViewById(R.id.tv_weixinpay).setOnClickListener(dialogOnclickListener);
-        view.findViewById(R.id.tv_shouwang_history).setOnClickListener(dialogOnclickListener);
-
-
-        pop.setOutsideTouchable(true);
-        pop.setFocusable(true);// 点击back退出pop
-        pop.setAnimationStyle(R.style.add_new_style);
-
-        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
-
-            @Override
-            public void onDismiss() {
-                WindowManager.LayoutParams lp = getWindow().getAttributes();
-                lp.alpha = 1f;
-                getWindow().setAttributes(lp);
-            }
-        });
-        pop.setBackgroundDrawable(new ColorDrawable(Color.argb(136, 0, 0, 0)));// 设置背景透明，点击back退出pop
-        rightIcon.setImageResource(R.mipmap.all);
-        rightIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (pop.isShowing()) {
-                    pop.dismiss();
-                } else {
-                    pop.showAtLocation(view, Gravity.BOTTOM, 0, -560);//在父控件下方出来
-                    pop.showAsDropDown(view);
-                    // 设置背景颜色变暗
-                    WindowManager.LayoutParams lp = getWindow().getAttributes();
-                    lp.alpha = 0.7f;
-                    getWindow().setAttributes(lp);
-                }
-            }
-        });
-
     }
 
 }

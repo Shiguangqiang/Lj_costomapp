@@ -18,6 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.Urls;
@@ -37,18 +39,9 @@ public class WebViewActivity extends AppCompatActivity {
     TextView rightTitle;
     private WebView webView;
     private ProgressBar progressBar;
+
     //WebViewClient主要帮助WebView处理各种通知、请求事件
     private WebViewClient webViewClient = new WebViewClient() {
-        @Override
-        public void onPageFinished(WebView view, String url) {//页面加载完成
-            progressBar.setVisibility(View.GONE);
-        }
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {//页面开始加载
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.i("ansen", "拦截url:" + url);
@@ -59,9 +52,34 @@ public class WebViewActivity extends AppCompatActivity {
             return super.shouldOverrideUrlLoading(view, url);
         }
 
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {//页面开始加载
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {//页面加载完成
+            progressBar.setVisibility(View.GONE);
+        }
+
     };
     //WebChromeClient主要辅助WebView处理Javascript的对话框、网站图标、网站title、加载进度等
     private WebChromeClient webChromeClient = new WebChromeClient() {
+        //加载进度回调
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            progressBar.setProgress(newProgress);
+        }
+
+        //获取网页标题
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            Log.i("ansen", "网页标题:" + title);
+            middleTitle.setText(title);
+
+        }
+
         //不支持js的alert弹窗，需要自己监听然后通过dialog弹窗
         @Override
         public boolean onJsAlert(WebView webView, String url, String message, JsResult result) {
@@ -76,21 +94,6 @@ public class WebViewActivity extends AppCompatActivity {
             //否则不能继续点击按钮
             result.confirm();
             return true;
-        }
-
-        //获取网页标题
-        @Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-            Log.i("ansen", "网页标题:" + title);
-            middleTitle.setText(title);
-
-        }
-
-        //加载进度回调
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            progressBar.setProgress(newProgress);
         }
     };
     private UserInfo userInfo;
@@ -152,6 +155,15 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //释放资源
+        webView.destroy();
+        webView = null;
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Log.i("ansen", "是否有上一个页面:" + webView.canGoBack());
         if (webView.canGoBack() && keyCode == KeyEvent.KEYCODE_BACK) {//点击返回按钮的时候判断有没有上一页
@@ -170,14 +182,5 @@ public class WebViewActivity extends AppCompatActivity {
     @JavascriptInterface //仍然必不可少
     public void getClient(String str) {
         Log.i("ansen", "html调用客户端:" + str);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        //释放资源
-        webView.destroy();
-        webView = null;
     }
 }

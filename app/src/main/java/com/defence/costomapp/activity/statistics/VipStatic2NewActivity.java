@@ -1,18 +1,14 @@
 package com.defence.costomapp.activity.statistics;
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.blankj.utilcode.util.ToastUtils;
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.viewPresenter.Vip_SWContract;
 import com.defence.costomapp.activity.viewPresenter.Vip_SWPresenter;
-import com.defence.costomapp.adapter.VipShouWangAdapter;
-import com.defence.costomapp.adapter.Vip_SW2NewAdapter;
 import com.defence.costomapp.base.BaseNewActivity;
 import com.defence.costomapp.bean.ShouWangVipBean;
 import com.defence.costomapp.utils.SgqUtils;
@@ -21,7 +17,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import tech.linjiang.pandora.Pandora;
 
 
@@ -33,7 +28,6 @@ public class VipStatic2NewActivity extends BaseNewActivity<Vip_SWPresenter> impl
     RecyclerView rvVipstatic2;
     @BindView(R.id.vip_static2srl)
     SwipeRefreshLayout vipStatic2srl;
-    Vip_SW2NewAdapter mArticleAdapter;
     private String iskaitong = "1";
     private String openString = "";
     private int sortingRecords = 0;
@@ -56,7 +50,7 @@ public class VipStatic2NewActivity extends BaseNewActivity<Vip_SWPresenter> impl
 
     @Override
     protected void initInjector() {
-        mActivityComponent.inject(this);
+
     }
 
     @Override
@@ -77,8 +71,7 @@ public class VipStatic2NewActivity extends BaseNewActivity<Vip_SWPresenter> impl
     @Override
     public void setSWVipData(ShouWangVipBean swVipData) {
         vipStatic2srl.setRefreshing(false);
-        mArticleAdapter = new Vip_SW2NewAdapter(R.layout.listvipshouwang_item, swVipData.getXfkList());
-        rvVipstatic2.setAdapter(mArticleAdapter);
+
 
     }
 }

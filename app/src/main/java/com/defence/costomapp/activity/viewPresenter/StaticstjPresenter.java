@@ -8,7 +8,6 @@ import com.defence.costomapp.net.ApiService;
 import com.defence.costomapp.net.RetrofitManager;
 import com.defence.costomapp.net.RxSchedulers;
 
-import javax.inject.Inject;
 
 import io.reactivex.functions.Consumer;
 
@@ -17,7 +16,6 @@ import io.reactivex.functions.Consumer;
  */
 
 public class StaticstjPresenter extends BasePresenter<StaticstjContract.View> implements StaticstjContract.Presenter {
-    @Inject
     public StaticstjPresenter() {
     }
 

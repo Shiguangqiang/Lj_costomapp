@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
-
 import com.defence.costomapp.di.scope.ContextLife;
 import com.defence.costomapp.di.scope.PerFragment;
 
 import dagger.Module;
 import dagger.Provides;
 
+
 /**
- * Created by Sgq on 2017/1/19.
+ * Created by lw on 2017/1/19.
  */
 @Module
 public class FragmentModule {
