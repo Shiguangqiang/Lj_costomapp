@@ -19,9 +19,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
+import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.TuikuanListBean;
+import com.defence.costomapp.bean.UserInfo;
 import com.defence.costomapp.myinterface.RVItemClickListener;
 import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.RefreshUtils.RefreshLayout;
@@ -92,6 +94,7 @@ public class TuikuanListActivity extends BaseActivity {
     private String groupMachineNumber;
     private List<TuikuanListBean.ListBean> list;
     private List<TuikuanListBean.ListBean> listdetail;
+    private UserInfo userInfo;
     private ChromeClientCallbackManager.ReceivedTitleCallback mReceivedTitleCallback = new ChromeClientCallbackManager.ReceivedTitleCallback() {
         @Override
         public void onReceivedTitle(WebView view, String title) {
@@ -149,6 +152,8 @@ public class TuikuanListActivity extends BaseActivity {
         fabRefundMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userInfo = MyApplication.getApp().getUserInfo();
+                String groupid = SharePerenceUtil.getStringValueFromSp("groupid");
                 AgentWeb.with(TuikuanListActivity.this)//传入Activity
                         .setAgentWebParent(flTk, new LinearLayout.LayoutParams(-1, -1))//传入AgentWeb 的父控件 ，如果父控件为 RelativeLayout ， 那么第二参数需要传入 RelativeLayout.LayoutParams
                         .useDefaultIndicator()// 使用默认进度条
@@ -156,7 +161,9 @@ public class TuikuanListActivity extends BaseActivity {
                         .setReceivedTitleCallback(mReceivedTitleCallback) //设置 Web 页面的 title 回调
                         .createAgentWeb()//
                         .ready()
-                        .go("http://www.jd.com");
+                        .go(Urls.BaseUrl + "/req-mobile/view/refund_orders.html?" + "phoneAID=" + userInfo.getId() + "&uniqueCode=" + userInfo.getAuthorizationKey() + "&funcType=" + SgqUtils.TONGJI_TYPE + "&adminGroupID=" + groupid + "&_t=" + Math.random() + "&keyA=1652");
+
+                fabRefundMoney.setVisibility(View.GONE);
 
             }
         });
@@ -335,8 +342,6 @@ public class TuikuanListActivity extends BaseActivity {
 
             try {
                 tv_show.setText(list.get(position).getDescVal());
-
-
                 if (list.get(position).getTui_val() == 1) {
                     tv_state.setText("手动退款(待出货)");
                     tv_state.setTextColor(Color.rgb(0, 204, 255));

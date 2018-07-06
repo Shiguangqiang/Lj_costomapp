@@ -107,7 +107,6 @@
             app:backgroundTintMode="multiply"
             app:borderWidth="0dp"
             app:elevation="@dimen/activity_horizontal_margin"
-            android:visibility="gone"
             app:fabSize="auto"
             app:pressedTranslationZ="@dimen/activity_horizontal_margin"
             app:rippleColor="@color/F4"

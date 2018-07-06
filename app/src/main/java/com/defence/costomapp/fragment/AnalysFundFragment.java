@@ -1,9 +1,11 @@
 package com.defence.costomapp.fragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.WebViewActivity;
@@ -15,8 +17,11 @@ import com.defence.costomapp.base.BaseNewFragment;
 import com.defence.costomapp.bean.DataAnGoodsFilterBean;
 import com.defence.costomapp.bean.DataAnMachineFilterBean;
 import com.defence.costomapp.bean.DataAnalysisFilterBean;
+import com.defence.costomapp.net.Constant;
 import com.defence.costomapp.utils.SgqUtils;
 
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -29,6 +34,8 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @BindView(R.id.rv_fund)
     RecyclerView rvFund;
+    private List<DataAnalysisFilterBean.TjListBean> mTjList;
+
 
     @Override
     protected void initInjector() {
@@ -41,8 +48,8 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
         rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
         mPresenter.getFilterData(String.valueOf(SgqUtils.TONGJI_TYPE), "0");
 
-
     }
+
 
     @Override
     protected int getLayoutId() {
@@ -51,13 +58,14 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @Override
     public void setFilterData(DataAnalysisFilterBean swVipData) {
-        DataAnalysFilterAdapter dataAnalysFilterAdapter = new DataAnalysFilterAdapter(R.layout.llitem_ddfilter, swVipData.getTjList());
+        mTjList = swVipData.getTjList();
+        DataAnalysFilterAdapter dataAnalysFilterAdapter = new DataAnalysFilterAdapter(R.layout.llitem_ddfilter, mTjList);
         rvFund.setAdapter(dataAnalysFilterAdapter);
         dataAnalysFilterAdapter.setOnItemClickListener(this);
     }
 
     @Override
-    public void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean) {
+    public void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean, int loadType) {
 
     }
 
@@ -68,6 +76,7 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        AnalysisFilter2Activity.start();
+        AnalysisFilter2Activity.start(mTjList.get(position).getTypeid() + "");
+        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEID, mTjList.get(position).getTypeid() + "");
     }
 }

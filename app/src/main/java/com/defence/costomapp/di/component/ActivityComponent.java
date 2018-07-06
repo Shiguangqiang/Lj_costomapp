@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 
+import com.defence.costomapp.activity.statistics.AnalysisFilter2Activity;
 import com.defence.costomapp.di.module.ActivityModule;
 import com.defence.costomapp.di.scope.ContextLife;
 import com.defence.costomapp.di.scope.PerActivity;
@@ -25,5 +26,6 @@ public interface ActivityComponent {
 
     Activity getActivity();
 
+    void inject(AnalysisFilter2Activity activity);
 
 }

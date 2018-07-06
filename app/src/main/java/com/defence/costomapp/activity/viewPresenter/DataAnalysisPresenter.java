@@ -6,6 +6,7 @@ import com.defence.costomapp.bean.DataAnMachineFilterBean;
 import com.defence.costomapp.bean.DataAnalysisFilterBean;
 import com.defence.costomapp.bean.DataResponse;
 import com.defence.costomapp.net.ApiService;
+import com.defence.costomapp.net.LoadType;
 import com.defence.costomapp.net.RetrofitManager;
 import com.defence.costomapp.net.RxSchedulers;
 
@@ -21,8 +22,29 @@ import io.reactivex.functions.Consumer;
  */
 public class DataAnalysisPresenter extends BasePresenter<DataAnalysisContract.View> implements DataAnalysisContract.Presenter {
 
+
+    private boolean mIsRefresh;
+    private int begin;
+    private String funcType;
+
+
     @Inject
     public DataAnalysisPresenter() {
+        this.mIsRefresh = true;
+    }
+
+    @Override
+    public void refresh() {
+        begin = 0;
+        mIsRefresh = true;
+        getFilterMachineData(funcType, begin + "", "10");
+    }
+
+    @Override
+    public void loadMore() {
+        begin++;
+        mIsRefresh = false;
+        getFilterMachineData(funcType, begin + "", "10");
     }
 
     @Override
@@ -55,6 +77,7 @@ public class DataAnalysisPresenter extends BasePresenter<DataAnalysisContract.Vi
 
     @Override
     public void getFilterMachineData(String funcType, String begin, String end) {
+        this.funcType = funcType;
         mView.showLoading();
         RetrofitManager.create(ApiService.class)
                 .getFilterMachineData(funcType, begin, end)
@@ -64,9 +87,12 @@ public class DataAnalysisPresenter extends BasePresenter<DataAnalysisContract.Vi
                     @Override
                     public void accept(DataResponse<DataAnMachineFilterBean> response) throws Exception {
                         if (response.getSign() == 1) {
-                            mView.setFilterMachineData(response.getResult());
+                            int loadType = mIsRefresh ? LoadType.TYPE_REFRESH_SUCCESS : LoadType.TYPE_LOAD_MORE_SUCCESS;
+                            mView.setFilterMachineData(response.getResult(), loadType);
                             mView.hideLoading();
+
                         } else {
+
                             mView.showFaild(String.valueOf(response.getMessage()));
                             mView.hideLoading();
                         }

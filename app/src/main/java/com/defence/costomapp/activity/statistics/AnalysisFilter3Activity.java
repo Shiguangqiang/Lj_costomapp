@@ -67,7 +67,6 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
 
     @Override
     protected void initView() {
-        Pandora.get().open();
         ARouter.getInstance().inject(this);
 
 

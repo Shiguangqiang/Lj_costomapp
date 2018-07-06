@@ -253,20 +253,25 @@
             android:configChanges="orientation|keyboard"
             android:launchMode="standard"
             android:screenOrientation="portrait" />
-        <!--<activity android:name=".activity.statistics.Statisticstj_Activity" />-->
-        <!--<activity android:name=".activity.statistics.VipStatic2NewActivity" />-->
+        <!-- <activity android:name=".activity.statistics.Statisticstj_Activity" /> -->
+        <!-- <activity android:name=".activity.statistics.VipStatic2NewActivity" /> -->
 
-        <!--数据分析筛选页面    资金 用户-->
+
+        <!-- 数据分析筛选页面    资金 用户 -->
         <activity
             android:name=".activity.statistics.AnalysisFilterActivity"
-            android:screenOrientation="portrait"></activity>
-        <!--数据分析筛选页面    机器 机器组 -->
+            android:screenOrientation="portrait" />
+        <!-- 数据分析筛选页面    机器 机器组 -->
         <activity
             android:name=".activity.statistics.AnalysisFilter2Activity"
-            android:screenOrientation="portrait"></activity>
-        <!--数据分析筛选页面    商品 商品组 -->
+            android:screenOrientation="portrait" />
+        <!-- 数据分析筛选页面    商品 商品组 -->
         <activity
             android:name=".activity.statistics.AnalysisFilter3Activity"
+            android:screenOrientation="portrait" />
+        <!--增长率-->
+        <activity
+            android:name=".activity.statistics.GrowthRateActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

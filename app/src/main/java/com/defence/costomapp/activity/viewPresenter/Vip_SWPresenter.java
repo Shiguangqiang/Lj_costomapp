@@ -20,9 +20,7 @@ import retrofit2.http.Field;
 public class Vip_SWPresenter extends BasePresenter<Vip_SWContract.View> implements Vip_SWContract.Presenter {
 
     public Vip_SWPresenter() {
-
     }
-
 
     @Override
     public void getSWVipData(String funcType, String listNum, String pags, String kaishitime, String jieshutime, String iskaitong, String huiyuantype, String paixu, String dora) {

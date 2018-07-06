@@ -3,14 +3,20 @@ package com.defence.costomapp.adapter;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.util.SparseBooleanArray;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.defence.costomapp.R;
+import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.bean.DataAnMachineFilterBean;
 import com.defence.costomapp.bean.DataAnalysisFilterBean;
+import com.defence.costomapp.utils.SpUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 
 /**
@@ -19,8 +25,9 @@ import java.util.List;
 
 public class DataAnalysFilter2Adapter extends BaseQuickAdapter<DataAnMachineFilterBean.MachineListBean, BaseViewHolder> {
 
-    public DataAnalysFilter2Adapter(@LayoutRes int layoutResId, @Nullable List data) {
-        super(layoutResId, data);
+    @Inject
+    public DataAnalysFilter2Adapter() {
+        super(R.layout.llitem_ddfilter2, null);
     }
 
 

@@ -149,7 +149,7 @@ public class RetrofitManager {
                             .addInterceptor(mRewriteCacheControlInterceptor)
                             .addInterceptor(mLoggingInterceptor)
                             .addInterceptor(sLogging)
-                            .addInterceptor(Pandora.get().getInterceptor())
+//                            .addInterceptor(Pandora.get().getInterceptor())
 //                            .cookieJar(new CookiesManager())
                             .build();
                 }

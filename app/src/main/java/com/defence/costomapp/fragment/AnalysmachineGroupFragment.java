@@ -38,14 +38,14 @@ public class AnalysmachineGroupFragment extends BaseNewFragment<DataAnalysisPres
     protected void initView(View view) {
         /**设置RecyclerView*/
         rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
-        mPresenter.getFilterMachineData(String.valueOf(SgqUtils.TONGJI_TYPE),"0","20");
+        mPresenter.getFilterMachineData(String.valueOf(SgqUtils.TONGJI_TYPE), "0", "20");
 
 
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_fund;
+        return R.layout.fragment_fund2;
     }
 
     @Override
@@ -55,10 +55,11 @@ public class AnalysmachineGroupFragment extends BaseNewFragment<DataAnalysisPres
     }
 
     @Override
-    public void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean) {
-        DataAnalysFilter2Adapter dataAnalysFilterAdapter = new DataAnalysFilter2Adapter(R.layout.llitem_ddfilter2, dataAnMachineFilterBean.getMachineList());
-        rvFund.setAdapter(dataAnalysFilterAdapter);
+    public void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean, int loadType) {
+//        DataAnalysFilter2Adapter dataAnalysFilterAdapter = new DataAnalysFilter2Adapter(R.layout.llitem_ddfilter2, dataAnMachineFilterBean.getMachineList());
+//        rvFund.setAdapter(dataAnalysFilterAdapter);
     }
+
 
     @Override
     public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {

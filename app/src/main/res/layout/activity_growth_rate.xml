@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.statistics.GrowthRateActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_title" />
+
+        <RadioGroup
+            android:id="@+id/rg_timerange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/rb_notSee"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_40"
+                android:layout_marginLeft="@dimen/pad_height_30"
+                android:layout_marginRight="@dimen/pad_height_30"
+                android:layout_marginTop="@dimen/pad_height_5"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:checked="true"
+                android:drawableRight="@drawable/bgrb_vip"
+                android:text="不看增长率(默认)"
+                android:textSize="@dimen/pad_text_size_16" />
+
+            <RadioButton
+                android:id="@+id/rv_viewGrowth"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_40"
+                android:layout_marginLeft="@dimen/pad_height_30"
+                android:layout_marginRight="@dimen/pad_height_30"
+                android:layout_marginTop="@dimen/pad_height_5"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableRight="@drawable/bgrb_vip"
+                android:text="查看增长率"
+                android:textSize="@dimen/pad_text_size_16" />
+
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="备注:如果选择查看增长率,那这条曲线就是增长率曲线!" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -42,7 +42,7 @@ public class MyApplication extends MultiDexApplication {
         initApplicationComponent();
         Utils.init(this);
         intARouter();
-        Pandora.init(this).enableShakeOpen();
+//        Pandora.init(this).enableShakeOpen();
 
     }
 

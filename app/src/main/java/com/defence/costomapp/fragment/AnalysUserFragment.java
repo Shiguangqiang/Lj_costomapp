@@ -16,6 +16,8 @@ import com.defence.costomapp.bean.DataAnMachineFilterBean;
 import com.defence.costomapp.bean.DataAnalysisFilterBean;
 import com.defence.costomapp.utils.SgqUtils;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -27,6 +29,7 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @BindView(R.id.rv_fund)
     RecyclerView rvFund;
+    private List<DataAnalysisFilterBean.TjListBean> mTjList;
 
     @Override
     protected void initInjector() {
@@ -47,13 +50,15 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @Override
     public void setFilterData(DataAnalysisFilterBean swVipData) {
-        DataAnalysFilterAdapter dataAnalysFilterAdapter = new DataAnalysFilterAdapter(R.layout.llitem_ddfilter, swVipData.getTjList());
+        mTjList = swVipData.getTjList();
+
+        DataAnalysFilterAdapter dataAnalysFilterAdapter = new DataAnalysFilterAdapter(R.layout.llitem_ddfilter, mTjList);
         rvFund.setAdapter(dataAnalysFilterAdapter);
         dataAnalysFilterAdapter.setOnItemClickListener(this);
     }
 
     @Override
-    public void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean) {
+    public void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean, int loadType) {
 
     }
 
@@ -64,6 +69,6 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        AnalysisFilter2Activity.start();
+        AnalysisFilter2Activity.start(mTjList.get(position).getTypeid() + "");
     }
 }

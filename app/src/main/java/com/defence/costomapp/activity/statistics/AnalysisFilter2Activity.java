@@ -8,14 +8,17 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.blankj.utilcode.util.SPUtils;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseNewActivity;
 import com.defence.costomapp.fragment.AnalysFundFragment;
 import com.defence.costomapp.fragment.AnalysUserFragment;
 import com.defence.costomapp.fragment.AnalysmachineFragment;
 import com.defence.costomapp.fragment.AnalysmachineGroupFragment;
+import com.defence.costomapp.net.Constant;
 import com.defence.costomapp.utils.SgqUtils;
 
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ import tech.linjiang.pandora.Pandora;
 @Route(path = "/statistics/AnalysisFilter2Activity")
 public class AnalysisFilter2Activity extends BaseNewActivity implements View.OnClickListener {
 
+    @Autowired
+    public String stypeId;
+
     @BindView(R.id.back)
     TextView back;
     @BindView(R.id.middle_title)
@@ -38,13 +44,12 @@ public class AnalysisFilter2Activity extends BaseNewActivity implements View.OnC
     TabLayout filterTablayout;
     @BindView(R.id.filter_viewpager)
     ViewPager filterViewpager;
-
     private List<Fragment> list;
     private MyAdapter adapter;
     private String[] titles = new String[]{"机器", "机器组"};
 
-    public static void start() {
-        ARouter.getInstance().build("/statistics/AnalysisFilter2Activity").navigation();
+    public static void start(String stypeId) {
+        ARouter.getInstance().build("/statistics/AnalysisFilter2Activity").withString("stypeId", stypeId).navigation();
     }
 
 
@@ -55,7 +60,7 @@ public class AnalysisFilter2Activity extends BaseNewActivity implements View.OnC
 
     @Override
     protected void initInjector() {
-//        mActivityComponent.inject(this);
+        mActivityComponent.inject(this);
     }
 
 
@@ -89,6 +94,7 @@ public class AnalysisFilter2Activity extends BaseNewActivity implements View.OnC
                 finish();
                 break;
             case R.id.right_title:
+
                 break;
         }
     }

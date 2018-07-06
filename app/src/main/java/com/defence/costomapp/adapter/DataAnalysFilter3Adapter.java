@@ -26,6 +26,6 @@ public class DataAnalysFilter3Adapter extends BaseQuickAdapter<DataAnGoodsFilter
 
     @Override
     protected void convert(BaseViewHolder helper, DataAnGoodsFilterBean.ShangpinListBean item) {
-        helper.setText(R.id.tv_show, item.getShang_pin_full_name());
+        helper.setText(R.id.tv_show, item.getShowName());
     }
 }

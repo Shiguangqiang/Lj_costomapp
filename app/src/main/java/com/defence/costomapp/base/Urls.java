@@ -12,10 +12,11 @@ public class Urls {
     //    正式的
 //    public static String BaseUrl = "http://swz.landgy.com/";
     //    测试 yang
-//    public static String BaseUrl = "http://192.168.0 127:8080/mp2017/";
+    public static String BaseUrl = "http://192.168.0.127:8080/mp2017/";
+//        public static String BaseUrl = "http://192.168.0.125:8080/mp2017/";
 //    public static String BaseUrl = "http://swz-test.landgy.com/";
 //     李
-    public static String BaseUrl = "http://192.168.0.234:8080/";
+//    public static String BaseUrl = "http://192.168.0.234:8080/";
     //
 
     public static String BuhuoLogin() {
@@ -283,6 +284,7 @@ public class Urls {
         return BaseUrl + "req-mobile/huiku/shangpin/device/back/goods/0data1.json";
     }
 
+    //【统计折线图】/// 根据筛选条件查询需要的结果 显示折线图///
     public static String filter() {
         return BaseUrl + "req-mobile/tong-ji/zhexiantu/query/zhexiantu/by/shaixuantiaojian/9data.json";
     }

@@ -4,6 +4,7 @@ import com.defence.costomapp.base.BaseContract;
 import com.defence.costomapp.bean.DataAnGoodsFilterBean;
 import com.defence.costomapp.bean.DataAnMachineFilterBean;
 import com.defence.costomapp.bean.DataAnalysisFilterBean;
+import com.defence.costomapp.net.LoadType;
 
 /**
  * Created by Sgq
@@ -14,15 +15,21 @@ public interface DataAnalysisContract {
 
 
     interface View extends BaseContract.BaseView {
+
         void setFilterData(DataAnalysisFilterBean swVipData);
 
-        void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean);
+        void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean, @LoadType.checker int loadType);
 
         void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean);
 
     }
 
     interface Presenter extends BaseContract.BasePresenter<DataAnalysisContract.View> {
+
+        void refresh();
+
+        void loadMore();
+
         void getFilterData(String funcType, String ctype);
 
         void getFilterMachineData(String funcType, String begin, String end);

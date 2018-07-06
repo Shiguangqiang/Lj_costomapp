@@ -35,14 +35,13 @@ public class AnalysGoodsGroupFragment extends BaseNewFragment<DataAnalysisPresen
     protected void initView(View view) {
         /**设置RecyclerView*/
         rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
-//        mPresenter.getFilterMachineData(String.valueOf(SgqUtils.TONGJI_TYPE),"0","20");
 
 
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_fund;
+        return R.layout.fragment_fund3;
     }
 
     @Override
@@ -52,9 +51,10 @@ public class AnalysGoodsGroupFragment extends BaseNewFragment<DataAnalysisPresen
     }
 
     @Override
-    public void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean) {
+    public void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean, int loadType) {
 
     }
+
 
     @Override
     public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {

@@ -15,14 +15,18 @@ import android.view.animation.Animation;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.di.component.DaggerFragmentComponent;
 import com.defence.costomapp.di.component.FragmentComponent;
 import com.defence.costomapp.di.module.FragmentModule;
+import com.defence.costomapp.net.LoadType;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -360,6 +364,37 @@ public abstract class BaseNewFragment<T extends BaseContract.BasePresenter> exte
     private void detachView() {
         if (mPresenter != null) {
             mPresenter.detachView();
+        }
+    }
+
+    /**
+     * 设置加载数据结果
+     *
+     * @param baseQuickAdapter
+     * @param refreshLayout
+     * @param list
+     * @param loadType
+     */
+    protected void setLoadDataResult(BaseQuickAdapter baseQuickAdapter, SwipeRefreshLayout refreshLayout, List list, @LoadType.checker int loadType) {
+        switch (loadType) {
+            case LoadType.TYPE_REFRESH_SUCCESS:
+                baseQuickAdapter.setNewData(list);
+                refreshLayout.setRefreshing(false);
+                break;
+            case LoadType.TYPE_REFRESH_ERROR:
+                refreshLayout.setRefreshing(false);
+                break;
+            case LoadType.TYPE_LOAD_MORE_SUCCESS:
+                if (list != null) baseQuickAdapter.addData(list);
+                break;
+            case LoadType.TYPE_LOAD_MORE_ERROR:
+                baseQuickAdapter.loadMoreFail();
+                break;
+        }
+        if (list == null || list.isEmpty() || list.size() < 10) {
+            baseQuickAdapter.loadMoreEnd(false);
+        } else {
+            baseQuickAdapter.loadMoreComplete();
         }
     }
 

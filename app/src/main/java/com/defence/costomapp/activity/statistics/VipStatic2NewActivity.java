@@ -55,7 +55,7 @@ public class VipStatic2NewActivity extends BaseNewActivity<Vip_SWPresenter> impl
 
     @Override
     protected void initView() {
-        Pandora.get().open();
+//        Pandora.get().open();
         try {
             mPresenter.getSWVipData("10110", length + "", "10", URLEncoder.encode(leftdate + " 00:00:00", "UTF-8"), URLEncoder.encode(rightdate + " 23:59:59", "UTF-8"), iskaitong, huiyuantype, sequence, dora);
         } catch (UnsupportedEncodingException e) {

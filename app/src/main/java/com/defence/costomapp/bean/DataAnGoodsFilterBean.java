@@ -25,15 +25,61 @@ public class DataAnGoodsFilterBean {
     }
 
     public static class ShangpinListBean {
+
+
+
         /**
-         * commodityspecificationsid : 521
-         * shang_pin_full_name : 七度空间-优雅系列-5片
-         * machinenumbers : LJ-010-04-002-001
+         * id : 507
+         * showName : 冰露矿泉水
+         * descVal : 550ml
+         * shangPinID : 391
          */
+        /**
+         * commodityspecificationsid : 559
+         * shang_pin_full_name : 甜酥夹心饼干-榛子巧克力味80+16g
+         * machinenumbers : lj-010-04-001-001
+         */
+
+        private int id;
+        private String showName;
+        private String descVal;
+        private int shangPinID;
 
         private int commodityspecificationsid;
         private String shang_pin_full_name;
         private String machinenumbers;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getShowName() {
+            return showName == null ? "" : showName;
+        }
+
+        public void setShowName(String showName) {
+            this.showName = showName;
+        }
+
+        public String getDescVal() {
+            return descVal == null ? "" : descVal;
+        }
+
+        public void setDescVal(String descVal) {
+            this.descVal = descVal;
+        }
+
+        public int getShangPinID() {
+            return shangPinID;
+        }
+
+        public void setShangPinID(int shangPinID) {
+            this.shangPinID = shangPinID;
+        }
 
         public int getCommodityspecificationsid() {
             return commodityspecificationsid;

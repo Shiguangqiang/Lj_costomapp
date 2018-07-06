@@ -72,25 +72,6 @@ public class JieSuanActivity extends BaseActivity {
             }
         });
 
-//        RequestParams params = new RequestParams();
-//        params.put("orderBy", "2");
-//        params.put("tongji_shijian", "2018-05-14");
-//        params.put("sdate", "1");
-//        try {
-//            params.put("leftTiaoJian", URLEncoder.encode("{\"stypeId\":\"1\",\"machineNumbers\":\"'lj-010-04-001-002','lj-010-04-002-001'\",\"guigeids\":\"505,545,555\",\"iszhengzhanglv\":\"0\"}", "UTF-8"));
-//            params.put("rightTiaoJian", URLEncoder.encode("{\"stypeId\":\"2\",\"machineNumbers\":\"'lj-010-04-001-002','lj-010-04-002-001'\",\"guigeids\":\"505,545,555\",\"iszhengzhanglv\":\"0\"}", "UTF-8"));
-//
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        httpUtils.doPost(Urls.filter(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
-//            @Override
-//            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
-//                JSONObject jsonObject = new JSONObject(result.toString());
-//
-//            }
-//        });
     }
 
 
