@@ -165,9 +165,7 @@ public class UserTjFragment extends Fragment {
                                     intent.putExtra("payType", "1");
                                     startActivity(intent);
                                 }
-
                             }
-
                         }, type);
 
                         pullLoadMoreRecyclerView.setAdapter(userTjAdapter);

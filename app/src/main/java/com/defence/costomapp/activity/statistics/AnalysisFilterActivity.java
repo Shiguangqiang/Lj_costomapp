@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.blankj.utilcode.util.SPUtils;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseNewActivity;
 import com.defence.costomapp.fragment.AnalysFundFragment;
 import com.defence.costomapp.fragment.AnalysUserFragment;
+import com.defence.costomapp.net.Constant;
 import com.defence.costomapp.utils.SgqUtils;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class AnalysisFilterActivity extends BaseNewActivity implements View.OnCl
     private List<Fragment> list;
     private MyAdapter adapter;
     private String[] titles = new String[]{"资金", "用户"};
+    private String mVerticalAxis;
 
     public static void start() {
         ARouter.getInstance().build("/statistics/AnalysisFilterActivity").navigation();
@@ -53,13 +56,12 @@ public class AnalysisFilterActivity extends BaseNewActivity implements View.OnCl
 
     @Override
     protected void initInjector() {
-//        mActivityComponent.inject(this);
+
     }
 
 
     @Override
     protected void initView() {
-
         back.setText("返回");
         back.setTextColor(getResources().getColor(R.color.bule_light));
         back.setOnClickListener(this);
@@ -74,6 +76,9 @@ public class AnalysisFilterActivity extends BaseNewActivity implements View.OnCl
         //绑定
         filterTablayout.setupWithViewPager(filterViewpager);
         SgqUtils.setIndicator(filterTablayout, 50, 50);
+        mVerticalAxis = getIntent().getStringExtra("verticalAxis");
+        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, mVerticalAxis);
+
 
     }
 

@@ -23,8 +23,7 @@ import butterknife.BindView;
  */
 public class AnalysGoodsGroupFragment extends BaseNewFragment<DataAnalysisPresenter> implements DataAnalysisContract.View {
 
-    @BindView(R.id.rv_fund)
-    RecyclerView rvFund;
+
 
     @Override
     protected void initInjector() {
@@ -34,7 +33,6 @@ public class AnalysGoodsGroupFragment extends BaseNewFragment<DataAnalysisPresen
     @Override
     protected void initView(View view) {
         /**设置RecyclerView*/
-        rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
     }

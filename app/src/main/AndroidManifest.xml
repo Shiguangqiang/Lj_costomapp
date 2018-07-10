@@ -66,9 +66,9 @@
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme">
@@ -253,10 +253,11 @@
             android:configChanges="orientation|keyboard"
             android:launchMode="standard"
             android:screenOrientation="portrait" />
-        <!-- <activity android:name=".activity.statistics.Statisticstj_Activity" /> -->
-        <!-- <activity android:name=".activity.statistics.VipStatic2NewActivity" /> -->
 
-
+        <!-- 数据分析筛选页面   日月视图  x,y轴 -->
+        <activity
+            android:name=".activity.statistics.AnalysisFilterXYActivity"
+            android:screenOrientation="portrait"></activity>
         <!-- 数据分析筛选页面    资金 用户 -->
         <activity
             android:name=".activity.statistics.AnalysisFilterActivity"
@@ -269,10 +270,11 @@
         <activity
             android:name=".activity.statistics.AnalysisFilter3Activity"
             android:screenOrientation="portrait" />
-        <!--增长率-->
+        <!-- 增长率 -->
         <activity
             android:name=".activity.statistics.GrowthRateActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

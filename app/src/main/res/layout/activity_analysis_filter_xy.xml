@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.statistics.AnalysisFilterXYActivity">
+
+
+    <include layout="@layout/include_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/rg_date"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_120"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_day"
+                    android:layout_width="@dimen/pad_height_50"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_60"
+                    android:layout_marginRight="@dimen/pad_height_40"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="日视图"
+                    android:textSize="@dimen/pad_text_size_16" />
+
+                <RadioButton
+                    android:id="@+id/rb_mouth"
+                    android:layout_width="@dimen/pad_height_50"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_40"
+                    android:layout_marginRight="@dimen/pad_height_60"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="月视图"
+                    android:textSize="@dimen/pad_text_size_16" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_margin="@dimen/pad_height_10"
+                android:background="@color/F4" />
+
+            <RadioButton
+                android:id="@+id/rb_left"
+                android:layout_width="@dimen/pad_height_80"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_height_20"
+                android:checked="true"
+                android:text="左纵轴"
+                android:textSize="@dimen/pad_text_size_16" />
+
+            <LinearLayout
+                android:id="@+id/ll_left"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_180"
+                android:layout_marginLeft="@dimen/pad_height_50"
+                android:layout_marginRight="@dimen/pad_height_50"
+                android:background="@drawable/fangkuai"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_filterCondition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_10"
+                    android:layout_marginTop="@dimen/pad_height_8"
+                    android:text="总销售金额"
+                    android:textSize="@dimen/pad_text_size_20"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:background="@color/F4" />
+
+                <TextView
+                    android:id="@+id/tv_communityGoods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_12"
+                    android:text="芳城园二区健达奇趣蛋"
+                    android:textSize="@dimen/pad_text_size_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_12"
+                    android:layout_marginTop="@dimen/pad_height_20"
+                    android:background="@drawable/shape_rectangle_white"
+                    android:padding="@dimen/pad_height_5"
+                    android:text="增加折线描述"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_14" />
+            </LinearLayout>
+
+            <RadioButton
+                android:id="@+id/rb_right"
+                android:layout_width="@dimen/pad_height_80"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/pad_height_20"
+                android:text="右纵轴"
+                android:textSize="@dimen/pad_text_size_16" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_right"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_180"
+                android:layout_marginLeft="@dimen/pad_height_50"
+                android:layout_marginRight="@dimen/pad_height_50"
+                android:background="@drawable/fangkuai"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_filterCondition_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_10"
+                    android:layout_marginTop="@dimen/pad_height_8"
+                    android:text="总销售金额"
+                    android:textSize="@dimen/pad_text_size_20"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:background="@color/F4" />
+
+                <TextView
+                    android:id="@+id/tv_communityGoods_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_12"
+                    android:text="芳城园二区健达奇趣蛋"
+                    android:textSize="@dimen/pad_text_size_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_description2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/pad_height_12"
+                    android:layout_marginTop="@dimen/pad_height_20"
+                    android:background="@drawable/shape_rectangle_white"
+                    android:padding="@dimen/pad_height_5"
+                    android:text="增加折线描述"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_50" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

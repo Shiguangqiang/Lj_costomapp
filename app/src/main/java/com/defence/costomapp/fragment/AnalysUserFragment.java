@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.statistics.AnalysisFilter2Activity;
@@ -14,6 +15,7 @@ import com.defence.costomapp.base.BaseNewFragment;
 import com.defence.costomapp.bean.DataAnGoodsFilterBean;
 import com.defence.costomapp.bean.DataAnMachineFilterBean;
 import com.defence.costomapp.bean.DataAnalysisFilterBean;
+import com.defence.costomapp.net.Constant;
 import com.defence.costomapp.utils.SgqUtils;
 
 import java.util.List;
@@ -30,6 +32,7 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
     @BindView(R.id.rv_fund)
     RecyclerView rvFund;
     private List<DataAnalysisFilterBean.TjListBean> mTjList;
+    private String mVerticalAxis;
 
     @Override
     protected void initInjector() {
@@ -40,6 +43,7 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
     protected void initView(View view) {
         /**设置RecyclerView*/
         rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
+        mVerticalAxis = getActivity().getIntent().getStringExtra("verticalAxis");
         mPresenter.getFilterData(String.valueOf(SgqUtils.TONGJI_TYPE), "1");
     }
 
@@ -69,6 +73,14 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        AnalysisFilter2Activity.start(mTjList.get(position).getTypeid() + "");
+        AnalysisFilter2Activity.start();
+        if (mVerticalAxis.equals("left")) {
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAME, mTjList.get(position).getName() + "");
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
+        } else if (mVerticalAxis.equals("right")) {
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMERIGHT, mTjList.get(position).getName() + "");
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
+
+        }
     }
 }

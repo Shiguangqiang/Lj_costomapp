@@ -16,9 +16,9 @@ import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseNewActivity;
 import com.defence.costomapp.fragment.AnalysGoodsFragment;
 import com.defence.costomapp.fragment.AnalysGoodsGroupFragment;
-import com.defence.costomapp.fragment.AnalysmachineFragment;
-import com.defence.costomapp.fragment.AnalysmachineGroupFragment;
+import com.defence.costomapp.net.RxBus;
 import com.defence.costomapp.utils.SgqUtils;
+import com.defence.costomapp.utils.event.EventUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +30,8 @@ import tech.linjiang.pandora.Pandora;
 @Route(path = "/statistics/AnalysisFilter3Activity")
 public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnClickListener {
 
+    @Autowired
+    public String machineNumber;
     @BindView(R.id.back)
     TextView back;
     @BindView(R.id.middle_title)
@@ -40,14 +42,9 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
     TabLayout filterTablayout;
     @BindView(R.id.filter_viewpager)
     ViewPager filterViewpager;
-
     private List<Fragment> list;
     private MyAdapter adapter;
     private String[] titles = new String[]{"商品", "商品组"};
-
-
-    @Autowired
-    public String machineNumber;
 
     public static void start(String machineNumber) {
         ARouter.getInstance().build("/statistics/AnalysisFilter3Activity").withString("machineNumber", machineNumber).navigation();
@@ -68,8 +65,6 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
     @Override
     protected void initView() {
         ARouter.getInstance().inject(this);
-
-
 
         back.setText("返回");
         rightTitle.setText("保存");
@@ -98,6 +93,9 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
                 finish();
                 break;
             case R.id.right_title:
+                /*通知 保存商品*/
+                RxBus.getInstance().post(new EventUtils());
+                GrowthRateActivity.start();
                 break;
         }
     }

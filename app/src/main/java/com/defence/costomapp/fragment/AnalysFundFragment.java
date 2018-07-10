@@ -35,6 +35,7 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
     @BindView(R.id.rv_fund)
     RecyclerView rvFund;
     private List<DataAnalysisFilterBean.TjListBean> mTjList;
+    private String mVerticalAxis;
 
 
     @Override
@@ -46,10 +47,10 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
     protected void initView(View view) {
         /**设置RecyclerView*/
         rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
+        mVerticalAxis = getActivity().getIntent().getStringExtra("verticalAxis");
         mPresenter.getFilterData(String.valueOf(SgqUtils.TONGJI_TYPE), "0");
 
     }
-
 
     @Override
     protected int getLayoutId() {
@@ -76,7 +77,15 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        AnalysisFilter2Activity.start(mTjList.get(position).getTypeid() + "");
-        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEID, mTjList.get(position).getTypeid() + "");
+        AnalysisFilter2Activity.start();
+
+        if (mVerticalAxis.equals("left")) {
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAME, mTjList.get(position).getName() + "");
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
+        } else if (mVerticalAxis.equals("right")) {
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMERIGHT, mTjList.get(position).getName() + "");
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
+
+        }
     }
 }

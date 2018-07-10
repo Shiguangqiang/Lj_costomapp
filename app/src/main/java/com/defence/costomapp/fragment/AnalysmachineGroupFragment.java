@@ -38,7 +38,7 @@ public class AnalysmachineGroupFragment extends BaseNewFragment<DataAnalysisPres
     protected void initView(View view) {
         /**设置RecyclerView*/
         rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
-        mPresenter.getFilterMachineData(String.valueOf(SgqUtils.TONGJI_TYPE), "0", "20");
+//        mPresenter.getFilterMachineData(String.valueOf(SgqUtils.TONGJI_TYPE), "0", "20");
 
 
     }

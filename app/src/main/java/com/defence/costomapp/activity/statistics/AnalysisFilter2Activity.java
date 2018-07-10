@@ -31,8 +31,6 @@ import tech.linjiang.pandora.Pandora;
 @Route(path = "/statistics/AnalysisFilter2Activity")
 public class AnalysisFilter2Activity extends BaseNewActivity implements View.OnClickListener {
 
-    @Autowired
-    public String stypeId;
 
     @BindView(R.id.back)
     TextView back;
@@ -48,8 +46,8 @@ public class AnalysisFilter2Activity extends BaseNewActivity implements View.OnC
     private MyAdapter adapter;
     private String[] titles = new String[]{"机器", "机器组"};
 
-    public static void start(String stypeId) {
-        ARouter.getInstance().build("/statistics/AnalysisFilter2Activity").withString("stypeId", stypeId).navigation();
+    public static void start() {
+        ARouter.getInstance().build("/statistics/AnalysisFilter2Activity").navigation();
     }
 
 
@@ -60,7 +58,6 @@ public class AnalysisFilter2Activity extends BaseNewActivity implements View.OnC
 
     @Override
     protected void initInjector() {
-        mActivityComponent.inject(this);
     }
 
 

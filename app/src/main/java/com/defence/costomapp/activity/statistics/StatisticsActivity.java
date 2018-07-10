@@ -119,7 +119,7 @@ public class StatisticsActivity extends BaseActivity {
                 break;
 //                数据统计
             case R.id.liear_statistics:
-                AnalysisFilterActivity.start();
+                AnalysisFilterXYActivity.start();
                 break;
 
         }

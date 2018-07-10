@@ -1,5 +1,6 @@
 package com.defence.costomapp.activity.statistics;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
@@ -21,14 +22,12 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 @Route(path = "/statistics/GrowthRateActivity")
-public class GrowthRateActivity extends BaseActivity {
+public class GrowthRateActivity extends BaseActivity implements View.OnClickListener {
+
 
     @BindView(R.id.back)
     TextView back;
@@ -48,6 +47,15 @@ public class GrowthRateActivity extends BaseActivity {
     private String mMachine_numbers;
     private String mData_stypeid;
     private String iszhengzhanglv = "0";
+    private String mFiltername;
+    private String mMachinename;
+    private String mData_stypeidright;
+    private String mMachinenumbersright;
+    private String mData_filternameright;
+    private String mMachinenameright;
+    private String mGuigeidsright;
+    private String mGoodsname;
+    private String mGoodsnameright;
 
     public static void start() {
         ARouter.getInstance().build("/statistics/GrowthRateActivity").navigation();
@@ -66,14 +74,25 @@ public class GrowthRateActivity extends BaseActivity {
         rightTitle.setText("保存");
         rightTitle.setTextColor(getResources().getColor(R.color.bule_light));
         back.setTextColor(getResources().getColor(R.color.bule_light));
+        back.setOnClickListener(this);
+        rightTitle.setOnClickListener(this);
+        tvTip.setOnClickListener(this::onClick);
 
 
         mData_stypeid = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_STYPEID);
+        mData_stypeidright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_STYPEIDRIGHT);
         mMachine_numbers = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINE_NUMBERS);
-        mGuigeids = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GUIGEIDS).replace("'","");
+        mMachinenumbersright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINENUMBERSRIGHT);
+        mGuigeids = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GUIGEIDS).replace("'", "");
+        mGuigeidsright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GUIGEIDSRIGHT).replace("'", "");
 
+        mFiltername = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAME);
+        mData_filternameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAMERIGHT);
+        mMachinename = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_MACHINENAME);
+        mMachinenameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINENAMERIGHT);
+        mGoodsname = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAME);
+        mGoodsnameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAMERIGHT);
 
-        //1 时间范围内开通    0时间范围内 终止
 
         rgTimerange.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -86,20 +105,21 @@ public class GrowthRateActivity extends BaseActivity {
                 }
             }
         });
+    }
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back:
                 finish();
-            }
-        });
-
-        tvTip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.right_title:
+                AnalysisFilterXYActivity.start();
+                break;
+            case R.id.tv_tip:
                 getData();
-            }
-        });
+                break;
+        }
     }
 
     private void getData() {
@@ -107,13 +127,8 @@ public class GrowthRateActivity extends BaseActivity {
         params.put("orderBy", "2");
         params.put("tongji_shijian", "2018-07-06");
         params.put("sdate", "1");
-        try {
-            params.put("leftTiaoJian", URLEncoder.encode("{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + iszhengzhanglv + "\"}", "UTF-8"));
-            params.put("rightTiaoJian", URLEncoder.encode("{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + iszhengzhanglv + "\"}", "UTF-8"));
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        params.put("leftTiaoJian", "{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + iszhengzhanglv + "\"}");
+        params.put("rightTiaoJian", "{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + iszhengzhanglv + "\"}");
 
         httpUtils.doPost(Urls.filter(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
             @Override
@@ -124,3 +139,4 @@ public class GrowthRateActivity extends BaseActivity {
         });
     }
 }
+

@@ -47,12 +47,12 @@ public class AnalysmachineFragment extends BaseNewFragment<DataAnalysisPresenter
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.btn_keep)
     Button btnKeep;
-    Unbinder unbinder;
     @Inject
     DataAnalysFilter2Adapter mDataAnalysFilterAdapter;
     private int begin = 0;
     private List<DataAnMachineFilterBean.MachineListBean> mMachineList;
-//    private DAFilterMachineAdapter mMDataAnalysFilterAdapter;
+    private String mVerticalaxis;
+    //    private DAFilterMachineAdapter mMDataAnalysFilterAdapter;
 
     @Override
     public void setFilterData(DataAnalysisFilterBean swVipData) {
@@ -80,9 +80,18 @@ public class AnalysmachineFragment extends BaseNewFragment<DataAnalysisPresenter
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent(getActivity(), AnalysisFilter3Activity.class);
-        intent.putExtra("machineNumber", mMachineList.get(position).getMachinenumber() + "");
+        intent.putExtra("machineNumber", mDataAnalysFilterAdapter.getItem(position).getMachinenumber() + "");
         startActivity(intent);
-        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINE_NUMBERS, mMachineList.get(position).getMachinenumber() + "");
+
+        mVerticalaxis = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.VERTICALAXIS);
+
+        if (mVerticalaxis.equals("left")) {
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_MACHINENAME, mDataAnalysFilterAdapter.getItem(position).getMachinename());
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINE_NUMBERS, "'" + mDataAnalysFilterAdapter.getItem(position).getMachinenumber() + "'");
+        } else if (mVerticalaxis.equals("right")) {
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINENAMERIGHT, mDataAnalysFilterAdapter.getItem(position).getMachinename());
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINENUMBERSRIGHT, "'" + mDataAnalysFilterAdapter.getItem(position).getMachinenumber() + "'");
+        }
 
     }
 
@@ -111,18 +120,8 @@ public class AnalysmachineFragment extends BaseNewFragment<DataAnalysisPresenter
         mDataAnalysFilterAdapter.setOnLoadMoreListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        mPresenter.getFilterMachineData(String.valueOf(SgqUtils.TONGJI_TYPE), begin + "", "10");
+        mPresenter.getFilterMachineData(String.valueOf(SgqUtils.TONGJI_TYPE), (begin * 10) + "", "10");
 
-//        btnKeep.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ArrayList<String> selectedItem = mMDataAnalysFilterAdapter.getSelectedItem();
-//                String s = SgqUtils.listToString(selectedItem);
-//                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINE_NUMBERS, s);
-//                AnalysisFilter3Activity.start("nl");
-//
-//            }
-//        });
 
     }
 

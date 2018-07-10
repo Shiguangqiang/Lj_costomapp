@@ -15,8 +15,6 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
-import com.defence.costomapp.di.component.ActivityComponent;
-import com.defence.costomapp.di.component.DaggerActivityComponent;
 import com.defence.costomapp.di.module.ActivityModule;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -37,7 +35,6 @@ public abstract class BaseNewActivity<T extends BaseContract.BasePresenter> exte
     final SupportActivityDelegate mDelegate = new SupportActivityDelegate(this);
     @Nullable
     protected T mPresenter;
-    protected ActivityComponent mActivityComponent;
     @Nullable
     private Unbinder unbinder;
 
@@ -45,7 +42,6 @@ public abstract class BaseNewActivity<T extends BaseContract.BasePresenter> exte
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDelegate.onCreate(savedInstanceState);
-        initActivityComponent();
         ARouter.getInstance().inject(this);
         int layoutId = getLayoutId();
         setContentView(layoutId);
@@ -56,15 +52,7 @@ public abstract class BaseNewActivity<T extends BaseContract.BasePresenter> exte
         if (!NetworkUtils.isConnected()) showNoNet();
     }
 
-    /**
-     * 初始化ActivityComponent
-     */
-    private void initActivityComponent() {
-        mActivityComponent = DaggerActivityComponent.builder()
-                .applicationComponent(((MyApplication) getApplication()).getApplicationComponent())
-                .activityModule(new ActivityModule(this))
-                .build();
-    }
+
 
     protected abstract int getLayoutId();
 

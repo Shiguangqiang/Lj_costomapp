@@ -6,6 +6,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -23,12 +24,14 @@ import java.util.List;
  * on 2018/3/21.
  */
 
+
 public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     String string;
     private List<DataAnGoodsFilterBean.ShangpinListBean> mList;
     private SparseBooleanArray mSelectedPositions = new SparseBooleanArray();
     private boolean mIsSelectable = false;
+
 
     public DAFilterGoodsAdapter(List<DataAnGoodsFilterBean.ShangpinListBean> list, String type) {
         if (list == null) {
@@ -60,7 +63,7 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             }
             SpUtil.putList(MyApplication.getApp(), "checkshop", selectList);
-            SpUtil.putList(MyApplication.getApp(), "checkshopstring", selectshopsting);
+            SpUtil.putList(MyApplication.getApp(), "filtershopstring", selectshopsting);
         }
 
         return selectList;
@@ -84,7 +87,6 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int i) {
 
 
-        List<Serializable> checkmachine = SpUtil.getList(MyApplication.getApp(), "checkmachine");
         List<Serializable> checkshop = SpUtil.getList(MyApplication.getApp(), "checkshop");
 
 
@@ -128,13 +130,13 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
         });
     }
 
-    private void setItemChecked(int position, boolean isChecked) {
-        mSelectedPositions.put(position, isChecked);
-    }
-
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
+    }
+
+    private void setItemChecked(int position, boolean isChecked) {
+        mSelectedPositions.put(position, isChecked);
     }
 
     //根据位置判断条目是否可选
@@ -146,6 +148,7 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void setSelectable(boolean selectable) {
         mIsSelectable = selectable;
     }
+
 
     public class ListItemViewHolder extends RecyclerView.ViewHolder {
         //ViewHolder

@@ -37,14 +37,14 @@ public class DataAnalysisPresenter extends BasePresenter<DataAnalysisContract.Vi
     public void refresh() {
         begin = 0;
         mIsRefresh = true;
-        getFilterMachineData(funcType, begin + "", "10");
+        getFilterMachineData(funcType, (begin *10) + "", "10");
     }
 
     @Override
     public void loadMore() {
         begin++;
         mIsRefresh = false;
-        getFilterMachineData(funcType, begin + "", "10");
+        getFilterMachineData(funcType, (begin *10) + "", "10");
     }
 
     @Override

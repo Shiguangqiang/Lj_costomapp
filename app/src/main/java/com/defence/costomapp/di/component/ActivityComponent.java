@@ -26,6 +26,5 @@ public interface ActivityComponent {
 
     Activity getActivity();
 
-    void inject(AnalysisFilter2Activity activity);
 
 }

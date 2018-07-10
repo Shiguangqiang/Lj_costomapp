@@ -52,8 +52,10 @@
         <TextView
             android:id="@+id/tv_tip"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pad_height_20"
             android:gravity="center"
-            android:text="备注:如果选择查看增长率,那这条曲线就是增长率曲线!" />
+            android:text="备注:如果选择查看增长率,那这条曲线就是增长率曲线!"
+            android:textSize="@dimen/pad_text_size_16" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
