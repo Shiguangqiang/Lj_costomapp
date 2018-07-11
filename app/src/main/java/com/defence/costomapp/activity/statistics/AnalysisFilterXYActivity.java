@@ -79,6 +79,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 finish();
                 break;
             case R.id.right_title:
+                startActivity(new Intent(AnalysisFilterXYActivity.this, MpLineChartActivity.class));
                 SPUtils.getInstance(Constant.SHARED_NAME).clear();
                 break;
             case R.id.rb_left:
@@ -105,6 +106,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 Intent intent = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
                 intent.putExtra("verticalAxis", "left");
                 startActivity(intent);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.SDATE, sdate);
                 break;
             case R.id.ll_right:
                 rbLeft.setChecked(false);
@@ -112,6 +114,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 Intent intentright = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
                 intentright.putExtra("verticalAxis", "right");
                 startActivity(intentright);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.SDATE, sdate);
                 break;
         }
 
@@ -186,7 +189,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 if (R.id.rb_day == checkedId) {
                     sdate = "1";
                 } else if (R.id.rb_mouth == checkedId) {
-                    sdate = "0";
+                    sdate = "2";
                 }
             }
         });

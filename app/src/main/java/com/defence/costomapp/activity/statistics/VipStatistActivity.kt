@@ -63,8 +63,8 @@ class VipStatistActivity : BaseActivity() {
                 when (tab.position) {
                     0 -> middle_title.text = "储蓄卡和会员"
                     1 -> middle_title.text = "储蓄卡和会员"
-                    2 -> middle_title.text = "储蓄卡和会员"
-                    3 -> middle_title.text = "机器注册统计"
+//                    2 -> middle_title.text = "储蓄卡和会员"
+//                    3 -> middle_title.text = "机器注册统计"
                 }
             }
 

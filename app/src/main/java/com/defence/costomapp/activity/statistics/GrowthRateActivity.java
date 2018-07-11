@@ -56,6 +56,7 @@ public class GrowthRateActivity extends BaseActivity implements View.OnClickList
     private String mGuigeidsright;
     private String mGoodsname;
     private String mGoodsnameright;
+    private String mSdate;
 
     public static void start() {
         ARouter.getInstance().build("/statistics/GrowthRateActivity").navigation();
@@ -93,6 +94,8 @@ public class GrowthRateActivity extends BaseActivity implements View.OnClickList
         mGoodsname = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAME);
         mGoodsnameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAMERIGHT);
 
+        mSdate = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.SDATE);
+
 
         rgTimerange.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -126,7 +129,7 @@ public class GrowthRateActivity extends BaseActivity implements View.OnClickList
         RequestParams params = new RequestParams();
         params.put("orderBy", "2");
         params.put("tongji_shijian", "2018-07-06");
-        params.put("sdate", "1");
+        params.put("sdate", mSdate);
         params.put("leftTiaoJian", "{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + iszhengzhanglv + "\"}");
         params.put("rightTiaoJian", "{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + iszhengzhanglv + "\"}");
 

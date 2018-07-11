@@ -18,7 +18,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
-import com.defence.costomapp.di.component.DaggerFragmentComponent;
 import com.defence.costomapp.di.component.FragmentComponent;
 import com.defence.costomapp.di.module.FragmentModule;
 import com.defence.costomapp.net.LoadType;
@@ -315,7 +314,7 @@ public abstract class BaseNewFragment<T extends BaseContract.BasePresenter> exte
      * 初始化FragmentComponent
      */
     private void initFragmentComponent() {
-        mFragmentComponent = DaggerFragmentComponent.builder()
+        mFragmentComponent = com.defence.costomapp.di.component.DaggerFragmentComponent.builder()
                 .applicationComponent(((MyApplication) getActivity().getApplication()).getApplicationComponent())
                 .fragmentModule(new FragmentModule(this))
                 .build();

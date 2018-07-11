@@ -17,7 +17,7 @@ public class Constant {
     public static final String DATA_STYPEIDRIGHT = "stypeIdright";
     public static final String DATA_FILTERNAMERIGHT = "filternameright";
     public static final String VERTICALAXIS = "verticalAxis";
-
+    public static final String SDATE = "sdate";
 
     public static final String SHARED_NAME = "_preferences";
     public static final String USERNAME_KEY = "username";

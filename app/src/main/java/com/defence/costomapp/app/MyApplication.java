@@ -13,7 +13,7 @@ import com.blankj.utilcode.util.Utils;
 import com.defence.costomapp.BuildConfig;
 import com.defence.costomapp.bean.UserInfo;
 import com.defence.costomapp.di.component.ApplicationComponent;
-import com.defence.costomapp.di.component.DaggerApplicationComponent;
+
 import com.defence.costomapp.di.module.ApplicationModule;
 
 
@@ -50,7 +50,7 @@ public class MyApplication extends MultiDexApplication {
      * 初始化ApplicationComponent
      */
     private void initApplicationComponent() {
-        mApplicationComponent = DaggerApplicationComponent.builder()
+        mApplicationComponent = com.defence.costomapp.di.component.DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
