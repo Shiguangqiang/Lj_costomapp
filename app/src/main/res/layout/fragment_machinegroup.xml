@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
-        android:id="@+id/rv_fund_good"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_fund"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -19,6 +19,7 @@
         android:text="点击略过此筛选条件"
         android:textColor="@color/bule_light"
         android:textSize="@dimen/pad_text_size_16" />
+
 </LinearLayout>
 
 

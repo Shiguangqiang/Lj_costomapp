@@ -73,14 +73,25 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        AnalysisFilter2Activity.start();
-        if (mVerticalAxis.equals("left")) {
-            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAME, mTjList.get(position).getName() + "");
-            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
-        } else if (mVerticalAxis.equals("right")) {
-            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMERIGHT, mTjList.get(position).getName() + "");
-            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
 
+        AnalysisFilter2Activity.start();
+        switch (mVerticalAxis) {
+            case "left":
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAME, mTjList.get(position).getName() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEID, mTjList.get(position).getTypeid() + "");
+                break;
+            case "right":
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMERIGHT, mTjList.get(position).getName() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
+                break;
+            case "lefts":
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMES, mTjList.get(position).getName() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDS, mTjList.get(position).getTypeid() + "");
+                break;
+            case "rights":
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMES, mTjList.get(position).getName() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHTS, mTjList.get(position).getTypeid() + "");
+                break;
         }
     }
 }

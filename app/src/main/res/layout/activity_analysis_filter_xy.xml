@@ -59,7 +59,7 @@
 
             <RadioButton
                 android:id="@+id/rb_left"
-                android:layout_width="@dimen/pad_height_80"
+                android:layout_width="@dimen/pad_height_120"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pad_height_20"
                 android:checked="true"
@@ -69,7 +69,7 @@
             <LinearLayout
                 android:id="@+id/ll_left"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pad_height_180"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/pad_height_50"
                 android:layout_marginRight="@dimen/pad_height_50"
                 android:background="@drawable/fangkuai"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pad_height_10"
                     android:layout_marginTop="@dimen/pad_height_8"
-                    android:text="总销售金额"
+                    android:text="点此定制横向坐标系"
                     android:textSize="@dimen/pad_text_size_20"
                     android:textStyle="bold" />
 
@@ -96,9 +96,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pad_height_12"
-                    android:text="芳城园二区健达奇趣蛋"
-                    android:textSize="@dimen/pad_text_size_16"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/pad_height_20"
+                    android:background="@drawable/shape_rectangle_white"
+                    android:padding="@dimen/pad_height_5"
+                    android:text="增加折线描述"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_14" />
 
                 <TextView
                     android:id="@+id/tv_description"
@@ -106,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pad_height_12"
                     android:layout_marginTop="@dimen/pad_height_20"
+                    android:layout_marginBottom="@dimen/pad_height_20"
                     android:background="@drawable/shape_rectangle_white"
                     android:padding="@dimen/pad_height_5"
                     android:text="增加折线描述"
@@ -115,7 +119,7 @@
 
             <RadioButton
                 android:id="@+id/rb_right"
-                android:layout_width="@dimen/pad_height_80"
+                android:layout_width="@dimen/pad_height_120"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/pad_height_20"
                 android:text="右纵轴"
@@ -125,7 +129,7 @@
             <LinearLayout
                 android:id="@+id/ll_right"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pad_height_180"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/pad_height_50"
                 android:layout_marginRight="@dimen/pad_height_50"
                 android:background="@drawable/fangkuai"
@@ -137,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pad_height_10"
                     android:layout_marginTop="@dimen/pad_height_8"
-                    android:text="总销售金额"
+                    android:text="点此定制横向坐标系"
                     android:textSize="@dimen/pad_text_size_20"
                     android:textStyle="bold" />
 
@@ -152,9 +156,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pad_height_12"
-                    android:text="芳城园二区健达奇趣蛋"
-                    android:textSize="@dimen/pad_text_size_16"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/pad_height_20"
+                    android:background="@drawable/shape_rectangle_white"
+                    android:padding="@dimen/pad_height_5"
+                    android:text="增加折线描述"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_14"  />
 
                 <TextView
                     android:id="@+id/tv_description2"
@@ -162,6 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pad_height_12"
                     android:layout_marginTop="@dimen/pad_height_20"
+                    android:layout_marginBottom="@dimen/pad_height_20"
                     android:background="@drawable/shape_rectangle_white"
                     android:padding="@dimen/pad_height_5"
                     android:text="增加折线描述"

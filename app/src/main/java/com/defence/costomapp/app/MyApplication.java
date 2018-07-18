@@ -15,6 +15,7 @@ import com.defence.costomapp.bean.UserInfo;
 import com.defence.costomapp.di.component.ApplicationComponent;
 
 import com.defence.costomapp.di.module.ApplicationModule;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 
 import cn.jpush.android.api.JPushInterface;
@@ -43,7 +44,14 @@ public class MyApplication extends MultiDexApplication {
         Utils.init(this);
         intARouter();
         Pandora.init(this).enableShakeOpen();
+//       DbFlow数据库
+        FlowManager.init(this);
 
+    }
+
+    private void initJPUSH() {
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     /**
@@ -53,15 +61,6 @@ public class MyApplication extends MultiDexApplication {
         mApplicationComponent = com.defence.costomapp.di.component.DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
-    }
-
-    public ApplicationComponent getApplicationComponent() {
-        return mApplicationComponent;
-    }
-
-    private void initJPUSH() {
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
     }
 
     /**
@@ -75,6 +74,9 @@ public class MyApplication extends MultiDexApplication {
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
     }
 
+    public ApplicationComponent getApplicationComponent() {
+        return mApplicationComponent;
+    }
 
     public UserInfo getUserInfo() {
         return userInfo;

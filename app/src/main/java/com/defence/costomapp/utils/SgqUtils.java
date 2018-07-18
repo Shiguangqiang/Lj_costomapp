@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +55,26 @@ public class SgqUtils {
             }
         }
         return sb.toString();
+    }
+
+    //List<String>转换为List<int>
+    public static List<Integer> parseIntegersList(List<String> StringList) {
+        List<Integer> IntegerList = new ArrayList<Integer>();
+        for (String x : StringList) {
+            Integer z = Integer.parseInt(x);
+            IntegerList.add(z);
+        }
+        return IntegerList;
+    }
+
+    //List<String>转换为List<int>
+    public static List<Float> parseFloatList(List<String> StringList) {
+        List<Float> FloatList = new ArrayList<Float>();
+        for (String x : StringList) {
+            Float z = Float.parseFloat(x);
+            FloatList.add(z);
+        }
+        return FloatList;
     }
 
     /**

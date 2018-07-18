@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:weightSum="4"
+    tools:context=".activity.statistics.LineCutoverActivity">
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/pad_height_20"
+        android:layout_weight="1"
+        android:background="@drawable/home_selector"
+        android:gravity="center"
+        android:text="上一周期"
+        android:textColor="@color/bule_light"
+        android:textSize="@dimen/pad_text_size_18" />
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/pad_height_20"
+        android:layout_weight="1"
+        android:background="@drawable/home_selector"
+        android:gravity="center"
+        android:text="下一周期"
+        android:textColor="@color/bule_light"
+        android:textSize="@dimen/pad_text_size_18" />
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/pad_height_20"
+        android:layout_weight="1"
+        android:background="@drawable/home_selector"
+        android:gravity="center"
+        android:text="筛选"
+        android:textColor="@color/bule_light"
+        android:textSize="@dimen/pad_text_size_18" />
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/pad_height_20"
+        android:layout_weight="1"
+        android:background="@drawable/home_selector"
+        android:gravity="center"
+        android:text="退出"
+        android:textColor="@color/bule_light"
+        android:textSize="@dimen/pad_text_size_18" />
+
+</LinearLayout>

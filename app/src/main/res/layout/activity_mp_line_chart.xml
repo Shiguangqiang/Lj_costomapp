@@ -7,11 +7,19 @@
     android:background="#ffffff"
     tools:context=".activity.statistics.MpLineChartActivity">
 
+    <TextView
+        android:id="@+id/tv_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="4"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <com.github.mikephil.chartline.charts.LineChart
             android:id="@+id/chart1"
@@ -27,46 +35,75 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_selectup"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="@dimen/pad_height_35"
+                android:gravity="center_vertical"
                 android:background="#f4f4f4"
-                android:gravity="center"
-                android:text="总销售金额" />
+                android:text="筛选条件" />
 
+            <TextView
+                android:id="@+id/tv_machinename1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_38"
+                android:singleLine="true"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/tv_num1"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/pad_height_38"
                 android:gravity="center"
                 android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/tv_machinename2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_38"
+                android:singleLine="true"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/tv_num2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/pad_height_38"
                 android:gravity="center"
                 android:textColor="@color/colorAccent" />
 
             <TextView
+                android:id="@+id/tv_selectdown"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="@dimen/pad_height_35"
+                android:gravity="center_vertical"
                 android:background="#f4f4f4"
-                android:gravity="center"
-                android:text="总销售成本" />
+                android:singleLine="true"
+                android:text="筛选条件" />
 
+            <TextView
+                android:id="@+id/tv_machinename3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pad_height_38"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/tv_num3"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/pad_height_38"
                 android:gravity="center"
                 android:textColor="@color/colorAccent" />
 
             <TextView
+                android:id="@+id/tv_machinename4"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:layout_height="@dimen/pad_height_38"
+                android:gravity="center" />
+
+
+            <TextView
                 android:id="@+id/tv_num4"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/pad_height_38"
                 android:gravity="center"
                 android:textColor="@color/colorAccent" />
 
@@ -78,7 +115,7 @@
             <TextView
                 android:id="@+id/tv_setting"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="38dp"
                 android:layout_gravity="bottom"
                 android:gravity="center"
                 android:text="设 置"

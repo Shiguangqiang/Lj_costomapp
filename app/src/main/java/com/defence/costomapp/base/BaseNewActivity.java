@@ -1,5 +1,6 @@
 package com.defence.costomapp.base;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,9 +16,13 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
+import com.defence.costomapp.di.component.ActivityComponent;
+import com.defence.costomapp.di.component.DaggerActivityComponent;
 import com.defence.costomapp.di.module.ActivityModule;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -34,25 +39,42 @@ public abstract class BaseNewActivity<T extends BaseContract.BasePresenter> exte
 
     final SupportActivityDelegate mDelegate = new SupportActivityDelegate(this);
     @Nullable
+    @Inject
     protected T mPresenter;
+    protected ActivityComponent mActivityComponent;
     @Nullable
     private Unbinder unbinder;
+    private ProgressDialog pd;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDelegate.onCreate(savedInstanceState);
+        initActivityComponent();
         ARouter.getInstance().inject(this);
         int layoutId = getLayoutId();
         setContentView(layoutId);
         initInjector();
         unbinder = ButterKnife.bind(this);
         attachView();
+        pd = new ProgressDialog(this);
+        pd.setCanceledOnTouchOutside(false);
+        pd.setMessage("正在加载....");
+
         initView();
         if (!NetworkUtils.isConnected()) showNoNet();
     }
 
-
+    /**
+     * 初始化ActivityComponent
+     */
+    private void initActivityComponent() {
+        mActivityComponent = DaggerActivityComponent.builder()
+                .applicationComponent(((MyApplication) getApplication()).getApplicationComponent())
+                .activityModule(new ActivityModule(this))
+                .build();
+    }
 
     protected abstract int getLayoutId();
 
@@ -88,13 +110,30 @@ public abstract class BaseNewActivity<T extends BaseContract.BasePresenter> exte
 
     @Override
     public void showLoading() {
+//        ToastUtils.showShort("showLoading");
+        try {
+            if (!pd.isShowing()) {
+                pd.show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void hideLoading() {
-
+//        ToastUtils.showShort("hideLoading");
+        try {
+            if (pd != null) {
+                pd.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public void showSuccess(String successMsg) {
@@ -113,7 +152,6 @@ public abstract class BaseNewActivity<T extends BaseContract.BasePresenter> exte
 
     @Override
     public void onRetry() {
-
     }
 
     @Override

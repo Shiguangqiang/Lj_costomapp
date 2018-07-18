@@ -6,7 +6,6 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -25,7 +24,7 @@ import java.util.List;
  */
 
 
-public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DAFilterGoodGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     String string;
     private List<DataAnGoodsFilterBean.ShangpinListBean> mList;
@@ -33,7 +32,7 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     private boolean mIsSelectable = false;
 
 
-    public DAFilterGoodsAdapter(List<DataAnGoodsFilterBean.ShangpinListBean> list, String type) {
+    public DAFilterGoodGroupAdapter(List<DataAnGoodsFilterBean.ShangpinListBean> list, String type) {
         if (list == null) {
             throw new IllegalArgumentException("model Data must not be null");
         }
@@ -54,18 +53,17 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
         ArrayList<String> selectListstring = new ArrayList<>();
         ArrayList<String> selectshopsting = new ArrayList<>();
 
-        if (string.equals("shop")) {
-
+        if (string.equals("shopgg")) {
             for (int i = 0; i < mList.size(); i++) {
                 if (isItemChecked(i)) {
-                    selectList.add(mList.get(i).getCommodityspecificationsid() + "");
-                    selectshopsting.add(mList.get(i).getShang_pin_full_name());
+                    selectList.add(mList.get(i).getId() + "");
+                    selectshopsting.add(mList.get(i).getShowName());
                 }
             }
-            SpUtil.putList(MyApplication.getApp(), "checkshop", selectList);
-            SpUtil.putList(MyApplication.getApp(), "filtershopstring", selectshopsting);
-
+            SpUtil.putList(MyApplication.getApp(), "checkshopgg", selectList);
+            SpUtil.putList(MyApplication.getApp(), "filtershopstringgg", selectshopsting);
         }
+
         return selectList;
     }
 
@@ -79,7 +77,7 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_item, viewGroup, false);
-        return new DAFilterGoodsAdapter.ListItemViewHolder(itemView);
+        return new DAFilterGoodGroupAdapter.ListItemViewHolder(itemView);
     }
 
     //绑定界面，设置监听
@@ -87,13 +85,14 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int i) {
 
 
-        List<Serializable> checkshop = SpUtil.getList(MyApplication.getApp(), "checkshop");
+        List<Serializable> checkshopgg = SpUtil.getList(MyApplication.getApp(), "checkshopgg");
 
-        if (string.equals("shop")) {
-            ((ListItemViewHolder) holder).mainTitle.setText(mList.get(i).getShang_pin_full_name());
-            if (checkshop != null && checkshop.size() > 0) {
-                for (int j = 0; j < checkshop.size(); j++) {
-                    if (checkshop.get(j).equals(mList.get(i).getShang_pin_full_name())) {
+
+        if (string.equals("shopgg")) {
+            ((ListItemViewHolder) holder).mainTitle.setText(mList.get(i).getShowName() + mList.get(i).getDescVal());
+            if (checkshopgg != null && checkshopgg.size() > 0) {
+                for (int j = 0; j < checkshopgg.size(); j++) {
+                    if (checkshopgg.get(j).equals(mList.get(i).getShowName())) {
                         setItemChecked(i, true);
                     }
                 }

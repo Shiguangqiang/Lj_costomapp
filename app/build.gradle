@@ -111,8 +111,14 @@ dependencies {
     implementation rootProject.ext.dependencies["agentweb"]
     implementation rootProject.ext.dependencies["BaseAdapterHelper"]
     implementation rootProject.ext.dependencies["arouter-api"]
-    compile rootProject.ext.dependencies["fragmentation"]
+    implementation rootProject.ext.dependencies["fragmentation"]
     annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+
+
+    annotationProcessor rootProject.ext.dependencies["dbflow-processor"]
+    implementation rootProject.ext.dependencies["dbflow-core"]
+    implementation rootProject.ext.dependencies["dbflow"]
+    implementation rootProject.ext.dependencies["dbflow-sqlcipher"]
 
     //折线图
     implementation project(':MPChartLib')
@@ -157,4 +163,7 @@ dependencies {
     //必选 Android快速生成通用Adapter
     implementation 'com.dyhdyh.adapters:adapters:1.0.0'
     implementation files('libs/systembartint-1.0.4.jar')
+}
+repositories {
+    mavenCentral()
 }

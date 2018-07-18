@@ -1,5 +1,6 @@
 package com.defence.costomapp.bean;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,18 +11,32 @@ import java.util.List;
  */
 public class LineChartBean {
 
-    private List<String> link1List;
 
-    public List<String> getLink1List() {
-        if (link1List == null) {
+
+    private List<List<String>> right_zhi;
+    private List<List<String>> left_zhi;
+
+
+    public List<List<String>> getRight_zhi() {
+        if (right_zhi == null) {
             return new ArrayList<>();
         }
-        return link1List;
+        return right_zhi;
     }
 
-    public void setLink1List(List<String> link1List) {
-        this.link1List = link1List;
+    public void setRight_zhi(List<List<String>> right_zhi) {
+        this.right_zhi = right_zhi;
     }
 
 
+    public List<List<String>> getLeft_zhi() {
+        if (left_zhi == null) {
+            return new ArrayList<>();
+        }
+        return left_zhi;
+    }
+
+    public void setLeft_zhi(List<List<String>> left_zhi) {
+        this.left_zhi = left_zhi;
+    }
 }

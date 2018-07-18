@@ -76,7 +76,9 @@
             android:name="com.amap.api.v2.apikey"
             android:value="491351e451db1c2545df196977ad0db3" />
 
-        <activity android:name=".activity.ChoiceTypeActivity">
+        <activity
+            android:name=".activity.ChoiceTypeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -254,11 +256,10 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" />
 
-
         <!-- 数据分析筛选页面   日月视图  x,y轴 -->
         <activity
             android:name=".activity.statistics.AnalysisFilterXYActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!-- 数据分析筛选页面    资金 用户 -->
         <activity
             android:name=".activity.statistics.AnalysisFilterActivity"
@@ -275,11 +276,24 @@
         <activity
             android:name=".activity.statistics.GrowthRateActivity"
             android:screenOrientation="portrait" />
-        <!-- 折线图-->
+        <!-- 折线图 -->
         <activity
             android:name=".activity.statistics.MpLineChartActivity"
-            android:screenOrientation="landscape"/>
-
+            android:screenOrientation="landscape" />
+        <!-- 线性切换 -->
+        <activity
+            android:name=".activity.statistics.LineCutoverActivity"
+            android:screenOrientation="landscape" />
+        <!-- 创建商品组 -->
+        <activity
+            android:name=".activity.statistics.CreatGoodsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <!-- 创建机器组 -->
+        <activity
+            android:name=".activity.statistics.CreatMachineActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
     </application>
 
 </manifest>

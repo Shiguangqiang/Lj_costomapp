@@ -6,13 +6,13 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
 import com.defence.costomapp.bean.DataAnGoodsFilterBean;
+import com.defence.costomapp.bean.DataAnMachineFilterBean;
 import com.defence.costomapp.utils.SpUtil;
 
 import java.io.Serializable;
@@ -25,15 +25,15 @@ import java.util.List;
  */
 
 
-public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DAFilterMachineGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     String string;
-    private List<DataAnGoodsFilterBean.ShangpinListBean> mList;
+    private List<DataAnMachineFilterBean.MachineListBean> mList;
     private SparseBooleanArray mSelectedPositions = new SparseBooleanArray();
     private boolean mIsSelectable = false;
 
 
-    public DAFilterGoodsAdapter(List<DataAnGoodsFilterBean.ShangpinListBean> list, String type) {
+    public DAFilterMachineGroupAdapter(List<DataAnMachineFilterBean.MachineListBean> list, String type) {
         if (list == null) {
             throw new IllegalArgumentException("model Data must not be null");
         }
@@ -42,7 +42,7 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     //更新adpter的数据和选择状态
-    public void updateDataSet(List<DataAnGoodsFilterBean.ShangpinListBean> list) {
+    public void updateDataSet(List<DataAnMachineFilterBean.MachineListBean> list) {
         this.mList = list;
         mSelectedPositions = new SparseBooleanArray();
 
@@ -54,18 +54,17 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
         ArrayList<String> selectListstring = new ArrayList<>();
         ArrayList<String> selectshopsting = new ArrayList<>();
 
-        if (string.equals("shop")) {
-
+        if (string.equals("machinegg")) {
             for (int i = 0; i < mList.size(); i++) {
                 if (isItemChecked(i)) {
-                    selectList.add(mList.get(i).getCommodityspecificationsid() + "");
-                    selectshopsting.add(mList.get(i).getShang_pin_full_name());
+                    selectList.add(mList.get(i).getMachinenumber() + "");
+                    selectshopsting.add(mList.get(i).getMachinename());
                 }
             }
-            SpUtil.putList(MyApplication.getApp(), "checkshop", selectList);
-            SpUtil.putList(MyApplication.getApp(), "filtershopstring", selectshopsting);
-
+            SpUtil.putList(MyApplication.getApp(), "checkmachinegg", selectList);
+            SpUtil.putList(MyApplication.getApp(), "filtersmachinestring", selectshopsting);
         }
+
         return selectList;
     }
 
@@ -79,7 +78,7 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_item, viewGroup, false);
-        return new DAFilterGoodsAdapter.ListItemViewHolder(itemView);
+        return new DAFilterMachineGroupAdapter.ListItemViewHolder(itemView);
     }
 
     //绑定界面，设置监听
@@ -87,13 +86,14 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int i) {
 
 
-        List<Serializable> checkshop = SpUtil.getList(MyApplication.getApp(), "checkshop");
+        List<Serializable> checkmachinegg = SpUtil.getList(MyApplication.getApp(), "checkmachinegg");
 
-        if (string.equals("shop")) {
-            ((ListItemViewHolder) holder).mainTitle.setText(mList.get(i).getShang_pin_full_name());
-            if (checkshop != null && checkshop.size() > 0) {
-                for (int j = 0; j < checkshop.size(); j++) {
-                    if (checkshop.get(j).equals(mList.get(i).getShang_pin_full_name())) {
+
+        if (string.equals("machinegg")) {
+            ((ListItemViewHolder) holder).mainTitle.setText(mList.get(i).getMachinename());
+            if (checkmachinegg != null && checkmachinegg.size() > 0) {
+                for (int j = 0; j < checkmachinegg.size(); j++) {
+                    if (checkmachinegg.get(j).equals(mList.get(i).getMachinename())) {
                         setItemChecked(i, true);
                     }
                 }
@@ -110,8 +110,6 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 } else {
                     setItemChecked(i, true);
                 }
-
-
             }
         });
 

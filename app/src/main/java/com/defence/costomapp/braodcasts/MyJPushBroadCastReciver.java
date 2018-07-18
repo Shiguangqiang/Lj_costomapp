@@ -29,7 +29,6 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class MyJPushBroadCastReciver extends BroadcastReceiver {
     private static final String TAG = "JPush";
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();

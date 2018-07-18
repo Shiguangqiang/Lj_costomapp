@@ -1,14 +1,16 @@
 package com.defence.costomapp.fragment;
 
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.defence.costomapp.R;
-import com.defence.costomapp.activity.WebViewActivity;
 import com.defence.costomapp.activity.statistics.AnalysisFilter2Activity;
 import com.defence.costomapp.activity.viewPresenter.DataAnalysisContract;
 import com.defence.costomapp.activity.viewPresenter.DataAnalysisPresenter;
@@ -20,10 +22,11 @@ import com.defence.costomapp.bean.DataAnalysisFilterBean;
 import com.defence.costomapp.net.Constant;
 import com.defence.costomapp.utils.SgqUtils;
 
-
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Sgq
@@ -34,6 +37,7 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
 
     @BindView(R.id.rv_fund)
     RecyclerView rvFund;
+    Unbinder unbinder;
     private List<DataAnalysisFilterBean.TjListBean> mTjList;
     private String mVerticalAxis;
 
@@ -41,6 +45,20 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
     @Override
     protected void initInjector() {
         mFragmentComponent.inject(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
@@ -78,14 +96,23 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         AnalysisFilter2Activity.start();
-
-        if (mVerticalAxis.equals("left")) {
-            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAME, mTjList.get(position).getName() + "");
-            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEID, mTjList.get(position).getTypeid() + "");
-        } else if (mVerticalAxis.equals("right")) {
-            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMERIGHT, mTjList.get(position).getName() + "");
-            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
-
+        switch (mVerticalAxis) {
+            case "left":
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAME, mTjList.get(position).getName() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEID, mTjList.get(position).getTypeid() + "");
+                break;
+            case "right":
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMERIGHT, mTjList.get(position).getName() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
+                break;
+            case "lefts":
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMES, mTjList.get(position).getName() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDS, mTjList.get(position).getTypeid() + "");
+                break;
+            case "rights":
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMES, mTjList.get(position).getName() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHTS, mTjList.get(position).getTypeid() + "");
+                break;
         }
     }
 }

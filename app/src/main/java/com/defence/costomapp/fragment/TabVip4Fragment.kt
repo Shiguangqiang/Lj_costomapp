@@ -35,20 +35,8 @@ import java.util.ArrayList
  */
 class TabVip4Fragment : BaseFragment() {
 
-
-    // TODO: Rename and change types of parameters
-    private var mParam1: String? = null
-    private var mParam2: String? = null
     private var lv_machineRegistration: ListView? = null
     private var srl: RefreshLayout? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mParam1 = arguments.getString(ARG_PARAM1)
-            mParam2 = arguments.getString(ARG_PARAM2)
-        }
-    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -126,7 +114,7 @@ class TabVip4Fragment : BaseFragment() {
                         machinestaticlist!!.addAll(machineBean)
 
                         if (machineRegisAdapter == null) {
-                            machineRegisAdapter = MachineRegisAdapter(machinestaticlist, activity)
+                            machineRegisAdapter = activity?.let { MachineRegisAdapter(machinestaticlist, it) }
                             lv_machineRegistration!!.adapter = machineRegisAdapter
                         } else {
                             machineRegisAdapter!!.notifyDataSetChanged()

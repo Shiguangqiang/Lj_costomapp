@@ -9,19 +9,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_keep"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:text="保存"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_fund"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_skip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pad_height_50"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="点击略过此筛选条件"
+            android:textColor="@color/bule_light"
+            android:textSize="@dimen/pad_text_size_16" />
+
     </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
 

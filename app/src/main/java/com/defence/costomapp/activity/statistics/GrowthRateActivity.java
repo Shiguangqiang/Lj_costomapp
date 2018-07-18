@@ -12,18 +12,12 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.SPUtils;
 import com.defence.costomapp.R;
 import com.defence.costomapp.base.BaseActivity;
-import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.net.Constant;
-import com.defence.costomapp.utils.SgqUtils;
-import com.defence.costomapp.utils.httputils.HttpInterface;
-import com.google.gson.Gson;
-import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import tech.linjiang.pandora.Pandora;
 
 @Route(path = "/statistics/GrowthRateActivity")
 public class GrowthRateActivity extends BaseActivity implements View.OnClickListener {
@@ -43,20 +37,9 @@ public class GrowthRateActivity extends BaseActivity implements View.OnClickList
     RadioGroup rgTimerange;
     @BindView(R.id.tv_tip)
     TextView tvTip;
-    private String mGuigeids;
-    private String mMachine_numbers;
-    private String mData_stypeid;
+    private String mVerticalaxis;
     private String iszhengzhanglv = "0";
-    private String mFiltername;
-    private String mMachinename;
-    private String mData_stypeidright;
-    private String mMachinenumbersright;
-    private String mData_filternameright;
-    private String mMachinenameright;
-    private String mGuigeidsright;
-    private String mGoodsname;
-    private String mGoodsnameright;
-    private String mSdate;
+
 
     public static void start() {
         ARouter.getInstance().build("/statistics/GrowthRateActivity").navigation();
@@ -68,6 +51,7 @@ public class GrowthRateActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_growth_rate);
         ButterKnife.bind(this);
         initView();
+
     }
 
     private void initView() {
@@ -77,25 +61,7 @@ public class GrowthRateActivity extends BaseActivity implements View.OnClickList
         back.setTextColor(getResources().getColor(R.color.bule_light));
         back.setOnClickListener(this);
         rightTitle.setOnClickListener(this);
-        tvTip.setOnClickListener(this::onClick);
-
-
-        mData_stypeid = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_STYPEID);
-        mData_stypeidright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_STYPEIDRIGHT);
-        mMachine_numbers = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINE_NUMBERS);
-        mMachinenumbersright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINENUMBERSRIGHT);
-        mGuigeids = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GUIGEIDS).replace("'", "");
-        mGuigeidsright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GUIGEIDSRIGHT).replace("'", "");
-
-        mFiltername = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAME);
-        mData_filternameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAMERIGHT);
-        mMachinename = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_MACHINENAME);
-        mMachinenameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINENAMERIGHT);
-        mGoodsname = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAME);
-        mGoodsnameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAMERIGHT);
-
-        mSdate = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.SDATE);
-
+        mVerticalaxis = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.VERTICALAXIS);
 
         rgTimerange.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -117,29 +83,19 @@ public class GrowthRateActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.right_title:
+                if (mVerticalaxis.equals("left")) {
+                    SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.ISZHENGZHANGLV, iszhengzhanglv);
+                } else if (mVerticalaxis.equals("right")) {
+                    SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.ISZHENGZHANGLVRIGHT, iszhengzhanglv);
+                } else if (mVerticalaxis.equals("lefts")) {
+                    SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.ISZHENGZHANGLVS, iszhengzhanglv);
+                } else if (mVerticalaxis.equals("rights")) {
+                    SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.ISZHENGZHANGLVRIGHTS, iszhengzhanglv);
+                }
                 AnalysisFilterXYActivity.start();
-                break;
-            case R.id.tv_tip:
-                getData();
                 break;
         }
     }
 
-    private void getData() {
-        RequestParams params = new RequestParams();
-        params.put("orderBy", "2");
-        params.put("tongji_shijian", "2018-07-06");
-        params.put("sdate", mSdate);
-        params.put("leftTiaoJian", "{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + iszhengzhanglv + "\"}");
-        params.put("rightTiaoJian", "{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + iszhengzhanglv + "\"}");
-
-        httpUtils.doPost(Urls.filter(), SgqUtils.TONGJI_TYPE, params, new HttpInterface() {
-            @Override
-            public void onSuccess(Gson gson, Object result, String message) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result.toString());
-                tvTip.setText(result.toString());
-            }
-        });
-    }
 }
 
