@@ -105,42 +105,48 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 rbLeft.setChecked(true);
                 rbRight.setChecked(false);
                 Intent intenttv = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-                intenttv.putExtra("verticalAxis", "left");
+//                intenttv.putExtra("verticalAxis", "left");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "left");
                 startActivity(intenttv);
                 break;
             case R.id.tv_communityGoods:
                 rbLeft.setChecked(true);
                 rbRight.setChecked(false);
                 Intent intenttvs = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-                intenttvs.putExtra("verticalAxis", "left");
+//                intenttvs.putExtra("verticalAxis", "left");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "left");
                 startActivity(intenttvs);
                 break;
             case R.id.tv_filterCondition_right:
                 rbLeft.setChecked(false);
                 rbRight.setChecked(true);
                 Intent intentrighttv = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-                intentrighttv.putExtra("verticalAxis", "right");
+//                intentrighttv.putExtra("verticalAxis", "right");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "right");
                 startActivity(intentrighttv);
                 break;
             case R.id.tv_communityGoods_right:
                 rbLeft.setChecked(false);
                 rbRight.setChecked(true);
                 Intent intentrighttvs = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-                intentrighttvs.putExtra("verticalAxis", "right");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "right");
+//                intentrighttvs.putExtra("verticalAxis", "right");
                 startActivity(intentrighttvs);
                 break;
             case R.id.tv_description:
                 rbLeft.setChecked(true);
                 rbRight.setChecked(false);
-                Intent intent = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-                intent.putExtra("verticalAxis", "lefts");
+                Intent intent = new Intent(AnalysisFilterXYActivity.this, AnalysisFilter2Activity.class);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "lefts");
+//                intent.putExtra("verticalAxis", "lefts");
                 startActivity(intent);
                 break;
             case R.id.tv_description2:
                 rbLeft.setChecked(false);
                 rbRight.setChecked(true);
-                Intent intentright = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-                intentright.putExtra("verticalAxis", "rights");
+                Intent intentright = new Intent(AnalysisFilterXYActivity.this, AnalysisFilter2Activity.class);
+//                intentright.putExtra("verticalAxis", "rights");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "rights");
                 startActivity(intentright);
                 break;
         }
@@ -164,6 +170,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
         rightTitle.setText("制图");
         rightTitle.setTextColor(getResources().getColor(R.color.bule_light));
         back.setTextColor(getResources().getColor(R.color.bule_light));
+
 
 //1，3折线描述
         mFiltername = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAME);
@@ -245,6 +252,14 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 }
             }
         });
+
+        
+        if (!"增加折线描述".equals(tvCommunityGoods.getText().toString())) {
+            tvDescription.setVisibility(View.VISIBLE);
+        }
+        if (!"增加折线描述".equals(tvCommunityGoodsRight.getText().toString())) {
+            tvDescription2.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

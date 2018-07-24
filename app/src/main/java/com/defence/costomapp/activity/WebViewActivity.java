@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -26,6 +28,9 @@ import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.UserInfo;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.SharePerenceUtil;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -148,7 +153,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         //支持屏幕缩放
         webSettings.setSupportZoom(true);
-        webSettings.setBuiltInZoomControls(true);
+        webSettings.setBuiltInZoomControls(false);
 
         //不显示webview缩放按钮
 //        webSettings.setDisplayZoomControls(false);
@@ -157,10 +162,9 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        webView.setVisibility(View.GONE);
         //释放资源
         webView.destroy();
-        webView = null;
     }
 
     @Override
@@ -170,6 +174,11 @@ public class WebViewActivity extends AppCompatActivity {
             webView.goBack(); // goBack()表示返回webView的上一页面
             return true;
         }
+//        }else{
+//            ViewGroup view = (ViewGroup) getWindow().getDecorView();
+//            view.removeAllViews();
+//            super.finish();
+//        }
         return super.onKeyDown(keyCode, event);
     }
 

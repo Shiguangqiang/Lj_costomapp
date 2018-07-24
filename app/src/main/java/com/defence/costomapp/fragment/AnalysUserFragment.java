@@ -43,7 +43,8 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
     protected void initView(View view) {
         /**设置RecyclerView*/
         rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
-        mVerticalAxis = getActivity().getIntent().getStringExtra("verticalAxis");
+//        mVerticalAxis = getActivity().getIntent().getStringExtra("verticalAxis");
+        mVerticalAxis = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.VERTICALAXIS);
         mPresenter.getFilterData(String.valueOf(SgqUtils.TONGJI_TYPE), "1");
     }
 

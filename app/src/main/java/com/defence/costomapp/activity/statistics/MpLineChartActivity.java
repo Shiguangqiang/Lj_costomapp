@@ -370,6 +370,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         set4.setHighLightColor(Color.BLACK);  //设置线条颜色
         set4.setDrawHorizontalHighlightIndicator(false);
 
+
         mData = new LineData(set1, set2, set3, set4);
         mData.setValueTextColor(Color.BLUE);
         mData.setValueTextSize(14f);

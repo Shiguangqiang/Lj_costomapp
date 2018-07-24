@@ -143,18 +143,19 @@ public class AnalysmachineGroupFragment extends BaseNewFragment<DataAnalysisPres
                     String sss = SgqUtils.listToString(listid);
                     String sff = SgqUtils.listToString(listshowName);
 
+
                     if (mVerticalaxis.equals("left")) {
                         SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_MACHINENAME, sff);
                         SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINE_NUMBERS, sss);
                     } else if (mVerticalaxis.equals("right")) {
-                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_MACHINENAME, sff);
-                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINE_NUMBERS, sss);
+                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINENAMERIGHT, sff);
+                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINENUMBERSRIGHT, sss);
                     } else if (mVerticalaxis.equals("lefts")) {
-                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_MACHINENAME, sff);
-                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINE_NUMBERS, sss);
+                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_MACHINENAMES, sff);
+                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINE_NUMBERSS, sss);
                     } else if (mVerticalaxis.equals("rights")) {
-                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_MACHINENAME, sff);
-                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINE_NUMBERS, sss);
+                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINENAMERIGHTS, sff);
+                        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.MACHINENUMBERSRIGHTS, sss);
                     }
                     Intent intent = new Intent(getActivity(), AnalysisFilter3Activity.class);
                     startActivity(intent);

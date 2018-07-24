@@ -133,6 +133,7 @@ public class AnalysGoodsGroupFragment extends BaseNewFragment<DataAnalysisPresen
                     String sss = SgqUtils.listToString(listid);
                     String sff = SgqUtils.listToString(listshowName);
 
+
                     if (mVerticalaxis.equals("left")) {
                         SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.GUIGEIDS, sss);
                         SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.GOODSNAME, sff);

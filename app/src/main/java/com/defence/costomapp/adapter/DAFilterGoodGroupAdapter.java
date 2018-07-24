@@ -57,7 +57,7 @@ public class DAFilterGoodGroupAdapter extends RecyclerView.Adapter<RecyclerView.
             for (int i = 0; i < mList.size(); i++) {
                 if (isItemChecked(i)) {
                     selectList.add(mList.get(i).getId() + "");
-                    selectshopsting.add(mList.get(i).getShowName());
+                    selectshopsting.add(mList.get(i).getShowName() + mList.get(i).getDescVal());
                 }
             }
             SpUtil.putList(MyApplication.getApp(), "checkshopgg", selectList);

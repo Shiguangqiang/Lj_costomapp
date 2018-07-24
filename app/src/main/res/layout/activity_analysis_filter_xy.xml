@@ -95,8 +95,7 @@
                     android:id="@+id/tv_communityGoods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pad_height_12"
-                    android:layout_marginTop="@dimen/pad_height_20"
+                    android:layout_margin="@dimen/pad_height_10"
                     android:background="@drawable/shape_rectangle_white"
                     android:padding="@dimen/pad_height_5"
                     android:text="增加折线描述"
@@ -107,14 +106,13 @@
                     android:id="@+id/tv_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pad_height_12"
-                    android:layout_marginTop="@dimen/pad_height_20"
-                    android:layout_marginBottom="@dimen/pad_height_20"
+                    android:layout_margin="@dimen/pad_height_10"
                     android:background="@drawable/shape_rectangle_white"
                     android:padding="@dimen/pad_height_5"
                     android:text="增加折线描述"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/pad_text_size_14" />
+                    android:textSize="@dimen/pad_text_size_14"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <RadioButton
@@ -155,26 +153,24 @@
                     android:id="@+id/tv_communityGoods_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pad_height_12"
-                    android:layout_marginTop="@dimen/pad_height_20"
-                    android:background="@drawable/shape_rectangle_white"
-                    android:padding="@dimen/pad_height_5"
-                    android:text="增加折线描述"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/pad_text_size_14"  />
-
-                <TextView
-                    android:id="@+id/tv_description2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/pad_height_12"
-                    android:layout_marginTop="@dimen/pad_height_20"
-                    android:layout_marginBottom="@dimen/pad_height_20"
+                    android:layout_margin="@dimen/pad_height_10"
                     android:background="@drawable/shape_rectangle_white"
                     android:padding="@dimen/pad_height_5"
                     android:text="增加折线描述"
                     android:textColor="@color/black"
                     android:textSize="@dimen/pad_text_size_14" />
+
+                <TextView
+                    android:id="@+id/tv_description2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/pad_height_10"
+                    android:background="@drawable/shape_rectangle_white"
+                    android:padding="@dimen/pad_height_5"
+                    android:text="增加折线描述"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/pad_text_size_14"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View

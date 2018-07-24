@@ -9,6 +9,7 @@
     tools:context="com.defence.costomapp.activity.buhuo.BuhuoMessageInfoActivity">
 
     <FrameLayout
+        android:id="@+id/fl_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

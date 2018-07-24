@@ -76,8 +76,8 @@ public class AnalysisFilterActivity extends BaseNewActivity implements View.OnCl
         //绑定
         filterTablayout.setupWithViewPager(filterViewpager);
         SgqUtils.setIndicator(filterTablayout, 50, 50);
-        mVerticalAxis = getIntent().getStringExtra("verticalAxis");
-        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, mVerticalAxis);
+//        mVerticalAxis = getIntent().getStringExtra("verticalAxis");
+//        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, mVerticalAxis);
 
 
     }

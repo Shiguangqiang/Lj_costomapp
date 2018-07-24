@@ -43,7 +43,7 @@ public class MyApplication extends MultiDexApplication {
         initApplicationComponent();
         Utils.init(this);
         intARouter();
-        Pandora.init(this).enableShakeOpen();
+//        Pandora.init(this).enableShakeOpen();
 //       DbFlow数据库
         FlowManager.init(this);
 
