@@ -2,19 +2,15 @@ package com.defence.costomapp.activity.statistics;
 
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.defence.costomapp.R;
@@ -42,13 +38,12 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import tech.linjiang.pandora.Pandora;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MpLineChartActivity extends BaseActivity implements OnChartValueSelectedListener {
 
@@ -59,6 +54,8 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
     private final ArrayList<Entry> mListNull = new ArrayList<Entry>();
     protected Typeface mTfRegular;
     protected Typeface mTfLight;
+    @BindView(R.id.tv_selectionPeriod)
+    TextView tvSelectionPeriod;
     private LineChart mChart;
     private TextView mTv_setting;
     private LineData mData;
@@ -102,6 +99,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
     private String mMachinenames;
     private String mData_filternamerights;
     private String mMachinenamerights;
+    private String linechartdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +107,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_mp_line_chart);
+        ButterKnife.bind(this);
         mTv_setting = findViewById(R.id.tv_setting);
         mTv_num1 = findViewById(R.id.tv_num1);
         mTv_num2 = findViewById(R.id.tv_num2);
@@ -126,14 +125,13 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
 //     筛选条件
         initSave();
 
-//        mTv_setting.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                LineCutoverActivity.start();
-//                finish();
-//            }
-//        });
-
+        mTv_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LineCutoverActivity.start();
+                finish();
+            }
+        });
     }
 
     private void initSave() {
@@ -200,10 +198,19 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         ArrayList<String> stringsleft = new ArrayList<>();
         ArrayList<String> stringsright = new ArrayList<>();
 
+        linechartdate = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.LINECHARTDATE);
+        if (TextUtils.isEmpty(linechartdate)) {
+            linechartdate = SgqUtils.getNowDate();
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.LINECHARTDATE, linechartdate);
+        } else {
+            SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.LINECHARTDATE, linechartdate);
+        }
+        tvSelectionPeriod.setText(linechartdate);
+
         String sleft1 = "{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numbers + "\",\"guigeids\":\"" + mGuigeids + "\",\"iszhengzhanglv\":\"" + mIszhengzhanglv + "\"}";
-        String sleft2 = "{\"stypeId\":\"" + mData_stypeids + "\",\"machineNumbers\":\"" + mMachine_numberss + "\",\"guigeids\":\"" + mGuigeidss + "\",\"iszhengzhanglv\":\"" + mIszhengzhanglvs + "\"}";
+        String sleft2 = "{\"stypeId\":\"" + mData_stypeid + "\",\"machineNumbers\":\"" + mMachine_numberss + "\",\"guigeids\":\"" + mGuigeidss + "\",\"iszhengzhanglv\":\"" + mIszhengzhanglvs + "\"}";
         String sright1 = "{\"stypeId\":\"" + mData_stypeidright + "\",\"machineNumbers\":\"" + mMachinenumbersright + "\",\"guigeids\":\"" + mGuigeidsright + "\",\"iszhengzhanglv\":\"" + miszhengzhanglvright + "\"}";
-        String sright2 = "{\"stypeId\":\"" + mData_stypeidrights + "\",\"machineNumbers\":\"" + mMachinenumbersrights + "\",\"guigeids\":\"" + mGuigeidsrights + "\",\"iszhengzhanglv\":\"" + miszhengzhanglvrights + "\"}";
+        String sright2 = "{\"stypeId\":\"" + mData_stypeidright + "\",\"machineNumbers\":\"" + mMachinenumbersrights + "\",\"guigeids\":\"" + mGuigeidsrights + "\",\"iszhengzhanglv\":\"" + miszhengzhanglvrights + "\"}";
 
         stringsleft.add(sleft1);
         stringsleft.add(sleft2);
@@ -212,7 +219,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
 
         RequestParams params = new RequestParams();
         params.put("orderBy", "2");
-        params.put("tongji_shijian", "2018-07-06");
+        params.put("tongji_shijian", linechartdate);
         params.put("sdate", mSdate);
 
         //测试方便查看参数   上线需修改
@@ -290,6 +297,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         }
 
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set1.setDrawValues(false);
         set1.setColor(Color.argb(1f, 0f, 0f, 0.5f));
         set1.setCircleColor(Color.RED);
         set1.setLineWidth(3f);
@@ -317,6 +325,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         set2.setCircleColor(Color.RED);
         set2.setLabel("");
         set2.setLineWidth(3f);
+        set2.setDrawValues(false);
         set2.setCircleRadius(3f);
         set2.setFillAlpha(50);
         set2.setFillColor(Color.RED);
@@ -338,6 +347,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         set3.setColor(Color.RED);
         set3.setCircleColor(Color.RED);
         set3.setLineWidth(3f);
+        set3.setDrawValues(false);
         set3.setLabel("");
         set3.setCircleRadius(3f);
         set3.setFillAlpha(50);
@@ -359,6 +369,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         set4.setColor(Color.argb(1f, 0.5f, 0f, 0.5f));
         set4.setCircleColor(Color.RED);
         set4.setLineWidth(3f);
+        set4.setDrawValues(false);
         set4.setLabel("");
         set4.setCircleRadius(3f);
         set4.setFillAlpha(50);
@@ -464,7 +475,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         leftAxis.setTextSize(16f);
         leftAxis.setTextColor(Color.BLUE);
         leftAxis.setAxisMaximum(maxl);
-        leftAxis.setAxisMinimum(mmin);
+        leftAxis.setAxisMinimum(minl);
         leftAxis.setDrawGridLines(true);
         leftAxis.setGranularityEnabled(true);
 
@@ -473,7 +484,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         rightAxis.setTextSize(16f);
         rightAxis.setTextColor(Color.BLUE);
         rightAxis.setAxisMaximum(maxr);
-        rightAxis.setAxisMinimum(mmin);
+        rightAxis.setAxisMinimum(minr);
         rightAxis.setDrawGridLines(false);
         rightAxis.setDrawZeroLine(false);
         rightAxis.setGranularityEnabled(false);
@@ -506,6 +517,20 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
             mTv_num4.setText(mYValsright2.get((int) e.getX()).getY() + "");
         } else {
             mTv_num4.setText(mListNull.get((int) e.getX()).getY() + "");
+        }
+
+
+        if (TextUtils.isEmpty(mMachinename)) {
+            mTv_num1.setText("");
+        }
+        if (TextUtils.isEmpty(mMachinenames)) {
+            mTv_num2.setText("");
+        }
+        if (TextUtils.isEmpty(mMachinenameright)) {
+            mTv_num3.setText("");
+        }
+        if (TextUtils.isEmpty(mMachinenamerights)) {
+            mTv_num4.setText("");
         }
 
 

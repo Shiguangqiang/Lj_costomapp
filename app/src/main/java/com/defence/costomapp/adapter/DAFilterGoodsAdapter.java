@@ -6,9 +6,9 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.defence.costomapp.R;
 import com.defence.costomapp.app.MyApplication;
@@ -48,34 +48,6 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     }
 
-    //获得选中条目的结果
-    public ArrayList<String> getSelectedItem() {
-        ArrayList<String> selectList = new ArrayList<>();
-        ArrayList<String> selectListstring = new ArrayList<>();
-        ArrayList<String> selectshopsting = new ArrayList<>();
-
-        if (string.equals("shop")) {
-
-            for (int i = 0; i < mList.size(); i++) {
-                if (isItemChecked(i)) {
-                    selectList.add(mList.get(i).getCommodityspecificationsid() + "");
-                    selectshopsting.add(mList.get(i).getShang_pin_full_name());
-                }
-            }
-            SpUtil.putList(MyApplication.getApp(), "checkshop", selectList);
-            SpUtil.putList(MyApplication.getApp(), "filtershopstring", selectshopsting);
-
-        }
-        return selectList;
-    }
-
-    //根据位置判断条目是否选中
-    private boolean isItemChecked(int position) {
-        return mSelectedPositions.get(position);
-    }
-
-    //设置给定位置条目的选择状态
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_item, viewGroup, false);
@@ -85,7 +57,6 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
     //绑定界面，设置监听
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int i) {
-
 
         List<Serializable> checkshop = SpUtil.getList(MyApplication.getApp(), "checkshop");
 
@@ -105,13 +76,17 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
         ((ListItemViewHolder) holder).checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //checkBox的监听
                 if (isItemChecked(i)) {
                     setItemChecked(i, false);
                 } else {
-                    setItemChecked(i, true);
+                    if (getSelectedItem().size() > 2) {
+                        Toast.makeText(MyApplication.getAppContext(), "商品最多只能选择三种!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        setItemChecked(i, true);
+                    }
                 }
-
-
+                notifyItemChanged(i);
             }
         });
 
@@ -119,15 +94,22 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
         ((ListItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //checkBox的监听
                 if (isItemChecked(i)) {
                     setItemChecked(i, false);
                 } else {
-                    setItemChecked(i, true);
+                    if (getSelectedItem().size() > 2) {
+                        Toast.makeText(MyApplication.getAppContext(), "商品最多只能选择三种!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        setItemChecked(i, true);
+                    }
                 }
                 notifyItemChanged(i);
             }
         });
     }
+
+    //设置给定位置条目的选择状态
 
     @Override
     public int getItemCount() {
@@ -136,6 +118,32 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private void setItemChecked(int position, boolean isChecked) {
         mSelectedPositions.put(position, isChecked);
+    }
+
+    //根据位置判断条目是否选中
+    private boolean isItemChecked(int position) {
+        return mSelectedPositions.get(position);
+    }
+
+    //获得选中条目的结果
+    public ArrayList<String> getSelectedItem() {
+        ArrayList<String> selectList = new ArrayList<>();
+        ArrayList<String> selectListstring = new ArrayList<>();
+        ArrayList<String> selectshopsting = new ArrayList<>();
+
+        if (string.equals("shop")) {
+
+            for (int i = 0; i < mList.size(); i++) {
+                if (isItemChecked(i)) {
+                    selectList.add(mList.get(i).getCommodityspecificationsid() + "");
+                    selectshopsting.add(mList.get(i).getShang_pin_full_name());
+                }
+            }
+            SpUtil.putList(MyApplication.getApp(), "checkshop", selectList);
+            SpUtil.putList(MyApplication.getApp(), "filtershopstring", selectshopsting);
+
+        }
+        return selectList;
     }
 
     //根据位置判断条目是否可选

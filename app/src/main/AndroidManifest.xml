@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <!-- Required -->
     <uses-permission android:name="com.defence.costomapp.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -37,6 +36,20 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- 百度鹰眼 -->
+
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入对象存储BOS数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!-- SD卡读取权限，用于写入对象存储BOS数据-->
 
     <!-- 高德定位 -->
 
@@ -118,7 +131,7 @@
         </receiver>
 
         <activity android:name=".activity.WelcomeActivity" />
-        <!-- <activity android:name=".activity.ChoiceTypeActivity" /> -->
+
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
@@ -129,10 +142,20 @@
         <activity
             android:name=".activity.buhuo.BuhuoMessageInfoActivity"
             android:screenOrientation="portrait" />
+
+        <!--定时任务  轨迹-->
+        <service
+            android:name=".service.LongRunningService"
+            android:enabled="true"
+            android:exported="true" />
+
+
+
         <activity
             android:name=".activity.CommonScanActivity"
             android:screenOrientation="portrait" />
 
+        <!--高德定位-->
         <service android:name="com.amap.api.location.APSService" />
         <!-- 管理人员 -->
         <activity

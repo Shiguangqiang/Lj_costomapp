@@ -34,7 +34,7 @@ public class HttpUtils {
         this.context = context;
         client = new AsyncHttpClient();
 
-        client.setTimeout(50000); // 设置链接超时，如果不设置，默认为10s
+        client.setTimeout(60000); // 设置链接超时，如果不设置，默认为10s
 
         gson = new Gson();
         pd = new ProgressDialog(context);

@@ -119,6 +119,7 @@
 
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -159,14 +160,20 @@
                         android:text="侧柜剩余量" />
                 </LinearLayout>
 
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/buhuoinforv"
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/srl"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/buhuoinforv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </android.support.v4.widget.SwipeRefreshLayout>
             </LinearLayout>
+
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton

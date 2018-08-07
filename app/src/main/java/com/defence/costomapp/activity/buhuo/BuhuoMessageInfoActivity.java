@@ -13,6 +13,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -92,6 +93,10 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     int taskType = 0;
     @BindView(R.id.fab_detail)
     FloatingActionButton fabDetail;
+    String sType = "";
+    boolean b = true;
+    @BindView(R.id.srl)
+    SwipeRefreshLayout srl;
     private BuhuoMessageEntity buhuoMessageEntity;
     private int alarmStock;
     private MachineEntity machineEntity;
@@ -105,7 +110,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     private NavigationView navigationView;
     private EditText tv_returnLibraryDescription;
     private ArrayAdapter<String> arr_adapter;
-
     private int mIndex = 0;//位置
     private boolean move = false;
     private TextView tv_newtasktype, tv_tasktype, tv_transferMachine, tv_arrangingGoods, tv_transferAmount;
@@ -142,17 +146,17 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 //        监听侧滑状态
         drawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 tv_transferAmount.setText("");
                 mBtn_selectMachine.setText("");
                 tv_returnLibraryDescription.setText("");
 
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
             }
         });
 
@@ -170,6 +174,20 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             }
         });
 
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (mBtn_toggleFiltering.getText().equals("未售商品")) {
+                    //在售商品
+                    getdata();
+                    mTv_shelfForSale.setVisibility(View.VISIBLE);
+                } else if (mBtn_toggleFiltering.getText().equals("在售商品")) {
+                    //未售商品
+                    getUnsoldGoods();
+                    mTv_shelfForSale.setVisibility(View.GONE);
+                }
+            }
+        });
         //在售商品
         getdata();
         ToggleButtonListener();
@@ -194,8 +212,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             }
         });
     }
-
-    String sType = "";
 
     private void ToggleButtonListener() {
 
@@ -233,6 +249,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
         httpUtils.doPost(Urls.getCeguiGoods(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
             @Override
             public void onSuccess(Gson gson, Object result, String message) {
+                srl.setRefreshing(false);
                 JSONObject jb = (JSONObject) result;
                 CeGuiGoodsBean ceGuiGoodsBean = gson.fromJson(jb.toString(), CeGuiGoodsBean.class);
 
@@ -320,6 +337,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             httpUtils.doPost(Urls.getBuhuoMessageInfo(), SgqUtils.BUHUO_TYPE, params, new HttpInterface() {
                 @Override
                 public void onSuccess(Gson gson, Object result, String message) {
+                    srl.setRefreshing(false);
                     JSONObject jb = (JSONObject) result;
                     try {
                         alarmStock = jb.getInt("alarmStock");
@@ -432,21 +450,15 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
                         });
                         rv.setAdapter(buhuoMessageInfoAdapter);
 
-//                        } else {qina
-//                            buhuoMessageInfoAdapter.notifyDataSetChanged();
-//                        }
 
-                    } catch (
-                            JSONException e)
-
-                    {
+                    } catch (JSONException e) {
+                        srl.setRefreshing(false);
                         e.printStackTrace();
                     }
                 }
             });
         }
     }
-
 
     /*侧滑菜单*/
     private void ShowNavigation() {
@@ -576,7 +588,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
         RequestParams params = new RequestParams();
         params.put("guigename", guigename);
-        params.put("guigeid", gui_ge_id+"");
+        params.put("guigeid", gui_ge_id + "");
         params.put("shangpinname", shangpinname);
         params.put("huikunumber", tv_transferAmount.getText().toString());
         params.put("machine_no", buhuoMessageEntity.getMachinenumber());
@@ -612,7 +624,7 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
         params.put("machine_ff_mtl", buhuoMessageEntity.getMachinenumber());
 //       当前长按所选的商品规格ID
-        params.put("iiint2_mkl", gui_ge_id+"");
+        params.put("iiint2_mkl", gui_ge_id + "");
 //       调货至某台机器上, 机器列表中手动选中的机器
         params.put("machine_tt_mtl", selectNum);
 //       商品规格全称, 商品名-规格名
@@ -636,8 +648,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
             }
         });
     }
-
-    boolean b = true;
 
     private void getAllMachineData() {
 
@@ -737,10 +747,10 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
-        mMapView.onResume();
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
+        mMapView.onSaveInstanceState(outState);
     }
 
     @Override
@@ -751,10 +761,10 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
-        mMapView.onSaveInstanceState(outState);
+    protected void onResume() {
+        super.onResume();
+        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
+        mMapView.onResume();
     }
 
     private void move(int n) {
@@ -785,7 +795,6 @@ public class BuhuoMessageInfoActivity extends BaseActivity {
 
     @OnClick(R.id.fab_detail)
     public void onViewClicked() {
-
         Intent intent = new Intent(BuhuoMessageInfoActivity.this, WebViewActivity.class);
         intent.putExtra("machine_no", machineEntity.getMachinenumber());
         startActivity(intent);

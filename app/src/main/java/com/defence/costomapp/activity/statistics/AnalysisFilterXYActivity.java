@@ -28,7 +28,6 @@ import tech.linjiang.pandora.Pandora;
 @Route(path = "/statistics/AnalysisFilterXYActivity")
 public class AnalysisFilterXYActivity extends BaseNewActivity implements View.OnClickListener {
 
-
     @BindView(R.id.back)
     TextView back;
     @BindView(R.id.middle_title)
@@ -76,6 +75,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
     private String mMachinenamerights;
     private String mGoodsnames;
     private String mGoodsnamerights;
+    private String mRbleftright;
 
 
     public static void start() {
@@ -96,14 +96,18 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
             case R.id.rb_left:
                 rbLeft.setChecked(true);
                 rbRight.setChecked(false);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "left");
                 break;
             case R.id.rb_right:
                 rbLeft.setChecked(false);
                 rbRight.setChecked(true);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
                 break;
             case R.id.tv_filterCondition:
+
                 rbLeft.setChecked(true);
                 rbRight.setChecked(false);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "left");
                 Intent intenttv = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
 //                intenttv.putExtra("verticalAxis", "left");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "left");
@@ -112,6 +116,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
             case R.id.tv_communityGoods:
                 rbLeft.setChecked(true);
                 rbRight.setChecked(false);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "left");
                 Intent intenttvs = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
 //                intenttvs.putExtra("verticalAxis", "left");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "left");
@@ -120,6 +125,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
             case R.id.tv_filterCondition_right:
                 rbLeft.setChecked(false);
                 rbRight.setChecked(true);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
                 Intent intentrighttv = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
 //                intentrighttv.putExtra("verticalAxis", "right");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "right");
@@ -128,6 +134,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
             case R.id.tv_communityGoods_right:
                 rbLeft.setChecked(false);
                 rbRight.setChecked(true);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
                 Intent intentrighttvs = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "right");
 //                intentrighttvs.putExtra("verticalAxis", "right");
@@ -136,6 +143,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
             case R.id.tv_description:
                 rbLeft.setChecked(true);
                 rbRight.setChecked(false);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "left");
                 Intent intent = new Intent(AnalysisFilterXYActivity.this, AnalysisFilter2Activity.class);
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "lefts");
 //                intent.putExtra("verticalAxis", "lefts");
@@ -144,6 +152,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
             case R.id.tv_description2:
                 rbLeft.setChecked(false);
                 rbRight.setChecked(true);
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
                 Intent intentright = new Intent(AnalysisFilterXYActivity.this, AnalysisFilter2Activity.class);
 //                intentright.putExtra("verticalAxis", "rights");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "rights");
@@ -175,35 +184,52 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
 //1，3折线描述
         mFiltername = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAME);
         mData_filternameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAMERIGHT);
+
         mMachinename = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_MACHINENAME);
         mMachinenameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINENAMERIGHT);
         mGoodsname = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAME);
         mGoodsnameright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAMERIGHT);
 //2，4折线描述
-        mFilternames = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAMES);
-        mData_filternamerights = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAMERIGHTS);
+//        mFilternames = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAMES);
+//        mData_filternamerights = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_FILTERNAMERIGHTS);
         mMachinenames = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_MACHINENAMES);
         mMachinenamerights = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINENAMERIGHTS);
         mGoodsnames = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAMES);
         mGoodsnamerights = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.GOODSNAMERIGHTS);
 
+        mRbleftright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.RBLEFTRIGHT);
+
+        if (mRbleftright.equals("right")) {
+            rbLeft.setChecked(false);
+            rbRight.setChecked(true);
+        } else {
+            rbLeft.setChecked(true);
+            rbRight.setChecked(false);
+        }
+
+        // TODO: 2018/8/2   有问题待修改
 
         if (!TextUtils.isEmpty(mFiltername)) {
+//      左      点此定制横向坐标系
             tvFilterCondition.setText(mFiltername);
         }
-        if (!TextUtils.isEmpty(mMachinename)) {
-            tvCommunityGoods.setText(mMachinename);
-        }
-        if (!TextUtils.isEmpty(mGoodsname)) {
-            tvCommunityGoods.setText(mMachinename + mGoodsname);
-        }
+//      右      点此定制横向坐标系
         if (!TextUtils.isEmpty(mData_filternameright)) {
             tvFilterConditionRight.setText(mData_filternameright);
         }
+
+        if (!TextUtils.isEmpty(mMachinename)) {
+//            增加折线描述
+            tvCommunityGoods.setText(mMachinename);
+        }
+        if (!TextUtils.isEmpty(mGoodsname) && !TextUtils.isEmpty(mMachinename)) {
+            tvCommunityGoods.setText(mMachinename + mGoodsname);
+        }
+
         if (!TextUtils.isEmpty(mMachinenameright)) {
             tvCommunityGoodsRight.setText(mMachinenameright);
         }
-        if (!TextUtils.isEmpty(mGoodsnameright)) {
+        if (!TextUtils.isEmpty(mGoodsnameright) && !TextUtils.isEmpty(mMachinenameright)) {
             tvCommunityGoodsRight.setText(mMachinenameright + mGoodsnameright);
         }
 
@@ -211,19 +237,19 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
         if (!TextUtils.isEmpty(mMachinenames)) {
             tvDescription.setText(mMachinenames);
         }
-        if (!TextUtils.isEmpty(mGoodsnames)) {
+        if (!TextUtils.isEmpty(mGoodsnames) && !TextUtils.isEmpty(mMachinenames)) {
             tvDescription.setText(mMachinenames + mGoodsnames);
         }
 
         if (!TextUtils.isEmpty(mMachinenamerights)) {
             tvDescription2.setText(mMachinenamerights);
         }
-        if (!TextUtils.isEmpty(mGoodsnamerights)) {
+        if (!TextUtils.isEmpty(mGoodsnamerights) && !TextUtils.isEmpty(mMachinenamerights)) {
             tvDescription2.setText(mMachinenamerights + mGoodsnamerights);
         }
 
 
-        back.setOnClickListener(this);
+        back.setOnClickListener(this::onClick);
         rightTitle.setOnClickListener(this::onClick);
         rbLeft.setOnClickListener(this::onClick);
         rbRight.setOnClickListener(this::onClick);
@@ -253,7 +279,7 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
             }
         });
 
-        
+
         if (!"增加折线描述".equals(tvCommunityGoods.getText().toString())) {
             tvDescription.setVisibility(View.VISIBLE);
         }

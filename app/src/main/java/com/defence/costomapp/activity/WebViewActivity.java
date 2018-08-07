@@ -171,8 +171,10 @@ public class WebViewActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Log.i("ansen", "是否有上一个页面:" + webView.canGoBack());
         if (webView.canGoBack() && keyCode == KeyEvent.KEYCODE_BACK) {//点击返回按钮的时候判断有没有上一页
-            webView.goBack(); // goBack()表示返回webView的上一页面
+//            webView.goBack(); // goBack()表示返回webView的上一页面
+            finish();
             return true;
+
         }
 //        }else{
 //            ViewGroup view = (ViewGroup) getWindow().getDecorView();

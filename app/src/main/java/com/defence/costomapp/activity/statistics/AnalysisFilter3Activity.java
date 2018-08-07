@@ -82,6 +82,35 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
         filterViewpager.setAdapter(adapter);
         //绑定
         filterTablayout.setupWithViewPager(filterViewpager);
+
+        //TabLayout的监听
+        filterTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                if (tab.getPosition() == 1) {
+                    rightTitle.setText("");
+                } else {
+                    rightTitle.setText("保存");
+                }
+//                int position = tab.getPosition();
+//                filterViewpager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 1) {
+                    rightTitle.setText("");
+                } else {
+                    rightTitle.setText("保存");
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         SgqUtils.setIndicator(filterTablayout, 50, 50);
 
     }

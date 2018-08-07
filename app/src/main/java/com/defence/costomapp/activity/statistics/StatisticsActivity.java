@@ -73,15 +73,15 @@ public class StatisticsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back:
-                int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
-                if (loginType != -1) {
-                    SharePerenceUtil.putStringValuetoSp(loginType + "", "");
-                    SharePerenceUtil.putStringValuetoSp("groupid", "0");
-                    SharePerenceUtil.putIntValuetoSp("loginType", -1);
-                    SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
-                    MyApplication.getApp().setUserInfo(null);
-
-                }
+//                int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
+//                if (loginType != -1) {
+//                    SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+//                    SharePerenceUtil.putStringValuetoSp("groupid", "0");
+//                    SharePerenceUtil.putIntValuetoSp("loginType", -1);
+//                    SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
+//                    MyApplication.getApp().setUserInfo(null);
+//
+//                }
                 startActivity(new Intent(StatisticsActivity.this, ChoiceTypeActivity.class));
                 finish();
                 break;
@@ -144,14 +144,14 @@ public class StatisticsActivity extends BaseActivity {
             Toast.makeText(StatisticsActivity.this, "再按一次退出系统", Toast.LENGTH_SHORT).show();
             mExitTime = System.currentTimeMillis();
         } else {
-            int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
-            if (loginType != -1) {
-                SharePerenceUtil.putStringValuetoSp(loginType + "", "");
-                SharePerenceUtil.putIntValuetoSp("loginType", -1);
-                SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
-                MyApplication.getApp().setUserInfo(null);
-
-            }
+//            int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
+//            if (loginType != -1) {
+//                SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+//                SharePerenceUtil.putIntValuetoSp("loginType", -1);
+//                SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
+//                MyApplication.getApp().setUserInfo(null);
+//
+//            }
             finishAffinity();
             System.exit(0);
         }

@@ -1,27 +1,45 @@
 package com.defence.costomapp.app;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.multidex.MultiDexApplication;
 
 
 import com.alibaba.android.arouter.launcher.ARouter;
+
 import com.blankj.utilcode.util.Utils;
 import com.defence.costomapp.BuildConfig;
+import com.defence.costomapp.activity.LoginActivity;
 import com.defence.costomapp.bean.UserInfo;
 import com.defence.costomapp.di.component.ApplicationComponent;
 
 import com.defence.costomapp.di.module.ApplicationModule;
+import com.defence.costomapp.service.LongRunningService;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import cn.jpush.android.api.JPushInterface;
 import tech.linjiang.pandora.Pandora;
 
 public class MyApplication extends MultiDexApplication {
+    public static int screenWidth = 0;
+    public static int screenHeight = 0;
     private static MyApplication mInstance;
     private UserInfo userInfo;
     private ApplicationComponent mApplicationComponent;
@@ -43,9 +61,15 @@ public class MyApplication extends MultiDexApplication {
         initApplicationComponent();
         Utils.init(this);
         intARouter();
-//        Pandora.init(this).enableShakeOpen();
-//       DbFlow数据库
+//      调试利器
+        Pandora.init(this).enableShakeOpen();
+//      DbFlow数据库
         FlowManager.init(this);
+
+        /*开启实时定位服务*/
+        Intent intent = new Intent();
+        intent.setClass(this, LongRunningService.class);
+        startService(intent);
 
     }
 
@@ -73,6 +97,7 @@ public class MyApplication extends MultiDexApplication {
         }
         ARouter.init(this); // 尽可能早，推荐在Application中初始化
     }
+
 
     public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;

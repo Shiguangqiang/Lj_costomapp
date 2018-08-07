@@ -17,6 +17,7 @@ import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
 import com.defence.costomapp.activity.manage.ManagerActivity;
 import com.defence.costomapp.activity.statistics.StatisticsActivity;
 import com.defence.costomapp.bean.MangerUserBean;
+import com.defence.costomapp.service.LongRunningService;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.R;
@@ -37,6 +38,7 @@ public class LoginActivity extends BaseActivity {
     private ImageView icon;
     private TextView name;
     private EditText username, psw;
+    private Intent mIntentservice;
 
 
     @Override
@@ -78,7 +80,6 @@ public class LoginActivity extends BaseActivity {
             username.setText(userNameintent);
             psw.setText(pswintent);
         }
-
 
         switch (loginType) {
             case 0:
@@ -125,11 +126,16 @@ public class LoginActivity extends BaseActivity {
 
                             MangerUserBean.ResultBean.DataOneBean mangerUserBean = gson.fromJson(jb.toString(), MangerUserBean.ResultBean.DataOneBean.class);
                             SharePerenceUtil.putStringValuetoSp("groupid", mangerUserBean.getGroupID() + "");
+                            SharePerenceUtil.putStringValuetoSp("phoneuid", mangerUserBean.getId() + "");
 
                             SetRegistrationid(getApplicationContext());
 
                             switch (loginType) {
                                 case 0:
+                                    /*开启实时定位服务*/
+                                    mIntentservice = new Intent(LoginActivity.this, LongRunningService.class);
+                                    startService(mIntentservice);
+
                                     startActivity(new Intent(LoginActivity.this, BuhuoMessageActivity.class));
                                     break;
                                 case 10100:
@@ -162,6 +168,20 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    private void initdata(int type) {
+
+        String nameAndPsw = SharePerenceUtil.getStringValueFromSp(type + "");
+        if (!TextUtils.isEmpty(nameAndPsw)) {
+            final String userNamesp = nameAndPsw.split("---")[0];
+            final String pswsp = nameAndPsw.split("---")[1];
+
+            username.setText(userNamesp);
+            psw.setText(pswsp);
+
+
+        }
+
+    }
 
     //设置注册id
     private void SetRegistrationid(Context context) {
@@ -186,21 +206,6 @@ public class LoginActivity extends BaseActivity {
             public void onFailure(Context context) {
             }
         });
-
-    }
-
-    private void initdata(int type) {
-
-        String nameAndPsw = SharePerenceUtil.getStringValueFromSp(type + "");
-        if (!TextUtils.isEmpty(nameAndPsw)) {
-            final String userNamesp = nameAndPsw.split("---")[0];
-            final String pswsp = nameAndPsw.split("---")[1];
-
-            username.setText(userNamesp);
-            psw.setText(pswsp);
-
-
-        }
 
     }
 }

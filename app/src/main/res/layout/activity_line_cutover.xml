@@ -1,59 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/pad_height_50"
+    android:layout_marginRight="@dimen/pad_height_50"
     android:background="@color/white"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:weightSum="4"
     tools:context=".activity.statistics.LineCutoverActivity">
 
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/pad_height_20"
+    <LinearLayout
+        android:id="@+id/ll_PreviousCycle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/home_selector"
-        android:gravity="center"
-        android:text="上一周期"
-        android:textColor="@color/bule_light"
-        android:textSize="@dimen/pad_text_size_18" />
+        android:gravity="center">
 
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/pad_height_20"
-        android:layout_weight="1"
-        android:background="@drawable/home_selector"
-        android:gravity="center"
-        android:text="下一周期"
-        android:textColor="@color/bule_light"
-        android:textSize="@dimen/pad_text_size_18" />
+        <TextView
+            android:layout_width="@dimen/pad_height_130"
+            android:layout_height="@dimen/pad_height_130"
+            android:background="@drawable/circle_bgwhite"
+            android:gravity="center"
+            android:text="上一周期"
+            android:textColor="@color/bule_light"
+            android:textSize="@dimen/pad_text_size_18" />
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/pad_height_20"
-        android:layout_weight="1"
-        android:background="@drawable/home_selector"
-        android:gravity="center"
-        android:text="筛选"
-        android:textColor="@color/bule_light"
-        android:textSize="@dimen/pad_text_size_18" />
 
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/pad_height_20"
+    <LinearLayout
+        android:id="@+id/ll_nextCycle"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/home_selector"
-        android:gravity="center"
-        android:text="退出"
-        android:textColor="@color/bule_light"
-        android:textSize="@dimen/pad_text_size_18" />
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/pad_height_130"
+            android:layout_height="@dimen/pad_height_130"
+            android:background="@drawable/circle_bgwhite"
+            android:gravity="center"
+            android:text="下一周期"
+            android:textColor="@color/bule_light"
+            android:textSize="@dimen/pad_text_size_18" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_filter"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/pad_height_130"
+            android:layout_height="@dimen/pad_height_130"
+            android:background="@drawable/circle_bgwhite"
+            android:gravity="center"
+            android:text="筛选"
+            android:textColor="@color/bule_light"
+            android:textSize="@dimen/pad_text_size_18" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_quit"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="@dimen/pad_height_130"
+            android:layout_height="@dimen/pad_height_130"
+            android:background="@drawable/circle_bgwhite"
+            android:gravity="center"
+            android:text="退出"
+            android:textColor="@color/bule_light"
+            android:textSize="@dimen/pad_text_size_18" />
+    </LinearLayout>
+
 
 </LinearLayout>

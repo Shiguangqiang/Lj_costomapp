@@ -21,6 +21,7 @@ public class Constant {
     public static final String ISZHENGZHANGLV = "iszhengzhanglv";
     public static final String ISZHENGZHANGLVRIGHT = "iszhengzhanglvright";
 
+
     public static final String DATA_STYPEIDS = "stypeIds";
     public static final String MACHINE_NUMBERSS = "machinenumberss";
     public static final String MACHINENUMBERSRIGHTS = "machinenumbersrights";
@@ -39,6 +40,10 @@ public class Constant {
     public static final String ISZHENGZHANGLVRIGHTS = "iszhengzhanglvrights";
 
     public static final String JSONOBJECTGOODS = "jsonObjectGoods";
+    public static final String RBLEFTRIGHT= "rbleftright";
+
+    public static final String LINECHARTDATE= "linechartdate";
+
 
     public static final String SHARED_NAME = "_preferences";
     public static final String USERNAME_KEY = "username";

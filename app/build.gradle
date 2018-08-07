@@ -81,15 +81,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
     api rootProject.ext.dependencies["appcompat-v7"]
     api rootProject.ext.dependencies["support-v4"]
-
     implementation rootProject.ext.dependencies["cardview"]
     implementation rootProject.ext.dependencies["design"]
     implementation rootProject.ext.dependencies["recyclerview"]
     implementation rootProject.ext.dependencies["constraint-layout"]
-
     implementation rootProject.ext.dependencies["preference"]
     implementation rootProject.ext.dependencies["retrofit2"]
     implementation rootProject.ext.dependencies["converter-scalars"]
@@ -99,9 +96,7 @@ dependencies {
     implementation rootProject.ext.dependencies["rxlifecomponents"]
     implementation rootProject.ext.dependencies["dagger"]
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
-
     implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
     implementation rootProject.ext.dependencies["rxbinding2"]
@@ -113,8 +108,6 @@ dependencies {
     implementation rootProject.ext.dependencies["arouter-api"]
     implementation rootProject.ext.dependencies["fragmentation"]
     annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
-
-
     annotationProcessor rootProject.ext.dependencies["dbflow-processor"]
     implementation rootProject.ext.dependencies["dbflow-core"]
     implementation rootProject.ext.dependencies["dbflow"]
@@ -122,44 +115,62 @@ dependencies {
 
     //折线图
     implementation project(':MPChartLib')
+
     //调试利器Pandora
     debugImplementation 'com.github.whataa:pandora:v1.0.1'
     releaseImplementation 'com.github.whataa:pandora-no-op:v1.0.1'
 
     //网络
     implementation files('libs/android-async-http-1.4.4.jar')
+
     //极光
     implementation 'cn.jiguang.sdk:jpush:3.1.1'
+
     // 此处以JPush 3.1.1 版本为例。
     implementation 'cn.jiguang.sdk:jcore:1.1.9'
+
     // 此处以JCore 1.1.9 版本为例。
+
     //扫码
     implementation 'com.google.zxing:core:3.3.0'
+
     // 2D地图
     implementation 'com.amap.api:map2d:latest.integration'
+
     // 搜索
     implementation 'com.amap.api:search:latest.integration'
+
     // 定位
     implementation 'com.amap.api:location:latest.integration'
+
     //图片下载
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+
     //仿ios 弹出菜单
     implementation project(':actionsheetmenumlib')
+
     //解析
     implementation 'com.google.code.gson:gson:2.8.2'
+
     //View注入框架
     implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
     //三级联动
     implementation 'com.contrarywind:Android-PickerView:3.2.5'
+
     //统计图
     implementation files('libs/mpchartlib.jar')
+
     //下拉刷新RV
     implementation 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
+
     //事件总线
     implementation 'org.greenrobot:eventbus:3.0.0'
+
     //必选 Android快速生成通用Adapter
     implementation 'com.dyhdyh.adapters:adapters:1.0.0'
     implementation files('libs/systembartint-1.0.4.jar')

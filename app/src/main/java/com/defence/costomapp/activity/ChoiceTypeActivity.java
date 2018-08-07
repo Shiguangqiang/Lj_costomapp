@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -29,6 +30,7 @@ import com.defence.costomapp.activity.buhuo.BuhuoMessageActivity;
 import com.defence.costomapp.activity.manage.ManagerActivity;
 import com.defence.costomapp.activity.statistics.StatisticsActivity;
 import com.defence.costomapp.bean.NewVersionBean;
+import com.defence.costomapp.service.LongRunningService;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.base.Urls;
@@ -75,10 +77,37 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice_type);
+
         findViewById(R.id.buhuoll).setOnClickListener(this);
 //        findViewById(R.id.kefull).setOnClickListener(this);
         findViewById(R.id.tongji).setOnClickListener(this);
         findViewById(R.id.guanlill).setOnClickListener(this);
+
+        findViewById(R.id.kefull).setOnClickListener(new View.OnClickListener() {
+            final static int COUNTS = 5;//点击次数
+            final static long DURATION = 3 * 1000;//规定有效时间
+            long[] mHits = new long[COUNTS];
+
+            @Override
+            public void onClick(View v) {
+                /**
+                 * 实现双击方法
+                 * src 拷贝的源数组
+                 * srcPos 从源数组的那个位置开始拷贝.
+                 * dst 目标数组
+                 * dstPos 从目标数组的那个位子开始写数据
+                 * length 拷贝的元素的个数
+                 */
+                System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+                //实现左移，然后最后一个位置更新距离开机的时间，如果最后一个时间和最开始时间小于DURATION，即连续5次点击
+                mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+                if (mHits[0] >= (SystemClock.uptimeMillis() - DURATION)) {
+                    tech.linjiang.pandora.Pandora.get().open();
+                    String tips = "您已在[" + DURATION + "]ms内连续点击【" + mHits.length + "】次了！！！" + "打开调试模式";
+                    Toast.makeText(ChoiceTypeActivity.this, tips, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         findViewById(R.id.guanlill).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -168,6 +197,17 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
 //        }
     }
 
+    private double[] gaoDeToBaidu(double gd_lon, double gd_lat) {
+        double[] bd_lat_lon = new double[2];
+        double PI = 3.14159265358979324 * 3000.0 / 180.0;
+        double x = gd_lon, y = gd_lat;
+        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * PI);
+        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * PI);
+        bd_lat_lon[0] = z * Math.cos(theta) + 0.0065;
+        bd_lat_lon[1] = z * Math.sin(theta) + 0.006;
+        return bd_lat_lon;
+    }
+
     private void checkNewVersion() {
         String versionCode = getVersionCode();
         RequestParams params = new RequestParams();
@@ -198,35 +238,6 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         });
     }
 
-    private void ShowDialog(String updateUrl, String updateTip, String newversion) {
-        AlertDialog.Builder normalDialog =
-                new AlertDialog.Builder(this);
-//        normalDialog.setIcon(R.drawable.icon_dialog);
-        normalDialog.setTitle("发现新版本:" + newversion);
-        normalDialog.setMessage(updateTip);
-        normalDialog.setPositiveButton("更新",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //...To-do
-                        Uri uri = Uri.parse(updateUrl);
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
-                    }
-                });
-        normalDialog.setNegativeButton("取消",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //...To-do
-                        dialog.dismiss();
-                    }
-                });
-        // 显示
-        normalDialog.show();
-    }
-
-
     public void showContacts() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -256,18 +267,84 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
         return versionCode;
     }
 
-    private double[] gaoDeToBaidu(double gd_lon, double gd_lat) {
-        double[] bd_lat_lon = new double[2];
-        double PI = 3.14159265358979324 * 3000.0 / 180.0;
-        double x = gd_lon, y = gd_lat;
-        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * PI);
-        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * PI);
-        bd_lat_lon[0] = z * Math.cos(theta) + 0.0065;
-        bd_lat_lon[1] = z * Math.sin(theta) + 0.006;
-        return bd_lat_lon;
+    private void ShowDialog(String updateUrl, String updateTip, String newversion) {
+        AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(this);
+//        normalDialog.setIcon(R.drawable.icon_dialog);
+        normalDialog.setTitle("发现新版本:" + newversion);
+        normalDialog.setMessage(updateTip);
+        normalDialog.setPositiveButton("更新",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                        Uri uri = Uri.parse(updateUrl);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }
+                });
+        normalDialog.setNegativeButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                        dialog.dismiss();
+                    }
+                });
+        // 显示
+        normalDialog.show();
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (pd != null) {
+            pd.dismiss();
+        }
+    }    //    //检查是否已经登录
+
+    //    private void checkTypeOrLogined(Intent intent, final int type, final Class<?> clz) {
+//        String nameAndPsw = SharePerenceUtil.getStringValueFromSp(type + "");
+//
+//        if (!TextUtils.isEmpty(nameAndPsw)) {
+//            final String userName = nameAndPsw.split("---")[0];
+//            final String psw = nameAndPsw.split("---")[1];
+//            RequestParams params = new RequestParams();
+//            params.put("account", userName);
+//            params.put("password", psw);
+//
+//            httpUtils.doPost(Urls.BuhuoLogin(), type, params, new HttpInterface() {
+//                @Override
+//                public void onSuccess(Gson gson, Object result, String message) {
+//                    try {
+//                        JSONObject jb = ((JSONObject) result).getJSONObject("data_one");
+//                        UserInfo userInfo = gson.fromJson(jb.toString(), UserInfo.class);
+//                        userInfo.setFuncType(type);
+//                        MyApplication.getApp().setUserInfo(userInfo);
+//                        SharePerenceUtil.putStringValuetoSp(type + "", userName + "---" + psw);
+//                        SharePerenceUtil.putIntValuetoSp("loginType", type);
+//                        startActivity(new Intent(ChoiceTypeActivity.this, clz));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                //sign 等于2
+//                @Override
+//                public void onError(Context context, String message) {
+//                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onFailure(Context context) {
+//                }
+//            });
+//
+//        } else {
+//            startActivity(intent);
+//        }
+//    }    @Override
+//
     public void onClick(View view) {
         Intent intent = new Intent(ChoiceTypeActivity.this, LoginActivity.class);
         switch (view.getId()) {
@@ -314,55 +391,5 @@ public class ChoiceTypeActivity extends BaseActivity implements OnClickListener 
 
     }
 
-    //检查是否已经登录
-    private void checkTypeOrLogined(Intent intent, final int type, final Class<?> clz) {
-        String nameAndPsw = SharePerenceUtil.getStringValueFromSp(type + "");
-
-        if (!TextUtils.isEmpty(nameAndPsw)) {
-            final String userName = nameAndPsw.split("---")[0];
-            final String psw = nameAndPsw.split("---")[1];
-            RequestParams params = new RequestParams();
-            params.put("account", userName);
-            params.put("password", psw);
-
-            httpUtils.doPost(Urls.BuhuoLogin(), type, params, new HttpInterface() {
-                @Override
-                public void onSuccess(Gson gson, Object result, String message) {
-                    try {
-                        JSONObject jb = ((JSONObject) result).getJSONObject("data_one");
-                        UserInfo userInfo = gson.fromJson(jb.toString(), UserInfo.class);
-                        userInfo.setFuncType(type);
-                        MyApplication.getApp().setUserInfo(userInfo);
-                        SharePerenceUtil.putStringValuetoSp(type + "", userName + "---" + psw);
-                        SharePerenceUtil.putIntValuetoSp("loginType", type);
-                        startActivity(new Intent(ChoiceTypeActivity.this, clz));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                //sign 等于2
-                @Override
-                public void onError(Context context, String message) {
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(Context context) {
-                }
-            });
-
-        } else {
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (pd != null) {
-            pd.dismiss();
-        }
-    }
 
 }

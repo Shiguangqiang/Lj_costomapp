@@ -147,13 +147,13 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
     @OnClick(R.id.back)
     public void onViewClicked() {
         int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
-        if (loginType != -1) {
-            SharePerenceUtil.putStringValuetoSp(loginType + "", "");
-            SharePerenceUtil.putStringValuetoSp("groupid", "0");
-            SharePerenceUtil.putIntValuetoSp("loginType", -1);
-            SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
-            MyApplication.getApp().setUserInfo(null);
-        }
+//        if (loginType != -1) {
+//            SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+//            SharePerenceUtil.putStringValuetoSp("groupid", "0");
+//            SharePerenceUtil.putIntValuetoSp("loginType", -1);
+//            SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
+//            MyApplication.getApp().setUserInfo(null);
+//        }
         startActivity(new Intent(ManagerActivity.this, ChoiceTypeActivity.class));
         finish();
 
@@ -182,14 +182,14 @@ public class ManagerActivity extends BaseActivity implements PoliceFragment.Frag
             Toast.makeText(ManagerActivity.this, "再按一次退出系统", Toast.LENGTH_SHORT).show();
             mExitTime = System.currentTimeMillis();
         } else {
-            int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
-            if (loginType != -1) {
-                SharePerenceUtil.putStringValuetoSp(loginType + "", "");
-                SharePerenceUtil.putIntValuetoSp("loginType", -1);
-                SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
-                MyApplication.getApp().setUserInfo(null);
-
-            }
+//            int loginType = SharePerenceUtil.getIntValueFromSP("loginType");
+//            if (loginType != -1) {
+//                SharePerenceUtil.putStringValuetoSp(loginType + "", "");
+//                SharePerenceUtil.putIntValuetoSp("loginType", -1);
+//                SharePerenceUtil.putBooleanValuetoSp(loginType + "isLogin", false);
+//                MyApplication.getApp().setUserInfo(null);
+//
+//            }
             finishAffinity();
             System.exit(0);
         }

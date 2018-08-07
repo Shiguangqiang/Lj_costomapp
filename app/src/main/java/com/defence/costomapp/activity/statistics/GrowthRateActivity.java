@@ -2,6 +2,9 @@ package com.defence.costomapp.activity.statistics;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -62,6 +65,16 @@ public class GrowthRateActivity extends BaseActivity implements View.OnClickList
         back.setOnClickListener(this);
         rightTitle.setOnClickListener(this);
         mVerticalaxis = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.VERTICALAXIS);
+
+        //部分文字改变颜色
+        //ForegroundColorSpan 为文字前景色，BackgroundColorSpan为文字背景色
+        ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().getColor(R.color.red));
+        //这里注意一定要先给textview赋值
+        SpannableStringBuilder builder = new SpannableStringBuilder(tvTip.getText().toString());
+        //为不同位置字符串设置不同颜色
+        builder.setSpan(redSpan, 20, tvTip.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //最后为textview赋值
+        tvTip.setText(builder);
 
         rgTimerange.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

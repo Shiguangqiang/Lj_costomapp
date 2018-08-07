@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="@dimen/pad_height_50"
             android:layout_height="@dimen/pad_height_50"
-            android:src="@mipmap/saoma_big" />
+            android:src="@mipmap/saoma" />
 
         <TextView
             android:layout_width="wrap_content"

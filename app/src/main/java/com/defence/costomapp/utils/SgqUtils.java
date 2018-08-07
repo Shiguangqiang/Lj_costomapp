@@ -189,7 +189,12 @@ public class SgqUtils {
         String dateOk = simpleDateFormat.format(newDate2);
         return dateOk;
     }
-
+    //获取当前时间
+    public static String getNowHmsDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss
+        Date date = new Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
+    }
 
     //获取当前时间
     public static String getNowDate() {

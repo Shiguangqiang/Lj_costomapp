@@ -45,7 +45,7 @@ public class DateAndTimeUtil {
      * @return 2014-10
      */
     public static String dateaddFormat(String datetime) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
             date = sdf.parse(datetime);
