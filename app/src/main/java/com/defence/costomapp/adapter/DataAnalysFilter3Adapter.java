@@ -12,20 +12,22 @@ import com.defence.costomapp.bean.DataAnMachineFilterBean;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 /**
- * Created by lw on 2018/1/19.
+ * Created by Sgq on 2018/1/19.
  */
 
 public class DataAnalysFilter3Adapter extends BaseQuickAdapter<DataAnGoodsFilterBean.ShangpinListBean, BaseViewHolder> {
-
-    public DataAnalysFilter3Adapter(@LayoutRes int layoutResId, @Nullable List data) {
-        super(layoutResId, data);
+    @Inject
+    public DataAnalysFilter3Adapter() {
+        super(R.layout.llitem_ddfilter2, null);
     }
 
 
     @Override
     protected void convert(BaseViewHolder helper, DataAnGoodsFilterBean.ShangpinListBean item) {
-        helper.setText(R.id.tv_show, item.getShowName());
+        helper.setText(R.id.tv_show, item.getShang_pin_full_name());
     }
 }

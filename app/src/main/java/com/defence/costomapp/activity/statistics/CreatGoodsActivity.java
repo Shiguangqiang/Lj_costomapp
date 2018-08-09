@@ -60,7 +60,6 @@ public class CreatGoodsActivity extends BaseNewActivity<DataAnalysisPresenter> i
     private List<DataAnGoodsFilterBean.ShangpinListBean> newlist;
     private DAFilterGoodGroupAdapter mDataAnalysFilterAdapter;
     private int begin = 0;
-    private JSONObject mMJsonObjectbig;
     private JSONArray mJsonarray;
     private List<HistoryModel> mHistoryModels;
 
@@ -80,7 +79,7 @@ public class CreatGoodsActivity extends BaseNewActivity<DataAnalysisPresenter> i
     }
 
     @Override
-    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+    public void setFilterGoodsGroupData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
         rvFund.setPullLoadMoreCompleted();
         if (newlist == null) {
             newlist = new ArrayList();
@@ -95,6 +94,12 @@ public class CreatGoodsActivity extends BaseNewActivity<DataAnalysisPresenter> i
         }
 
     }
+
+    @Override
+    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean, int loadType) {
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -123,8 +128,6 @@ public class CreatGoodsActivity extends BaseNewActivity<DataAnalysisPresenter> i
                             mJsonobject.put("showName", filtershopstring.get(i));
                             mJsonarray.put(mJsonobject);
                         }
-//                        mJsonObject.put("list", jsonarray);
-//                        mMJsonObjectbig.put("result", mJsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -178,16 +181,16 @@ public class CreatGoodsActivity extends BaseNewActivity<DataAnalysisPresenter> i
                 if (newlist != null) {
                     newlist.clear();
                 }
-                mPresenter.getFilterGoodsData(String.valueOf(SgqUtils.TONGJI_TYPE), (begin * 20) + "", "20", "nl");
+                mPresenter.getFilterGoodsGroupData(String.valueOf(SgqUtils.TONGJI_TYPE), (begin * 20) + "", "20", "nl");
             }
 
             @Override
             public void onLoadMore() {
                 begin++;
-                mPresenter.getFilterGoodsData(String.valueOf(SgqUtils.TONGJI_TYPE), (begin * 20) + "", "20", "nl");
+                mPresenter.getFilterGoodsGroupData(String.valueOf(SgqUtils.TONGJI_TYPE), (begin * 20) + "", "20", "nl");
             }
         });
 
-        mPresenter.getFilterGoodsData(String.valueOf(SgqUtils.TONGJI_TYPE), (begin * 20) + "", "20", "nl");
+        mPresenter.getFilterGoodsGroupData(String.valueOf(SgqUtils.TONGJI_TYPE), (begin * 20) + "", "20", "nl");
     }
 }

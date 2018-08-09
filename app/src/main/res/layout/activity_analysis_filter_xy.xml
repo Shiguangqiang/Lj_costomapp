@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pad_height_10"
                     android:layout_marginTop="@dimen/pad_height_8"
-                    android:text="点此定制横向坐标系"
+                    android:text="点此定制纵向坐标系"
                     android:textSize="@dimen/pad_text_size_20"
                     android:textStyle="bold" />
 
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/pad_height_10"
                     android:layout_marginTop="@dimen/pad_height_8"
-                    android:text="点此定制横向坐标系"
+                    android:text="点此定制纵向坐标系"
                     android:textSize="@dimen/pad_text_size_20"
                     android:textStyle="bold" />
 

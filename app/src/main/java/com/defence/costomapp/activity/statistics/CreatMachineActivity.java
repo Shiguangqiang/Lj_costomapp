@@ -87,8 +87,12 @@ public class CreatMachineActivity extends BaseNewActivity<DataAnalysisPresenter>
     }
 
     @Override
-    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+    public void setFilterGoodsGroupData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
 
+    }
+
+    @Override
+    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean, int loadType) {
 
     }
 

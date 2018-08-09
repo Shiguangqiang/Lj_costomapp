@@ -16,4 +16,10 @@
         android:text=""
         android:textSize="@dimen/pad_text_size_16" />
 
+    <ImageView
+        android:layout_width="@dimen/pad_height_20"
+        android:layout_height="@dimen/pad_height_20"
+        android:src="@mipmap/right" />
+
+
 </LinearLayout>

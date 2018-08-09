@@ -65,8 +65,6 @@ public class AnalysisFilter2Activity extends BaseNewActivity implements View.OnC
     protected void initView() {
 
         back.setText("返回");
-        rightTitle.setText("保存");
-        rightTitle.setTextColor(getResources().getColor(R.color.bule_light));
         back.setTextColor(getResources().getColor(R.color.bule_light));
         back.setOnClickListener(this);
         rightTitle.setOnClickListener(this);

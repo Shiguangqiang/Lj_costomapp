@@ -209,7 +209,13 @@ public class AnalysmachineGroupFragment extends BaseNewFragment<DataAnalysisPres
     }
 
     @Override
-    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+    public void setFilterGoodsGroupData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
 
     }
+
+    @Override
+    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean, int loadType) {
+
+    }
+
 }

@@ -42,12 +42,10 @@ public class AnalysisFilterActivity extends BaseNewActivity implements View.OnCl
     private List<Fragment> list;
     private MyAdapter adapter;
     private String[] titles = new String[]{"资金", "用户"};
-    private String mVerticalAxis;
 
     public static void start() {
         ARouter.getInstance().build("/statistics/AnalysisFilterActivity").navigation();
     }
-
 
     @Override
     protected int getLayoutId() {
@@ -59,13 +57,11 @@ public class AnalysisFilterActivity extends BaseNewActivity implements View.OnCl
 
     }
 
-
     @Override
     protected void initView() {
         back.setText("返回");
         back.setTextColor(getResources().getColor(R.color.bule_light));
         back.setOnClickListener(this);
-
         //页面，数据源
         list = new ArrayList<>();
         list.add(new AnalysFundFragment());
@@ -76,9 +72,6 @@ public class AnalysisFilterActivity extends BaseNewActivity implements View.OnCl
         //绑定
         filterTablayout.setupWithViewPager(filterViewpager);
         SgqUtils.setIndicator(filterTablayout, 50, 50);
-//        mVerticalAxis = getIntent().getStringExtra("verticalAxis");
-//        SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, mVerticalAxis);
-
 
     }
 

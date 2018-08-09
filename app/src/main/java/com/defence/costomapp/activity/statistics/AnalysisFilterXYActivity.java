@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -104,41 +105,44 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
                 break;
             case R.id.tv_filterCondition:
-
                 rbLeft.setChecked(true);
                 rbRight.setChecked(false);
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "left");
                 Intent intenttv = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-//                intenttv.putExtra("verticalAxis", "left");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "left");
                 startActivity(intenttv);
                 break;
             case R.id.tv_communityGoods:
-                rbLeft.setChecked(true);
-                rbRight.setChecked(false);
-                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "left");
-                Intent intenttvs = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-//                intenttvs.putExtra("verticalAxis", "left");
-                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "left");
-                startActivity(intenttvs);
+                if ("点此定制纵向坐标系".equals(tvFilterCondition.getText().toString())) {
+                    Toast.makeText(this, "请先选择纵向坐标条件", Toast.LENGTH_SHORT).show();
+                } else {
+                    rbLeft.setChecked(true);
+                    rbRight.setChecked(false);
+                    SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "left");
+                    Intent intenttvs = new Intent(AnalysisFilterXYActivity.this, AnalysisFilter2Activity.class);
+                    SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "left");
+                    startActivity(intenttvs);
+                }
                 break;
             case R.id.tv_filterCondition_right:
                 rbLeft.setChecked(false);
                 rbRight.setChecked(true);
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
                 Intent intentrighttv = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-//                intentrighttv.putExtra("verticalAxis", "right");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "right");
                 startActivity(intentrighttv);
                 break;
             case R.id.tv_communityGoods_right:
-                rbLeft.setChecked(false);
-                rbRight.setChecked(true);
-                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
-                Intent intentrighttvs = new Intent(AnalysisFilterXYActivity.this, AnalysisFilterActivity.class);
-                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "right");
-//                intentrighttvs.putExtra("verticalAxis", "right");
-                startActivity(intentrighttvs);
+                if ("点此定制纵向坐标系".equals(tvFilterConditionRight.getText().toString())) {
+                    Toast.makeText(this, "请先选择纵向坐标条件", Toast.LENGTH_SHORT).show();
+                } else {
+                    rbLeft.setChecked(false);
+                    rbRight.setChecked(true);
+                    SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
+                    Intent intentrighttvs = new Intent(AnalysisFilterXYActivity.this, AnalysisFilter2Activity.class);
+                    SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "right");
+                    startActivity(intentrighttvs);
+                }
                 break;
             case R.id.tv_description:
                 rbLeft.setChecked(true);
@@ -146,7 +150,6 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "left");
                 Intent intent = new Intent(AnalysisFilterXYActivity.this, AnalysisFilter2Activity.class);
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "lefts");
-//                intent.putExtra("verticalAxis", "lefts");
                 startActivity(intent);
                 break;
             case R.id.tv_description2:
@@ -154,7 +157,6 @@ public class AnalysisFilterXYActivity extends BaseNewActivity implements View.On
                 rbRight.setChecked(true);
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.RBLEFTRIGHT, "right");
                 Intent intentright = new Intent(AnalysisFilterXYActivity.this, AnalysisFilter2Activity.class);
-//                intentright.putExtra("verticalAxis", "rights");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.VERTICALAXIS, "rights");
                 startActivity(intentright);
                 break;

@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.defence.costomapp.R;
 import com.defence.costomapp.activity.statistics.AnalysisFilter2Activity;
+import com.defence.costomapp.activity.statistics.AnalysisFilterXYActivity;
 import com.defence.costomapp.activity.viewPresenter.DataAnalysisContract;
 import com.defence.costomapp.activity.viewPresenter.DataAnalysisPresenter;
 import com.defence.costomapp.adapter.DataAnalysFilterAdapter;
@@ -43,7 +44,6 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
     protected void initView(View view) {
         /**设置RecyclerView*/
         rvFund.setLayoutManager(new LinearLayoutManager(getContext()));
-//        mVerticalAxis = getActivity().getIntent().getStringExtra("verticalAxis");
         mVerticalAxis = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.VERTICALAXIS);
         mPresenter.getFilterData(String.valueOf(SgqUtils.TONGJI_TYPE), "1");
     }
@@ -56,7 +56,6 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
     @Override
     public void setFilterData(DataAnalysisFilterBean swVipData) {
         mTjList = swVipData.getTjList();
-
         DataAnalysFilterAdapter dataAnalysFilterAdapter = new DataAnalysFilterAdapter(R.layout.llitem_ddfilter, mTjList);
         rvFund.setAdapter(dataAnalysFilterAdapter);
         dataAnalysFilterAdapter.setOnItemClickListener(this);
@@ -68,14 +67,18 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
     }
 
     @Override
-    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+    public void setFilterGoodsGroupData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+
+    }
+
+    @Override
+    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean, int loadType) {
 
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-        AnalysisFilter2Activity.start();
+        AnalysisFilterXYActivity.start();
         switch (mVerticalAxis) {
             case "left":
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAME, mTjList.get(position).getName() + "");
@@ -84,14 +87,6 @@ public class AnalysUserFragment extends BaseNewFragment<DataAnalysisPresenter> i
             case "right":
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMERIGHT, mTjList.get(position).getName() + "");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
-                break;
-            case "lefts":
-                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMES, mTjList.get(position).getName() + "");
-                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDS, mTjList.get(position).getTypeid() + "");
-                break;
-            case "rights":
-                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMES, mTjList.get(position).getName() + "");
-                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHTS, mTjList.get(position).getTypeid() + "");
                 break;
         }
     }

@@ -193,7 +193,14 @@ public class AnalysGoodsGroupFragment extends BaseNewFragment<DataAnalysisPresen
     }
 
     @Override
-    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+    public void setFilterGoodsGroupData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+
     }
+
+    @Override
+    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean, int loadType) {
+
+    }
+
 
 }

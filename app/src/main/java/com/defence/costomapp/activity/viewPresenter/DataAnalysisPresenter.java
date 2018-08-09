@@ -9,6 +9,7 @@ import com.defence.costomapp.net.ApiService;
 import com.defence.costomapp.net.LoadType;
 import com.defence.costomapp.net.RetrofitManager;
 import com.defence.costomapp.net.RxSchedulers;
+import com.defence.costomapp.utils.SgqUtils;
 
 
 import javax.inject.Inject;
@@ -26,6 +27,7 @@ public class DataAnalysisPresenter extends BasePresenter<DataAnalysisContract.Vi
     private boolean mIsRefresh;
     private int begin;
     private String funcType;
+    private String machineNumber;
 
 
     @Inject
@@ -37,14 +39,16 @@ public class DataAnalysisPresenter extends BasePresenter<DataAnalysisContract.Vi
     public void refresh() {
         begin = 0;
         mIsRefresh = true;
-        getFilterMachineData(funcType, (begin *10) + "", "10");
+        getFilterMachineData(funcType, (begin * 10) + "", "10");
+        getFilterGoodsData(funcType, (begin * 10) + "", "10", machineNumber);
     }
 
     @Override
     public void loadMore() {
         begin++;
         mIsRefresh = false;
-        getFilterMachineData(funcType, (begin *10) + "", "10");
+        getFilterMachineData(funcType, (begin * 10) + "", "10");
+        getFilterGoodsData(funcType, (begin * 10) + "", "10", machineNumber);
     }
 
     @Override
@@ -109,6 +113,8 @@ public class DataAnalysisPresenter extends BasePresenter<DataAnalysisContract.Vi
 
     @Override
     public void getFilterGoodsData(String funcType, String begin, String end, String machineNumber) {
+        this.funcType = funcType;
+        this.machineNumber = machineNumber;
         mView.showLoading();
         RetrofitManager.create(ApiService.class)
                 .getFilterGoodsData(funcType, begin, end, machineNumber)
@@ -118,7 +124,37 @@ public class DataAnalysisPresenter extends BasePresenter<DataAnalysisContract.Vi
                     @Override
                     public void accept(DataResponse<DataAnGoodsFilterBean> response) throws Exception {
                         if (response.getSign() == 1) {
-                            mView.setFilterGoodsData(response.getResult());
+                            int loadType = mIsRefresh ? LoadType.TYPE_REFRESH_SUCCESS : LoadType.TYPE_LOAD_MORE_SUCCESS;
+                            mView.setFilterGoodsData(response.getResult(), loadType);
+                            mView.hideLoading();
+                        } else {
+                            mView.showFaild(String.valueOf(response.getMessage()));
+                            mView.hideLoading();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.showFaild(throwable.getMessage());
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    @Override
+    public void getFilterGoodsGroupData(String funcType, String begin, String end, String machineNumber) {
+        this.funcType = funcType;
+        mView.showLoading();
+        RetrofitManager.create(ApiService.class)
+                .getFilterGoodsData(funcType, begin, end, machineNumber)
+                .compose(RxSchedulers.<DataResponse<DataAnGoodsFilterBean>>applySchedulers())
+                .compose(mView.<DataResponse<DataAnGoodsFilterBean>>bindToLife())
+                .subscribe(new Consumer<DataResponse<DataAnGoodsFilterBean>>() {
+                    @Override
+                    public void accept(DataResponse<DataAnGoodsFilterBean> response) throws Exception {
+                        if (response.getSign() == 1) {
+                            int loadType = mIsRefresh ? LoadType.TYPE_REFRESH_SUCCESS : LoadType.TYPE_LOAD_MORE_SUCCESS;
+                            mView.setFilterGoodsGroupData(response.getResult());
                             mView.hideLoading();
                         } else {
                             mView.showFaild(String.valueOf(response.getMessage()));

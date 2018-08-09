@@ -34,7 +34,7 @@ public class HttpUtils {
         this.context = context;
         client = new AsyncHttpClient();
 
-        client.setTimeout(60000); // 设置链接超时，如果不设置，默认为10s
+        client.setTimeout(300000); // 设置链接超时，如果不设置，默认为10s
 
         gson = new Gson();
         pd = new ProgressDialog(context);
@@ -42,32 +42,6 @@ public class HttpUtils {
         pd.setMessage("正在加载....");
 //
 
-    }
-
-    /**
-     * 添加基本的Params
-     */
-    public RequestParams addBaseParams(RequestParams params, int funcType) {
-        //判断如果是Welcome则不显示pd;
-        user = MyApplication.getApp().getUserInfo();
-        params.put("_t", System.currentTimeMillis() + "");
-        if (user != null) {
-            params.put("uniqueCode", user.getAuthorizationKey());
-            params.put("phoneAID", user.getId() + "");
-            params.put("funcType", funcType + "");
-            params.put("android_swz_manage_request", "android-" + SystemUtil.getSystemModel() + "-" + SystemUtil.getSystemVersion());
-            params.put("android_swz_manage_version_int", SgqUtils.getVersionCode(context) + "");
-            params.put("_t", Math.random());
-            // TODO: 16/9/14 尚未添加登录和未登录 目前视为未登录,修改后把上面两行代码删除即可
-        } else {
-            params.put("uniqueCode", "009900");
-            params.put("phoneAID", "0");
-            params.put("funcType", funcType + "");
-            params.put("android_swz_manage_request", "android-" + SystemUtil.getSystemModel() + "-" + SystemUtil.getSystemVersion());
-            params.put("android_swz_manage_version_int", SgqUtils.getVersionCode(context) + "");
-            params.put("_t", Math.random());
-        }
-        return params;
     }
 
     public void doPost(String url, int funcType, RequestParams params, final HttpInterface integerface) {
@@ -151,6 +125,32 @@ public class HttpUtils {
         }
 
 
+    }
+
+    /**
+     * 添加基本的Params
+     */
+    public RequestParams addBaseParams(RequestParams params, int funcType) {
+        //判断如果是Welcome则不显示pd;
+        user = MyApplication.getApp().getUserInfo();
+        params.put("_t", System.currentTimeMillis() + "");
+        if (user != null) {
+            params.put("uniqueCode", user.getAuthorizationKey());
+            params.put("phoneAID", user.getId() + "");
+            params.put("funcType", funcType + "");
+            params.put("android_swz_manage_request", "android-" + SystemUtil.getSystemModel() + "-" + SystemUtil.getSystemVersion());
+            params.put("android_swz_manage_version_int", SgqUtils.getVersionCode(context) + "");
+            params.put("_t", Math.random());
+            // TODO: 16/9/14 尚未添加登录和未登录 目前视为未登录,修改后把上面两行代码删除即可
+        } else {
+            params.put("uniqueCode", "009900");
+            params.put("phoneAID", "0");
+            params.put("funcType", funcType + "");
+            params.put("android_swz_manage_request", "android-" + SystemUtil.getSystemModel() + "-" + SystemUtil.getSystemVersion());
+            params.put("android_swz_manage_version_int", SgqUtils.getVersionCode(context) + "");
+            params.put("_t", Math.random());
+        }
+        return params;
     }
 
     /**

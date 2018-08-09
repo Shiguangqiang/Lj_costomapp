@@ -58,17 +58,13 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
 
     @Override
     protected void initInjector() {
-//        mActivityComponent.inject(this);
     }
-
 
     @Override
     protected void initView() {
         ARouter.getInstance().inject(this);
 
         back.setText("返回");
-        rightTitle.setText("保存");
-        rightTitle.setTextColor(getResources().getColor(R.color.bule_light));
         back.setTextColor(getResources().getColor(R.color.bule_light));
         back.setOnClickListener(this);
         rightTitle.setOnClickListener(this);
@@ -83,7 +79,7 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
         //绑定
         filterTablayout.setupWithViewPager(filterViewpager);
 
-        //TabLayout的监听
+/*        //TabLayout的监听
         filterTablayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -110,7 +106,7 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
+        });*/
         SgqUtils.setIndicator(filterTablayout, 50, 50);
 
     }
@@ -121,11 +117,12 @@ public class AnalysisFilter3Activity extends BaseNewActivity implements View.OnC
             case R.id.back:
                 finish();
                 break;
-            case R.id.right_title:
-                /*通知 保存商品*/
+
+            /* case R.id.right_title:
+             *//*通知 保存商品*//*
                 RxBus.getInstance().post(new EventUtils());
                 GrowthRateActivity.start();
-                break;
+                break;*/
         }
     }
 

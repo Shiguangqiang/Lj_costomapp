@@ -296,9 +296,11 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
             set1 = new LineDataSet(mListNull, "");
         }
 
+
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
         set1.setDrawValues(false);
-        set1.setColor(Color.argb(1f, 0f, 0f, 0.5f));
+//        set1.setColor(Color.argb(1f, 0f, 0f, 0.5f));
+        set1.setColor(Color.RED);
         set1.setCircleColor(Color.RED);
         set1.setLineWidth(3f);
         set1.setCircleRadius(3f);
@@ -321,7 +323,8 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         }
 
         set2.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set2.setColor(Color.argb(1f, 0f, 1f, 0.5f));
+//        set2.setColor(Color.argb(1f, 0f, 1f, 0.5f));
+        set2.setColor(Color.YELLOW);
         set2.setCircleColor(Color.RED);
         set2.setLabel("");
         set2.setLineWidth(3f);
@@ -344,7 +347,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
             set3 = new LineDataSet(mListNull, "");
         }
         set3.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        set3.setColor(Color.RED);
+        set3.setColor(Color.BLUE);
         set3.setCircleColor(Color.RED);
         set3.setLineWidth(3f);
         set3.setDrawValues(false);
@@ -366,7 +369,8 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
             set4 = new LineDataSet(mListNull, " ");
         }
         set4.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        set4.setColor(Color.argb(1f, 0.5f, 0f, 0.5f));
+//        set4.setColor(Color.argb(1f, 0.5f, 0f, 0.5f));
+        set4.setColor(Color.BLACK);
         set4.setCircleColor(Color.RED);
         set4.setLineWidth(3f);
         set4.setDrawValues(false);

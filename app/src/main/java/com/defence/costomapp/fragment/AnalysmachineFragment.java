@@ -63,14 +63,16 @@ public class AnalysmachineFragment extends BaseNewFragment<DataAnalysisPresenter
         swipeRefreshLayout.setRefreshing(false);
         mMachineList = dataAnMachineFilterBean.getMachineList();
         setLoadDataResult(mDataAnalysFilterAdapter, swipeRefreshLayout, mMachineList, loadType);
-//       mMDataAnalysFilterAdapter = new DAFilterMachineAdapter(mMachineList, "machine");
-//       rvFund.setAdapter(mMDataAnalysFilterAdapter);
 
     }
 
+    @Override
+    public void setFilterGoodsGroupData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+
+    }
 
     @Override
-    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean) {
+    public void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean, int loadType) {
         swipeRefreshLayout.setRefreshing(false);
     }
 
@@ -160,7 +162,6 @@ public class AnalysmachineFragment extends BaseNewFragment<DataAnalysisPresenter
 
             }
         });
-
 
     }
 

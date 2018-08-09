@@ -20,7 +20,10 @@ public interface DataAnalysisContract {
 
         void setFilterMachineData(DataAnMachineFilterBean dataAnMachineFilterBean, @LoadType.checker int loadType);
 
-        void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean);
+
+        void setFilterGoodsGroupData(DataAnGoodsFilterBean dataAnGoodsFilterBean);
+
+        void setFilterGoodsData(DataAnGoodsFilterBean dataAnGoodsFilterBean, @LoadType.checker int loadType);
 
     }
 
@@ -35,6 +38,8 @@ public interface DataAnalysisContract {
         void getFilterMachineData(String funcType, String begin, String end);
 
         void getFilterGoodsData(String funcType, String begin, String end, String machineNumber);
+
+        void getFilterGoodsGroupData(String funcType, String begin, String end, String machineNumber);
 
 
     }

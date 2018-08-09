@@ -80,8 +80,8 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (isItemChecked(i)) {
                     setItemChecked(i, false);
                 } else {
-                    if (getSelectedItem().size() > 2) {
-                        Toast.makeText(MyApplication.getAppContext(), "商品最多只能选择三种!", Toast.LENGTH_SHORT).show();
+                    if (getSelectedItem().size() > 0) {
+                        Toast.makeText(MyApplication.getAppContext(), "商品最多只能选择一种!", Toast.LENGTH_SHORT).show();
                     } else {
                         setItemChecked(i, true);
                     }
@@ -98,8 +98,8 @@ public class DAFilterGoodsAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (isItemChecked(i)) {
                     setItemChecked(i, false);
                 } else {
-                    if (getSelectedItem().size() > 2) {
-                        Toast.makeText(MyApplication.getAppContext(), "商品最多只能选择三种!", Toast.LENGTH_SHORT).show();
+                    if (getSelectedItem().size() > 0) {
+                        Toast.makeText(MyApplication.getAppContext(), "商品最多只能选择一种!", Toast.LENGTH_SHORT).show();
                     } else {
                         setItemChecked(i, true);
                     }
