@@ -358,6 +358,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
                         mMinright1 = Collections.min(SgqUtils.parseFloatListcy100(right_zhi.get(1)));
                     }
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
