@@ -346,6 +346,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
                             mYValsright2.add(new Entry(i, Float.parseFloat(AmountUtils.changeF2Y(right_zhi.get(1).get(i)))));
                         }
                     }
+
                     if ("1".equals(mCtypecyright)) {
                         //获取最大值
                         mMaxright1 = Collections.max(SgqUtils.parseFloatList(right_zhi.get(1)));
