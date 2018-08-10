@@ -43,6 +43,8 @@ public class Constant {
     public static final String RBLEFTRIGHT= "rbleftright";
 
     public static final String LINECHARTDATE= "linechartdate";
+    public static final String CTYPECYLEFT= "ctypecyleft";
+    public static final String CTYPECYRIGHT= "ctypecyright";
 
 
     public static final String SHARED_NAME = "_preferences";

@@ -67,6 +67,16 @@ public class SgqUtils {
         return IntegerList;
     }
 
+    //List<String>转换为List<int>  除以100
+    public static List<Float> parseFloatListcy100(List<String> StringList) {
+        List<Float> FloatList = new ArrayList<Float>();
+        for (String x : StringList) {
+            Float z = Float.parseFloat(AmountUtils.changeF2Y(x));
+            FloatList.add(z);
+        }
+        return FloatList;
+    }
+
     //List<String>转换为List<int>
     public static List<Float> parseFloatList(List<String> StringList) {
         List<Float> FloatList = new ArrayList<Float>();
@@ -189,6 +199,7 @@ public class SgqUtils {
         String dateOk = simpleDateFormat.format(newDate2);
         return dateOk;
     }
+
     //获取当前时间
     public static String getNowHmsDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss

@@ -106,10 +106,12 @@ public class AnalysFundFragment extends BaseNewFragment<DataAnalysisPresenter> i
             case "left":
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAME, mTjList.get(position).getName() + "");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEID, mTjList.get(position).getTypeid() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.CTYPECYLEFT, mTjList.get(position).getCtype() + "");
                 break;
             case "right":
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_FILTERNAMERIGHT, mTjList.get(position).getName() + "");
                 SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.DATA_STYPEIDRIGHT, mTjList.get(position).getTypeid() + "");
+                SPUtils.getInstance(Constant.SHARED_NAME).put(Constant.CTYPECYRIGHT, mTjList.get(position).getCtype() + "");
                 break;
         }
     }

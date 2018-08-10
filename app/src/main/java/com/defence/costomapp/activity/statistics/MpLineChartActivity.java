@@ -18,6 +18,7 @@ import com.defence.costomapp.base.BaseActivity;
 import com.defence.costomapp.base.Urls;
 import com.defence.costomapp.bean.LineChartBean;
 import com.defence.costomapp.net.Constant;
+import com.defence.costomapp.utils.AmountUtils;
 import com.defence.costomapp.utils.SgqUtils;
 import com.defence.costomapp.utils.httputils.HttpInterface;
 import com.defence.costomapp.utils.view.DayAxisValueFormatter;
@@ -82,14 +83,14 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
     private String mIszhengzhanglvs;
     private String miszhengzhanglvrights;
     private int time;
-    private Float mMaxright1 = 100f;
+    private Float mMaxright1 = 0f;
     private Float mMinright1 = 0f;
     private Float mMinright = 0f;
-    private Float mMaxright = 100f;
+    private Float mMaxright = 0f;
     private Float mMinleft1 = 0f;
-    private Float mMaxleft1 = 200f;
+    private Float mMaxleft1 = 0f;
     private Float mMinleft = 0f;
-    private Float mMaxleft = 200f;
+    private Float mMaxleft = 0f;
     private TextView mTv_show;
     private String mFiltername;
     private String mMachinename;
@@ -100,6 +101,8 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
     private String mData_filternamerights;
     private String mMachinenamerights;
     private String linechartdate;
+    private String mCtypecyleft;
+    private String mCtypecyright;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +164,11 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         mMachinenames = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.DATA_MACHINENAMES);
         mMachinenamerights = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.MACHINENAMERIGHTS);
 
+
+        mCtypecyleft = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.CTYPECYLEFT);
+
+        mCtypecyright = SPUtils.getInstance(Constant.SHARED_NAME).getString(Constant.CTYPECYRIGHT);
+
         if (!TextUtils.isEmpty(mFiltername)) {
             tv_selectup.setText(mFiltername);
         }
@@ -212,10 +220,21 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         String sright1 = "{\"stypeId\":\"" + mData_stypeidright + "\",\"machineNumbers\":\"" + mMachinenumbersright + "\",\"guigeids\":\"" + mGuigeidsright + "\",\"iszhengzhanglv\":\"" + miszhengzhanglvright + "\"}";
         String sright2 = "{\"stypeId\":\"" + mData_stypeidright + "\",\"machineNumbers\":\"" + mMachinenumbersrights + "\",\"guigeids\":\"" + mGuigeidsrights + "\",\"iszhengzhanglv\":\"" + miszhengzhanglvrights + "\"}";
 
-        stringsleft.add(sleft1);
-        stringsleft.add(sleft2);
-        stringsright.add(sright1);
-        stringsright.add(sright2);
+        if (!TextUtils.isEmpty(mMachine_numbers)) {
+            stringsleft.add(sleft1);
+        }
+//        第二条线  没有选择机器的话   不添加
+        if (!TextUtils.isEmpty(mMachine_numberss)) {
+            stringsleft.add(sleft2);
+        }
+        if (!TextUtils.isEmpty(mMachinenumbersright)) {
+            stringsright.add(sright1);
+        }
+        //        第四条线  没有选择机器的话   不添加
+        if (!TextUtils.isEmpty(mMachinenumbersrights)) {
+            stringsright.add(sright2);
+        }
+
 
         RequestParams params = new RequestParams();
         params.put("orderBy", "2");
@@ -237,8 +256,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
             public void onSuccess(Gson gson, Object result, String message) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result.toString());
                 LineChartBean lineChartBean = gson.fromJson(jsonObject.toString(), LineChartBean.class);
-//                mTv_show.setText(jsonObject.toString());
-//                Toast.makeText(MpLineChartActivity.this, jsonObject.toString(), Toast.LENGTH_SHORT).show();
+//
                 //      设置折线图数据
                 setData(lineChartBean.getLeft_zhi(), lineChartBean.getRight_zhi());
             }
@@ -248,150 +266,106 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
     @TargetApi(Build.VERSION_CODES.O)
     private void setData(List<List<String>> left_zhi, List<List<String>> right_zhi) {
 
-        if (left_zhi.get(0) != null && left_zhi.get(0).size() > 0) {
-            for (int i = 0; i < left_zhi.get(0).size(); i++) {
-                mYValsleft1.add(new Entry(i, Float.parseFloat(left_zhi.get(0).get(i))));
-            }
-            //获取最小值
-            mMinleft = Collections.min(SgqUtils.parseFloatList(left_zhi.get(0)));
-            //获取最大值
-            mMaxleft = Collections.max(SgqUtils.parseFloatList(left_zhi.get(0)));
-        }
-        if (left_zhi.get(1) != null && left_zhi.get(1).size() > 0) {
-            for (int i = 0; i < left_zhi.get(1).size(); i++) {
-                mYValsleft2.add(new Entry(i, Float.parseFloat(left_zhi.get(1).get(i))));
-            }
-            //获取最小值
-            mMinleft1 = Collections.min(SgqUtils.parseFloatList(left_zhi.get(1)));
-            //获取最大值
-            mMaxleft1 = Collections.max(SgqUtils.parseFloatList(left_zhi.get(1)));
-        }
-        if (right_zhi.get(0) != null && right_zhi.get(0).size() > 0) {
-            for (int i = 0; i < right_zhi.get(0).size(); i++) {
-                mYValsright1.add(new Entry(i, Float.parseFloat(right_zhi.get(0).get(i))));
-            }
-            //获取最小值
-            mMinright = Collections.min(SgqUtils.parseFloatList(right_zhi.get(0)));
-            //获取最大值
-            mMaxright = Collections.max(SgqUtils.parseFloatList(right_zhi.get(0)));
-        }
-        if (right_zhi.get(1) != null && right_zhi.get(1).size() > 0) {
-            for (int i = 0; i < right_zhi.get(1).size(); i++) {
-                mYValsright2.add(new Entry(i, Float.parseFloat(right_zhi.get(1).get(i))));
-            }
-            //获取最大值
-            mMaxright1 = Collections.max(SgqUtils.parseFloatList(right_zhi.get(1)));
-            //获取最小值
-            mMinright1 = Collections.min(SgqUtils.parseFloatList(right_zhi.get(1)));
+        try {
 
+            if (left_zhi.get(0) != null && left_zhi.get(0).size() > 0) {
+                for (int i = 0; i < left_zhi.get(0).size(); i++) {
+                    if ("1".equals(mCtypecyleft)) {
+                        mYValsleft1.add(new Entry(i, Float.parseFloat(left_zhi.get(0).get(i))));
+                    } else {
+                        mYValsleft1.add(new Entry(i, Float.parseFloat(AmountUtils.changeF2Y(left_zhi.get(0).get(i)))));
+                    }
+                }
+                if ("1".equals(mCtypecyleft)) {
+                    //获取最小值
+                    mMinleft = Collections.min(SgqUtils.parseFloatList(left_zhi.get(0)));
+                    //获取最大值
+                    mMaxleft = Collections.max(SgqUtils.parseFloatList(left_zhi.get(0)));
+                } else {
+                    //获取最小值
+                    mMinleft = Collections.min(SgqUtils.parseFloatListcy100(left_zhi.get(0)));
+                    //获取最大值
+                    mMaxleft = Collections.max(SgqUtils.parseFloatListcy100(left_zhi.get(0)));
+                }
+
+            }
+
+            if (left_zhi.size() == 2) {
+                if (left_zhi.get(1) != null && left_zhi.get(1).size() > 0) {
+                    for (int i = 0; i < left_zhi.get(1).size(); i++) {
+                        if ("1".equals(mCtypecyleft)) {
+                            mYValsleft2.add(new Entry(i, Float.parseFloat(left_zhi.get(1).get(i))));
+                        } else {
+                            mYValsleft2.add(new Entry(i, Float.parseFloat(AmountUtils.changeF2Y(left_zhi.get(1).get(i)))));
+                        }
+
+                    }
+                    if ("1".equals(mCtypecyleft)) {
+                        //获取最小值
+                        mMinleft1 = Collections.min(SgqUtils.parseFloatListcy100(left_zhi.get(1)));
+                        //获取最大值
+                        mMaxleft1 = Collections.max(SgqUtils.parseFloatListcy100(left_zhi.get(1)));
+                    } else {
+                        //获取最小值
+                        mMinleft1 = Collections.min(SgqUtils.parseFloatList(left_zhi.get(1)));
+                        //获取最大值
+                        mMaxleft1 = Collections.max(SgqUtils.parseFloatList(left_zhi.get(1)));
+                    }
+
+                }
+            }
+
+
+            if (right_zhi.get(0) != null && right_zhi.get(0).size() > 0) {
+                for (int i = 0; i < right_zhi.get(0).size(); i++) {
+                    if ("1".equals(mCtypecyright)) {
+                        mYValsright1.add(new Entry(i, Float.parseFloat(right_zhi.get(0).get(i))));
+                    } else {
+                        mYValsright1.add(new Entry(i, Float.parseFloat(AmountUtils.changeF2Y(right_zhi.get(0).get(i)))));
+                    }
+                }
+                if ("1".equals(mCtypecyright)) {
+                    //获取最小值
+                    mMinright = Collections.min(SgqUtils.parseFloatList(right_zhi.get(0)));
+                    //获取最大值
+                    mMaxright = Collections.max(SgqUtils.parseFloatList(right_zhi.get(0)));
+                } else {
+                    //获取最小值
+                    mMinright = Collections.min(SgqUtils.parseFloatListcy100(right_zhi.get(0)));
+                    //获取最大值
+                    mMaxright = Collections.max(SgqUtils.parseFloatListcy100(right_zhi.get(0)));
+                }
+
+            }
+            if (right_zhi.size() == 2) {
+                if (right_zhi.get(1) != null && right_zhi.get(1).size() > 0) {
+                    for (int i = 0; i < right_zhi.get(1).size(); i++) {
+                        if ("1".equals(mCtypecyright)) {
+                            mYValsright2.add(new Entry(i, Float.parseFloat(right_zhi.get(1).get(i))));
+                        } else {
+                            mYValsright2.add(new Entry(i, Float.parseFloat(AmountUtils.changeF2Y(right_zhi.get(1).get(i)))));
+                        }
+                    }
+                    if ("1".equals(mCtypecyright)) {
+                        //获取最大值
+                        mMaxright1 = Collections.max(SgqUtils.parseFloatList(right_zhi.get(1)));
+                        //获取最小值
+                        mMinright1 = Collections.min(SgqUtils.parseFloatList(right_zhi.get(1)));
+                    } else {
+                        //获取最大值
+                        mMaxright1 = Collections.max(SgqUtils.parseFloatListcy100(right_zhi.get(1)));
+                        //获取最小值
+                        mMinright1 = Collections.min(SgqUtils.parseFloatListcy100(right_zhi.get(1)));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         //     初始化折线图
         initChart();
 
-
         LineDataSet set1, set2, set3, set4;
-        if (mYValsleft1 != null && mYValsleft1.size() > 0) {
-            set1 = new LineDataSet(mYValsleft1, "");
-        } else {
-            set1 = new LineDataSet(mListNull, "");
-        }
-
-
-        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set1.setDrawValues(false);
-//        set1.setColor(Color.argb(1f, 0f, 0f, 0.5f));
-        set1.setColor(Color.RED);
-        set1.setCircleColor(Color.RED);
-        set1.setLineWidth(3f);
-        set1.setCircleRadius(3f);
-        set1.setFillAlpha(50);
-        set1.setLabel("");
-        set1.setFillColor(ColorTemplate.getHoloBlue());
-        set1.setHighLightColor(Color.rgb(244, 117, 117));
-        set1.setDrawCircleHole(false);
-        set1.setDrawCircles(false);
-//        定制节点水平和垂直的两条线
-        set1.setHighlightLineWidth(1f); //设置线条宽度
-        set1.setHighLightColor(Color.BLACK);  //设置线条颜色
-        set1.setDrawHorizontalHighlightIndicator(false);
-
-//            DataSet 2
-        if (mYValsleft2 != null && mYValsleft2.size() > 0) {
-            set2 = new LineDataSet(mYValsleft2, "");
-        } else {
-            set2 = new LineDataSet(mListNull, "");
-        }
-
-        set2.setAxisDependency(YAxis.AxisDependency.LEFT);
-//        set2.setColor(Color.argb(1f, 0f, 1f, 0.5f));
-        set2.setColor(Color.YELLOW);
-        set2.setCircleColor(Color.RED);
-        set2.setLabel("");
-        set2.setLineWidth(3f);
-        set2.setDrawValues(false);
-        set2.setCircleRadius(3f);
-        set2.setFillAlpha(50);
-        set2.setFillColor(Color.RED);
-        set2.setDrawCircleHole(false);
-        set2.setHighLightColor(Color.rgb(244, 117, 117));
-        set2.setDrawCircles(false);
-        set2.setHighlightLineWidth(1f); //设置线条宽度
-        set2.setHighLightColor(Color.BLACK);  //设置线条颜色
-        set2.setDrawHorizontalHighlightIndicator(false);
-
-
-//            DataSet 3
-        if (mYValsright1 != null && mYValsright1.size() > 0) {
-            set3 = new LineDataSet(mYValsright1, "");
-        } else {
-            set3 = new LineDataSet(mListNull, "");
-        }
-        set3.setAxisDependency(YAxis.AxisDependency.RIGHT);
-        set3.setColor(Color.BLUE);
-        set3.setCircleColor(Color.RED);
-        set3.setLineWidth(3f);
-        set3.setDrawValues(false);
-        set3.setLabel("");
-        set3.setCircleRadius(3f);
-        set3.setFillAlpha(50);
-        set3.setFillColor(ColorTemplate.colorWithAlpha(Color.YELLOW, 200));
-        set3.setDrawCircleHole(false);
-        set3.setHighLightColor(Color.rgb(244, 117, 117));
-        set3.setDrawCircles(false);
-        set3.setHighlightLineWidth(1f); //设置线条宽度
-        set3.setHighLightColor(Color.BLACK);  //设置线条颜色
-        set3.setDrawHorizontalHighlightIndicator(false);
-
-//            DataSet 4
-        if (mYValsright2 != null && mYValsright2.size() > 0) {
-            set4 = new LineDataSet(mYValsright2, " ");
-        } else {
-            set4 = new LineDataSet(mListNull, " ");
-        }
-        set4.setAxisDependency(YAxis.AxisDependency.RIGHT);
-//        set4.setColor(Color.argb(1f, 0.5f, 0f, 0.5f));
-        set4.setColor(Color.BLACK);
-        set4.setCircleColor(Color.RED);
-        set4.setLineWidth(3f);
-        set4.setDrawValues(false);
-        set4.setLabel("");
-        set4.setCircleRadius(3f);
-        set4.setFillAlpha(50);
-        set4.setFillColor(ColorTemplate.getHoloBlue());
-        set4.setHighLightColor(Color.rgb(244, 117, 117));
-        set4.setDrawCircleHole(false);
-        set4.setDrawCircles(false);
-        set4.setHighlightLineWidth(1f); //设置线条宽度
-        set4.setHighLightColor(Color.BLACK);  //设置线条颜色
-        set4.setDrawHorizontalHighlightIndicator(false);
-
-
-        mData = new LineData(set1, set2, set3, set4);
-        mData.setValueTextColor(Color.BLUE);
-        mData.setValueTextSize(14f);
-        mChart.setData(mData);
-        mChart.invalidate();
-
 
         if (mChart.getData() != null &&
                 mChart.getData().getDataSetCount() > 0) {
@@ -422,6 +396,123 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
             }
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
+        } else {
+            if (mYValsleft1 != null && mYValsleft1.size() > 0) {
+                set1 = new LineDataSet(mYValsleft1, "");
+            } else {
+                set1 = new LineDataSet(mListNull, "");
+            }
+
+            set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+            set1.setDrawValues(false);
+//          set1.setColor(Color.argb(1f, 0f, 0f, 0.5f));
+            if (mYValsleft1 != null && mYValsleft1.size() > 0) {
+                set1.setLineWidth(3f);
+            } else {
+                set1.setLineWidth(0f);
+            }
+
+            set1.setColor(Color.RED);
+            set1.setCircleColor(Color.RED);
+            set1.setCircleRadius(3f);
+            set1.setFillAlpha(50);
+            set1.setLabel("");
+            set1.setFillColor(ColorTemplate.getHoloBlue());
+            set1.setHighLightColor(Color.rgb(244, 117, 117));
+            set1.setDrawCircleHole(false);
+            set1.setDrawCircles(false);
+//          定制节点水平和垂直的两条线
+            set1.setHighlightLineWidth(1f); //设置线条宽度
+            set1.setHighLightColor(Color.BLACK);  //设置线条颜色
+            set1.setDrawHorizontalHighlightIndicator(false);
+
+//            DataSet 2
+            if (mYValsleft2 != null && mYValsleft2.size() > 0) {
+                set2 = new LineDataSet(mYValsleft2, "");
+            } else {
+                set2 = new LineDataSet(mListNull, "");
+            }
+
+            set2.setAxisDependency(YAxis.AxisDependency.LEFT);
+//          set2.setColor(Color.argb(1f, 0f, 1f, 0.5f));
+            if (mYValsleft2 != null && mYValsleft2.size() > 0) {
+                set2.setLineWidth(3f);
+            } else {
+                set2.setLineWidth(0f);
+            }
+            set2.setColor(Color.YELLOW);
+            set2.setCircleColor(Color.RED);
+            set2.setLabel("");
+            set2.setDrawValues(false);
+            set2.setCircleRadius(3f);
+            set2.setFillAlpha(50);
+            set2.setFillColor(Color.RED);
+            set2.setDrawCircleHole(false);
+            set2.setHighLightColor(Color.rgb(244, 117, 117));
+            set2.setDrawCircles(false);
+            set2.setHighlightLineWidth(1f); //设置线条宽度
+            set2.setHighLightColor(Color.BLACK);  //设置线条颜色
+            set2.setDrawHorizontalHighlightIndicator(false);
+
+
+//            DataSet 3
+            if (mYValsright1 != null && mYValsright1.size() > 0) {
+                set3 = new LineDataSet(mYValsright1, "");
+            } else {
+                set3 = new LineDataSet(mListNull, "");
+            }
+            set3.setAxisDependency(YAxis.AxisDependency.RIGHT);
+            set3.setColor(Color.BLUE);
+            if (mYValsright1 != null && mYValsright1.size() > 0) {
+                set3.setLineWidth(3f);
+            } else {
+                set3.setLineWidth(0f);
+            }
+            set3.setCircleColor(Color.RED);
+            set3.setDrawValues(false);
+            set3.setLabel("");
+            set3.setCircleRadius(3f);
+            set3.setFillAlpha(50);
+            set3.setFillColor(ColorTemplate.colorWithAlpha(Color.YELLOW, 200));
+            set3.setDrawCircleHole(false);
+            set3.setHighLightColor(Color.rgb(244, 117, 117));
+            set3.setDrawCircles(false);
+            set3.setHighlightLineWidth(1f); //设置线条宽度
+            set3.setHighLightColor(Color.BLACK);  //设置线条颜色
+            set3.setDrawHorizontalHighlightIndicator(false);
+
+//            DataSet 4
+            if (mYValsright2 != null && mYValsright2.size() > 0) {
+                set4 = new LineDataSet(mYValsright2, " ");
+            } else {
+                set4 = new LineDataSet(mListNull, " ");
+            }
+            set4.setAxisDependency(YAxis.AxisDependency.RIGHT);
+//        set4.setColor(Color.argb(1f, 0.5f, 0f, 0.5f));
+            if (mYValsright2 != null && mYValsright2.size() > 0) {
+                set4.setLineWidth(3f);
+            } else {
+                set4.setLineWidth(0f);
+            }
+            set4.setColor(Color.BLACK);
+            set4.setCircleColor(Color.RED);
+            set4.setDrawValues(false);
+            set4.setLabel("");
+            set4.setCircleRadius(3f);
+            set4.setFillAlpha(50);
+            set4.setFillColor(ColorTemplate.getHoloBlue());
+            set4.setHighLightColor(Color.rgb(244, 117, 117));
+            set4.setDrawCircleHole(false);
+            set4.setDrawCircles(false);
+            set4.setHighlightLineWidth(1f); //设置线条宽度
+            set4.setHighLightColor(Color.BLACK);  //设置线条颜色
+            set4.setDrawHorizontalHighlightIndicator(false);
+
+            mData = new LineData(set1, set2, set3, set4);
+            mData.setValueTextColor(Color.BLUE);
+            mData.setValueTextSize(14f);
+            mChart.setData(mData);
+            mChart.invalidate();
         }
     }
 
@@ -432,7 +523,7 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         float maxr = mMaxright >= mMaxright1 ? mMaxright : mMaxright1;
         float minr = mMinright >= mMinright1 ? mMinright1 : mMinright;
         //左右纵轴最小的比较
-        float mmin = minl <= minr ? minl : minr;
+//        float mmin = minl <= minr ? minl : minr;
 
 
         mTfRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
@@ -522,7 +613,6 @@ public class MpLineChartActivity extends BaseActivity implements OnChartValueSel
         } else {
             mTv_num4.setText(mListNull.get((int) e.getX()).getY() + "");
         }
-
 
         if (TextUtils.isEmpty(mMachinename)) {
             mTv_num1.setText("");
